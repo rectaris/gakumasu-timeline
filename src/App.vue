@@ -186,22 +186,31 @@ onUnmounted(() => {
 
   </svg>
 
-  <div
-    v-if="selectedEvent"
-    class="overlay"
-    @click.self="closePanel"
+  <!-- サイド固定の詳細パネル -->
+  <aside
+    class="side-panel"
+    :class="{ open: selectedEvent }"
   >
-    <div class="panel">
+    <div v-if="selectedEvent" class="panel-content">
+      <button class="close-btn" @click="closePanel">×</button>
+
       <h2>{{ selectedEvent.title }}</h2>
-      <p>
+
+      <p class="meta">
         {{ selectedEvent.character }}
         ｜ {{ selectedEvent.year }}年{{ selectedEvent.month }}月
       </p>
-      <p>{{ selectedEvent.detail }}</p>
 
-      <button @click="closePanel">閉じる</button>
+      <p class="detail">
+        {{ selectedEvent.detail }}
+      </p>
     </div>
-  </div>
+
+    <div v-else class="panel-placeholder">
+      イベントを選択してください
+    </div>
+  </aside>
+
 </template>
 
 <style>
@@ -213,19 +222,55 @@ body {
   cursor: pointer;
 }
 
-.overlay {
+.side-panel {
   position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100vh;
+  background: #ffffff;
+  border-left: 1px solid #ddd;
+  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.1);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
 }
 
-.panel {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 320px;
+.side-panel.open {
+  transform: translateX(0);
 }
+
+.panel-content {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.panel-placeholder {
+  padding: 20px;
+  color: #888;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.meta {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.detail {
+  line-height: 1.6;
+}
+
 </style>
