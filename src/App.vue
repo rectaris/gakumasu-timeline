@@ -1,9 +1,19 @@
 <script setup>
-import { computed } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { characters } from "./data/events";
 
 function timeValue(year, month) {
   return year * 12 + (month - 1);
+}
+
+const selectedEvent = ref(null);
+
+function selectEvent(event) {
+  selectedEvent.value = event;
+}
+
+function closePanel() {
+  selectedEvent.value = null;
 }
 
 // レーン設定
@@ -62,6 +72,19 @@ const years = computed(() => {
   }
   return result;
 });
+
+function handleKey(e) {
+  if (e.key === "Escape") closePanel();
+}
+
+onMounted(() => {
+  window.addEventListener("keydown", handleKey);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("keydown", handleKey);
+});
+
 </script>
 
 <template>
@@ -116,12 +139,14 @@ const years = computed(() => {
 
     <!-- イベント -->
     <g v-for="event in allEvents" :key="event.title">
-      <circle
-        :cx="xPos(event.time)"
-        :cy="yPos(event.laneIndex)"
-        r="6"
-        :fill="event.color"
-      >
+        <circle
+          :cx="xPos(event.time)"
+          :cy="yPos(event.laneIndex)"
+          r="6"
+          :fill="event.color"
+          class="event-dot"
+          @click="selectEvent(event)"
+        >
         <title>
           {{ event.character }}
           {{ event.year }}年{{ event.month }}月
@@ -131,10 +156,47 @@ const years = computed(() => {
     </g>
 
   </svg>
+
+  <div
+    v-if="selectedEvent"
+    class="overlay"
+    @click.self="closePanel"
+  >
+    <div class="panel">
+      <h2>{{ selectedEvent.title }}</h2>
+      <p>
+        {{ selectedEvent.character }}
+        ｜ {{ selectedEvent.year }}年{{ selectedEvent.month }}月
+      </p>
+      <p>{{ selectedEvent.detail }}</p>
+
+      <button @click="closePanel">閉じる</button>
+    </div>
+  </div>
 </template>
 
 <style>
 body {
   font-family: system-ui, sans-serif;
+}
+
+.event-dot {
+  cursor: pointer;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panel {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 320px;
 }
 </style>
