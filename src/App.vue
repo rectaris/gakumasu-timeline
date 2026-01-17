@@ -10,10 +10,28 @@ const selectedEvent = ref(null);
 
 function selectEvent(event) {
   selectedEvent.value = event;
+  updateUrl(event.id);
 }
 
 function closePanel() {
   selectedEvent.value = null;
+  updateUrl(null);
+}
+
+function updateUrl(eventId) {
+  const params = new URLSearchParams(window.location.search);
+
+  if (eventId) {
+    params.set("event", eventId);
+  } else {
+    params.delete("event");
+  }
+
+  const query = params.toString();
+  const newUrl =
+    window.location.pathname + (query ? "?" + query : "");
+
+  history.replaceState(null, "", newUrl);
 }
 
 // レーン設定
@@ -78,6 +96,17 @@ function handleKey(e) {
 }
 
 onMounted(() => {
+  // URLから event ID を取得
+  const params = new URLSearchParams(window.location.search);
+  const eventId = params.get("event");
+
+  if (eventId) {
+    const found = allEvents.value.find(e => e.id === eventId);
+    if (found) {
+      selectedEvent.value = found;
+    }
+  }
+
   window.addEventListener("keydown", handleKey);
 });
 
