@@ -92,6 +92,14 @@ const yearBounds = computed(() => {
   const maxYear = Math.floor(
     Math.max(...times.value) / 12
   );
+
+  if (minYear === maxYear) {
+    return {
+      minYear: minYear - 1,
+      maxYear: maxYear + 1
+    };
+  }
+
   return { minYear, maxYear };
 });
 
@@ -174,7 +182,6 @@ onUnmounted(() => {
 
   <div class="zoom-controls">
     <button @click="zoomMode = 'all'">全期間</button>
-    <button @click="zoomMode = 'year'">2年目を拡大</button>
     <button @click="zoomMode = 'year'">年ズーム</button>
   </div>
 
