@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import { characters } from "./data/events";
+import { watch } from "vue";
 
 function timeValue(year, month) {
   return year * 12 + (month - 1);
@@ -9,8 +10,22 @@ function timeValue(year, month) {
 const zoomMode = ref("all"); 
 // "all" | "year"
 
-const zoomCenterYear = ref(2);
+const zoomCenterYear = ref(
+  Math.floor(
+    (yearBounds.value.minYear + yearBounds.value.maxYear) / 2
+  )
+);
+
 const zoomRangeYears = 1; // ±1年
+
+watch(zoomMode, mode => {
+  if (mode === "year") {
+    // 現在の選択イベントがあればそこを中心に
+    if (selectedEvent.value) {
+      zoomCenterYear.value = selectedEvent.value.year;
+    }
+  }
+});
 
 const selectedEvent = ref(null);
 
@@ -73,6 +88,16 @@ const viewRange = computed(() => {
     min: Math.min(...times.value),
     max: Math.max(...times.value)
   };
+});
+
+const yearBounds = computed(() => {
+  const minYear = Math.floor(
+    Math.min(...times.value) / 12
+  );
+  const maxYear = Math.floor(
+    Math.max(...times.value) / 12
+  );
+  return { minYear, maxYear };
 });
 
 // SVGサイズ
@@ -150,6 +175,24 @@ onUnmounted(() => {
   <div class="zoom-controls">
     <button @click="zoomMode = 'all'">全期間</button>
     <button @click="zoomMode = 'year'">2年目を拡大</button>
+  </div>
+
+  <div
+    class="year-slider"
+    v-if="zoomMode === 'year'"
+  >
+    <label>
+      中心年：
+      {{ zoomCenterYear }} 年目
+    </label>
+
+    <input
+      type="range"
+      :min="yearBounds.minYear"
+      :max="yearBounds.maxYear"
+      v-model.number="zoomCenterYear"
+      step="1"
+    />
   </div>
 
   <svg :width="width" :height="height">
@@ -312,6 +355,20 @@ body {
 
 .zoom-controls button {
   margin-right: 6px;
+}
+
+.year-slider {
+  margin-bottom: 12px;
+}
+
+.year-slider label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.year-slider input[type="range"] {
+  width: 300px;
 }
 
 </style>
