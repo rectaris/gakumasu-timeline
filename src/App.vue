@@ -10,13 +10,8 @@ function timeValue(year, month) {
 const zoomMode = ref("all"); 
 // "all" | "year"
 
-const zoomCenterYear = ref(
-  Math.floor(
-    (yearBounds.value.minYear + yearBounds.value.maxYear) / 2
-  )
-);
-
-const zoomRangeYears = 1; // ±1年
+const zoomCenterYear = ref(0);
+const zoomRangeYears = 1;
 
 watch(zoomMode, mode => {
   if (mode === "year") {
@@ -160,6 +155,11 @@ onMounted(() => {
     }
   }
 
+  const { minYear, maxYear } = yearBounds.value;
+  zoomCenterYear.value = Math.floor(
+    (minYear + maxYear) / 2
+  );
+
   window.addEventListener("keydown", handleKey);
 });
 
@@ -175,6 +175,7 @@ onUnmounted(() => {
   <div class="zoom-controls">
     <button @click="zoomMode = 'all'">全期間</button>
     <button @click="zoomMode = 'year'">2年目を拡大</button>
+    <button @click="zoomMode = 'year'">年ズーム</button>
   </div>
 
   <div
