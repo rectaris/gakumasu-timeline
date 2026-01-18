@@ -6,6 +6,12 @@ function timeValue(year, month) {
   return year * 12 + (month - 1);
 }
 
+const zoomMode = ref("all"); 
+// "all" | "year"
+
+const zoomCenterYear = ref(2);
+const zoomRangeYears = 1; // ±1年
+
 const selectedEvent = ref(null);
 
 function selectEvent(event) {
@@ -54,8 +60,20 @@ const allEvents = computed(() => {
 
 const times = computed(() => allEvents.value.map(e => e.time));
 
-const minTime = Math.min(...times.value);
-const maxTime = Math.max(...times.value);
+const viewRange = computed(() => {
+  if (zoomMode.value === "year") {
+    const center = zoomCenterYear.value * 12;
+    return {
+      min: center - zoomRangeYears * 12,
+      max: center + zoomRangeYears * 12
+    };
+  }
+
+  return {
+    min: Math.min(...times.value),
+    max: Math.max(...times.value)
+  };
+});
 
 // SVGサイズ
 const width = 1100;
@@ -64,9 +82,11 @@ const height =
 
 // time → x
 function xPos(time) {
+  const { min, max } = viewRange.value;
+
   return (
     leftLabelWidth +
-    ((time - minTime) / (maxTime - minTime)) *
+    ((time - min) / (max - min)) *
       (width - leftLabelWidth - 40)
   );
 }
@@ -77,8 +97,20 @@ function yPos(laneIndex) {
 }
 
 // 年スケール
-const startYear = Math.floor(minTime / 12);
-const endYear = Math.floor(maxTime / 12);
+const years = computed(() => {
+  const { min, max } = viewRange.value;
+  const startYear = Math.floor(min / 12);
+  const endYear = Math.floor(max / 12);
+
+  const result = [];
+  for (let y = startYear; y <= endYear; y++) {
+    result.push({
+      year: y,
+      time: y * 12
+    });
+  }
+  return result;
+});
 
 const years = computed(() => {
   const result = [];
@@ -89,6 +121,13 @@ const years = computed(() => {
     });
   }
   return result;
+});
+
+const visibleEvents = computed(() => {
+  const { min, max } = viewRange.value;
+  return allEvents.value.filter(
+    e => e.time >= min && e.time <= max
+  );
 });
 
 function handleKey(e) {
@@ -118,6 +157,11 @@ onUnmounted(() => {
 
 <template>
   <h1>キャラクタータイムライン</h1>
+
+  <div class="zoom-controls">
+    <button @click="zoomMode = 'all'">全期間</button>
+    <button @click="zoomMode = 'year'">2年目を拡大</button>
+  </div>
 
   <svg :width="width" :height="height">
 
@@ -167,7 +211,7 @@ onUnmounted(() => {
     </g>
 
     <!-- イベント -->
-    <g v-for="event in allEvents" :key="event.title">
+    <g v-for="event in visibleEvents" :key="event.id">
         <circle
           :cx="xPos(event.time)"
           :cy="yPos(event.laneIndex)"
@@ -271,6 +315,14 @@ body {
 
 .detail {
   line-height: 1.6;
+}
+
+.zoom-controls {
+  margin-bottom: 10px;
+}
+
+.zoom-controls button {
+  margin-right: 6px;
 }
 
 </style>
