@@ -5,8 +5,8 @@ export default {
   events: [
     {
       id: "sumika_debut",
-      year: 1,
-      month: 1,
+      start: { year: 1, month: 1 },
+      end: { year: 1, month: 1 },
       title: "初星学園入学",
       detail: "不真面目系ギャルとしてアイドル活動開始"
     }

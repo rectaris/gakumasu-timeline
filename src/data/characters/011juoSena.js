@@ -5,8 +5,8 @@ export default {
   events: [
     {
       id: "sena_regent",
-      year: 1,
-      month: 1,
+      start: { year: 1, month: 1 },
+      end: { year: 1, month: 1 },
       title: "生徒会長として登場",
       detail: "一番星（プリマステラ）として登場"
     }

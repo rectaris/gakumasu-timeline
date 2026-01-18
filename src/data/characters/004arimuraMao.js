@@ -5,8 +5,8 @@ export default {
   events: [
     {
       id: "mao_debut",
-      year: 1,
-      month: 1,
+      start: { year: 1, month: 1 },
+      end: { year: 1, month: 1 },
       title: "初星学園入学",
       detail: "アイドル科寮長として初星学園に登場"
     }

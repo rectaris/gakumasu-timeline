@@ -5,8 +5,8 @@ export default {
   events: [
     {
       id: "tsubame_debut",
-      year: 1,
-      month: 1,
+      start: { year: 1, month: 1 },
+      end: { year: 1, month: 1 },
       title: "副会長として登場",
       detail: "雨夜燕として生徒会副会長で登場"
     }

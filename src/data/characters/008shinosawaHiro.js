@@ -5,8 +5,8 @@ export default {
   events: [
     {
       id: "hiro_debut",
-      year: 1,
-      month: 1,
+      start: { year: 1, month: 1 },
+      end: { year: 1, month: 1 },
       title: "初星学園入学",
       detail: "ギフテッドなミステリアス少女として登場"
     }

@@ -5,8 +5,8 @@ export default {
   events: [
     {
       id: "saki_debut",
-      year: 1,
-      month: 1,
+      start: { year: 1, month: 1 },
+      end: { year: 1, month: 1 },
       title: "初星学園入学",
       detail: "初星学園に入学しアイドル候補として活動開始"
     }

@@ -5,8 +5,8 @@ export default {
   events: [
     {
       id: "ume_debut",
-      year: 1,
-      month: 1,
+      start: { year: 1, month: 1 },
+      end: { year: 1, month: 1 },
       title: "プロデュース対象に追加",
       detail: "補欠入学からプロデュース対象となる"
     }
