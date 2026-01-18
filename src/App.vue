@@ -80,7 +80,9 @@ const allEvents = computed(() => {
   );
 });
 
-const times = computed(() => allEvents.value.map(e => e.time));
+const times = computed(() =>
+  allEvents.value.flatMap(e => [e.startTime, e.endTime])
+);
 
 const viewRange = computed(() => {
   if (zoomMode.value === "year") {
@@ -98,14 +100,10 @@ const viewRange = computed(() => {
 });
 
 const yearBounds = computed(() => {
-  const minYear = Math.floor(
-    Math.min(...times.value) / 12
-  );
-  const maxYear = Math.floor(
-    Math.max(...times.value) / 12
-  );
+  const minYear = Math.floor(Math.min(...times.value) / 12);
+  const maxYear = Math.floor(Math.max(...times.value) / 12);
 
-  if (minYear === maxYear) {
+  if (maxYear - minYear < 2) {
     return {
       minYear: minYear - 1,
       maxYear: maxYear + 1
