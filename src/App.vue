@@ -124,6 +124,18 @@ function yPos(laneIndex) {
   return topOffset + laneIndex * laneHeight;
 }
 
+function yearLabel(year) {
+  if (year === 1) return "1年目";
+
+  if (year > 1) {
+    return `${year}年目`;
+  }
+
+  // year < 1
+  const diff = 1 - year;
+  return `${diff}年前`;
+}
+
 // 年スケール
 const years = computed(() => {
   const { min, max } = viewRange.value;
@@ -163,10 +175,7 @@ onMounted(() => {
     }
   }
 
-  const { minYear, maxYear } = yearBounds.value;
-  zoomCenterYear.value = Math.floor(
-    (minYear + maxYear) / 2
-  );
+  zoomCenterYear.value = 1;
 
   window.addEventListener("keydown", handleKey);
 });
@@ -191,7 +200,7 @@ onUnmounted(() => {
   >
     <label>
       中心年：
-      {{ zoomCenterYear }} 年目
+      {{ yearLabel(zoomCenterYear) }}
     </label>
 
     <input
@@ -221,7 +230,7 @@ onUnmounted(() => {
         font-size="12"
         fill="#555"
       >
-        {{ y.year }}年目
+        {{ yearLabel(y.year) }}
       </text>
     </g>
 
