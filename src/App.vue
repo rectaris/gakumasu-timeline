@@ -58,13 +58,25 @@ const leftLabelWidth = 100;
 // 全イベント（キャラ情報付き）
 const allEvents = computed(() => {
   return characters.flatMap((char, index) =>
-    char.events.map(ev => ({
-      ...ev,
-      character: char.name,
-      color: char.color,
-      laneIndex: index,
-      time: timeValue(ev.year, ev.month)
-    }))
+    char.events.map(ev => {
+      const startTime = timeValue(
+        ev.start.year,
+        ev.start.month
+      );
+      const endTime = timeValue(
+        ev.end.year,
+        ev.end.month
+      );
+
+      return {
+        ...ev,
+        character: char.name,
+        color: char.color,
+        laneIndex: index,
+        startTime,
+        endTime
+      };
+    })
   );
 });
 
@@ -154,8 +166,8 @@ const years = computed(() => {
 
 const visibleEvents = computed(() => {
   const { min, max } = viewRange.value;
-  return allEvents.value.filter(
-    e => e.time >= min && e.time <= max
+  return allEvents.value.filter(e =>
+    e.endTime >= min && e.startTime <= max
   );
 });
 
@@ -261,20 +273,39 @@ onUnmounted(() => {
 
     <!-- イベント -->
     <g v-for="event in visibleEvents" :key="event.id">
-        <circle
-          :cx="xPos(event.time)"
-          :cy="yPos(event.laneIndex)"
-          r="6"
-          :fill="event.color"
-          class="event-dot"
-          @click="selectEvent(event)"
-        >
+      <g @click="selectEvent(event)" class="event-group">
+
         <title>
           {{ event.character }}
-          {{ event.year }}年{{ event.month }}月
+          {{ yearLabel(event.start.year) }} {{ event.start.month }}月
+          <template v-if="
+            event.start.year !== event.end.year ||
+            event.start.month !== event.end.month
+          ">
+            〜 {{ yearLabel(event.end.year) }} {{ event.end.month }}月
+          </template>
           {{ event.title }}
         </title>
-      </circle>
+
+        <!-- 期間バー -->
+        <rect
+          :x="xPos(event.startTime)"
+          :y="yPos(event.laneIndex) - 6"
+          :width="xPos(event.endTime) - xPos(event.startTime)"
+          height="12"
+          :fill="event.color"
+          rx="6"
+        />
+
+        <!-- 開始点マーカー -->
+        <circle
+          :cx="xPos(event.startTime)"
+          :cy="yPos(event.laneIndex)"
+          r="5"
+          fill="#fff"
+          stroke="#333"
+        />
+      </g>
     </g>
 
   </svg>
@@ -290,8 +321,14 @@ onUnmounted(() => {
       <h2>{{ selectedEvent.title }}</h2>
 
       <p class="meta">
-        {{ selectedEvent.character }}
-        ｜ {{ selectedEvent.year }}年{{ selectedEvent.month }}月
+        {{ selectedEvent.character }}<br />
+        {{ yearLabel(selectedEvent.start.year) }}
+        {{ selectedEvent.start.month }}月
+        <template v-if="...">
+          〜
+          {{ yearLabel(selectedEvent.end.year) }}
+          {{ selectedEvent.end.month }}月
+        </template>
       </p>
 
       <p class="detail">
@@ -386,6 +423,14 @@ body {
 
 .year-slider input[type="range"] {
   width: 300px;
+}
+
+.event-group {
+  cursor: pointer;
+}
+
+.event-group:hover rect {
+  opacity: 0.8;
 }
 
 </style>
