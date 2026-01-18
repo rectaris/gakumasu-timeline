@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
-import { characters } from "./data/events";
+import { characters } from "./data";
 import { watch } from "vue";
 
 function timeValue(year, month) {
