@@ -324,7 +324,10 @@ onUnmounted(() => {
         {{ selectedEvent.character }}<br />
         {{ yearLabel(selectedEvent.start.year) }}
         {{ selectedEvent.start.month }}月
-        <template v-if="...">
+        <template v-if="
+          selectedEvent.start.year !== selectedEvent.end.year ||
+          selectedEvent.start.month !== selectedEvent.end.month
+        ">
           〜
           {{ yearLabel(selectedEvent.end.year) }}
           {{ selectedEvent.end.month }}月
