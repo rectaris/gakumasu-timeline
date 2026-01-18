@@ -1,3 +1,5 @@
+import { yearsAgo, yearOf } from "../utils/time";
+
 export default {
   id: "kotone_fujita",
   name: "藤田 ことね",
@@ -5,8 +7,8 @@ export default {
   events: [
     {
       id: "kotone_debut",
-      start: { year: 1, month: 1 },
-      end: { year: 1, month: 1 },
+      start: { year: yearOf(1), month: 1 },
+      end: { year: yearOf(1), month: 1 },
       title: "初星学園入学",
       detail: "初星学園に入学、アイドル活動を開始"
     }
