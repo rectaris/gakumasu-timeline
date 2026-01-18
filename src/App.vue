@@ -112,17 +112,6 @@ const years = computed(() => {
   return result;
 });
 
-const years = computed(() => {
-  const result = [];
-  for (let y = startYear; y <= endYear; y++) {
-    result.push({
-      year: y,
-      time: y * 12
-    });
-  }
-  return result;
-});
-
 const visibleEvents = computed(() => {
   const { min, max } = viewRange.value;
   return allEvents.value.filter(
