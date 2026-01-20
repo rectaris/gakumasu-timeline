@@ -1,15 +1,18 @@
-export const BASE_YEAR = 1;
-
-/**
- * n年前 → 通算yearに変換
- */
-export function yearsAgo(n) {
-  return BASE_YEAR - n;
+// 年→内部表現
+export function yearOf(year) {
+  return year;
 }
 
-/**
- * n年目 → 通算year（そのまま）
- */
-export function yearOf(n) {
-  return n;
+// ○年前
+export function yearsAgo(n) {
+  return 1 - n;
+}
+
+// ★ NEW：日付込み timeValue
+export function timeValue({ year, month, day = 1 }) {
+  return (
+    year * 12 * 31 +
+    (month - 1) * 31 +
+    (day - 1)
+  );
 }
