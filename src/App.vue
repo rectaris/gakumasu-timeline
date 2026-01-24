@@ -138,7 +138,7 @@ function buildLaneLayout(events) {
     .sort((a, b) => a.startTime - b.startTime)
     .map(event => {
       let subLaneIndex = subLaneEndTimes.findIndex(
-        endTime => endTime <= event.startTime
+        endTime => endTime < event.startTime
       );
 
       if (subLaneIndex === -1) {

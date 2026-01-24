@@ -36,7 +36,7 @@ export default {
       end: { year: yearOf(1), month: 4, day: 10 },
       title: "プロデューサーにスカウトされる",
       detail: "プロデューサーにスカウトされ、アイドル活動を開始する",
-      worldlineId: ["story_of_re;iris", "likability_story"],
+      worldlineId: ["likability_story"],
       participants: ["saki_hanami"],
       source: "初星コミュ1話",
       note: "入学式当日の早朝か、それ以前からスカウトされている可能性がある。\n初星学園は私立の学校法人のため、入学式の日程にはばらつきがある可能性がある。\n初星学園は関東圏の学校である可能性が高いため、4月7日〜8日の間に入学式が行われたと推測される。"
@@ -49,15 +49,6 @@ export default {
       detail: "初星学園高等部に入学、1年1組に配属される",
       participants: ["saki_hanami"],
       note: "初星学園は私立の学校法人のため、入学式の日程にはばらつきがある可能性がある。\n初星学園は関東圏の学校である可能性が高いため、4月7日〜8日の間に入学式が行われたと推測される。"
-    },
-    {
-      id: "001_kotone_battle",
-      start: { year: yearOf(1), month: 4, day: 3 },
-      end: { year: yearOf(1), month: 4, day: 12 },
-      title: "ことねとのダンス勝負",
-      detail: "プロデューサーにスカウトされ、アイドル活動を開始する",
-      worldlineId: ["story_of_re;iris"],
-      participants: ["saki_hanami"]
     }
   ]
 };
