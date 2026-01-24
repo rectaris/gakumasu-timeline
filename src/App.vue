@@ -138,13 +138,17 @@ const yearBounds = computed(() => {
 });
 
 const monthBounds = computed(() => {
-  const min = Math.min(...times.value);
-  const max = Math.max(...times.value);
+  const minMonth = Math.min(...times.value);
+  const maxMonth = Math.max(...times.value);
 
-  return {
-    min,
-    max
-  };
+  if (maxMonth - minMonth < 2) {
+    return {
+      minMonth: minMonth - 1,
+      maxMonth: maxMonth + 1
+    };
+  }
+
+  return { minMonth, maxMonth };
 });
 
 const zoomLabel = computed(() => zoomLabels[zoomMode.value]);
@@ -383,7 +387,7 @@ onUnmounted(() => {
 
   <div class="zoom-controls">
     <button
-      class="zoom-button"
+      class="zoom-button zoom-button--out"
       @click="zoomOut"
       :disabled="zoomMode === 'all'"
     >
@@ -391,7 +395,7 @@ onUnmounted(() => {
     </button>
     <span class="zoom-label">{{ zoomLabel }}</span>
     <button
-      class="zoom-button"
+      class="zoom-button zoom-button--in"
       @click="zoomIn"
       :disabled="zoomMode === 'month'"
     >
@@ -428,8 +432,8 @@ onUnmounted(() => {
 
     <input
       type="range"
-      :min="monthBounds.min"
-      :max="monthBounds.max"
+      :min="monthBounds.minMonth"
+      :max="monthBounds.maxMonth"
       v-model.number="zoomCenterMonth"
       step="1"
     />
@@ -683,6 +687,14 @@ body {
   line-height: 1;
   font-size: 16px;
   padding: 0;
+}
+
+.zoom-button--in {
+  color: #d60000;
+}
+
+.zoom-button--out {
+  color: #0066cc;
 }
 
 .zoom-button:disabled {

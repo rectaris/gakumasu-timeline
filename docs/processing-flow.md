@@ -39,8 +39,11 @@
 - `zoomMode === 'year'`
   - `zoomCenterYear` を中心に `± zoomRangeYears` 年（現在は 1 年）
   - 内部時刻は「月」なので年→月に変換して `center = zoomCenterYear * 12`
+- `zoomMode === 'month'`
+  - `zoomCenterMonth` を中心に `± zoomRangeMonths` 月（現在は 6 ヶ月）
+  - `zoomCenterMonth` は `timeValue(year, month)` の内部時刻で扱う
 
-関連: `yearBounds` はスライダーの `min/max` を、全イベントの範囲から算出します。
+関連: `yearBounds` / `monthBounds` はスライダーの `min/max` を、全イベントの範囲から算出します。
 
 ## 描画
 
@@ -48,21 +51,22 @@
 
 - `xPos(time)`
   - `viewRange.min/max` に対する比率で x 座標を計算
-- `yPos(laneIndex)`
-  - `topOffset + laneIndex * laneHeight`
+- イベントの縦位置はサブレーン計算で決定
+  - `eventY(event)` が `laneTop + padding + subLaneIndex * rowHeight` を返す
 
 描画内容:
 
 1. 年目盛り（縦グリッド）
    - `years` computed が `viewRange` から年の配列を生成
    - 各年について縦線とラベル（`1年目`, `2年目`, `n年前`）を描画
+  - 月ズーム時は日付（1〜31）を薄く補助表示
 2. キャラレーン
    - キャラ名テキスト
    - レーン線
 3. イベント
    - `visibleEvents`（表示範囲に重なるイベント）だけを描画
    - 期間バー: `rect (x=start, width=end-start)`
-   - 開始点: `circle`
+  - 開始点・終了点: `circle`
   - `occurrenceType === "singleWithinRange"` の場合、バーに破線＋中央マーカーを追加
 
 ## インタラクション
