@@ -69,6 +69,30 @@ function updateUrl(eventId) {
   history.replaceState(null, "", newUrl);
 }
 
+function normalizeHexColor(color) {
+  if (!color) return null;
+  const hex = color.replace("#", "");
+  if (hex.length === 3) {
+    return `#${hex
+      .split("")
+      .map(ch => ch + ch)
+      .join("")}`;
+  }
+  if (hex.length === 6) return `#${hex}`;
+  return null;
+}
+
+function invertHexColor(color) {
+  const hex = normalizeHexColor(color);
+  if (!hex) return "#ffffff";
+  const r = 255 - parseInt(hex.slice(1, 3), 16);
+  const g = 255 - parseInt(hex.slice(3, 5), 16);
+  const b = 255 - parseInt(hex.slice(5, 7), 16);
+  return `#${r.toString(16).padStart(2, "0")}${g
+    .toString(16)
+    .padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+}
+
 // レーン設定
 const EVENT_BAR_HEIGHT = 12;
 const EVENT_ROW_GAP = 6;
@@ -761,12 +785,20 @@ onUnmounted(() => {
     <g v-for="(char, index) in characters" :key="char.id">
 
       <!-- キャラ名 -->
+      <rect
+        x="6"
+        :y="laneCenterY(index) - 12"
+        :width="leftLabelWidth - 12"
+        height="24"
+        :fill="invertHexColor(char.color)"
+        rx="6"
+      />
       <text
         x="10"
         :y="laneCenterY(index)"
         font-size="13"
         dominant-baseline="middle"
-        fill="#333"
+        :fill="char.color"
       >
         {{ char.name }}
       </text>
