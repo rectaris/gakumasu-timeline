@@ -599,6 +599,8 @@ onUnmounted(() => {
 <style>
 body {
   font-family: system-ui, sans-serif;
+  display: block;
+  min-height: auto;
 }
 
 .event-dot {
