@@ -413,6 +413,42 @@ function handleKey(e) {
   if (e.key === "Escape") closePanel();
 }
 
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function prevYear() {
+  zoomCenterYear.value = clamp(
+    zoomCenterYear.value - 1,
+    yearBounds.value.minYear,
+    yearBounds.value.maxYear
+  );
+}
+
+function nextYear() {
+  zoomCenterYear.value = clamp(
+    zoomCenterYear.value + 1,
+    yearBounds.value.minYear,
+    yearBounds.value.maxYear
+  );
+}
+
+function prevMonth() {
+  zoomCenterMonth.value = clamp(
+    zoomCenterMonth.value - 1,
+    monthBounds.value.minMonth,
+    monthBounds.value.maxMonth
+  );
+}
+
+function nextMonth() {
+  zoomCenterMonth.value = clamp(
+    zoomCenterMonth.value + 1,
+    monthBounds.value.minMonth,
+    monthBounds.value.maxMonth
+  );
+}
+
 function zoomIn() {
   if (zoomMode.value === "all") {
     zoomMode.value = "year";
@@ -487,13 +523,29 @@ onUnmounted(() => {
       {{ yearLabel(zoomCenterYear) }}
     </label>
 
-    <input
-      type="range"
-      :min="yearBounds.minYear"
-      :max="yearBounds.maxYear"
-      v-model.number="zoomCenterYear"
-      step="1"
-    />
+    <div class="slider-row">
+      <button
+        class="slider-nav"
+        @click="prevYear"
+        :disabled="zoomCenterYear <= yearBounds.minYear"
+      >
+        &lt;
+      </button>
+      <input
+        type="range"
+        :min="yearBounds.minYear"
+        :max="yearBounds.maxYear"
+        v-model.number="zoomCenterYear"
+        step="1"
+      />
+      <button
+        class="slider-nav"
+        @click="nextYear"
+        :disabled="zoomCenterYear >= yearBounds.maxYear"
+      >
+        &gt;
+      </button>
+    </div>
   </div>
 
   <div
@@ -505,13 +557,29 @@ onUnmounted(() => {
       {{ monthLabel(zoomCenterMonth) }}
     </label>
 
-    <input
-      type="range"
-      :min="monthBounds.minMonth"
-      :max="monthBounds.maxMonth"
-      v-model.number="zoomCenterMonth"
-      step="1"
-    />
+    <div class="slider-row">
+      <button
+        class="slider-nav"
+        @click="prevMonth"
+        :disabled="zoomCenterMonth <= monthBounds.minMonth"
+      >
+        &lt;
+      </button>
+      <input
+        type="range"
+        :min="monthBounds.minMonth"
+        :max="monthBounds.maxMonth"
+        v-model.number="zoomCenterMonth"
+        step="1"
+      />
+      <button
+        class="slider-nav"
+        @click="nextMonth"
+        :disabled="zoomCenterMonth >= monthBounds.maxMonth"
+      >
+        &gt;
+      </button>
+    </div>
   </div>
 
   <svg :width="width" :height="svgHeight">
@@ -825,6 +893,33 @@ body {
 
 .month-slider input[type="range"] {
   width: 300px;
+}
+
+.slider-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.slider-nav {
+  width: 22px;
+  height: 22px;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+  padding: 0;
+}
+
+.slider-nav:hover {
+  background: #f3f3f3;
+}
+
+.slider-nav:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .event-group {
