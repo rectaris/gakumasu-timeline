@@ -15,6 +15,12 @@ const zoomRangeYears = 1;
 const zoomCenterMonth = ref(0);
 const zoomRangeMonths = 6;
 
+const zoomLabels = {
+  all: "全期間表示",
+  year: "年表示",
+  month: "月表示"
+};
+
 watch(zoomMode, mode => {
   if (mode === "year") {
     // 現在の選択イベントがあればそこを中心に
@@ -140,6 +146,8 @@ const monthBounds = computed(() => {
     max
   };
 });
+
+const zoomLabel = computed(() => zoomLabels[zoomMode.value]);
 
 // SVGサイズ
 const width = 1100;
@@ -272,6 +280,29 @@ function monthLabel(time) {
   return `${yearLabel(year)} ${month}月`;
 }
 
+function dayTime(monthTime, day) {
+  return monthTime + (day - 1) / 31;
+}
+
+const dayTicks = computed(() => {
+  if (zoomMode.value !== "month") return [];
+
+  const { min, max } = viewRange.value;
+  const startMonth = Math.floor(min);
+  const endMonth = Math.floor(max);
+  const ticks = [];
+
+  for (let monthTime = startMonth; monthTime <= endMonth; monthTime += 1) {
+    for (let day = 1; day <= 31; day += 1) {
+      const time = dayTime(monthTime, day);
+      if (time < min || time > max) continue;
+      ticks.push({ time, day });
+    }
+  }
+
+  return ticks;
+});
+
 // 年スケール
 const years = computed(() => {
   const { min, max } = viewRange.value;
@@ -303,6 +334,26 @@ function handleKey(e) {
   if (e.key === "Escape") closePanel();
 }
 
+function zoomIn() {
+  if (zoomMode.value === "all") {
+    zoomMode.value = "year";
+    return;
+  }
+  if (zoomMode.value === "year") {
+    zoomMode.value = "month";
+  }
+}
+
+function zoomOut() {
+  if (zoomMode.value === "month") {
+    zoomMode.value = "year";
+    return;
+  }
+  if (zoomMode.value === "year") {
+    zoomMode.value = "all";
+  }
+}
+
 onMounted(() => {
   // URLから event ID を取得
   const params = new URLSearchParams(window.location.search);
@@ -331,9 +382,21 @@ onUnmounted(() => {
   <h1>キャラクタータイムライン</h1>
 
   <div class="zoom-controls">
-    <button @click="zoomMode = 'all'">全期間</button>
-    <button @click="zoomMode = 'year'">年ズーム</button>
-    <button @click="zoomMode = 'month'">月ズーム</button>
+    <button
+      class="zoom-button"
+      @click="zoomOut"
+      :disabled="zoomMode === 'all'"
+    >
+      −
+    </button>
+    <span class="zoom-label">{{ zoomLabel }}</span>
+    <button
+      class="zoom-button"
+      @click="zoomIn"
+      :disabled="zoomMode === 'month'"
+    >
+      ＋
+    </button>
   </div>
 
   <div
@@ -391,6 +454,21 @@ onUnmounted(() => {
         fill="#555"
       >
         {{ yearLabel(y.year) }}
+      </text>
+    </g>
+
+    <!-- 月ズーム時の日付補助スケール -->
+    <g v-if="zoomMode === 'month'">
+      <text
+        v-for="tick in dayTicks"
+        :key="`${tick.time}-${tick.day}`"
+        :x="xPos(tick.time)"
+        y="48"
+        text-anchor="middle"
+        font-size="9"
+        fill="#bbb"
+      >
+        {{ tick.day }}
       </text>
     </g>
 
@@ -580,10 +658,33 @@ body {
 
 .zoom-controls {
   margin-bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.zoom-controls button {
-  margin-right: 6px;
+.zoom-button {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  line-height: 1;
+  font-size: 16px;
+  padding: 0;
+}
+
+.zoom-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.zoom-label {
+  font-size: 13px;
+  color: #444;
+  min-width: 70px;
+  text-align: center;
 }
 
 .year-slider {
