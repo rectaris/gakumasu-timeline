@@ -1,4 +1,4 @@
-import { yearsAgo, yearOf } from "../utils/time";
+import { yearsAgo, yearOf } from "../../utils/time";
 
 export default {
   id: "misuzu_hataya",
