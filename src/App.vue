@@ -411,42 +411,133 @@ const visibleEvents = computed(() => {
 
 function handleKey(e) {
   if (e.key === "Escape") closePanel();
+  if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+
+  const target = e.target;
+  const tagName = target?.tagName?.toLowerCase();
+  const isFormElement =
+    tagName === "input" ||
+    tagName === "textarea" ||
+    tagName === "select" ||
+    target?.isContentEditable;
+
+  if (isFormElement) return;
+
+  const delta = e.key === "ArrowRight" ? 1 : -1;
+
+  if (e.shiftKey) {
+    moveYear(delta);
+    return;
+  }
+
+  if (zoomMode.value === "month") {
+    moveMonth(delta);
+  } else if (zoomMode.value === "year") {
+    moveYear(delta);
+  }
 }
 
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
-function prevYear() {
+function moveYear(delta) {
   zoomCenterYear.value = clamp(
-    zoomCenterYear.value - 1,
+    zoomCenterYear.value + delta,
     yearBounds.value.minYear,
     yearBounds.value.maxYear
   );
+}
+
+function moveMonth(delta) {
+  zoomCenterMonth.value = clamp(
+    zoomCenterMonth.value + delta,
+    monthBounds.value.minMonth,
+    monthBounds.value.maxMonth
+  );
+}
+
+function prevYear() {
+  moveYear(-1);
 }
 
 function nextYear() {
-  zoomCenterYear.value = clamp(
-    zoomCenterYear.value + 1,
-    yearBounds.value.minYear,
-    yearBounds.value.maxYear
-  );
+  moveYear(1);
 }
 
 function prevMonth() {
-  zoomCenterMonth.value = clamp(
-    zoomCenterMonth.value - 1,
-    monthBounds.value.minMonth,
-    monthBounds.value.maxMonth
-  );
+  moveMonth(-1);
 }
 
 function nextMonth() {
-  zoomCenterMonth.value = clamp(
-    zoomCenterMonth.value + 1,
-    monthBounds.value.minMonth,
-    monthBounds.value.maxMonth
-  );
+  moveMonth(1);
+}
+
+const holdIntervalId = ref(null);
+const holdTimeoutId = ref(null);
+const suppressClick = ref(false);
+
+function stopHold() {
+  if (holdTimeoutId.value) {
+    clearTimeout(holdTimeoutId.value);
+    holdTimeoutId.value = null;
+  }
+  if (holdIntervalId.value) {
+    clearInterval(holdIntervalId.value);
+    holdIntervalId.value = null;
+  }
+}
+
+function startHold(action) {
+  suppressClick.value = true;
+  stopHold();
+  action();
+  holdTimeoutId.value = setTimeout(() => {
+    holdIntervalId.value = setInterval(action, 100);
+  }, 300);
+}
+
+function handleNavClick(action) {
+  if (suppressClick.value) {
+    suppressClick.value = false;
+    return;
+  }
+  action();
+}
+
+const touchStartX = ref(0);
+const touchStartY = ref(0);
+const touchActive = ref(false);
+
+function onTouchStart(e) {
+  if (e.touches.length !== 1) return;
+  touchActive.value = true;
+  touchStartX.value = e.touches[0].clientX;
+  touchStartY.value = e.touches[0].clientY;
+}
+
+function onTouchMove(e) {
+  if (!touchActive.value || e.touches.length !== 1) return;
+}
+
+function onTouchEnd(e) {
+  if (!touchActive.value) return;
+  touchActive.value = false;
+
+  const endX = e.changedTouches[0].clientX;
+  const endY = e.changedTouches[0].clientY;
+  const diffX = endX - touchStartX.value;
+  const diffY = endY - touchStartY.value;
+
+  if (Math.abs(diffX) < 40 || Math.abs(diffX) <= Math.abs(diffY)) return;
+
+  const delta = diffX < 0 ? 1 : -1;
+
+  if (zoomMode.value === "month") {
+    moveMonth(delta);
+  } else if (zoomMode.value === "year") {
+    moveYear(delta);
+  }
 }
 
 function zoomIn() {
@@ -489,6 +580,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener("keydown", handleKey);
+  stopHold();
 });
 
 </script>
@@ -525,8 +617,14 @@ onUnmounted(() => {
 
     <div class="slider-row">
       <button
-        class="slider-nav"
-        @click="prevYear"
+        class="slider-nav slider-nav--prev"
+        @mousedown="startHold(prevYear)"
+        @touchstart="startHold(prevYear)"
+        @click="handleNavClick(prevYear)"
+        @mouseup="stopHold"
+        @mouseleave="stopHold"
+        @touchend="stopHold"
+        @touchcancel="stopHold"
         :disabled="zoomCenterYear <= yearBounds.minYear"
       >
         &lt;
@@ -539,8 +637,14 @@ onUnmounted(() => {
         step="1"
       />
       <button
-        class="slider-nav"
-        @click="nextYear"
+        class="slider-nav slider-nav--next"
+        @mousedown="startHold(nextYear)"
+        @touchstart="startHold(nextYear)"
+        @click="handleNavClick(nextYear)"
+        @mouseup="stopHold"
+        @mouseleave="stopHold"
+        @touchend="stopHold"
+        @touchcancel="stopHold"
         :disabled="zoomCenterYear >= yearBounds.maxYear"
       >
         &gt;
@@ -559,8 +663,14 @@ onUnmounted(() => {
 
     <div class="slider-row">
       <button
-        class="slider-nav"
-        @click="prevMonth"
+        class="slider-nav slider-nav--prev"
+        @mousedown="startHold(prevMonth)"
+        @touchstart="startHold(prevMonth)"
+        @click="handleNavClick(prevMonth)"
+        @mouseup="stopHold"
+        @mouseleave="stopHold"
+        @touchend="stopHold"
+        @touchcancel="stopHold"
         :disabled="zoomCenterMonth <= monthBounds.minMonth"
       >
         &lt;
@@ -573,8 +683,14 @@ onUnmounted(() => {
         step="1"
       />
       <button
-        class="slider-nav"
-        @click="nextMonth"
+        class="slider-nav slider-nav--next"
+        @mousedown="startHold(nextMonth)"
+        @touchstart="startHold(nextMonth)"
+        @click="handleNavClick(nextMonth)"
+        @mouseup="stopHold"
+        @mouseleave="stopHold"
+        @touchend="stopHold"
+        @touchcancel="stopHold"
         :disabled="zoomCenterMonth >= monthBounds.maxMonth"
       >
         &gt;
@@ -582,7 +698,14 @@ onUnmounted(() => {
     </div>
   </div>
 
-  <svg :width="width" :height="svgHeight">
+  <svg
+    :width="width"
+    :height="svgHeight"
+    @touchstart="onTouchStart"
+    @touchmove="onTouchMove"
+    @touchend="onTouchEnd"
+    @touchcancel="onTouchEnd"
+  >
 
     <!-- 年目盛り（全レーン共通） -->
     <g v-for="y in years" :key="y.year">
@@ -911,6 +1034,14 @@ body {
   font-size: 12px;
   line-height: 1;
   padding: 0;
+}
+
+.slider-nav--prev {
+  color: #0066cc;
+}
+
+.slider-nav--next {
+  color: #d60000;
 }
 
 .slider-nav:hover {
