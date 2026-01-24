@@ -426,8 +426,9 @@ onUnmounted(() => {
     v-if="zoomMode === 'month'"
   >
     <label>
-      中心年月：
-      {{ monthLabel(zoomCenterMonth) }}
+      1カ月前：{{ monthLabel(zoomCenterMonth - 1) }}
+      ／ 当月：{{ monthLabel(zoomCenterMonth) }}
+      ／ 1カ月後：{{ monthLabel(zoomCenterMonth + 1) }}
     </label>
 
     <input
