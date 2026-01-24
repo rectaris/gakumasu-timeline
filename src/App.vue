@@ -13,7 +13,7 @@ const zoomMode = ref("all");
 const zoomCenterYear = ref(0);
 const zoomRangeYears = 1;
 const zoomCenterMonth = ref(0);
-const zoomRangeMonths = 6;
+const zoomRangeMonths = 1;
 
 const zoomLabels = {
   all: "全期間表示",
@@ -426,9 +426,8 @@ onUnmounted(() => {
     v-if="zoomMode === 'month'"
   >
     <label>
-      1カ月前：{{ monthLabel(zoomCenterMonth - 1) }}
-      ／ 当月：{{ monthLabel(zoomCenterMonth) }}
-      ／ 1カ月後：{{ monthLabel(zoomCenterMonth + 1) }}
+      中心月：
+      {{ monthLabel(zoomCenterMonth) }}
     </label>
 
     <input
