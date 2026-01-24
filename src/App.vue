@@ -101,6 +101,7 @@ const LANE_PADDING = 10;
 const MIN_LANE_HEIGHT = 60;
 const topOffset = 80;
 const leftLabelWidth = 100;
+const rightPadding = 20;
 
 // 全イベント（キャラ情報付き）
 const allEvents = computed(() => {
@@ -203,11 +204,12 @@ const width = 1100;
 // time → x
 function xPos(time) {
   const { min, max } = viewRange.value;
+  const viewportWidth = timelineViewport.value.width;
 
   return (
     leftLabelWidth +
     ((time - min) / (max - min)) *
-      (width - leftLabelWidth - 40)
+      viewportWidth
   );
 }
 
@@ -311,6 +313,21 @@ const svgHeight = computed(() => {
     ? lastLane.laneTop + lastLane.laneHeight
     : topOffset;
   return contentHeight + 40;
+});
+
+const timelineViewport = computed(() => {
+  const lastLane = laneLayouts.value.at(-1);
+  const bottom = lastLane
+    ? lastLane.laneTop + lastLane.laneHeight
+    : topOffset;
+  const height = Math.max(0, bottom - topOffset);
+
+  return {
+    x: leftLabelWidth,
+    y: topOffset,
+    width: width - leftLabelWidth - rightPadding,
+    height
+  };
 });
 
 function laneCenterY(laneIndex) {
@@ -731,92 +748,92 @@ onUnmounted(() => {
     @touchcancel="onTouchEnd"
   >
 
-    <!-- 年目盛り（全レーン共通） -->
-    <g v-for="y in years" :key="y.year">
-      <line
-        :x1="xPos(y.time)"
-        y1="40"
-        :x2="xPos(y.time)"
-        :y2="svgHeight - 20"
-        stroke="#eee"
-      />
-      <text
-        :x="xPos(y.time)"
-        y="30"
-        text-anchor="middle"
-        font-size="12"
-        fill="#555"
-      >
-        {{ yearLabel(y.year) }}
-      </text>
-    </g>
+    <defs>
+      <clipPath id="timeline-clip">
+        <rect
+          :x="timelineViewport.x"
+          :y="timelineViewport.y"
+          :width="timelineViewport.width"
+          :height="timelineViewport.height"
+        />
+      </clipPath>
+    </defs>
 
-    <!-- 月ズーム時の月名表示 -->
-    <g v-if="zoomMode === 'month'">
-      <text
-        v-for="tick in monthTicks"
-        :key="`month-${tick.time}`"
-        :x="xPos(tick.time)"
-        y="40"
-        text-anchor="middle"
-        font-size="10"
-        fill="#777"
-      >
-        {{ tick.label }}
-      </text>
-    </g>
+    <!-- タイムライン描画フィールド -->
+    <rect
+      :x="timelineViewport.x"
+      :y="timelineViewport.y"
+      :width="timelineViewport.width"
+      :height="timelineViewport.height"
+      fill="#fafafa"
+      stroke="#ddd"
+    />
 
-    <!-- 月ズーム時の日付補助スケール -->
-    <g v-if="zoomMode === 'month'">
-      <text
-        v-for="tick in dayTicks"
-        :key="`${tick.time}-${tick.day}`"
-        :x="xPos(tick.time)"
-        y="48"
-        text-anchor="middle"
-        font-size="9"
-        fill="#bbb"
-      >
-        {{ tick.day }}
-      </text>
-    </g>
+    <g clip-path="url(#timeline-clip)">
+      <!-- 年目盛り（全レーン共通） -->
+      <g v-for="y in years" :key="y.year">
+        <line
+          :x1="xPos(y.time)"
+          :y1="timelineViewport.y"
+          :x2="xPos(y.time)"
+          :y2="timelineViewport.y + timelineViewport.height"
+          stroke="#eee"
+        />
+        <text
+          :x="xPos(y.time)"
+          :y="timelineViewport.y + 14"
+          text-anchor="middle"
+          font-size="12"
+          fill="#555"
+        >
+          {{ yearLabel(y.year) }}
+        </text>
+      </g>
 
-    <!-- キャラレーン -->
-    <g v-for="(char, index) in characters" :key="char.id">
+      <!-- 月ズーム時の月名表示 -->
+      <g v-if="zoomMode === 'month'">
+        <text
+          v-for="tick in monthTicks"
+          :key="`month-${tick.time}`"
+          :x="xPos(tick.time)"
+          :y="timelineViewport.y + 28"
+          text-anchor="middle"
+          font-size="10"
+          fill="#777"
+        >
+          {{ tick.label }}
+        </text>
+      </g>
 
-      <!-- キャラ名 -->
-      <rect
-        x="6"
-        :y="laneCenterY(index) - 12"
-        :width="leftLabelWidth - 12"
-        height="24"
-        :fill="invertHexColor(char.color)"
-        rx="6"
-      />
-      <text
-        x="10"
-        :y="laneCenterY(index)"
-        font-size="13"
-        dominant-baseline="middle"
-        :fill="char.color"
-      >
-        {{ char.name }}
-      </text>
+      <!-- 月ズーム時の日付補助スケール -->
+      <g v-if="zoomMode === 'month'">
+        <text
+          v-for="tick in dayTicks"
+          :key="`${tick.time}-${tick.day}`"
+          :x="xPos(tick.time)"
+          :y="timelineViewport.y + 40"
+          text-anchor="middle"
+          font-size="9"
+          fill="#bbb"
+        >
+          {{ tick.day }}
+        </text>
+      </g>
 
       <!-- レーン線 -->
-      <line
-        :x1="leftLabelWidth"
-        :y1="laneCenterY(index)"
-        :x2="width - 20"
-        :y2="laneCenterY(index)"
-        stroke="#ccc"
-      />
+      <g v-for="(char, index) in characters" :key="char.id">
+        <line
+          :x1="timelineViewport.x"
+          :y1="laneCenterY(index)"
+          :x2="timelineViewport.x + timelineViewport.width"
+          :y2="laneCenterY(index)"
+          stroke="#ccc"
+        />
+      </g>
 
-    </g>
-
-    <!-- イベント -->
-    <g v-for="event in visibleEvents" :key="event.id">
-      <g @click="selectEvent(event)" class="event-group">
+      <!-- イベント -->
+      <g v-for="event in visibleEvents" :key="event.id">
+        <g @click="selectEvent(event)" class="event-group">
 
         <title>
           {{ event.character }}
@@ -872,7 +889,32 @@ onUnmounted(() => {
           stroke="#333"
           stroke-width="1.5"
         />
+        </g>
       </g>
+    </g>
+
+    <!-- キャラレーン -->
+    <g v-for="(char, index) in characters" :key="char.id">
+
+      <!-- キャラ名 -->
+      <rect
+        x="6"
+        :y="laneCenterY(index) - 12"
+        :width="leftLabelWidth - 12"
+        height="24"
+        :fill="char.color"
+        rx="6"
+      />
+      <text
+        x="10"
+        :y="laneCenterY(index)"
+        font-size="13"
+        dominant-baseline="middle"
+        :fill="invertHexColor(char.color)"
+      >
+        {{ char.name }}
+      </text>
+
     </g>
 
   </svg>
