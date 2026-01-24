@@ -51,7 +51,11 @@ function updateUrl(eventId) {
 }
 
 // レーン設定
-const laneHeight = 60;
+const EVENT_BAR_HEIGHT = 12;
+const EVENT_ROW_GAP = 6;
+const EVENT_ROW_HEIGHT = EVENT_BAR_HEIGHT + EVENT_ROW_GAP;
+const LANE_PADDING = 10;
+const MIN_LANE_HEIGHT = 60;
 const topOffset = 80;
 const leftLabelWidth = 100;
 
@@ -115,8 +119,6 @@ const yearBounds = computed(() => {
 
 // SVGサイズ
 const width = 1100;
-const height =
-  topOffset + characters.length * laneHeight + 40;
 
 // time → x
 function xPos(time) {
@@ -129,9 +131,94 @@ function xPos(time) {
   );
 }
 
-// lane → y
-function yPos(laneIndex) {
-  return topOffset + laneIndex * laneHeight;
+function buildLaneLayout(events) {
+  const subLaneEndTimes = [];
+  const eventsWithLane = events
+    .slice()
+    .sort((a, b) => a.startTime - b.startTime)
+    .map(event => {
+      let subLaneIndex = subLaneEndTimes.findIndex(
+        endTime => endTime <= event.startTime
+      );
+
+      if (subLaneIndex === -1) {
+        subLaneIndex = subLaneEndTimes.length;
+        subLaneEndTimes.push(event.endTime);
+      } else {
+        subLaneEndTimes[subLaneIndex] = event.endTime;
+      }
+
+      return { ...event, subLaneIndex };
+    });
+
+  return {
+    events: eventsWithLane,
+    subLaneCount: Math.max(1, subLaneEndTimes.length)
+  };
+}
+
+const laneEventLayouts = computed(() => {
+  return characters.map((char, laneIndex) => {
+    const laneEvents = allEvents.value.filter(
+      event => event.laneIndex === laneIndex
+    );
+    const layout = buildLaneLayout(laneEvents);
+
+    return {
+      laneIndex,
+      characterId: char.id,
+      ...layout
+    };
+  });
+});
+
+const laneLayouts = computed(() => {
+  let currentTop = topOffset;
+
+  return characters.map((char, laneIndex) => {
+    const laneData = laneEventLayouts.value[laneIndex];
+    const subLaneCount = laneData?.subLaneCount ?? 1;
+    const laneHeight = Math.max(
+      MIN_LANE_HEIGHT,
+      subLaneCount * EVENT_ROW_HEIGHT + LANE_PADDING * 2
+    );
+    const laneTop = currentTop;
+    const centerY = laneTop + laneHeight / 2;
+
+    currentTop += laneHeight;
+
+    return {
+      laneIndex,
+      laneTop,
+      laneHeight,
+      centerY,
+      subLaneCount
+    };
+  });
+});
+
+const svgHeight = computed(() => {
+  const lastLane = laneLayouts.value.at(-1);
+  const contentHeight = lastLane
+    ? lastLane.laneTop + lastLane.laneHeight
+    : topOffset;
+  return contentHeight + 40;
+});
+
+function laneCenterY(laneIndex) {
+  return laneLayouts.value[laneIndex]?.centerY ?? topOffset;
+}
+
+function eventY(event) {
+  const lane = laneLayouts.value[event.laneIndex];
+  if (!lane) return topOffset;
+
+  return (
+    lane.laneTop +
+    LANE_PADDING +
+    event.subLaneIndex * EVENT_ROW_HEIGHT +
+    EVENT_BAR_HEIGHT / 2
+  );
 }
 
 function isSingleWithinRange(event) {
@@ -166,10 +253,14 @@ const years = computed(() => {
   return result;
 });
 
+const allEventsWithLayout = computed(() =>
+  laneEventLayouts.value.flatMap(lane => lane.events)
+);
+
 const visibleEvents = computed(() => {
   const { min, max } = viewRange.value;
-  return allEvents.value.filter(e =>
-    e.endTime >= min && e.startTime <= max
+  return allEventsWithLayout.value.filter(
+    e => e.endTime >= min && e.startTime <= max
   );
 });
 
@@ -226,7 +317,7 @@ onUnmounted(() => {
     />
   </div>
 
-  <svg :width="width" :height="height">
+  <svg :width="width" :height="svgHeight">
 
     <!-- 年目盛り（全レーン共通） -->
     <g v-for="y in years" :key="y.year">
@@ -234,7 +325,7 @@ onUnmounted(() => {
         :x1="xPos(y.time)"
         y1="40"
         :x2="xPos(y.time)"
-        :y2="height - 20"
+        :y2="svgHeight - 20"
         stroke="#eee"
       />
       <text
@@ -254,7 +345,7 @@ onUnmounted(() => {
       <!-- キャラ名 -->
       <text
         x="10"
-        :y="yPos(index) + 5"
+        :y="laneCenterY(index)"
         font-size="13"
         dominant-baseline="middle"
         fill="#333"
@@ -265,9 +356,9 @@ onUnmounted(() => {
       <!-- レーン線 -->
       <line
         :x1="leftLabelWidth"
-        :y1="yPos(index)"
+        :y1="laneCenterY(index)"
         :x2="width - 20"
-        :y2="yPos(index)"
+        :y2="laneCenterY(index)"
         stroke="#ccc"
       />
 
@@ -297,9 +388,9 @@ onUnmounted(() => {
           class="event-bar"
           :class="{ 'event-bar--single': isSingleWithinRange(event) }"
           :x="xPos(event.startTime)"
-          :y="yPos(event.laneIndex) - 6"
+          :y="eventY(event) - EVENT_BAR_HEIGHT / 2"
           :width="xPos(event.endTime) - xPos(event.startTime)"
-          height="12"
+          :height="EVENT_BAR_HEIGHT"
           :fill="event.color"
           rx="6"
         />
@@ -308,7 +399,7 @@ onUnmounted(() => {
         <circle
           v-if="isSingleWithinRange(event)"
           :cx="(xPos(event.startTime) + xPos(event.endTime)) / 2"
-          :cy="yPos(event.laneIndex)"
+          :cy="eventY(event)"
           r="3"
           fill="#333"
         />
@@ -316,7 +407,7 @@ onUnmounted(() => {
         <!-- 開始点マーカー -->
         <circle
           :cx="xPos(event.startTime)"
-          :cy="yPos(event.laneIndex)"
+          :cy="eventY(event)"
           r="5"
           fill="#fff"
           stroke="#333"
