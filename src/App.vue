@@ -412,6 +412,16 @@ onUnmounted(() => {
           fill="#fff"
           stroke="#333"
         />
+
+        <!-- 終了点マーカー -->
+        <circle
+          :cx="xPos(event.endTime)"
+          :cy="eventY(event)"
+          r="5"
+          :fill="event.color"
+          stroke="#333"
+          stroke-width="1.5"
+        />
       </g>
     </g>
 
