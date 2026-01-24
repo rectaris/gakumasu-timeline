@@ -1,10 +1,12 @@
 # データ構造
 
-データは `src/data/characters/` 配下の JS モジュールとして定義されています。
+データは `src/data/worldline_commu/` 配下の JS モジュールとして定義されています。
 
 - 集約: `src/data/index.js`
-- 個別キャラ: `src/data/characters/*.js`
+- 個別キャラ: `src/data/worldline_commu/**/` 配下の各モジュール
 - 時間ユーティリティ: `src/data/utils/time.js`
+- 世界線一覧: `src/data/worldlines.js`
+- キャラクター一覧: `src/data/characterCatalog.js`
 
 ## Character オブジェクト
 
@@ -22,6 +24,9 @@
 - `end: DateLike`
 - `title: string`
 - `detail: string`
+- `occurrenceType?: "continuous" | "singleWithinRange"`
+  - 省略時は `continuous` 扱い
+  - `singleWithinRange` は「期間内のどこか1日」イベントを示す
 
 ### DateLike
 
@@ -60,6 +65,6 @@ export function timeValue({ year, month, day = 1 }) {
 
 ## データ追加の手順（現状）
 
-1. `src/data/characters/` にキャラファイルを追加
+1. `src/data/worldline_commu/` 配下の適切な世界線ディレクトリにキャラファイルを追加
 2. `src/data/index.js` で import して `characters` 配列に追加
 3. `events` の `id` は他キャラと衝突しない命名にする（`<char>_<event>` など）

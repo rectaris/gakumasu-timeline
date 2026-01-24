@@ -134,6 +134,10 @@ function yPos(laneIndex) {
   return topOffset + laneIndex * laneHeight;
 }
 
+function isSingleWithinRange(event) {
+  return event.occurrenceType === "singleWithinRange";
+}
+
 function yearLabel(year) {
   if (year === 1) return "1年目";
 
@@ -282,17 +286,31 @@ onUnmounted(() => {
           ">
             〜 {{ yearLabel(event.end.year) }} {{ event.end.month }}月
           </template>
+          <template v-if="isSingleWithinRange(event)">
+            （期間内の1日）
+          </template>
           {{ event.title }}
         </title>
 
         <!-- 期間バー -->
         <rect
+          class="event-bar"
+          :class="{ 'event-bar--single': isSingleWithinRange(event) }"
           :x="xPos(event.startTime)"
           :y="yPos(event.laneIndex) - 6"
           :width="xPos(event.endTime) - xPos(event.startTime)"
           height="12"
           :fill="event.color"
           rx="6"
+        />
+
+        <!-- 期間内1日イベントのマーカー -->
+        <circle
+          v-if="isSingleWithinRange(event)"
+          :cx="(xPos(event.startTime) + xPos(event.endTime)) / 2"
+          :cy="yPos(event.laneIndex)"
+          r="3"
+          fill="#333"
         />
 
         <!-- 開始点マーカー -->
@@ -432,6 +450,12 @@ body {
 
 .event-group:hover rect {
   opacity: 0.8;
+}
+
+.event-bar--single {
+  stroke: #333;
+  stroke-width: 1;
+  stroke-dasharray: 3 2;
 }
 
 </style>

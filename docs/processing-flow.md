@@ -63,6 +63,7 @@
    - `visibleEvents`（表示範囲に重なるイベント）だけを描画
    - 期間バー: `rect (x=start, width=end-start)`
    - 開始点: `circle`
+  - `occurrenceType === "singleWithinRange"` の場合、バーに破線＋中央マーカーを追加
 
 ## インタラクション
 
@@ -84,3 +85,4 @@
 
 - 日付（`day`）は UI の時間計算に反映されません（表示は月単位）
 - `start` と `end` が同一（月単位で同値）だとバー幅が 0 になり視認性が落ちます（開始点の円は表示されます）
+- 「期間内のどこか1日」イベントは `occurrenceType` の有無で判別します（具体的な日付は未確定）

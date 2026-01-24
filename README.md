@@ -15,6 +15,7 @@
 - 横軸: 時間
 - 縦軸: キャラクター（キャラごとに 1 レーン）
 - 色付きのバー: イベント（開始〜終了の期間）
+- 破線バー＋中央点: 「期間内のどこか1日」で起きるイベント（`occurrenceType: "singleWithinRange"`）
 
 ### イベントの詳細を見る
 
@@ -52,8 +53,10 @@
 
 ## データの置き場所
 
-- キャラ/イベントデータ: [src/data/characters/](src/data/characters/)
+- キャラ/イベントデータ: [src/data/worldline_commu/](src/data/worldline_commu/)
 - データ集約: [src/data/index.js](src/data/index.js)
+- 世界線一覧: [src/data/worldlines.js](src/data/worldlines.js)
+- キャラクター一覧: [src/data/characterCatalog.js](src/data/characterCatalog.js)
 
 ## 詳細ドキュメント
 
