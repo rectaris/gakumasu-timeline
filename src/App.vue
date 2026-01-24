@@ -8,16 +8,23 @@ function timeValue(year, month) {
 }
 
 const zoomMode = ref("all"); 
-// "all" | "year"
+// "all" | "year" | "month"
 
 const zoomCenterYear = ref(0);
 const zoomRangeYears = 1;
+const zoomCenterMonth = ref(0);
+const zoomRangeMonths = 6;
 
 watch(zoomMode, mode => {
   if (mode === "year") {
     // 現在の選択イベントがあればそこを中心に
     if (selectedEvent.value) {
-      zoomCenterYear.value = selectedEvent.value.year;
+      zoomCenterYear.value = selectedEvent.value.start.year;
+    }
+  }
+  if (mode === "month") {
+    if (selectedEvent.value) {
+      zoomCenterMonth.value = selectedEvent.value.startTime;
     }
   }
 });
@@ -97,6 +104,13 @@ const viewRange = computed(() => {
     };
   }
 
+  if (zoomMode.value === "month") {
+    return {
+      min: zoomCenterMonth.value - zoomRangeMonths,
+      max: zoomCenterMonth.value + zoomRangeMonths
+    };
+  }
+
   return {
     min: Math.min(...times.value),
     max: Math.max(...times.value)
@@ -115,6 +129,16 @@ const yearBounds = computed(() => {
   }
 
   return { minYear, maxYear };
+});
+
+const monthBounds = computed(() => {
+  const min = Math.min(...times.value);
+  const max = Math.max(...times.value);
+
+  return {
+    min,
+    max
+  };
 });
 
 // SVGサイズ
@@ -237,6 +261,17 @@ function yearLabel(year) {
   return `${diff}年前`;
 }
 
+function timeToYearMonth(time) {
+  const year = Math.floor(time / 12);
+  const monthIndex = ((time % 12) + 12) % 12;
+  return { year, month: monthIndex + 1 };
+}
+
+function monthLabel(time) {
+  const { year, month } = timeToYearMonth(time);
+  return `${yearLabel(year)} ${month}月`;
+}
+
 // 年スケール
 const years = computed(() => {
   const { min, max } = viewRange.value;
@@ -281,6 +316,7 @@ onMounted(() => {
   }
 
   zoomCenterYear.value = 1;
+  zoomCenterMonth.value = timeValue(1, 1);
 
   window.addEventListener("keydown", handleKey);
 });
@@ -297,6 +333,7 @@ onUnmounted(() => {
   <div class="zoom-controls">
     <button @click="zoomMode = 'all'">全期間</button>
     <button @click="zoomMode = 'year'">年ズーム</button>
+    <button @click="zoomMode = 'month'">月ズーム</button>
   </div>
 
   <div
@@ -313,6 +350,24 @@ onUnmounted(() => {
       :min="yearBounds.minYear"
       :max="yearBounds.maxYear"
       v-model.number="zoomCenterYear"
+      step="1"
+    />
+  </div>
+
+  <div
+    class="month-slider"
+    v-if="zoomMode === 'month'"
+  >
+    <label>
+      中心年月：
+      {{ monthLabel(zoomCenterMonth) }}
+    </label>
+
+    <input
+      type="range"
+      :min="monthBounds.min"
+      :max="monthBounds.max"
+      v-model.number="zoomCenterMonth"
       step="1"
     />
   </div>
@@ -409,7 +464,7 @@ onUnmounted(() => {
           :cx="xPos(event.startTime)"
           :cy="eventY(event)"
           r="5"
-          fill="#fff"
+          :fill="event.color"
           stroke="#333"
         />
 
@@ -542,6 +597,20 @@ body {
 }
 
 .year-slider input[type="range"] {
+  width: 300px;
+}
+
+.month-slider {
+  margin-bottom: 12px;
+}
+
+.month-slider label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.month-slider input[type="range"] {
   width: 300px;
 }
 
