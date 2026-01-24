@@ -769,6 +769,45 @@ onUnmounted(() => {
       stroke="#ddd"
     />
 
+    <!-- 年月日ラベル（イベントと重ならない位置） -->
+    <g>
+      <text
+        v-for="y in years"
+        :key="`year-label-${y.year}`"
+        :x="xPos(y.time)"
+        :y="timelineViewport.y - 26"
+        text-anchor="middle"
+        font-size="12"
+        fill="#555"
+      >
+        {{ yearLabel(y.year) }}
+      </text>
+      <g v-if="zoomMode === 'month'">
+        <text
+          v-for="tick in monthTicks"
+          :key="`month-label-${tick.time}`"
+          :x="xPos(tick.time)"
+          :y="timelineViewport.y - 12"
+          text-anchor="middle"
+          font-size="10"
+          fill="#777"
+        >
+          {{ tick.label }}
+        </text>
+        <text
+          v-for="tick in dayTicks"
+          :key="`day-label-${tick.time}-${tick.day}`"
+          :x="xPos(tick.time)"
+          :y="timelineViewport.y - 2"
+          text-anchor="middle"
+          font-size="9"
+          fill="#bbb"
+        >
+          {{ tick.day }}
+        </text>
+      </g>
+    </g>
+
     <g clip-path="url(#timeline-clip)">
       <!-- 年目盛り（全レーン共通） -->
       <g v-for="y in years" :key="y.year">
@@ -779,45 +818,19 @@ onUnmounted(() => {
           :y2="timelineViewport.y + timelineViewport.height"
           stroke="#eee"
         />
-        <text
-          :x="xPos(y.time)"
-          :y="timelineViewport.y + 14"
-          text-anchor="middle"
-          font-size="12"
-          fill="#555"
-        >
-          {{ yearLabel(y.year) }}
-        </text>
       </g>
 
-      <!-- 月ズーム時の月名表示 -->
+      <!-- 月ズーム時の月区切り線 -->
       <g v-if="zoomMode === 'month'">
-        <text
-          v-for="tick in monthTicks"
-          :key="`month-${tick.time}`"
-          :x="xPos(tick.time)"
-          :y="timelineViewport.y + 28"
-          text-anchor="middle"
-          font-size="10"
-          fill="#777"
-        >
-          {{ tick.label }}
-        </text>
-      </g>
-
-      <!-- 月ズーム時の日付補助スケール -->
-      <g v-if="zoomMode === 'month'">
-        <text
-          v-for="tick in dayTicks"
-          :key="`${tick.time}-${tick.day}`"
-          :x="xPos(tick.time)"
-          :y="timelineViewport.y + 40"
-          text-anchor="middle"
-          font-size="9"
-          fill="#bbb"
-        >
-          {{ tick.day }}
-        </text>
+        <g v-for="tick in monthTicks" :key="`month-${tick.time}`">
+          <line
+            :x1="xPos(tick.time)"
+            :y1="timelineViewport.y"
+            :x2="xPos(tick.time)"
+            :y2="timelineViewport.y + timelineViewport.height"
+            stroke="#e0e0e0"
+          />
+        </g>
       </g>
 
       <!-- レーン線 -->
