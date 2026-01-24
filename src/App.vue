@@ -659,10 +659,18 @@ body {
 }
 
 .zoom-controls {
-  margin-bottom: 10px;
+  position: fixed;
+  top: 16px;
+  left: 16px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  z-index: 1100;
 }
 
 .zoom-button {
