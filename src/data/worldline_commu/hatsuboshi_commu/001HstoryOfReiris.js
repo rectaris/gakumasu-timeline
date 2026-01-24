@@ -71,10 +71,6 @@ export default {
       worldlineId: ["hatsuboshi_commu"],
       participants: ["saki_hanami", "temari_tsukimura", "kotone_fujita"],
       source: ["Story of Re;IRIS 10話"]
-    },
-    {
-      id: "001_h_running_saki_temari",
-      start: { year: yearOf(1), month: 4, day: 13 },
     }
   ]
 };

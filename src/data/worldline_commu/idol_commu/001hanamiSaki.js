@@ -58,9 +58,6 @@ export default {
       detail: "プロデューサーにスカウトされ、アイドル活動を開始する",
       worldlineId: ["story_of_re;iris"],
       participants: ["saki_hanami"]
-    },
-    {
-      id: "001_"
     }
   ]
 };
