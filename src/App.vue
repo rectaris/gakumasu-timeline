@@ -3,8 +3,14 @@ import { ref, computed, onMounted, onUnmounted } from "vue";
 import { characters } from "./data";
 import { watch } from "vue";
 
+const DAYS_IN_MONTH = 31;
+
 function timeValue(year, month) {
   return year * 12 + (month - 1);
+}
+
+function dayTimeValue(year, month, day = 1) {
+  return timeValue(year, month) * DAYS_IN_MONTH + (day - 1);
 }
 
 const zoomMode = ref("all"); 
@@ -91,7 +97,17 @@ const allEvents = computed(() => {
         color: char.color,
         laneIndex: index,
         startTime,
-        endTime
+        endTime,
+        startTimeDay: dayTimeValue(
+          ev.start.year,
+          ev.start.month,
+          ev.start.day ?? 1
+        ),
+        endTimeDay: dayTimeValue(
+          ev.end.year,
+          ev.end.month,
+          ev.end.day ?? 1
+        )
       };
     })
   );
@@ -111,9 +127,11 @@ const viewRange = computed(() => {
   }
 
   if (zoomMode.value === "month") {
+    const startMonth = zoomCenterMonth.value - zoomRangeMonths;
+    const endMonth = zoomCenterMonth.value + zoomRangeMonths;
     return {
-      min: zoomCenterMonth.value - zoomRangeMonths,
-      max: zoomCenterMonth.value + zoomRangeMonths
+      min: startMonth * DAYS_IN_MONTH,
+      max: endMonth * DAYS_IN_MONTH + (DAYS_IN_MONTH - 1)
     };
   }
 
@@ -153,6 +171,8 @@ const monthBounds = computed(() => {
 
 const zoomLabel = computed(() => zoomLabels[zoomMode.value]);
 
+const isDayScale = computed(() => zoomMode.value === "month");
+
 // SVGサイズ
 const width = 1100;
 
@@ -167,21 +187,49 @@ function xPos(time) {
   );
 }
 
+function displayTimeForMonth(monthTime) {
+  return isDayScale.value
+    ? monthTime * DAYS_IN_MONTH
+    : monthTime;
+}
+
+function eventDisplayStart(event) {
+  return isDayScale.value
+    ? event.startTimeDay
+    : event.startTime;
+}
+
+function eventDisplayEnd(event) {
+  return isDayScale.value
+    ? event.endTimeDay
+    : event.endTime;
+}
+
 function buildLaneLayout(events) {
+  const useDayScale = isDayScale.value;
   const subLaneEndTimes = [];
   const eventsWithLane = events
     .slice()
-    .sort((a, b) => a.startTime - b.startTime)
+    .sort((a, b) =>
+      (useDayScale ? a.startTimeDay : a.startTime) -
+        (useDayScale ? b.startTimeDay : b.startTime)
+    )
     .map(event => {
+      const startTime = useDayScale
+        ? event.startTimeDay
+        : event.startTime;
+      const endTime = useDayScale
+        ? event.endTimeDay
+        : event.endTime;
       let subLaneIndex = subLaneEndTimes.findIndex(
-        endTime => endTime < event.startTime
+        laneEndTime => laneEndTime < startTime
       );
 
       if (subLaneIndex === -1) {
         subLaneIndex = subLaneEndTimes.length;
-        subLaneEndTimes.push(event.endTime);
+        subLaneEndTimes.push(endTime);
       } else {
-        subLaneEndTimes[subLaneIndex] = event.endTime;
+        subLaneEndTimes[subLaneIndex] = endTime;
       }
 
       return { ...event, subLaneIndex };
@@ -285,15 +333,15 @@ function monthLabel(time) {
 }
 
 function dayTime(monthTime, day) {
-  return monthTime + (day - 1) / 31;
+  return monthTime * DAYS_IN_MONTH + (day - 1);
 }
 
 const dayTicks = computed(() => {
   if (zoomMode.value !== "month") return [];
 
   const { min, max } = viewRange.value;
-  const startMonth = Math.floor(min);
-  const endMonth = Math.floor(max);
+  const startMonth = Math.floor(min / DAYS_IN_MONTH);
+  const endMonth = Math.floor(max / DAYS_IN_MONTH);
   const ticks = [];
 
   for (let monthTime = startMonth; monthTime <= endMonth; monthTime += 1) {
@@ -307,17 +355,42 @@ const dayTicks = computed(() => {
   return ticks;
 });
 
+const monthTicks = computed(() => {
+  if (zoomMode.value !== "month") return [];
+
+  const { min, max } = viewRange.value;
+  const startMonth = Math.floor(min / DAYS_IN_MONTH);
+  const endMonth = Math.floor(max / DAYS_IN_MONTH);
+  const ticks = [];
+
+  for (let monthTime = startMonth; monthTime <= endMonth; monthTime += 1) {
+    const { month } = timeToYearMonth(monthTime);
+    ticks.push({
+      time: dayTime(monthTime, 1),
+      label: `${month}月`
+    });
+  }
+
+  return ticks;
+});
+
 // 年スケール
 const years = computed(() => {
   const { min, max } = viewRange.value;
-  const startYear = Math.floor(min / 12);
-  const endYear = Math.floor(max / 12);
+  const minMonth = isDayScale.value
+    ? Math.floor(min / DAYS_IN_MONTH)
+    : Math.floor(min);
+  const maxMonth = isDayScale.value
+    ? Math.floor(max / DAYS_IN_MONTH)
+    : Math.floor(max);
+  const startYear = Math.floor(minMonth / 12);
+  const endYear = Math.floor(maxMonth / 12);
 
   const result = [];
   for (let y = startYear; y <= endYear; y++) {
     result.push({
       year: y,
-      time: y * 12
+      time: displayTimeForMonth(y * 12)
     });
   }
   return result;
@@ -330,7 +403,9 @@ const allEventsWithLayout = computed(() =>
 const visibleEvents = computed(() => {
   const { min, max } = viewRange.value;
   return allEventsWithLayout.value.filter(
-    e => e.endTime >= min && e.startTime <= max
+    e =>
+      eventDisplayEnd(e) >= min &&
+      eventDisplayStart(e) <= max
   );
 });
 
@@ -461,6 +536,21 @@ onUnmounted(() => {
       </text>
     </g>
 
+    <!-- 月ズーム時の月名表示 -->
+    <g v-if="zoomMode === 'month'">
+      <text
+        v-for="tick in monthTicks"
+        :key="`month-${tick.time}`"
+        :x="xPos(tick.time)"
+        y="40"
+        text-anchor="middle"
+        font-size="10"
+        fill="#777"
+      >
+        {{ tick.label }}
+      </text>
+    </g>
+
     <!-- 月ズーム時の日付補助スケール -->
     <g v-if="zoomMode === 'month'">
       <text
@@ -524,9 +614,9 @@ onUnmounted(() => {
         <rect
           class="event-bar"
           :class="{ 'event-bar--single': isSingleWithinRange(event) }"
-          :x="xPos(event.startTime)"
+          :x="xPos(eventDisplayStart(event))"
           :y="eventY(event) - EVENT_BAR_HEIGHT / 2"
-          :width="xPos(event.endTime) - xPos(event.startTime)"
+          :width="xPos(eventDisplayEnd(event)) - xPos(eventDisplayStart(event))"
           :height="EVENT_BAR_HEIGHT"
           :fill="event.color"
           rx="6"
@@ -535,7 +625,7 @@ onUnmounted(() => {
         <!-- 期間内1日イベントのマーカー -->
         <circle
           v-if="isSingleWithinRange(event)"
-          :cx="(xPos(event.startTime) + xPos(event.endTime)) / 2"
+          :cx="(xPos(eventDisplayStart(event)) + xPos(eventDisplayEnd(event))) / 2"
           :cy="eventY(event)"
           r="3"
           fill="#333"
@@ -543,7 +633,7 @@ onUnmounted(() => {
 
         <!-- 開始点マーカー -->
         <circle
-          :cx="xPos(event.startTime)"
+          :cx="xPos(eventDisplayStart(event))"
           :cy="eventY(event)"
           r="5"
           :fill="event.color"
@@ -552,7 +642,7 @@ onUnmounted(() => {
 
         <!-- 終了点マーカー -->
         <circle
-          :cx="xPos(event.endTime)"
+          :cx="xPos(eventDisplayEnd(event))"
           :cy="eventY(event)"
           r="5"
           :fill="event.color"
