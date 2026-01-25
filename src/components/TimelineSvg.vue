@@ -13,16 +13,15 @@ const props = defineProps({
   years: { type: Array, required: true },
   monthTicks: { type: Array, required: true },
   dayTicks: { type: Array, required: true },
-  zoomMode: { type: String, required: true },
+  showMonthScale: { type: Boolean, required: true },
+  showDayScale: { type: Boolean, required: true },
   xPos: { type: Function, required: true },
   laneCenterY: { type: Function, required: true },
+  yPos: { type: Function, required: true },
   characters: { type: Array, required: true },
   visibleEvents: { type: Array, required: true },
-  eventDisplayStart: { type: Function, required: true },
-  eventDisplayEnd: { type: Function, required: true },
-  eventY: { type: Function, required: true },
+  isDayScale: { type: Boolean, required: true },
   isSingleWithinRange: { type: Function, required: true },
-  selectEvent: { type: Function, required: true },
   invertHexColor: { type: Function, required: true },
   leftLabelWidth: { type: Number, required: true },
   yearLabel: { type: Function, required: true },
@@ -30,6 +29,8 @@ const props = defineProps({
   onTouchMove: { type: Function, required: true },
   onTouchEnd: { type: Function, required: true }
 });
+
+const emit = defineEmits(["select"]);
 </script>
 
 <template>
@@ -58,7 +59,8 @@ const props = defineProps({
       :years="years"
       :month-ticks="monthTicks"
       :day-ticks="dayTicks"
-      :zoom-mode="zoomMode"
+      :show-month-scale="showMonthScale"
+      :show-day-scale="showDayScale"
       :x-pos="xPos"
       :timeline-viewport="timelineViewport"
       :year-label="yearLabel"
@@ -68,7 +70,7 @@ const props = defineProps({
       <TimelineScaleLines
         :years="years"
         :month-ticks="monthTicks"
-        :zoom-mode="zoomMode"
+        :show-month-scale="showMonthScale"
         :x-pos="xPos"
         :timeline-viewport="timelineViewport"
       />
@@ -82,12 +84,11 @@ const props = defineProps({
       <TimelineEvents
         :visible-events="visibleEvents"
         :x-pos="xPos"
-        :event-display-start="eventDisplayStart"
-        :event-display-end="eventDisplayEnd"
-        :event-y="eventY"
+        :y-pos="yPos"
+        :is-day-scale="isDayScale"
         :is-single-within-range="isSingleWithinRange"
-        :select-event="selectEvent"
         :year-label="yearLabel"
+        @select="event => emit('select', event)"
       />
     </g>
 

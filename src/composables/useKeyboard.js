@@ -22,10 +22,15 @@ export function useKeyboard({ zoomMode, moveYear, moveMonth, closePanel }) {
       return;
     }
 
-    if (zoomMode.value === "month") {
-      moveMonth(delta);
-    } else if (zoomMode.value === "year") {
-      moveYear(delta);
+    switch (zoomMode.value) {
+      case "MONTH":
+        moveMonth(delta);
+        break;
+      case "YEAR":
+        moveYear(delta);
+        break;
+      default:
+        break;
     }
   }
 

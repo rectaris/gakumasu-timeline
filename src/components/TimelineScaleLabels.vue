@@ -3,7 +3,8 @@ defineProps({
   years: { type: Array, required: true },
   monthTicks: { type: Array, required: true },
   dayTicks: { type: Array, required: true },
-  zoomMode: { type: String, required: true },
+  showMonthScale: { type: Boolean, required: true },
+  showDayScale: { type: Boolean, required: true },
   xPos: { type: Function, required: true },
   timelineViewport: { type: Object, required: true },
   yearLabel: { type: Function, required: true }
@@ -23,7 +24,7 @@ defineProps({
     >
       {{ yearLabel(y.year) }}
     </text>
-    <g v-if="zoomMode === 'month'">
+    <g v-if="showMonthScale">
       <text
         v-for="tick in monthTicks"
         :key="`month-label-${tick.time}`"
@@ -36,6 +37,7 @@ defineProps({
         {{ tick.label }}
       </text>
       <text
+        v-if="showDayScale"
         v-for="tick in dayTicks"
         :key="`day-label-${tick.time}-${tick.day}`"
         :x="xPos(tick.time)"

@@ -1,6 +1,9 @@
 <script setup>
 const props = defineProps({
   zoomMode: { type: String, required: true },
+  isYearMode: { type: Boolean, required: true },
+  isMonthMode: { type: Boolean, required: true },
+  isDayMode: { type: Boolean, required: true },
   zoomLabel: { type: String, required: true },
   zoomCenterYear: { type: Number, required: true },
   zoomCenterMonth: { type: Number, required: true },
@@ -46,13 +49,13 @@ function updateMonth(event) {
     <button
       class="zoom-button zoom-button--in"
       @click="zoomIn"
-      :disabled="zoomMode === 'month'"
+      :disabled="isDayMode"
     >
       ＋
     </button>
   </div>
 
-  <div class="year-slider" v-if="zoomMode === 'year'">
+  <div class="year-slider" v-if="isYearMode">
     <label>
       中心年：
       {{ yearLabel(zoomCenterYear) }}
@@ -96,7 +99,7 @@ function updateMonth(event) {
     </div>
   </div>
 
-  <div class="month-slider" v-if="zoomMode === 'month'">
+  <div class="month-slider" v-if="isMonthMode">
     <label>
       中心月：
       {{ monthLabel(zoomCenterMonth) }}

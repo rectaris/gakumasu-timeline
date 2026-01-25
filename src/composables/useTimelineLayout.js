@@ -120,14 +120,14 @@ export function useTimelineLayout({
     return laneLayouts.value[laneIndex]?.centerY ?? TOP_OFFSET;
   }
 
-  function eventY(event) {
-    const lane = laneLayouts.value[event.laneIndex];
+  function yPos(laneIndex, subLaneIndex = 0) {
+    const lane = laneLayouts.value[laneIndex];
     if (!lane) return TOP_OFFSET;
 
     return (
       lane.laneTop +
       LANE_PADDING +
-      event.subLaneIndex * EVENT_ROW_HEIGHT +
+      subLaneIndex * EVENT_ROW_HEIGHT +
       EVENT_BAR_HEIGHT / 2
     );
   }
@@ -138,7 +138,11 @@ export function useTimelineLayout({
       viewRange,
       eventDisplayStart,
       eventDisplayEnd
-    })
+    }).map(event => ({
+      ...event,
+      displayStart: eventDisplayStart(event),
+      displayEnd: eventDisplayEnd(event)
+    }))
   );
 
   function xPos(time) {
@@ -156,7 +160,7 @@ export function useTimelineLayout({
     svgHeight,
     timelineViewport,
     laneCenterY,
-    eventY,
+    yPos,
     visibleEvents,
     xPos
   };

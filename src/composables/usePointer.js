@@ -1,6 +1,6 @@
 import { onUnmounted, ref } from "vue";
 
-export function usePointer({ zoomMode, moveYear, moveMonth }) {
+export function usePointer({ zoomMode, moveYear, moveMonth, moveDay }) {
   const holdIntervalId = ref(null);
   const holdTimeoutId = ref(null);
   const suppressClick = ref(false);
@@ -61,10 +61,18 @@ export function usePointer({ zoomMode, moveYear, moveMonth }) {
 
     const delta = diffX < 0 ? 1 : -1;
 
-    if (zoomMode.value === "month") {
-      moveMonth(delta);
-    } else if (zoomMode.value === "year") {
-      moveYear(delta);
+    switch (zoomMode.value) {
+      case "MONTH":
+        moveMonth(delta);
+        break;
+      case "DAY":
+        if (moveDay) moveDay(delta);
+        break;
+      case "YEAR":
+        moveYear(delta);
+        break;
+      default:
+        break;
     }
   }
 

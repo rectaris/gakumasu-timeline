@@ -8,7 +8,7 @@ import { useSelection } from "./composables/useSelection";
 import { useTimelineData } from "./composables/useTimelineData";
 import { useTimelineLayout } from "./composables/useTimelineLayout";
 import { useTimelineScales } from "./composables/useTimelineScales";
-import { useZoom } from "./composables/useZoom";
+import { useZoomMachine } from "./composables/useZoomMachine";
 import ZoomControls from "./components/ZoomControls.vue";
 import SidePanel from "./components/SidePanel.vue";
 import TimelineSvg from "./components/TimelineSvg.vue";
@@ -19,40 +19,48 @@ import { LEFT_LABEL_WIDTH, RIGHT_PADDING, WIDTH } from "./utils/constants";
 
 const charactersRef = ref(characters);
 
-const { allEvents, times } = useTimelineData(charactersRef);
+const { allEvents, times, timesDay } = useTimelineData(charactersRef);
 const { selectedEvent, selectEvent, closePanel } = useSelection(allEvents);
 
 const {
-  zoomMode,
-  zoomCenterYear,
-  zoomCenterMonth,
+  mode,
+  centerYear,
+  centerMonth,
+  centerDay,
   zoomLabel,
   viewRange,
   yearBounds,
   monthBounds,
+  dayBounds,
+  isYearMode,
+  isMonthMode,
+  isDayMode,
   isDayScale,
+  showMonthScale,
+  showDayScale,
   moveYear,
   moveMonth,
-  prevYear,
-  nextYear,
-  prevMonth,
-  nextMonth,
+  moveDay,
+  moveNext,
+  movePrev,
   zoomIn,
   zoomOut
-} = useZoom(times, selectedEvent);
+} = useZoomMachine(times, timesDay, selectedEvent);
 
 const { eventDisplayStart, eventDisplayEnd } = useEventDisplay(isDayScale);
 
 const { years, monthTicks, dayTicks } = useTimelineScales({
   viewRange,
-  isDayScale
+  isDayScale,
+  showMonthScale,
+  showDayScale
 });
 
 const {
   svgHeight,
   timelineViewport,
   laneCenterY,
-  eventY,
+  yPos,
   visibleEvents,
   xPos
 } = useTimelineLayout({
@@ -74,19 +82,27 @@ const {
   onTouchStart,
   onTouchMove,
   onTouchEnd
-} = usePointer({ zoomMode, moveYear, moveMonth });
+} = usePointer({ zoomMode: mode, moveYear, moveMonth });
 
-useKeyboard({ zoomMode, moveYear, moveMonth, closePanel });
+useKeyboard({ zoomMode: mode, moveYear, moveMonth, closePanel });
+
+const prevYear = () => moveYear(-1);
+const nextYear = () => moveYear(1);
+const prevMonth = () => moveMonth(-1);
+const nextMonth = () => moveMonth(1);
 </script>
 
 <template>
   <h1>キャラクタータイムライン</h1>
 
   <ZoomControls
-    :zoom-mode="zoomMode"
+    :zoom-mode="mode"
+    :is-year-mode="isYearMode"
+    :is-month-mode="isMonthMode"
+    :is-day-mode="isDayMode"
     :zoom-label="zoomLabel"
-    :zoom-center-year="zoomCenterYear"
-    :zoom-center-month="zoomCenterMonth"
+    :zoom-center-year="centerYear"
+    :zoom-center-month="centerMonth"
     :year-bounds="yearBounds"
     :month-bounds="monthBounds"
     :year-label="yearLabel"
@@ -100,8 +116,8 @@ useKeyboard({ zoomMode, moveYear, moveMonth, closePanel });
     :start-hold="startHold"
     :stop-hold="stopHold"
     :handle-nav-click="handleNavClick"
-    @update:zoom-center-year="value => (zoomCenterYear = value)"
-    @update:zoom-center-month="value => (zoomCenterMonth = value)"
+    @update:zoom-center-year="value => (centerYear = value)"
+    @update:zoom-center-month="value => (centerMonth = value)"
   />
 
   <TimelineSvg
@@ -111,22 +127,22 @@ useKeyboard({ zoomMode, moveYear, moveMonth, closePanel });
     :years="years"
     :month-ticks="monthTicks"
     :day-ticks="dayTicks"
-    :zoom-mode="zoomMode"
+    :show-month-scale="showMonthScale"
+    :show-day-scale="showDayScale"
     :x-pos="xPos"
     :lane-center-y="laneCenterY"
+    :y-pos="yPos"
     :characters="charactersRef"
     :visible-events="visibleEvents"
-    :event-display-start="eventDisplayStart"
-    :event-display-end="eventDisplayEnd"
-    :event-y="eventY"
+    :is-day-scale="isDayScale"
     :is-single-within-range="isSingleWithinRange"
-    :select-event="selectEvent"
     :invert-hex-color="invertHexColor"
     :left-label-width="LEFT_LABEL_WIDTH"
     :year-label="yearLabel"
     :on-touch-start="onTouchStart"
     :on-touch-move="onTouchMove"
     :on-touch-end="onTouchEnd"
+    @select="selectEvent"
   />
 
   <SidePanel

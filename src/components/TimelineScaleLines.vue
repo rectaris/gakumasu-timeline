@@ -2,7 +2,7 @@
 defineProps({
   years: { type: Array, required: true },
   monthTicks: { type: Array, required: true },
-  zoomMode: { type: String, required: true },
+  showMonthScale: { type: Boolean, required: true },
   xPos: { type: Function, required: true },
   timelineViewport: { type: Object, required: true }
 });
@@ -20,7 +20,7 @@ defineProps({
       />
     </g>
 
-    <g v-if="zoomMode === 'month'">
+    <g v-if="showMonthScale">
       <g v-for="tick in monthTicks" :key="`month-${tick.time}`">
         <line
           :x1="xPos(tick.time)"

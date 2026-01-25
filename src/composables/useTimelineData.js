@@ -34,9 +34,14 @@ export function useTimelineData(characters) {
     allEvents.value.flatMap(e => [e.startTime, e.endTime])
   );
 
+  const timesDay = computed(() =>
+    allEvents.value.flatMap(e => [e.startTimeDay, e.endTimeDay])
+  );
+
   return {
     allEvents,
-    times
+    times,
+    timesDay
   };
 }
 

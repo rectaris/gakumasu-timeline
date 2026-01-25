@@ -4,18 +4,22 @@ import { EVENT_BAR_HEIGHT } from "../utils/constants";
 defineProps({
   visibleEvents: { type: Array, required: true },
   xPos: { type: Function, required: true },
-  eventDisplayStart: { type: Function, required: true },
-  eventDisplayEnd: { type: Function, required: true },
-  eventY: { type: Function, required: true },
+  yPos: { type: Function, required: true },
+  isDayScale: { type: Boolean, required: true },
   isSingleWithinRange: { type: Function, required: true },
-  selectEvent: { type: Function, required: true },
   yearLabel: { type: Function, required: true }
 });
+
+const emit = defineEmits(["select"]);
+
+function handleSelect(event) {
+  emit("select", event);
+}
 </script>
 
 <template>
   <g v-for="event in visibleEvents" :key="event.id">
-    <g @click="selectEvent(event)" class="event-group">
+    <g @click="handleSelect(event)" class="event-group">
       <title>
         {{ event.character }}
         {{ yearLabel(event.start.year) }} {{ event.start.month }}月
@@ -36,9 +40,9 @@ defineProps({
       <rect
         class="event-bar"
         :class="{ 'event-bar--single': isSingleWithinRange(event) }"
-        :x="xPos(eventDisplayStart(event))"
-        :y="eventY(event) - EVENT_BAR_HEIGHT / 2"
-        :width="xPos(eventDisplayEnd(event)) - xPos(eventDisplayStart(event))"
+        :x="xPos(event.displayStart)"
+        :y="yPos(event.laneIndex, event.subLaneIndex) - EVENT_BAR_HEIGHT / 2"
+        :width="xPos(event.displayEnd) - xPos(event.displayStart)"
         :height="EVENT_BAR_HEIGHT"
         :fill="event.color"
         rx="6"
@@ -46,23 +50,23 @@ defineProps({
 
       <circle
         v-if="isSingleWithinRange(event)"
-        :cx="(xPos(eventDisplayStart(event)) + xPos(eventDisplayEnd(event))) / 2"
-        :cy="eventY(event)"
+        :cx="(xPos(event.displayStart) + xPos(event.displayEnd)) / 2"
+        :cy="yPos(event.laneIndex, event.subLaneIndex)"
         r="3"
         fill="#333"
       />
 
       <circle
-        :cx="xPos(eventDisplayStart(event))"
-        :cy="eventY(event)"
+        :cx="xPos(event.displayStart)"
+        :cy="yPos(event.laneIndex, event.subLaneIndex)"
         r="5"
         :fill="event.color"
         stroke="#333"
       />
 
       <circle
-        :cx="xPos(eventDisplayEnd(event))"
-        :cy="eventY(event)"
+        :cx="xPos(event.displayEnd)"
+        :cy="yPos(event.laneIndex, event.subLaneIndex)"
         r="5"
         :fill="event.color"
         stroke="#333"

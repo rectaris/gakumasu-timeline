@@ -2,7 +2,12 @@ import { computed } from "vue";
 import { DAYS_IN_MONTH } from "../utils/constants";
 import { timeToYearMonth } from "../utils/time";
 
-export function useTimelineScales({ viewRange, isDayScale }) {
+export function useTimelineScales({
+  viewRange,
+  isDayScale,
+  showMonthScale,
+  showDayScale
+}) {
   function dayTime(monthTime, day) {
     return monthTime * DAYS_IN_MONTH + (day - 1);
   }
@@ -12,7 +17,7 @@ export function useTimelineScales({ viewRange, isDayScale }) {
   }
 
   const dayTicks = computed(() => {
-    if (!isDayScale.value) return [];
+    if (!showDayScale.value) return [];
 
     const { min, max } = viewRange.value;
     const startMonth = Math.floor(min / DAYS_IN_MONTH);
@@ -31,7 +36,7 @@ export function useTimelineScales({ viewRange, isDayScale }) {
   });
 
   const monthTicks = computed(() => {
-    if (!isDayScale.value) return [];
+    if (!showMonthScale.value) return [];
 
     const { min, max } = viewRange.value;
     const startMonth = Math.floor(min / DAYS_IN_MONTH);
