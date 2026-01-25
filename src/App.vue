@@ -132,9 +132,7 @@ const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
       type="button"
       aria-label="メニューを開く"
       @click="toggleMenu"
-    >
-      ☰
-    </button>
+    >☰</button>
     <div class="app-title">キャラクタータイムライン</div>
   </header>
 
