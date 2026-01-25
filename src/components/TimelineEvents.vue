@@ -21,20 +21,10 @@ function handleSelect(event) {
   <g v-for="event in visibleEvents" :key="event.id">
     <g @click="handleSelect(event)" class="event-group">
       <title>
-        {{ event.character }}
-        {{ yearLabel(event.start.year) }} {{ event.start.month }}月
-        <template
-          v-if="
-            event.start.year !== event.end.year ||
-            event.start.month !== event.end.month
-          "
-        >
-          〜 {{ yearLabel(event.end.year) }} {{ event.end.month }}月
-        </template>
-        <template v-if="isSingleWithinRange(event)">
-          （期間内の1日）
-        </template>
         {{ event.title }}
+        <template v-if="event.detail">
+          {{ event.detail }}
+        </template>
       </title>
 
       <rect
