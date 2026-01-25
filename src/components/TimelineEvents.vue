@@ -21,10 +21,8 @@ function handleSelect(event) {
   <g v-for="event in visibleEvents" :key="event.id">
     <g @click="handleSelect(event)" class="event-group">
       <title>
-        {{ event.title }}
-        <template v-if="event.detail">
-          {{ event.detail }}
-        </template>
+        title:  {{ event.title }}
+        detail: {{ event.detail }}
       </title>
 
       <rect
