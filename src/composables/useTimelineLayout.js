@@ -148,10 +148,11 @@ export function useTimelineLayout({
   function xPos(time) {
     const { min, max } = viewRange.value;
     const viewportWidth = timelineViewport.value.width;
+    if (max === min) {
+      return leftLabelWidth + viewportWidth / 2;
+    }
 
-    return (
-      leftLabelWidth + ((time - min) / (max - min)) * viewportWidth
-    );
+    return leftLabelWidth + ((time - min) / (max - min)) * viewportWidth;
   }
 
   return {

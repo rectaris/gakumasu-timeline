@@ -1,9 +1,16 @@
 <script setup>
-import { ref } from "vue";
-import { characters } from "./data";
+import { computed, ref } from "vue";
+import {
+  characters,
+  hatsuboshiCommus,
+  eventCommus,
+  supportCardCommus
+} from "./data";
 import { useEventDisplay } from "./composables/useEventDisplay";
 import { useKeyboard } from "./composables/useKeyboard";
+import { useMenuState } from "./composables/useMenuState";
 import { usePointer } from "./composables/usePointer";
+import { useCategoryFilter } from "./composables/useCategoryFilter";
 import { useSelection } from "./composables/useSelection";
 import { useTimelineData } from "./composables/useTimelineData";
 import { useTimelineLayout } from "./composables/useTimelineLayout";
@@ -18,8 +25,29 @@ import { dayLabel, monthLabel, yearLabel } from "./utils/labels";
 import { LEFT_LABEL_WIDTH, RIGHT_PADDING, WIDTH } from "./utils/constants";
 
 const charactersRef = ref(characters);
+const hatsuboshiRef = ref(hatsuboshiCommus);
+const eventRef = ref(eventCommus);
+const supportRef = ref(supportCardCommus);
 
-const { allEvents, times, timesDay } = useTimelineData(charactersRef);
+const {
+  categoryOptions,
+  selectedCategory,
+  laneOptions,
+  activeLanes,
+  normalizedEvents,
+  isLaneSelected,
+  toggleLane
+} = useCategoryFilter({
+  characters: charactersRef,
+  hatsuboshiCommus: hatsuboshiRef,
+  eventCommus: eventRef,
+  supportCardCommus: supportRef
+});
+
+const { isOpen: menuOpen, openMenu, closeMenu, toggleMenu } =
+  useMenuState();
+
+const { allEvents, times, timesDay } = useTimelineData(activeLanes);
 const { selectedEvent, selectEvent, closePanel } = useSelection(allEvents);
 
 const {
@@ -65,7 +93,7 @@ const {
   visibleEvents,
   xPos
 } = useTimelineLayout({
-  characters: charactersRef,
+  characters: activeLanes,
   allEvents,
   viewRange,
   isDayScale,
@@ -93,10 +121,78 @@ const prevMonth = () => moveMonth(-1);
 const nextMonth = () => moveMonth(1);
 const prevDay = () => moveDay(-1);
 const nextDay = () => moveDay(1);
+
+const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
 </script>
 
 <template>
-  <h1>キャラクタータイムライン</h1>
+  <header class="app-header">
+    <button
+      class="menu-button"
+      type="button"
+      aria-label="メニューを開く"
+      @click="toggleMenu"
+    >
+      ☰
+    </button>
+    <div class="app-title">キャラクタータイムライン</div>
+  </header>
+
+  <div
+    v-if="menuOpen"
+    class="menu-overlay"
+    @click="closeMenu"
+  ></div>
+
+  <aside class="side-menu" :class="{ open: menuOpen }">
+    <div class="side-menu__header">
+      <span>表示設定</span>
+      <button
+        class="menu-close"
+        type="button"
+        aria-label="メニューを閉じる"
+        @click="closeMenu"
+      >
+        ×
+      </button>
+    </div>
+
+    <section class="side-menu__section">
+      <p class="menu-section-title">カテゴリ</p>
+      <label
+        v-for="option in categoryOptions"
+        :key="option.id"
+        class="menu-option"
+      >
+        <input
+          type="radio"
+          name="category"
+          :value="option.id"
+          v-model="selectedCategory"
+        />
+        <span>{{ option.label }}</span>
+      </label>
+    </section>
+
+    <section class="side-menu__section">
+      <p class="menu-section-title">表示レーン</p>
+      <template v-if="!isCurrentCategoryEmpty">
+        <label
+          v-for="lane in laneOptions"
+          :key="lane.key"
+          class="menu-option"
+        >
+          <input
+            type="checkbox"
+            :checked="isLaneSelected(selectedCategory, lane.key)"
+            @change="toggleLane(selectedCategory, lane.key)"
+          />
+          <span>{{ lane.label }}</span>
+        </label>
+      </template>
+      <div v-else class="menu-empty">今後追加予定</div>
+    </section>
+  </aside>
 
   <ZoomControls
     :zoom-mode="mode"
@@ -142,7 +238,7 @@ const nextDay = () => moveDay(1);
     :x-pos="xPos"
     :lane-center-y="laneCenterY"
     :y-pos="yPos"
-    :characters="charactersRef"
+    :characters="activeLanes"
     :visible-events="visibleEvents"
     :is-day-scale="isDayScale"
     :is-single-within-range="isSingleWithinRange"

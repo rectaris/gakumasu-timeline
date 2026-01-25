@@ -30,13 +30,15 @@ export function useTimelineData(characters) {
     );
   });
 
-  const times = computed(() =>
-    allEvents.value.flatMap(e => [e.startTime, e.endTime])
-  );
+  const times = computed(() => {
+    const values = allEvents.value.flatMap(e => [e.startTime, e.endTime]);
+    return values.length ? values : [0];
+  });
 
-  const timesDay = computed(() =>
-    allEvents.value.flatMap(e => [e.startTimeDay, e.endTimeDay])
-  );
+  const timesDay = computed(() => {
+    const values = allEvents.value.flatMap(e => [e.startTimeDay, e.endTimeDay]);
+    return values.length ? values : [0];
+  });
 
   return {
     allEvents,
