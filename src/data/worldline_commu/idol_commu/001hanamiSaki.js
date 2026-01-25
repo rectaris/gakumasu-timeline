@@ -26,7 +26,7 @@ export default {
       start: { year: yearsAgo(13), month: 1, day: 1 },
       end: { year: yearsAgo(5), month: 1, day: 1 },
       title: "世界一を目指す理由",
-      detail: "咲季がアイドルで世界一を目指す理由",
+      detail: "咲季がアイドルで世界一を目指す理由が決まる",
       participants: ["saki_hanami", "ume_hanami"],
       source: "親愛度10コミュ"
     },

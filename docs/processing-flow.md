@@ -30,6 +30,11 @@
 - イベントデータ側は `day` を持つ場合がありますが、`src/App.vue` の `timeValue` は `day` を見ません
 - `src/data/utils/time.js` に日付込みの `timeValue({year,month,day})` があるものの、現状 UI 側では使われていません
 
+月ズーム時は日単位の内部表現 `dayTimeValue(year, month, day)` を使用します。
+
+- `dayTimeValue = timeValue(year, month) * 31 + (day - 1)`
+- `day` がない場合は `1` を使用
+
 ## 表示範囲（ズーム）
 
 `viewRange`（computed）で表示する最小〜最大の内部時刻を決めます。
@@ -40,8 +45,9 @@
   - `zoomCenterYear` を中心に `± zoomRangeYears` 年（現在は 1 年）
   - 内部時刻は「月」なので年→月に変換して `center = zoomCenterYear * 12`
 - `zoomMode === 'month'`
-  - `zoomCenterMonth` を中心に `± zoomRangeMonths` 月（現在は 6 ヶ月）
+  - `zoomCenterMonth` を中心に `± zoomRangeMonths` 月（現在は 1 ヶ月）
   - `zoomCenterMonth` は `timeValue(year, month)` の内部時刻で扱う
+  - 月ズーム時の `viewRange` は日単位（31日/月）で算出
 
 関連: `yearBounds` / `monthBounds` はスライダーの `min/max` を、全イベントの範囲から算出します。
 
@@ -51,6 +57,7 @@
 
 - `xPos(time)`
   - `viewRange.min/max` に対する比率で x 座標を計算
+  - 描画幅は `timelineViewport` の幅に合わせる
 - イベントの縦位置はサブレーン計算で決定
   - `eventY(event)` が `laneTop + padding + subLaneIndex * rowHeight` を返す
 
@@ -58,8 +65,9 @@
 
 1. 年目盛り（縦グリッド）
    - `years` computed が `viewRange` から年の配列を生成
-   - 各年について縦線とラベル（`1年目`, `2年目`, `n年前`）を描画
+  - 各年について縦線とラベル（`1年目`, `2年目`, `n年前`）を描画
   - 月ズーム時は日付（1〜31）を薄く補助表示
+  - 月ズーム時の月名ラベルは 1 日目位置の上部に表示
 2. キャラレーン
    - キャラ名テキスト
    - レーン線
@@ -87,6 +95,6 @@
 
 ## 既知の制約（現状）
 
-- 日付（`day`）は UI の時間計算に反映されません（表示は月単位）
+- 年/全期間は月単位、月ズームは日単位で描画されます
 - `start` と `end` が同一（月単位で同値）だとバー幅が 0 になり視認性が落ちます（開始点の円は表示されます）
 - 「期間内のどこか1日」イベントは `occurrenceType` の有無で判別します（具体的な日付は未確定）
