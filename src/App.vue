@@ -986,6 +986,7 @@ body {
   width: 320px;
   height: 100vh;
   background: #ffffff;
+  color: #000000;
   border-left: 1px solid #ddd;
   box-shadow: -2px 0 6px rgba(0, 0, 0, 0.1);
   transform: translateX(100%);
