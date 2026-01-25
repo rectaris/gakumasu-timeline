@@ -153,7 +153,7 @@ const viewRange = computed(() => {
 
   if (zoomMode.value === "month") {
     const startMonth = zoomCenterMonth.value - zoomRangeMonths;
-    const endMonth = zoomCenterMonth.value + zoomRangeMonths;
+    const endMonth = zoomCenterMonth.value;
     return {
       min: startMonth * DAYS_IN_MONTH,
       max: endMonth * DAYS_IN_MONTH + (DAYS_IN_MONTH - 1)
