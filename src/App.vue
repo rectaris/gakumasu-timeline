@@ -14,7 +14,7 @@ import SidePanel from "./components/SidePanel.vue";
 import TimelineSvg from "./components/TimelineSvg.vue";
 import { invertHexColor } from "./utils/colors";
 import { isSingleWithinRange } from "./utils/events";
-import { monthLabel, yearLabel } from "./utils/labels";
+import { dayLabel, monthLabel, yearLabel } from "./utils/labels";
 import { LEFT_LABEL_WIDTH, RIGHT_PADDING, WIDTH } from "./utils/constants";
 
 const charactersRef = ref(characters);
@@ -35,6 +35,7 @@ const {
   isYearMode,
   isMonthMode,
   isDayMode,
+  isFullMode,
   isDayScale,
   showMonthScale,
   showDayScale,
@@ -82,14 +83,16 @@ const {
   onTouchStart,
   onTouchMove,
   onTouchEnd
-} = usePointer({ zoomMode: mode, moveYear, moveMonth });
+} = usePointer({ zoomMode: mode, moveYear, moveMonth, moveDay });
 
-useKeyboard({ zoomMode: mode, moveYear, moveMonth, closePanel });
+useKeyboard({ zoomMode: mode, moveYear, moveMonth, moveDay, closePanel });
 
 const prevYear = () => moveYear(-1);
 const nextYear = () => moveYear(1);
 const prevMonth = () => moveMonth(-1);
 const nextMonth = () => moveMonth(1);
+const prevDay = () => moveDay(-1);
+const nextDay = () => moveDay(1);
 </script>
 
 <template>
@@ -100,24 +103,31 @@ const nextMonth = () => moveMonth(1);
     :is-year-mode="isYearMode"
     :is-month-mode="isMonthMode"
     :is-day-mode="isDayMode"
+    :is-full-mode="isFullMode"
     :zoom-label="zoomLabel"
     :zoom-center-year="centerYear"
     :zoom-center-month="centerMonth"
+    :zoom-center-day="centerDay"
     :year-bounds="yearBounds"
     :month-bounds="monthBounds"
+    :day-bounds="dayBounds"
     :year-label="yearLabel"
     :month-label="monthLabel"
+    :day-label="dayLabel"
     :zoom-in="zoomIn"
     :zoom-out="zoomOut"
     :prev-year="prevYear"
     :next-year="nextYear"
     :prev-month="prevMonth"
     :next-month="nextMonth"
+    :prev-day="prevDay"
+    :next-day="nextDay"
     :start-hold="startHold"
     :stop-hold="stopHold"
     :handle-nav-click="handleNavClick"
     @update:zoom-center-year="value => (centerYear = value)"
     @update:zoom-center-month="value => (centerMonth = value)"
+    @update:zoom-center-day="value => (centerDay = value)"
   />
 
   <TimelineSvg

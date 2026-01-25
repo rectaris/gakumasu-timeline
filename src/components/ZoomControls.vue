@@ -4,19 +4,25 @@ const props = defineProps({
   isYearMode: { type: Boolean, required: true },
   isMonthMode: { type: Boolean, required: true },
   isDayMode: { type: Boolean, required: true },
+  isFullMode: { type: Boolean, required: true },
   zoomLabel: { type: String, required: true },
   zoomCenterYear: { type: Number, required: true },
   zoomCenterMonth: { type: Number, required: true },
+  zoomCenterDay: { type: Number, required: true },
   yearBounds: { type: Object, required: true },
   monthBounds: { type: Object, required: true },
+  dayBounds: { type: Object, required: true },
   yearLabel: { type: Function, required: true },
   monthLabel: { type: Function, required: true },
+  dayLabel: { type: Function, required: true },
   zoomIn: { type: Function, required: true },
   zoomOut: { type: Function, required: true },
   prevYear: { type: Function, required: true },
   nextYear: { type: Function, required: true },
   prevMonth: { type: Function, required: true },
   nextMonth: { type: Function, required: true },
+  prevDay: { type: Function, required: true },
+  nextDay: { type: Function, required: true },
   startHold: { type: Function, required: true },
   stopHold: { type: Function, required: true },
   handleNavClick: { type: Function, required: true }
@@ -24,7 +30,8 @@ const props = defineProps({
 
 const emit = defineEmits([
   "update:zoomCenterYear",
-  "update:zoomCenterMonth"
+  "update:zoomCenterMonth",
+  "update:zoomCenterDay"
 ]);
 
 function updateYear(event) {
@@ -34,6 +41,10 @@ function updateYear(event) {
 function updateMonth(event) {
   emit("update:zoomCenterMonth", Number(event.target.value));
 }
+
+function updateDay(event) {
+  emit("update:zoomCenterDay", Number(event.target.value));
+}
 </script>
 
 <template>
@@ -41,7 +52,7 @@ function updateMonth(event) {
     <button
       class="zoom-button zoom-button--out"
       @click="zoomOut"
-      :disabled="zoomMode === 'all'"
+      :disabled="isFullMode"
     >
       −
     </button>
@@ -137,6 +148,50 @@ function updateMonth(event) {
         @touchend="stopHold"
         @touchcancel="stopHold"
         :disabled="zoomCenterMonth >= monthBounds.maxMonth"
+      >
+        &gt;
+      </button>
+    </div>
+  </div>
+
+  <div class="month-slider" v-if="isDayMode">
+    <label>
+      中心日：
+      {{ dayLabel(zoomCenterDay) }}
+    </label>
+
+    <div class="slider-row">
+      <button
+        class="slider-nav slider-nav--prev"
+        @mousedown="startHold(prevDay)"
+        @touchstart="startHold(prevDay)"
+        @click="handleNavClick(prevDay)"
+        @mouseup="stopHold"
+        @mouseleave="stopHold"
+        @touchend="stopHold"
+        @touchcancel="stopHold"
+        :disabled="zoomCenterDay <= dayBounds.minDay"
+      >
+        &lt;
+      </button>
+      <input
+        type="range"
+        :min="dayBounds.minDay"
+        :max="dayBounds.maxDay"
+        :value="zoomCenterDay"
+        @input="updateDay"
+        step="1"
+      />
+      <button
+        class="slider-nav slider-nav--next"
+        @mousedown="startHold(nextDay)"
+        @touchstart="startHold(nextDay)"
+        @click="handleNavClick(nextDay)"
+        @mouseup="stopHold"
+        @mouseleave="stopHold"
+        @touchend="stopHold"
+        @touchcancel="stopHold"
+        :disabled="zoomCenterDay >= dayBounds.maxDay"
       >
         &gt;
       </button>

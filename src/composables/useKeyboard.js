@@ -1,6 +1,12 @@
 import { onMounted, onUnmounted } from "vue";
 
-export function useKeyboard({ zoomMode, moveYear, moveMonth, closePanel }) {
+export function useKeyboard({
+  zoomMode,
+  moveYear,
+  moveMonth,
+  moveDay,
+  closePanel
+}) {
   function handleKey(e) {
     if (e.key === "Escape") closePanel();
     if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
@@ -25,6 +31,9 @@ export function useKeyboard({ zoomMode, moveYear, moveMonth, closePanel }) {
     switch (zoomMode.value) {
       case "MONTH":
         moveMonth(delta);
+        break;
+      case "DAY":
+        if (moveDay) moveDay(delta);
         break;
       case "YEAR":
         moveYear(delta);
