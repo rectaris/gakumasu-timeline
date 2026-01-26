@@ -22,7 +22,7 @@ defineProps({
       :y="laneCenterY(index)"
       font-size="13"
       dominant-baseline="middle"
-      :fill="invertHexColor(char.color)"
+      :fill="char.textColor ?? invertHexColor(char.color)"
     >
       {{ char.name }}
     </text>

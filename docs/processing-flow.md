@@ -9,26 +9,30 @@
 
 ## データの取り込み
 
-- `src/App.vue` が `src/data/index.js` から `characters` を import
-- `characters` は、キャラ定義オブジェクトの配列
+- `src/App.vue` が `src/data/index.js` から `characters` / `hatsuboshiCommus` / `eventCommus` / `supportCardCommus` を import
+- カテゴリ別のレーン情報は正規化され、選択されたレーンのみ表示対象になる
+
+## カテゴリ/レーンの選択
+
+- 左メニューでカテゴリとレーンを選択
+- 選択結果は `activeLanes` としてタイムライン描画に反映
 
 ## 表示用イベントへの変換
 
-`allEvents`（computed）で、キャラ配列をイベント配列へフラット化します。
+`allEvents`（computed）で、選択済みレーンのイベント配列へフラット化します。
 
-- 入力: `characters[n].events[m]`
+- 入力: `activeLanes[n].events[m]`
 - 出力: `[{...event, character, color, laneIndex, startTime, endTime}, ...]`
 
 ### 時間の内部表現（現状）
 
-`src/App.vue` 内のローカル関数 `timeValue(year, month)` を使用します。
+`src/utils/time.js` の `timeValue(year, month)` を使用します。
 
 - `timeValue(year, month) = year * 12 + (month - 1)`
 - したがって、時間粒度は「月」です
 
 注意:
-- イベントデータ側は `day` を持つ場合がありますが、`src/App.vue` の `timeValue` は `day` を見ません
-- `src/data/utils/time.js` に日付込みの `timeValue({year,month,day})` があるものの、現状 UI 側では使われていません
+- 年/全期間は月単位、月/日ズームは日単位で描画されます
 
 月ズーム時は日単位の内部表現 `dayTimeValue(year, month, day)` を使用します。
 
@@ -37,17 +41,19 @@
 
 ## 表示範囲（ズーム）
 
-`viewRange`（computed）で表示する最小〜最大の内部時刻を決めます。
+`viewRange`（computed）で表示する最小〜最大の内部時刻を決めます（ズーム状態機械）。
 
-- `zoomMode === 'all'`
+- `mode === 'FULL'`
   - 全イベントの `startTime/endTime` から `min/max` を算出
-- `zoomMode === 'year'`
-  - `zoomCenterYear` を中心に `± zoomRangeYears` 年（現在は 1 年）
-  - 内部時刻は「月」なので年→月に変換して `center = zoomCenterYear * 12`
-- `zoomMode === 'month'`
-  - `zoomCenterMonth` を中心に `± zoomRangeMonths` 月（現在は 1 ヶ月）
-  - `zoomCenterMonth` は `timeValue(year, month)` の内部時刻で扱う
+- `mode === 'YEAR'`
+  - `centerYear` を中心に `± zoomRangeYears` 年（現在は 1 年）
+  - 内部時刻は「月」なので年→月に変換して `center = centerYear * 12`
+- `mode === 'MONTH'`
+  - `centerMonth` を中心に `± zoomRangeMonths` 月（現在は 1 ヶ月）
+  - `centerMonth` は `timeValue(year, month)` の内部時刻で扱う
   - 月ズーム時の `viewRange` は日単位（31日/月）で算出
+- `mode === 'DAY'`
+  - `centerDay` を中心に `± zoomRangeDays` 日（現在は 1 日）
 
 関連: `yearBounds` / `monthBounds` はスライダーの `min/max` を、全イベントの範囲から算出します。
 
@@ -59,7 +65,7 @@
   - `viewRange.min/max` に対する比率で x 座標を計算
   - 描画幅は `timelineViewport` の幅に合わせる
 - イベントの縦位置はサブレーン計算で決定
-  - `eventY(event)` が `laneTop + padding + subLaneIndex * rowHeight` を返す
+  - `yPos(laneIndex, subLaneIndex)` が `laneTop + padding + subLaneIndex * rowHeight` を返す
 
 描画内容:
 
@@ -72,7 +78,7 @@
    - キャラ名テキスト
    - レーン線
 3. イベント
-   - `visibleEvents`（表示範囲に重なるイベント）だけを描画
+  - `visibleEvents`（表示範囲に重なるイベント）だけを描画
    - 期間バー: `rect (x=start, width=end-start)`
   - 開始点・終了点: `circle`
   - `occurrenceType === "singleWithinRange"` の場合、バーに破線＋中央マーカーを追加

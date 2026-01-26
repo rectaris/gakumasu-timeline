@@ -3,8 +3,12 @@
 データは `src/data/worldline_commu/` 配下の JS モジュールとして定義されています。
 
 - 集約: `src/data/index.js`
+  - `characters`（アイドルコミュ）
+  - `hatsuboshiCommus`（初星コミュ）
+  - `eventCommus`（イベントコミュ）
+  - `supportCardCommus`（サポートカードコミュ）
 - 個別キャラ: `src/data/worldline_commu/**/` 配下の各モジュール
-- 時間ユーティリティ: `src/data/utils/time.js`
+- 時間ユーティリティ: `src/utils/time.js`
 - 世界線一覧: `src/data/worldlines.js`
 - キャラクター一覧: `src/data/characterCatalog.js`
 
@@ -32,9 +36,9 @@
 
 - `year: number`
 - `month: number`（1〜12）
-- `day?: number`（任意、現状 UI では未使用）
+- `day?: number`（任意、月/日ズーム時に表示へ反映）
 
-## 年の表現（`src/data/utils/time.js`）
+## 年の表現（`src/utils/time.js`）
 
 `year` は「学園の 1 年目」を基準にした相対表現として扱っています。
 
@@ -48,20 +52,10 @@
 
 ## timeValue ユーティリティ（注意点）
 
-`src/data/utils/time.js` には日付込みの内部表現 `timeValue({year,month,day})` が定義されています。
+`src/utils/time.js` では月単位 (`timeValue(year, month)`) と日単位 (`dayTimeValue(year, month, day)`) を併用します。
 
-```js
-export function timeValue({ year, month, day = 1 }) {
-  return year * 12 * 31 + (month - 1) * 31 + (day - 1);
-}
-```
-
-ただし現状の UI（`src/App.vue`）は、別のローカル関数 `timeValue(year, month)` を持っており、内部表現は月単位です。
-
-- データ側: 日付まで表現できる
-- UI 側: 月までしか反映されない
-
-この差分は「既存データを日付付きで書けるようにする」途中の状態の可能性があります。
+- 年/全期間表示は月単位
+- 月/日表示は日単位
 
 ## データ追加の手順（現状）
 
