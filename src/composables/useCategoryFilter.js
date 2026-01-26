@@ -1,5 +1,5 @@
 import { computed, reactive, ref, watch } from "vue";
-import { invertHexColor } from "../utils/colors";
+import { invertHexColor, normalizeHexColor } from "../utils/colors";
 import { timeValue } from "../utils/time";
 
 const CATEGORY_OPTIONS = [
@@ -12,7 +12,8 @@ const CATEGORY_OPTIONS = [
 const FALLBACK_COLORS = ["#7a7a7a", "#4d7ea8", "#a26ea1", "#c2854b"];
 
 function normalizeLaneColor(lane, index) {
-  return lane.color || FALLBACK_COLORS[index % FALLBACK_COLORS.length];
+  const normalized = normalizeHexColor(lane.color);
+  return normalized || FALLBACK_COLORS[index % FALLBACK_COLORS.length];
 }
 
 function normalizeLaneLabel(lane) {
@@ -45,6 +46,7 @@ function normalizeLanes(category, lanes) {
   return lanes.map((lane, index) => {
     const laneId = lane.id || `${category}_${index}`;
     const laneLabel = normalizeLaneLabel(lane);
+    const laneColor = normalizeLaneColor(lane, index);
     const events = Array.isArray(lane.events)
       ? lane.events
           .map(event =>
@@ -57,8 +59,8 @@ function normalizeLanes(category, lanes) {
       ...lane,
       id: laneId,
       name: laneLabel,
-      color: normalizeLaneColor(lane, index),
-      textColor: invertHexColor(normalizeLaneColor(lane, index)),
+      color: laneColor,
+      textColor: invertHexColor(laneColor),
       events
     };
   });
