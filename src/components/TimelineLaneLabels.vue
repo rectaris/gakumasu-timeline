@@ -59,7 +59,7 @@ function textX(text) {
       :y="laneCenterY(index) - rectHeight() / 2"
       :width="rectWidth(char.name)"
       :height="rectHeight()"
-      :fill="char.color"
+      :fill="char.labelBgColor ?? char.color"
       rx="6"
     />
     <text

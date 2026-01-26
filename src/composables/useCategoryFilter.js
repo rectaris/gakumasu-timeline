@@ -1,5 +1,8 @@
 import { computed, reactive, ref, watch } from "vue";
-import { invertHexColor, normalizeHexColor } from "../utils/colors";
+import {
+  backgroundFromTextColor,
+  normalizeHexColor
+} from "../utils/colors";
 import { timeValue } from "../utils/time";
 
 const CATEGORY_OPTIONS = [
@@ -60,7 +63,8 @@ function normalizeLanes(category, lanes) {
       id: laneId,
       name: laneLabel,
       color: laneColor,
-      textColor: invertHexColor(laneColor),
+      textColor: laneColor,
+      labelBgColor: backgroundFromTextColor(laneColor),
       events
     };
   });
