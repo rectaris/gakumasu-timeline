@@ -20,7 +20,8 @@ defineProps({
     <text
       x="10"
       :y="laneCenterY(index)"
-      font-size="13"
+      font-size="17"
+      font-weight="700"
       dominant-baseline="middle"
       :fill="char.textColor ?? invertHexColor(char.color)"
     >
