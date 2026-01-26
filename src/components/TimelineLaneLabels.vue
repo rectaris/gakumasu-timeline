@@ -22,7 +22,8 @@ function textX() {
 }
 
 function rectWidth(text) {
-  return estimateTextWidth(text) + H_PADDING * 2;
+  const maxWidth = Math.max(0, textX() - MIN_X);
+  return Math.min(estimateTextWidth(text) + H_PADDING * 2, maxWidth);
 }
 
 function rectX(text) {
@@ -32,6 +33,10 @@ function rectX(text) {
 
 function rectHeight() {
   return FONT_SIZE + 8;
+}
+
+function textWidth(text) {
+  return Math.max(0, rectWidth(text) - H_PADDING * 2);
 }
 </script>
 
@@ -52,6 +57,8 @@ function rectHeight() {
       :font-weight="FONT_WEIGHT"
       dominant-baseline="middle"
       text-anchor="end"
+      lengthAdjust="spacingAndGlyphs"
+      :textLength="textWidth(char.name)"
       :fill="char.textColor ?? invertHexColor(char.color)"
     >
       {{ char.name }}
