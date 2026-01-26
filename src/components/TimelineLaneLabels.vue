@@ -14,10 +14,18 @@ const MIN_X = 6;
 
 function estimateTextWidth(text) {
   if (!text) return 0;
-  const asciiWidth = FONT_SIZE * 0.6;
-  const wideWidth = FONT_SIZE;
+  const asciiWidth = FONT_SIZE * 0.58;
+  const spaceWidth = FONT_SIZE * 0.28;
+  const halfKanaWidth = FONT_SIZE * 0.72;
+  const wideWidth = FONT_SIZE * 0.98;
   return Array.from(text).reduce((total, char) => {
-    return total + (char.charCodeAt(0) <= 0x007f ? asciiWidth : wideWidth);
+    if (char === " ") return total + spaceWidth;
+    if (/^[\uFF61-\uFF9F]$/.test(char)) return total + halfKanaWidth;
+    if (/^[\u3040-\u30FF\u3400-\u9FFF\uF900-\uFAFF]$/.test(char)) {
+      return total + wideWidth;
+    }
+    if (char.charCodeAt(0) <= 0x007f) return total + asciiWidth;
+    return total + wideWidth;
   }, 0);
 }
 
