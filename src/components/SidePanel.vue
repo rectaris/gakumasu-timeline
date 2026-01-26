@@ -17,15 +17,18 @@ const props = defineProps({
         {{ selectedEvent.character }}<br />
         {{ yearLabel(selectedEvent.start.year) }}
         {{ selectedEvent.start.month }}月
+        {{ selectedEvent.start.day ?? 1 }}日
         <template
           v-if="
             selectedEvent.start.year !== selectedEvent.end.year ||
-            selectedEvent.start.month !== selectedEvent.end.month
+            selectedEvent.start.month !== selectedEvent.end.month ||
+            (selectedEvent.start.day ?? 1) !== (selectedEvent.end.day ?? 1)
           "
         >
           〜
           {{ yearLabel(selectedEvent.end.year) }}
           {{ selectedEvent.end.month }}月
+          {{ selectedEvent.end.day ?? 1 }}日
         </template>
       </p>
 
