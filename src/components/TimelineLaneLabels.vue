@@ -22,8 +22,7 @@ function textX() {
 }
 
 function rectWidth(text) {
-  const maxWidth = Math.max(0, textX() - MIN_X);
-  return Math.min(estimateTextWidth(text) + H_PADDING * 2, maxWidth);
+  return estimateTextWidth(text) + H_PADDING * 2;
 }
 
 function rectX(text) {
@@ -35,9 +34,6 @@ function rectHeight() {
   return FONT_SIZE + 8;
 }
 
-function textWidth(text) {
-  return Math.max(0, rectWidth(text) - H_PADDING * 2);
-}
 </script>
 
 <template>
@@ -57,8 +53,6 @@ function textWidth(text) {
       :font-weight="FONT_WEIGHT"
       dominant-baseline="middle"
       text-anchor="end"
-      lengthAdjust="spacingAndGlyphs"
-      :textLength="textWidth(char.name)"
       :fill="char.textColor ?? invertHexColor(char.color)"
     >
       {{ char.name }}
