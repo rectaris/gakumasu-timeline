@@ -21,7 +21,7 @@ function estimateTextWidth(text) {
   }, 0);
 }
 
-function textX() {
+function rectRight() {
   return props.leftLabelWidth - GAP_TO_TIMELINE;
 }
 
@@ -30,12 +30,16 @@ function rectWidth(text) {
 }
 
 function rectX(text) {
-  const x = textX() - rectWidth(text);
+  const x = rectRight() - rectWidth(text);
   return Math.max(MIN_X, x);
 }
 
 function rectHeight() {
   return FONT_SIZE + 8;
+}
+
+function textX(text) {
+  return rectX(text) + rectWidth(text) / 2;
 }
 
 </script>
@@ -51,12 +55,12 @@ function rectHeight() {
       rx="6"
     />
     <text
-      :x="textX()"
+      :x="textX(char.name)"
       :y="laneCenterY(index)"
       :font-size="FONT_SIZE"
       :font-weight="FONT_WEIGHT"
       dominant-baseline="middle"
-      text-anchor="end"
+      text-anchor="middle"
       :fill="char.textColor ?? invertHexColor(char.color)"
     >
       {{ char.name }}
