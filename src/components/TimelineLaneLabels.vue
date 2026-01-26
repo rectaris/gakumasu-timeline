@@ -14,7 +14,11 @@ const MIN_X = 6;
 
 function estimateTextWidth(text) {
   if (!text) return 0;
-  return text.length * (FONT_SIZE * 0.6);
+  const asciiWidth = FONT_SIZE * 0.6;
+  const wideWidth = FONT_SIZE;
+  return Array.from(text).reduce((total, char) => {
+    return total + (char.charCodeAt(0) <= 0x007f ? asciiWidth : wideWidth);
+  }, 0);
 }
 
 function textX() {
