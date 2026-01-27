@@ -96,9 +96,12 @@ export function useCategoryFilter({
     value => {
       CATEGORY_OPTIONS.forEach(option => {
         const lanes = value[option.id] || [];
-        if (lanes.length === 0) return;
+        if (lanes.length === 0) {
+          selectedLaneKeys[option.id] = [];
+          return;
+        }
         if (selectedLaneKeys[option.id].length === 0) {
-          selectedLaneKeys[option.id] = lanes.map(lane => lane.id);
+          selectedLaneKeys[option.id] = [];
         }
       });
     },
@@ -113,6 +116,20 @@ export function useCategoryFilter({
     }));
   });
 
+  const allSelected = computed(() => {
+    const category = selectedCategory.value;
+    const lanes = lanesByCategory.value[category] || [];
+    if (lanes.length === 0) return false;
+    return selectedLaneKeys[category].length === lanes.length;
+  });
+
+  const isIndeterminate = computed(() => {
+    const category = selectedCategory.value;
+    const lanes = lanesByCategory.value[category] || [];
+    const selectedCount = selectedLaneKeys[category].length;
+    return selectedCount > 0 && selectedCount < lanes.length;
+  });
+
   function isLaneSelected(category, laneKey) {
     return selectedLaneKeys[category].includes(laneKey);
   }
@@ -124,6 +141,11 @@ export function useCategoryFilter({
     } else {
       selectedLaneKeys[category] = [...selection, laneKey];
     }
+  }
+
+  function toggleAll(category, enabled) {
+    const lanes = lanesByCategory.value[category] || [];
+    selectedLaneKeys[category] = enabled ? lanes.map(lane => lane.id) : [];
   }
 
   const activeLanes = computed(() => {
@@ -147,7 +169,10 @@ export function useCategoryFilter({
     laneOptions,
     activeLanes,
     normalizedEvents,
+    allSelected,
+    isIndeterminate,
     isLaneSelected,
-    toggleLane
+    toggleLane,
+    toggleAll
   };
 }

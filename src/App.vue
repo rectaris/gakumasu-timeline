@@ -35,8 +35,11 @@ const {
   laneOptions,
   activeLanes,
   normalizedEvents,
+  allSelected,
+  isIndeterminate,
   isLaneSelected,
-  toggleLane
+  toggleLane,
+  toggleAll
 } = useCategoryFilter({
   characters: charactersRef,
   hatsuboshiCommus: hatsuboshiRef,
@@ -173,7 +176,19 @@ const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
     </section>
 
     <section class="side-menu__section">
-      <p class="menu-section-title">表示レーン</p>
+      <div class="menu-section-header">
+        <p class="menu-section-title">表示レーン</p>
+        <label class="menu-bulk-toggle">
+          <input
+            type="checkbox"
+            :checked="allSelected"
+            :indeterminate="isIndeterminate"
+            @change="toggleAll(selectedCategory, $event.target.checked)"
+            :disabled="isCurrentCategoryEmpty"
+          />
+          <span>一括</span>
+        </label>
+      </div>
       <template v-if="!isCurrentCategoryEmpty">
         <label
           v-for="lane in laneOptions"
