@@ -393,11 +393,40 @@ body {
 .manual-content {
   padding: 16px;
   margin: 0;
-  white-space: pre-wrap;
   overflow-y: auto;
   color: #333;
   font-family: "Noto Sans JP", system-ui, sans-serif;
-  line-height: 1.6;
+  line-height: 1.7;
+}
+
+.manual-content h1,
+.manual-content h2,
+.manual-content h3 {
+  margin: 16px 0 8px;
+  font-weight: 700;
+}
+
+.manual-content p {
+  margin: 8px 0;
+}
+
+.manual-content ul,
+.manual-content ol {
+  margin: 8px 0 8px 20px;
+}
+
+.manual-content code {
+  background: #f3f3f3;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 90%;
+}
+
+.manual-content pre {
+  background: #f6f6f6;
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
 }
 
 .menu-overlay {

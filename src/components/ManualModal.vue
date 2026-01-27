@@ -1,9 +1,14 @@
 <script setup>
-defineProps({
+import { computed } from "vue";
+import { marked } from "marked";
+
+const props = defineProps({
   open: { type: Boolean, required: true },
   content: { type: String, required: true },
   onClose: { type: Function, required: true }
 });
+
+const renderedHtml = computed(() => marked.parse(props.content));
 </script>
 
 <template>
@@ -16,7 +21,7 @@ defineProps({
           ×
         </button>
       </div>
-      <pre class="manual-content">{{ content }}</pre>
+      <div class="manual-content" v-html="renderedHtml"></div>
     </div>
   </div>
 </template>
