@@ -16,6 +16,7 @@ import { useTimelineData } from "./composables/useTimelineData";
 import { useTimelineLayout } from "./composables/useTimelineLayout";
 import { useTimelineScales } from "./composables/useTimelineScales";
 import { useZoomMachine } from "./composables/useZoomMachine";
+import ManualModal from "./components/ManualModal.vue";
 import ZoomControls from "./components/ZoomControls.vue";
 import SidePanel from "./components/SidePanel.vue";
 import TimelineSvg from "./components/TimelineSvg.vue";
@@ -23,6 +24,7 @@ import { invertHexColor } from "./utils/colors";
 import { isSingleWithinRange } from "./utils/events";
 import { dayLabel, monthLabel, yearLabel } from "./utils/labels";
 import { LEFT_LABEL_WIDTH, RIGHT_PADDING, WIDTH } from "./utils/constants";
+import manualContent from "../docs/manual.md?raw";
 
 const charactersRef = ref(characters);
 const hatsuboshiRef = ref(hatsuboshiCommus);
@@ -49,6 +51,12 @@ const {
 
 const { isOpen: menuOpen, openMenu, closeMenu, toggleMenu } =
   useMenuState();
+
+const {
+  isOpen: manualOpen,
+  openMenu: openManual,
+  closeMenu: closeManual
+} = useMenuState();
 
 const { allEvents, times, timesDay } = useTimelineData(activeLanes);
 const { selectedEvent, selectEvent, closePanel } = useSelection(allEvents);
@@ -137,16 +145,21 @@ const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
         aria-label="メニューを開く"
         @click="toggleMenu"
       >☰</button>
-      <a
+      <button
         class="manual-button"
-        href="docs/manual.md"
-        target="_blank"
-        rel="noopener noreferrer"
+        type="button"
         aria-label="マニュアルを開く"
-      >？</a>
+        @click="openManual"
+      >？</button>
     </div>
     <div class="app-title">キャラクタータイムライン</div>
   </header>
+
+  <ManualModal
+    :open="manualOpen"
+    :content="manualContent"
+    :on-close="closeManual"
+  />
 
   <div
     v-if="menuOpen"
