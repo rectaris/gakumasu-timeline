@@ -127,14 +127,22 @@ export function backgroundFromTextColor(hex) {
 
   const { h } = rgbToOklch(rgb);
   const targetHue = (h + 180) % 360;
-  let lightness = 0.92;
+  const textLuminance = relativeLuminance(rgb);
+  const isTextLight = textLuminance > 0.6;
+  let lightness = isTextLight ? 0.35 : 0.92;
   let chroma = 0.06;
 
   let background = oklchToRgb({ L: lightness, C: chroma, h: targetHue });
   let ratio = contrastRatio(rgb, background);
 
-  while (ratio < 4.5 && lightness < 0.98) {
+  while (ratio < 4.5 && lightness < 0.98 && !isTextLight) {
     lightness += 0.01;
+    background = oklchToRgb({ L: lightness, C: chroma, h: targetHue });
+    ratio = contrastRatio(rgb, background);
+  }
+
+  while (ratio < 4.5 && lightness > 0.12 && isTextLight) {
+    lightness -= 0.01;
     background = oklchToRgb({ L: lightness, C: chroma, h: targetHue });
     ratio = contrastRatio(rgb, background);
   }
