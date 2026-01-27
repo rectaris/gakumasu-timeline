@@ -130,12 +130,21 @@ const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
 
 <template>
   <header class="app-header">
-    <button
-      class="menu-button"
-      type="button"
-      aria-label="メニューを開く"
-      @click="toggleMenu"
-    >☰</button>
+    <div class="header-left">
+      <button
+        class="menu-button"
+        type="button"
+        aria-label="メニューを開く"
+        @click="toggleMenu"
+      >☰</button>
+      <a
+        class="manual-button"
+        href="docs/manual.md"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="マニュアルを開く"
+      >？</a>
+    </div>
     <div class="app-title">キャラクタータイムライン</div>
   </header>
 

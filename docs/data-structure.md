@@ -19,6 +19,7 @@
 - `id: string`
 - `name: string`
 - `color: string`（CSS 色。イベントバーに使用）
+- レーンラベルの文字色にも使用し、背景色は表示側で自動補正されます
 - `events: Event[]`
 
 ## Event オブジェクト
