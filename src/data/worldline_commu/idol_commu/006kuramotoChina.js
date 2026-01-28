@@ -3,7 +3,7 @@ import { yearsAgo, yearOf } from "../../utils/time";
 export default {
   id: "china_kuramoto",
   name: "倉本 千奈",
-  color: "#ffa500", // オレンジ（イメージカラー）
+  color: "#F68C21",
   events: [
     {
       id: "china_debut",

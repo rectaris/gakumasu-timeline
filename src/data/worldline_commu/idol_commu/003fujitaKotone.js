@@ -3,7 +3,7 @@ import { yearsAgo, yearOf } from "../../utils/time";
 export default {
   id: "kotone_fujita",
   name: "藤田 ことね",
-  color: "#ffff00", // 黄色（イメージカラー）
+  color: "#F8C216",
   events: [
     {
       id: "003_birth",

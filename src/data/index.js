@@ -14,7 +14,7 @@ import juoSena from "./worldline_commu/idol_commu/011juoSena";
 import hatayaMisuzu from "./worldline_commu/idol_commu/012hatayaMisuzu";
 import amayaTsubame from "./worldline_commu/idol_commu/013amayaTsubame";
 
-export const idol_commu = [
+export const idolCommu = [
     hanamiSaki,
     tsukimuraTemari,
     fujitaKotone,
@@ -29,8 +29,6 @@ export const idol_commu = [
     hatayaMisuzu,
     amayaTsubame,
 ];
-
-export const characters = idol_commu;
 
 // 初星コミュ
 // src/data/worldline_commu/hatsuboshi_commu/

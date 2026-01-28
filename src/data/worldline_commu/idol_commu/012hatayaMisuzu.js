@@ -3,7 +3,7 @@ import { yearsAgo, yearOf } from "../../utils/time";
 export default {
   id: "misuzu_hataya",
   name: "秦谷 美鈴",
-  color: "#00008b", // 群青（イメージカラー）
+  color: "#7B9ACF",
   events: [
     {
       id: "misuzu_debut",

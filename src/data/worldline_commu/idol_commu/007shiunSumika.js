@@ -3,7 +3,7 @@ import { yearsAgo, yearOf } from "../../utils/time";
 export default {
   id: "sumika_shiun",
   name: "紫雲 清夏",
-  color: "#7fff00", // 黄緑（イメージカラー）
+  color: "#7EFC04",
   events: [
     {
       id: "sumika_debut",

@@ -3,7 +3,7 @@ import { yearsAgo, yearOf } from "../../utils/time";
 export default {
   id: "rinami_himesaki",
   name: "姫崎 莉波",
-  color: "#ffc0cb", // ピンク（イメージカラー）
+  color: "#F6AEC6",
   events: [
     {
       id: "rinami_debut",

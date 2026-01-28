@@ -3,7 +3,7 @@ import { yearsAgo, yearOf } from "../../utils/time";
 export default {
   id: "mao_arimura",
   name: "有村 麻央",
-  color: "#800080", // 紫（イメージカラー）
+  color: "#801184",
   events: [
     {
       id: "mao_debut",

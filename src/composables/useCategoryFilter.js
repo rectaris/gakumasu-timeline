@@ -71,7 +71,7 @@ function normalizeLanes(category, lanes) {
 }
 
 export function useCategoryFilter({
-  characters,
+  idolCommu,
   hatsuboshiCommus,
   eventCommus,
   supportCardCommus
@@ -85,7 +85,7 @@ export function useCategoryFilter({
   });
 
   const lanesByCategory = computed(() => ({
-    idol: normalizeLanes("idol", characters.value || []),
+    idol: normalizeLanes("idol", idolCommu.value || []),
     hatsuboshi: normalizeLanes("hatsuboshi", hatsuboshiCommus.value || []),
     event: normalizeLanes("event", eventCommus.value || []),
     support: normalizeLanes("support", supportCardCommus.value || [])

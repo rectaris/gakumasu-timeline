@@ -3,7 +3,7 @@ import { yearOf } from "../../utils/time";
 export default {
   id: "story_of_reiris",
   name: "Story of Re;Iris",
-  color: "#826EB4", // 藤紫（イメージカラー）
+  color: "#826EB4",
   events: [
     {
       id: "001_h_debut",

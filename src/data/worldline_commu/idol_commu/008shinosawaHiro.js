@@ -3,7 +3,7 @@ import { yearsAgo, yearOf } from "../../utils/time";
 export default {
   id: "hiro_shinosawa",
   name: "篠澤 広",
-  color: "#00ffff", // 水色（イメージカラー）
+  color: "#02B0CD",
   events: [
     {
       id: "hiro_debut",

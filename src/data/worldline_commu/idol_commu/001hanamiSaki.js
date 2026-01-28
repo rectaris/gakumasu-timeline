@@ -3,7 +3,7 @@ import { yearsAgo, yearOf } from "../../utils/time";
 export default {
   id: "saki_hanami",
   name: "花海 咲季",
-  color: "#ff0000", // 赤（イメージカラー）
+  color: "#E30920",
   events: [
     {
       id: "001_birth",

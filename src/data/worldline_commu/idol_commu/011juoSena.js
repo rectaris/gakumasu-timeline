@@ -3,7 +3,7 @@ import { yearsAgo, yearOf } from "../../utils/time";
 export default {
   id: "sena_juo",
   name: "十王 星南",
-  color: "#ffd700", // 山吹色（イメージカラー）
+  color: "#F7B869",
   events: [
     {
       id: "sena_regent",

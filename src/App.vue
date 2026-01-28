@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import {
-  characters,
+  idolCommu,
   hatsuboshiCommus,
   eventCommus,
   supportCardCommus
@@ -26,7 +26,7 @@ import { dayLabel, monthLabel, yearLabel } from "./utils/labels";
 import { LEFT_LABEL_WIDTH, RIGHT_PADDING, WIDTH } from "./utils/constants";
 import manualContent from "../docs/manual.md?raw";
 
-const charactersRef = ref(characters);
+const idolCommuRef = ref(idolCommu);
 const hatsuboshiRef = ref(hatsuboshiCommus);
 const eventRef = ref(eventCommus);
 const supportRef = ref(supportCardCommus);
@@ -43,7 +43,7 @@ const {
   toggleLane,
   toggleAll
 } = useCategoryFilter({
-  characters: charactersRef,
+  idolCommu: idolCommuRef,
   hatsuboshiCommus: hatsuboshiRef,
   eventCommus: eventRef,
   supportCardCommus: supportRef

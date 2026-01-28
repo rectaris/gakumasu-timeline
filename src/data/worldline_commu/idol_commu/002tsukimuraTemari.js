@@ -3,7 +3,7 @@ import { yearsAgo, yearOf } from "../../utils/time";
 export default {
   id: "temari_tsukimura",
   name: "月村 手毬",
-  color: "#0000ff", // 青（イメージカラー）
+  color: "#0D7CBC",
   events: [
     {
       id: "002_birth",

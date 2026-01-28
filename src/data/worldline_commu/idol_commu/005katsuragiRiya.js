@@ -3,7 +3,7 @@ import { yearsAgo, yearOf } from "../../utils/time";
 export default {
   id: "riya_katsuragi",
   name: "葛城 リーリヤ",
-  color: "#ffffff", // 白（イメージカラー）
+  color: "#EAFDFF",
   events: [
     {
       id: "riya_debut",
