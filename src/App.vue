@@ -4,7 +4,8 @@ import {
   idolCommu,
   hatsuboshiCommus,
   eventCommus,
-  supportCardCommus
+  supportCardCommus,
+  commonTimeline
 } from "./data";
 import { useEventDisplay } from "./composables/useEventDisplay";
 import { useKeyboard } from "./composables/useKeyboard";
@@ -58,7 +59,7 @@ const {
   closeMenu: closeManual
 } = useMenuState();
 
-const { allEvents, times, timesDay } = useTimelineData(activeLanes);
+const { allEvents, times, timesDay } = useTimelineData(activeLanes, commonTimeline);
 const { selectedEvent, selectEvent, closePanel } = useSelection(allEvents);
 
 const {

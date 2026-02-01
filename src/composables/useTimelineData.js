@@ -1,9 +1,10 @@
 import { computed } from "vue";
 import { dayTimeValue, timeValue } from "../utils/time";
 
-export function useTimelineData(characters) {
+export function useTimelineData(characters, commonTimeline = null) {
   const allEvents = computed(() => {
-    return characters.value.flatMap((char, index) =>
+    // キャラクターごとのイベント
+    const characterEvents = characters.value.flatMap((char, index) =>
       char.events.map(ev => {
         const startTime = timeValue(ev.start.year, ev.start.month);
         const endTime = timeValue(ev.end.year, ev.end.month);
@@ -24,10 +25,43 @@ export function useTimelineData(characters) {
             ev.end.year,
             ev.end.month,
             ev.end.day ?? 1
-          )
+          ),
+          isCommon: false
         };
       })
     );
+
+    // 共通イベント（全レーンに展開）
+    const commonEvents = commonTimeline && commonTimeline.events
+      ? characters.value.flatMap((char, laneIndex) =>
+          commonTimeline.events.map(ev => {
+            const startTime = timeValue(ev.start.year, ev.start.month);
+            const endTime = timeValue(ev.end.year, ev.end.month);
+
+            return {
+              ...ev,
+              character: commonTimeline.name,
+              color: commonTimeline.color,
+              laneIndex,
+              startTime,
+              endTime,
+              startTimeDay: dayTimeValue(
+                ev.start.year,
+                ev.start.month,
+                ev.start.day ?? 1
+              ),
+              endTimeDay: dayTimeValue(
+                ev.end.year,
+                ev.end.month,
+                ev.end.day ?? 1
+              ),
+              isCommon: true
+            };
+          })
+        )
+      : [];
+
+    return [...characterEvents, ...commonEvents];
   });
 
   const times = computed(() => {

@@ -1,3 +1,6 @@
+// 共通イベント
+import commonTimeline from "./worldline_commu/common_timeline";
+
 // アイドルコミュ
 // src/data/worldline_commu/idol_commu/
 import hanamiSaki from "./worldline_commu/idol_commu/001hanamiSaki";
@@ -51,3 +54,7 @@ export const eventCommus = [
 export const supportCardCommus = [
     // 今後追加予定
 ];
+
+// 共通イベント（全レーンで表示）
+export { commonTimeline };
+
