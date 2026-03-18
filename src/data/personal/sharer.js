@@ -9,306 +9,306 @@
 */
 
 export default {
-    sharer: [
-        {
-            id: "001",
-            name: "いおん",
-            url: ["https://www.youtube.com/@ion_fna"],
-            tags: [""]
-        },
-        {
-            id: "002",
-            name: "愛幸P",
-            url: ["https://www.youtube.com/@aisachiP"],
-            tags: [""]
-        },
-        {
-            id: "003",
-            name: "ミーク",
-            url: ["https://www.youtube.com/@Meek_Meekuma"],
-            tags: [""]
-        },
-        {
-            id: "004",
-            name: "坂道 のぼる",
-            url: ["https://www.youtube.com/@noboru_SKMC"],
-            tags: [""]
-        },
-        {
-            id: "005",
-            name: "黒咲くるみ",
-            url: ["https://www.youtube.com/@kuru3lk_"],
-            tags: [""]
-        },
-        {
-            id: "006",
-            name: "なな湖",
-            url: ["https://www.youtube.com/@nanaco775"],
-            tags: [""]
-        },
-        {
-            id: "007",
-            name: "ジャック・オ・蘭たん",
-            url: ["https://www.youtube.com/@lantanch"],
-            tags: [""]
-        },
-        {
-            id: "008",
-            name: "オタクチャンネル",
-            url: ["https://www.youtube.com/@otaku.ch1"],
-            tags: [""]
-        },
-        {
-            id: "009",
-            name: "千代倉こはる",
-            url: ["https://www.youtube.com/@ChiyokuraCoharu"],
-            tags: [""]
-        },
-        {
-            id: "010",
-            name: "ドドドメテオ",
-            url: ["https://www.youtube.com/channel/UCl4-NOZIRgiPrSvniQt3hzA"],
-            tags: [""]
-        },
-        {
-            id: "011",
-            name: "百合園える",
-            url: ["https://www.youtube.com/@yurizonoeru0505"],
-            tags: [""]
-        },
-        {
-            id: "012",
-            name: "明星あかり",
-            url: ["https://www.youtube.com/@akariakehoshi4087"],
-            tags: [""]
-        },
-        {
-            id: "013",
-            name: "画尾がるる",
-            url: ["https://www.youtube.com/@GaoGaruru"],
-            tags: [""]
-        },
-        {
-            id: "014",
-            name: "春歌みこと",
-            url: ["https://www.youtube.com/@mikoto_songs"],
-            tags: [""]
-        },
-        {
-            id: "015",
-            name: "トォル",
-            url: ["https://www.youtube.com/channel/UCqOPA9ZQ7uB4OXmCw1jTAPQ"],
-            tags: [""]
-        },
-        {
-            id: "016",
-            name: "穂俵こごめ",
-            url: ["https://www.youtube.com/@hodawara_kogome"],
-            tags: [""]
-        },
-        {
-            id: "017",
-            name: "杉田こと",
-            url: ["https://www.youtube.com/@sugita_koto"],
-            tags: [""]
-        },
-        {
-            id: "018",
-            name: "日向なこ",
-            url: ["https://www.youtube.com/@日向なこ"],
-            tags: [""]
-        },
-        {
-            id: "019",
-            name: "津島千代女",
-            url: ["https://www.youtube.com/@tiyome_tusima"],
-            tags: [""]
-        },
-        {
-            id: "020",
-            name: "七星チユ",
-            url: ["https://www.youtube.com/@nanasechiyu1117"],
-            tags: [""]
-        },
-        {
-            id: "021",
-            name: "ごまごまご",
-            url: ["https://www.youtube.com/@ごまごまご"],
-            tags: [""]
-        },
-        {
-            id: "022",
-            name: "眠乃よる",
-            url: ["https://www.youtube.com/@NemurinoYoru"],
-            tags: [""]
-        },
-        {
-            id: "023",
-            name: "葉加瀬冬雪",
-            url: ["https://www.youtube.com/@HakaseFuyuki"],
-            tags: [""]
-        },
-        {
-            id: "024",
-            name: "十河ののは",
-            url: ["https://www.youtube.com/@TogawaNonoha"],
-            tags: [""]
-        },
-        {
-            id: "025",
-            name: "Emera",
-            url: ["https://www.youtube.com/@Emera_VEYOND"],
-            tags: [""]
-        },
-        {
-            id: "026",
-            name: "香鳴ハノン",
-            url: ["https://www.youtube.com/@kanaruhanon"],
-            tags: [""]
-        },
-        {
-            id: "027",
-            name: "斗涙つつじ",
-            url: ["https://www.youtube.com/@HoshinamiTsutsuji"],
-            tags: [""]
-        },
-        {
-            id: "028",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "029",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "030",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "031",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "032",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "033",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "034",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "035",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "036",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "037",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "038",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "039",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "040",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "041",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "042",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "043",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "044",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "045",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "046",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "047",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "048",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "049",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-        {
-            id: "050",
-            name: "",
-            url: [],
-            tags: [""]
-        },
-    ]
-}
+  sharer: [
+    {
+      id: "001",
+      name: "いおん",
+      url: ["https://www.youtube.com/@ion_fna"],
+      tags: [""],
+    },
+    {
+      id: "002",
+      name: "愛幸P",
+      url: ["https://www.youtube.com/@aisachiP"],
+      tags: [""],
+    },
+    {
+      id: "003",
+      name: "ミーク",
+      url: ["https://www.youtube.com/@Meek_Meekuma"],
+      tags: [""],
+    },
+    {
+      id: "004",
+      name: "坂道 のぼる",
+      url: ["https://www.youtube.com/@noboru_SKMC"],
+      tags: [""],
+    },
+    {
+      id: "005",
+      name: "黒咲くるみ",
+      url: ["https://www.youtube.com/@kuru3lk_"],
+      tags: [""],
+    },
+    {
+      id: "006",
+      name: "なな湖",
+      url: ["https://www.youtube.com/@nanaco775"],
+      tags: [""],
+    },
+    {
+      id: "007",
+      name: "ジャック・オ・蘭たん",
+      url: ["https://www.youtube.com/@lantanch"],
+      tags: [""],
+    },
+    {
+      id: "008",
+      name: "オタクチャンネル",
+      url: ["https://www.youtube.com/@otaku.ch1"],
+      tags: [""],
+    },
+    {
+      id: "009",
+      name: "千代倉こはる",
+      url: ["https://www.youtube.com/@ChiyokuraCoharu"],
+      tags: [""],
+    },
+    {
+      id: "010",
+      name: "ドドドメテオ",
+      url: ["https://www.youtube.com/channel/UCl4-NOZIRgiPrSvniQt3hzA"],
+      tags: [""],
+    },
+    {
+      id: "011",
+      name: "百合園える",
+      url: ["https://www.youtube.com/@yurizonoeru0505"],
+      tags: [""],
+    },
+    {
+      id: "012",
+      name: "明星あかり",
+      url: ["https://www.youtube.com/@akariakehoshi4087"],
+      tags: [""],
+    },
+    {
+      id: "013",
+      name: "画尾がるる",
+      url: ["https://www.youtube.com/@GaoGaruru"],
+      tags: [""],
+    },
+    {
+      id: "014",
+      name: "春歌みこと",
+      url: ["https://www.youtube.com/@mikoto_songs"],
+      tags: [""],
+    },
+    {
+      id: "015",
+      name: "トォル",
+      url: ["https://www.youtube.com/channel/UCqOPA9ZQ7uB4OXmCw1jTAPQ"],
+      tags: [""],
+    },
+    {
+      id: "016",
+      name: "穂俵こごめ",
+      url: ["https://www.youtube.com/@hodawara_kogome"],
+      tags: [""],
+    },
+    {
+      id: "017",
+      name: "杉田こと",
+      url: ["https://www.youtube.com/@sugita_koto"],
+      tags: [""],
+    },
+    {
+      id: "018",
+      name: "日向なこ",
+      url: ["https://www.youtube.com/@日向なこ"],
+      tags: [""],
+    },
+    {
+      id: "019",
+      name: "津島千代女",
+      url: ["https://www.youtube.com/@tiyome_tusima"],
+      tags: [""],
+    },
+    {
+      id: "020",
+      name: "七星チユ",
+      url: ["https://www.youtube.com/@nanasechiyu1117"],
+      tags: [""],
+    },
+    {
+      id: "021",
+      name: "ごまごまご",
+      url: ["https://www.youtube.com/@ごまごまご"],
+      tags: [""],
+    },
+    {
+      id: "022",
+      name: "眠乃よる",
+      url: ["https://www.youtube.com/@NemurinoYoru"],
+      tags: [""],
+    },
+    {
+      id: "023",
+      name: "葉加瀬冬雪",
+      url: ["https://www.youtube.com/@HakaseFuyuki"],
+      tags: [""],
+    },
+    {
+      id: "024",
+      name: "十河ののは",
+      url: ["https://www.youtube.com/@TogawaNonoha"],
+      tags: [""],
+    },
+    {
+      id: "025",
+      name: "Emera",
+      url: ["https://www.youtube.com/@Emera_VEYOND"],
+      tags: [""],
+    },
+    {
+      id: "026",
+      name: "香鳴ハノン",
+      url: ["https://www.youtube.com/@kanaruhanon"],
+      tags: [""],
+    },
+    {
+      id: "027",
+      name: "斗涙つつじ",
+      url: ["https://www.youtube.com/@HoshinamiTsutsuji"],
+      tags: [""],
+    },
+    {
+      id: "028",
+      name: "姫雅夜花香",
+      url: ["https://www.youtube.com/@honoka_fsp"],
+      tags: [""],
+    },
+    {
+      id: "029",
+      name: "かんなぎぺあ",
+      url: ["https://www.youtube.com/@kannagipair"],
+      tags: [""],
+    },
+    {
+      id: "030",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "031",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "032",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "033",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "034",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "035",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "036",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "037",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "038",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "039",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "040",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "041",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "042",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "043",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "044",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "045",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "046",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "047",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "048",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "049",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+    {
+      id: "050",
+      name: "",
+      url: [],
+      tags: [""],
+    },
+  ],
+};
