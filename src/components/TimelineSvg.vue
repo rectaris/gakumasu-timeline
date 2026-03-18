@@ -31,12 +31,16 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["select"]);
+const CLIP_PADDING = 6;
 </script>
 
 <template>
   <svg
+    class="timeline-svg"
     :width="width"
     :height="svgHeight"
+    :viewBox="`0 0 ${width} ${svgHeight}`"
+    preserveAspectRatio="xMidYMin meet"
     @touchstart="onTouchStart"
     @touchmove="onTouchMove"
     @touchend="onTouchEnd"
@@ -45,9 +49,9 @@ const emit = defineEmits(["select"]);
     <defs>
       <clipPath id="timeline-clip">
         <rect
-          :x="timelineViewport.x"
+          :x="timelineViewport.x - CLIP_PADDING"
           :y="timelineViewport.y"
-          :width="timelineViewport.width"
+          :width="timelineViewport.width + CLIP_PADDING * 2"
           :height="timelineViewport.height"
         />
       </clipPath>

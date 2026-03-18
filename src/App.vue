@@ -262,30 +262,34 @@ const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
     @update:zoom-center-day="value => (centerDay = value)"
   />
 
-  <TimelineSvg
-    :width="WIDTH"
-    :svg-height="svgHeight"
-    :timeline-viewport="timelineViewport"
-    :years="years"
-    :month-ticks="monthTicks"
-    :day-ticks="dayTicks"
-    :show-month-scale="showMonthScale"
-    :show-day-scale="showDayScale"
-    :x-pos="xPos"
-    :lane-center-y="laneCenterY"
-    :y-pos="yPos"
-    :characters="activeLanes"
-    :visible-events="visibleEvents"
-    :is-day-scale="isDayScale"
-    :is-single-within-range="isSingleWithinRange"
-    :invert-hex-color="invertHexColor"
-    :left-label-width="LEFT_LABEL_WIDTH"
-    :year-label="yearLabel"
-    :on-touch-start="onTouchStart"
-    :on-touch-move="onTouchMove"
-    :on-touch-end="onTouchEnd"
-    @select="selectEvent"
-  />
+  <div class="timeline-shell">
+    <div class="timeline-stage">
+      <TimelineSvg
+        :width="WIDTH"
+        :svg-height="svgHeight"
+        :timeline-viewport="timelineViewport"
+        :years="years"
+        :month-ticks="monthTicks"
+        :day-ticks="dayTicks"
+        :show-month-scale="showMonthScale"
+        :show-day-scale="showDayScale"
+        :x-pos="xPos"
+        :lane-center-y="laneCenterY"
+        :y-pos="yPos"
+        :characters="activeLanes"
+        :visible-events="visibleEvents"
+        :is-day-scale="isDayScale"
+        :is-single-within-range="isSingleWithinRange"
+        :invert-hex-color="invertHexColor"
+        :left-label-width="LEFT_LABEL_WIDTH"
+        :year-label="yearLabel"
+        :on-touch-start="onTouchStart"
+        :on-touch-move="onTouchMove"
+        :on-touch-end="onTouchEnd"
+        @select="selectEvent"
+      />
+    </div>
+  </div>
 
   <SidePanel
     :selected-event="selectedEvent"
