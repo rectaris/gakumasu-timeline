@@ -25,10 +25,13 @@ const props = defineProps({
   invertHexColor: { type: Function, required: true },
   leftLabelWidth: { type: Number, required: true },
   yearLabel: { type: Function, required: true },
+  onClickCapture: { type: Function, required: true },
+  onMouseDown: { type: Function, required: true },
   onWheel: { type: Function, required: true },
   onTouchStart: { type: Function, required: true },
   onTouchMove: { type: Function, required: true },
-  onTouchEnd: { type: Function, required: true }
+  onTouchEnd: { type: Function, required: true },
+  isDragging: { type: Boolean, required: true }
 });
 
 const emit = defineEmits(["select"]);
@@ -38,10 +41,13 @@ const CLIP_PADDING = 6;
 <template>
   <svg
     class="timeline-svg"
+    :class="{ 'timeline-svg--dragging': isDragging }"
     :width="width"
     :height="svgHeight"
     :viewBox="`0 0 ${width} ${svgHeight}`"
     preserveAspectRatio="xMidYMin meet"
+    @click.capture="onClickCapture"
+    @mousedown="onMouseDown"
     @wheel="onWheel"
     @touchstart="onTouchStart"
     @touchmove="onTouchMove"

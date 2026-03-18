@@ -18,7 +18,7 @@ defineProps({
 <template>
   <div class="zoom-controls">
     <div class="zoom-group">
-      <span class="zoom-group-label">H</span>
+      <span class="zoom-group-label">横</span>
       <button
         class="zoom-button zoom-button--out"
         type="button"
@@ -32,7 +32,7 @@ defineProps({
         type="button"
         @click="resetHorizontalZoom"
       >
-        Fit
+        全体
       </button>
       <button
         class="zoom-button zoom-button--in"
@@ -46,7 +46,7 @@ defineProps({
     </div>
 
     <div class="zoom-group">
-      <span class="zoom-group-label">V</span>
+      <span class="zoom-group-label">縦</span>
       <button
         class="zoom-button zoom-button--out"
         type="button"
@@ -75,8 +75,9 @@ defineProps({
   </div>
 
   <div class="zoom-hints">
-    <p class="zoom-hint">Wheel: pan horizontally</p>
-    <p class="zoom-hint">Ctrl / Cmd / Alt + Wheel: zoom horizontally</p>
-    <p class="timeline-scale-note">Dates use an abstract 31-day month scale.</p>
+    <p class="zoom-hint">ドラッグ: 左右に移動</p>
+    <p class="zoom-hint">ホイール: 拡大・縮小</p>
+    <p class="zoom-hint">横方向ホイール: 左右に移動</p>
+    <p class="timeline-scale-note">日付は各月31日換算の抽象時系列です。</p>
   </div>
 </template>

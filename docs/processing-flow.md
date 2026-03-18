@@ -37,7 +37,7 @@
 - `day` がない場合でも、表示用レンジは抽象時系列として月初 / 月末へ補完します
 - 実カレンダーではなく、各月31日換算です
 
-## 表示範囲（水平 pan / zoom）
+## 表示範囲（水平移動 / 拡大縮小）
 
 `viewRange`（computed）で表示する最小〜最大の内部時刻を決めます。
 
@@ -49,7 +49,7 @@
   - `horizontalCenter ± horizontalSpan / 2`
 - `timeBounds`
   - 全イベントの `displayStartDay / displayEndDay` をもとに算出
-- 選択イベントが表示範囲外に出る場合は `fit if needed` で span を広げて再センタリングします
+- 選択イベントが表示範囲外に出る場合は、必要な幅まで span を広げて再センタリングします
 
 縦方向は `verticalScale` でレーン高さ・行間・バー高さを伸縮します。
 
@@ -89,14 +89,16 @@
   - URL クエリから `event` を削除
 - キーボード
   - `onMounted` で `keydown` リスナーを登録
-  - `ArrowLeft / ArrowRight` で水平 pan
-  - `+ / -` で水平 zoom
+  - `ArrowLeft / ArrowRight` で水平移動
+  - `+ / -` で水平拡大縮小
   - `Escape` でパネルを閉じる
 - ホイール
-  - 通常ホイールで水平 pan
-  - `Ctrl / Cmd / Alt + Wheel` で水平 zoom
+  - 通常ホイールで水平拡大縮小
+  - 横方向ホイールで水平移動
+- マウス
+  - ドラッグで水平移動
 - タッチ
-  - 横ドラッグで水平 pan
+  - 横ドラッグで水平移動
 
 ## URL からの復元
 

@@ -127,32 +127,35 @@ function panByPixels(deltaPixels, svgElement) {
 
 function handleTimelineWheel(event) {
   const svgElement = event.currentTarget;
-  const panDeltaPixels =
-    Math.abs(event.deltaX) > Math.abs(event.deltaY)
-      ? event.deltaX
-      : event.deltaY;
+  const isHorizontalWheel = Math.abs(event.deltaX) > Math.abs(event.deltaY);
 
-  if (event.ctrlKey || event.metaKey || event.altKey) {
-    event.preventDefault();
+  event.preventDefault();
 
-    const rect = svgElement.getBoundingClientRect();
-    if (!rect.width) return;
-
-    const scaleX = WIDTH / rect.width;
-    const svgX = (event.clientX - rect.left) * scaleX;
-    const anchorRatio = clampRatio(
-      (svgX - timelineViewport.value.x) / timelineViewport.value.width
-    );
-
-    zoomHorizontallyBy(Math.exp(event.deltaY * 0.0015), anchorRatio);
+  if (isHorizontalWheel) {
+    panByPixels(event.deltaX, svgElement);
     return;
   }
 
-  event.preventDefault();
-  panByPixels(panDeltaPixels, svgElement);
+  const rect = svgElement.getBoundingClientRect();
+  if (!rect.width) return;
+
+  const scaleX = WIDTH / rect.width;
+  const svgX = (event.clientX - rect.left) * scaleX;
+  const anchorRatio = clampRatio(
+    (svgX - timelineViewport.value.x) / timelineViewport.value.width
+  );
+
+  zoomHorizontallyBy(Math.exp(event.deltaY * 0.0015), anchorRatio);
 }
 
-const { onTouchStart, onTouchMove, onTouchEnd } = usePointer({
+const {
+  isDragging,
+  onClickCapture,
+  onMouseDown,
+  onTouchStart,
+  onTouchMove,
+  onTouchEnd
+} = usePointer({
   panByPixels
 });
 
@@ -296,9 +299,12 @@ const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
         :left-label-width="LEFT_LABEL_WIDTH"
         :year-label="yearLabel"
         :on-wheel="handleTimelineWheel"
+        :on-click-capture="onClickCapture"
+        :on-mouse-down="onMouseDown"
         :on-touch-start="onTouchStart"
         :on-touch-move="onTouchMove"
         :on-touch-end="onTouchEnd"
+        :is-dragging="isDragging"
         @select="selectEvent"
       />
     </div>

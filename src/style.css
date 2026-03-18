@@ -59,11 +59,13 @@ button:focus-visible {
 }
 
 #app {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    padding-top: calc(2rem + 64px);
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 56px 0 0;
+    min-height: 100vh;
     text-align: initial;
+    box-sizing: border-box;
 }
 
 @media (prefers-color-scheme: light) {
@@ -159,7 +161,7 @@ body {
     align-items: stretch;
     gap: 8px;
     padding: 10px 12px;
-    background: rgba(173, 173, 173, 0.92);
+    background: rgba(255, 255, 255, 0.94);
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
@@ -173,7 +175,7 @@ body {
 }
 
 .zoom-group-label {
-    min-width: 16px;
+    min-width: 20px;
     font-size: 12px;
     font-weight: 700;
     color: #333;
@@ -203,7 +205,7 @@ body {
 
 .zoom-button--reset {
     width: auto;
-    min-width: 48px;
+    min-width: 52px;
     padding: 0 8px;
     font-size: 12px;
     color: #333;
@@ -264,7 +266,7 @@ body {
 
 .zoom-hints {
     position: fixed;
-    bottom: 112px;
+    bottom: 124px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -330,23 +332,30 @@ body {
 
 .timeline-shell {
     width: 100%;
-    display: flex;
-    justify-content: center;
+    min-height: calc(100vh - 56px);
+    padding: 12px 0 132px;
+    box-sizing: border-box;
 }
 
 .timeline-stage {
     width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-bottom: 24px;
+    overflow: hidden;
+    padding: 0;
 }
 
 .timeline-svg {
     display: block;
-    width: 1100px;
-    max-width: 100%;
+    width: 100%;
     height: auto;
-    margin: 0 auto;
+    margin: 0;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y;
+}
+
+.timeline-svg--dragging {
+    cursor: grabbing;
 }
 
 .app-header {
