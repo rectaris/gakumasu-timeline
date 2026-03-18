@@ -1,15 +1,12 @@
 import { computed, reactive, ref, watch } from "vue";
-import {
-  backgroundFromTextColor,
-  normalizeHexColor
-} from "../utils/colors";
+import { backgroundFromTextColor, normalizeHexColor } from "../utils/colors";
 import { timeValue } from "../utils/time";
 
 const CATEGORY_OPTIONS = [
   { id: "idol", label: "アイドルコミュ" },
   { id: "hatsuboshi", label: "初星コミュ" },
   { id: "event", label: "イベントコミュ" },
-  { id: "support", label: "サポートカードコミュ" }
+  { id: "support", label: "サポートカードコミュ" },
 ];
 
 const FALLBACK_COLORS = ["#7a7a7a", "#4d7ea8", "#a26ea1", "#c2854b"];
@@ -41,7 +38,7 @@ function normalizeEvent(event, laneMeta, category) {
     laneLabel: laneMeta.label,
     time: timeValue(event.start.year, event.start.month),
     title: event.title || "(無題)",
-    detail: event.detail
+    detail: event.detail,
   };
 }
 
@@ -52,8 +49,8 @@ function normalizeLanes(category, lanes) {
     const laneColor = normalizeLaneColor(lane, index);
     const events = Array.isArray(lane.events)
       ? lane.events
-          .map(event =>
-            normalizeEvent(event, { key: laneId, label: laneLabel }, category)
+          .map((event) =>
+            normalizeEvent(event, { key: laneId, label: laneLabel }, category),
           )
           .filter(Boolean)
       : [];
@@ -65,7 +62,7 @@ function normalizeLanes(category, lanes) {
       color: laneColor,
       textColor: laneColor,
       labelBgColor: backgroundFromTextColor(laneColor),
-      events
+      events,
     };
   });
 }
@@ -74,45 +71,60 @@ export function useCategoryFilter({
   idolCommu,
   hatsuboshiCommus,
   eventCommus,
-  supportCardCommus
+  supportCardCommus,
 }) {
   const selectedCategory = ref("idol");
+  const initializedCategories = reactive({
+    idol: false,
+    hatsuboshi: false,
+    event: false,
+    support: false,
+  });
   const selectedLaneKeys = reactive({
     idol: [],
     hatsuboshi: [],
     event: [],
-    support: []
+    support: [],
   });
 
   const lanesByCategory = computed(() => ({
     idol: normalizeLanes("idol", idolCommu.value || []),
     hatsuboshi: normalizeLanes("hatsuboshi", hatsuboshiCommus.value || []),
     event: normalizeLanes("event", eventCommus.value || []),
-    support: normalizeLanes("support", supportCardCommus.value || [])
+    support: normalizeLanes("support", supportCardCommus.value || []),
   }));
 
   watch(
     lanesByCategory,
-    value => {
-      CATEGORY_OPTIONS.forEach(option => {
+    (value) => {
+      CATEGORY_OPTIONS.forEach((option) => {
         const lanes = value[option.id] || [];
         if (lanes.length === 0) {
           selectedLaneKeys[option.id] = [];
+          initializedCategories[option.id] = false;
           return;
         }
-        if (selectedLaneKeys[option.id].length === 0) {
-          selectedLaneKeys[option.id] = [];
+
+        if (!initializedCategories[option.id]) {
+          selectedLaneKeys[option.id] = lanes.map((lane) => lane.id);
+          initializedCategories[option.id] = true;
+          return;
         }
+
+        const laneIds = new Set(lanes.map((lane) => lane.id));
+        selectedLaneKeys[option.id] = selectedLaneKeys[option.id].filter(
+          (key) => laneIds.has(key),
+        );
       });
     },
-    { immediate: true }
+    { immediate: true },
   );
 
   const laneOptions = computed(() => {
     const lanes = lanesByCategory.value[selectedCategory.value] || [];
-    return lanes.map(lane => ({
+    return lanes.map((lane) => ({
       key: lane.id,
-      label: lane.name
+      label: lane.name,
     }));
   });
 
@@ -137,7 +149,7 @@ export function useCategoryFilter({
   function toggleLane(category, laneKey) {
     const selection = selectedLaneKeys[category];
     if (selection.includes(laneKey)) {
-      selectedLaneKeys[category] = selection.filter(key => key !== laneKey);
+      selectedLaneKeys[category] = selection.filter((key) => key !== laneKey);
     } else {
       selectedLaneKeys[category] = [...selection, laneKey];
     }
@@ -145,7 +157,7 @@ export function useCategoryFilter({
 
   function toggleAll(category, enabled) {
     const lanes = lanesByCategory.value[category] || [];
-    selectedLaneKeys[category] = enabled ? lanes.map(lane => lane.id) : [];
+    selectedLaneKeys[category] = enabled ? lanes.map((lane) => lane.id) : [];
   }
 
   const activeLanes = computed(() => {
@@ -154,11 +166,11 @@ export function useCategoryFilter({
     const selection = selectedLaneKeys[category];
     if (selection.length === 0) return [];
     const selectedSet = new Set(selection);
-    return lanes.filter(lane => selectedSet.has(lane.id));
+    return lanes.filter((lane) => selectedSet.has(lane.id));
   });
 
   const normalizedEvents = computed(() =>
-    activeLanes.value.flatMap(lane => lane.events)
+    activeLanes.value.flatMap((lane) => lane.events),
   );
 
   // TODO: カテゴリ別の一括選択・検索・並び替えを追加する
@@ -173,6 +185,6 @@ export function useCategoryFilter({
     isIndeterminate,
     isLaneSelected,
     toggleLane,
-    toggleAll
+    toggleAll,
   };
 }

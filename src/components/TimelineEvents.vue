@@ -18,7 +18,7 @@ function handleSelect(event) {
 </script>
 
 <template>
-  <g v-for="event in visibleEvents" :key="event.id">
+  <g v-for="event in visibleEvents" :key="event.instanceId ?? event.id">
     <g @click="handleSelect(event)" class="event-group">
       <title>
         title:  {{ event.title }}

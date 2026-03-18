@@ -152,6 +152,9 @@ function updateDay(event) {
         &gt;
       </button>
     </div>
+    <p class="timeline-scale-note">
+      日付は便宜上、各月31日換算の抽象時系列で表示しています。
+    </p>
   </div>
 
   <div class="month-slider" v-if="isDayMode">
@@ -196,5 +199,8 @@ function updateDay(event) {
         &gt;
       </button>
     </div>
+    <p class="timeline-scale-note">
+      日付は便宜上、各月31日換算の抽象時系列で表示しています。
+    </p>
   </div>
 </template>
