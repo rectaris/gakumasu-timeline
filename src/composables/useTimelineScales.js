@@ -3,7 +3,7 @@ import { DAYS_IN_MONTH } from "../utils/constants";
 import { timeToYearMonth } from "../utils/time";
 
 const COARSE_YEAR_STEP = 5;
-const COARSE_YEAR_THRESHOLD = DAYS_IN_MONTH * 12 * COARSE_YEAR_STEP;
+const COARSE_YEAR_THRESHOLD = DAYS_IN_MONTH * 12 * 9.8;
 
 function monthStartTime(monthTime) {
   return monthTime * DAYS_IN_MONTH;
