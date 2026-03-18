@@ -9,8 +9,9 @@ export default {
       id: "mao_debut",
       start: { year: yearOf(1), month: 1 },
       end: { year: yearOf(1), month: 1 },
+      occurrenceType: "singleWithinRange",
       title: "初星学園入学",
-      detail: "アイドル科寮長として初星学園に登場"
-    }
-  ]
+      detail: "アイドル科寮長として初星学園に登場",
+    },
+  ],
 };

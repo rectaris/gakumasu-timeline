@@ -9,8 +9,9 @@ export default {
       id: "misuzu_debut",
       start: { year: yearOf(1), month: 1 },
       end: { year: yearOf(1), month: 1 },
+      occurrenceType: "singleWithinRange",
       title: "プロデュース対象に追加",
-      detail: "中等部からのユニット経験者として加入"
-    }
-  ]
+      detail: "中等部からのユニット経験者として加入",
+    },
+  ],
 };

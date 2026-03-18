@@ -2,46 +2,52 @@ import { computed } from "vue";
 import { filterVisibleEvents } from "./useTimelineData";
 import {
   EVENT_BAR_HEIGHT,
-  EVENT_ROW_HEIGHT,
+  EVENT_ROW_GAP,
   LANE_PADDING,
   MIN_LANE_HEIGHT,
-  TOP_OFFSET
+  TOP_OFFSET,
 } from "../utils/constants";
 
 export function useTimelineLayout({
   characters,
   allEvents,
   viewRange,
-  isDayScale,
-  eventDisplayStart,
-  eventDisplayEnd,
+  verticalScale,
   width,
   leftLabelWidth,
-  rightPadding
+  rightPadding,
 }) {
+  const layoutMetrics = computed(() => {
+    const scale = verticalScale.value;
+    const eventBarHeight = Math.max(8, EVENT_BAR_HEIGHT * scale);
+    const rowGap = Math.max(4, EVENT_ROW_GAP * scale);
+    const rowHeight = eventBarHeight + rowGap;
+    const lanePadding = Math.max(6, LANE_PADDING * scale);
+    const minLaneHeight = Math.max(40, MIN_LANE_HEIGHT * scale);
+
+    return {
+      eventBarHeight,
+      rowHeight,
+      lanePadding,
+      minLaneHeight,
+    };
+  });
+
   function buildLaneLayout(events) {
-    const useDayScale = isDayScale.value;
     const subLaneEndTimes = [];
     const eventsWithLane = events
       .slice()
-      .sort((a, b) =>
-        (useDayScale ? a.startTimeDay : a.startTime) -
-          (useDayScale ? b.startTimeDay : b.startTime)
-      )
-      .map(event => {
-        const startTime = useDayScale
-          ? event.startTimeDay
-          : event.startTime;
-        const endTime = useDayScale ? event.endTimeDay : event.endTime;
+      .sort((a, b) => a.displayStartDay - b.displayStartDay)
+      .map((event) => {
         let subLaneIndex = subLaneEndTimes.findIndex(
-          laneEndTime => laneEndTime < startTime
+          (laneEndTime) => laneEndTime < event.displayStartDay,
         );
 
         if (subLaneIndex === -1) {
           subLaneIndex = subLaneEndTimes.length;
-          subLaneEndTimes.push(endTime);
+          subLaneEndTimes.push(event.displayEndDay);
         } else {
-          subLaneEndTimes[subLaneIndex] = endTime;
+          subLaneEndTimes[subLaneIndex] = event.displayEndDay;
         }
 
         return { ...event, subLaneIndex };
@@ -49,24 +55,23 @@ export function useTimelineLayout({
 
     return {
       events: eventsWithLane,
-      subLaneCount: Math.max(1, subLaneEndTimes.length)
+      subLaneCount: Math.max(1, subLaneEndTimes.length),
     };
   }
 
-  const laneEventLayouts = computed(() => {
-    return characters.value.map((char, laneIndex) => {
+  const laneEventLayouts = computed(() =>
+    characters.value.map((char, laneIndex) => {
       const laneEvents = allEvents.value.filter(
-        event => event.laneIndex === laneIndex
+        (event) => event.laneIndex === laneIndex,
       );
-      const layout = buildLaneLayout(laneEvents);
 
       return {
         laneIndex,
         characterId: char.id,
-        ...layout
+        ...buildLaneLayout(laneEvents),
       };
-    });
-  });
+    }),
+  );
 
   const laneLayouts = computed(() => {
     let currentTop = TOP_OFFSET;
@@ -75,8 +80,9 @@ export function useTimelineLayout({
       const laneData = laneEventLayouts.value[laneIndex];
       const subLaneCount = laneData?.subLaneCount ?? 1;
       const laneHeight = Math.max(
-        MIN_LANE_HEIGHT,
-        subLaneCount * EVENT_ROW_HEIGHT + LANE_PADDING * 2
+        layoutMetrics.value.minLaneHeight,
+        subLaneCount * layoutMetrics.value.rowHeight +
+          layoutMetrics.value.lanePadding * 2,
       );
       const laneTop = currentTop;
       const centerY = laneTop + laneHeight / 2;
@@ -88,7 +94,7 @@ export function useTimelineLayout({
         laneTop,
         laneHeight,
         centerY,
-        subLaneCount
+        subLaneCount,
       };
     });
   });
@@ -98,6 +104,7 @@ export function useTimelineLayout({
     const contentHeight = lastLane
       ? lastLane.laneTop + lastLane.laneHeight
       : TOP_OFFSET;
+
     return contentHeight + 40;
   });
 
@@ -112,7 +119,7 @@ export function useTimelineLayout({
       x: leftLabelWidth,
       y: TOP_OFFSET,
       width: width - leftLabelWidth - rightPadding,
-      height
+      height,
     };
   });
 
@@ -126,28 +133,29 @@ export function useTimelineLayout({
 
     return (
       lane.laneTop +
-      LANE_PADDING +
-      subLaneIndex * EVENT_ROW_HEIGHT +
-      EVENT_BAR_HEIGHT / 2
+      layoutMetrics.value.lanePadding +
+      subLaneIndex * layoutMetrics.value.rowHeight +
+      layoutMetrics.value.eventBarHeight / 2
     );
   }
 
   const visibleEvents = computed(() =>
     filterVisibleEvents({
-      events: laneEventLayouts.value.flatMap(lane => lane.events),
+      events: laneEventLayouts.value.flatMap((lane) => lane.events),
       viewRange,
-      eventDisplayStart,
-      eventDisplayEnd
-    }).map(event => ({
+      eventDisplayStart: (event) => event.displayStartDay,
+      eventDisplayEnd: (event) => event.displayEndDay,
+    }).map((event) => ({
       ...event,
-      displayStart: eventDisplayStart(event),
-      displayEnd: eventDisplayEnd(event)
-    }))
+      displayStart: event.displayStartDay,
+      displayEnd: event.displayEndDay,
+    })),
   );
 
   function xPos(time) {
     const { min, max } = viewRange.value;
     const viewportWidth = timelineViewport.value.width;
+
     if (max === min) {
       return leftLabelWidth + viewportWidth / 2;
     }
@@ -163,6 +171,7 @@ export function useTimelineLayout({
     laneCenterY,
     yPos,
     visibleEvents,
-    xPos
+    xPos,
+    eventBarHeight: computed(() => layoutMetrics.value.eventBarHeight),
   };
 }

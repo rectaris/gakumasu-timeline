@@ -1,15 +1,16 @@
 import { onMounted, onUnmounted } from "vue";
 
 export function useKeyboard({
-  zoomMode,
-  moveYear,
-  moveMonth,
-  moveDay,
-  closePanel,
+  panByViewportRatio,
+  zoomInHorizontal,
+  zoomOutHorizontal,
+  closePanel
 }) {
   function handleKey(e) {
-    if (e.key === "Escape") closePanel();
-    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    if (e.key === "Escape") {
+      closePanel();
+      return;
+    }
 
     const target = e.target;
     const tagName = target?.tagName?.toLowerCase();
@@ -21,26 +22,24 @@ export function useKeyboard({
 
     if (isFormElement) return;
 
-    const delta = e.key === "ArrowRight" ? 1 : -1;
-
-    if (e.shiftKey) {
-      e.preventDefault();
-      moveYear(delta);
-      return;
-    }
-
-    switch (zoomMode.value) {
-      case "MONTH":
+    switch (e.key) {
+      case "ArrowLeft":
         e.preventDefault();
-        moveMonth(delta);
+        panByViewportRatio(-0.12);
         break;
-      case "DAY":
+      case "ArrowRight":
         e.preventDefault();
-        if (moveDay) moveDay(delta);
+        panByViewportRatio(0.12);
         break;
-      case "YEAR":
+      case "+":
+      case "=":
         e.preventDefault();
-        moveYear(delta);
+        zoomInHorizontal();
+        break;
+      case "-":
+      case "_":
+        e.preventDefault();
+        zoomOutHorizontal();
         break;
       default:
         break;

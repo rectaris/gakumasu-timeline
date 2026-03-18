@@ -2,34 +2,23 @@ import { computed } from "vue";
 import { DAYS_IN_MONTH } from "../utils/constants";
 import { timeToYearMonth } from "../utils/time";
 
-export function useTimelineScales({
-  viewRange,
-  isDayScale,
-  showMonthScale,
-  showDayScale
-}) {
-  function dayTime(monthTime, day) {
-    return monthTime * DAYS_IN_MONTH + (day - 1);
-  }
+function monthStartTime(monthTime) {
+  return monthTime * DAYS_IN_MONTH;
+}
 
-  function displayTimeForMonth(monthTime) {
-    return isDayScale.value ? monthTime * DAYS_IN_MONTH : monthTime;
-  }
-
-  const dayTicks = computed(() => {
-    if (!showDayScale.value) return [];
-
-    const { min, max } = viewRange.value;
-    const startMonth = Math.floor(min / DAYS_IN_MONTH);
-    const endMonth = Math.floor(max / DAYS_IN_MONTH);
+export function useTimelineScales({ viewRange, showMonthScale, showDayScale }) {
+  const years = computed(() => {
+    const startMonth = Math.floor(viewRange.value.min / DAYS_IN_MONTH);
+    const endMonth = Math.floor(viewRange.value.max / DAYS_IN_MONTH);
+    const startYear = Math.floor(startMonth / 12);
+    const endYear = Math.floor(endMonth / 12);
     const ticks = [];
 
-    for (let monthTime = startMonth; monthTime <= endMonth; monthTime += 1) {
-      for (let day = 1; day <= 31; day += 1) {
-        const time = dayTime(monthTime, day);
-        if (time < min || time > max) continue;
-        ticks.push({ time, day });
-      }
+    for (let year = startYear; year <= endYear; year += 1) {
+      ticks.push({
+        year,
+        time: monthStartTime(year * 12),
+      });
     }
 
     return ticks;
@@ -38,46 +27,40 @@ export function useTimelineScales({
   const monthTicks = computed(() => {
     if (!showMonthScale.value) return [];
 
-    const { min, max } = viewRange.value;
-    const startMonth = Math.floor(min / DAYS_IN_MONTH);
-    const endMonth = Math.floor(max / DAYS_IN_MONTH);
+    const startMonth = Math.floor(viewRange.value.min / DAYS_IN_MONTH);
+    const endMonth = Math.floor(viewRange.value.max / DAYS_IN_MONTH);
     const ticks = [];
 
     for (let monthTime = startMonth; monthTime <= endMonth; monthTime += 1) {
       const { month } = timeToYearMonth(monthTime);
       ticks.push({
-        time: dayTime(monthTime, 1),
-        label: `${month}月`
+        time: monthStartTime(monthTime),
+        label: `${month}月`,
       });
     }
 
     return ticks;
   });
 
-  const years = computed(() => {
-    const { min, max } = viewRange.value;
-    const minMonth = isDayScale.value
-      ? Math.floor(min / DAYS_IN_MONTH)
-      : Math.floor(min);
-    const maxMonth = isDayScale.value
-      ? Math.floor(max / DAYS_IN_MONTH)
-      : Math.floor(max);
-    const startYear = Math.floor(minMonth / 12);
-    const endYear = Math.floor(maxMonth / 12);
+  const dayTicks = computed(() => {
+    if (!showDayScale.value) return [];
 
-    const result = [];
-    for (let y = startYear; y <= endYear; y++) {
-      result.push({
-        year: y,
-        time: displayTimeForMonth(y * 12)
-      });
+    const startDay = Math.floor(viewRange.value.min);
+    const endDay = Math.floor(viewRange.value.max);
+    const ticks = [];
+
+    for (let time = startDay; time <= endDay; time += 1) {
+      const day =
+        (((time % DAYS_IN_MONTH) + DAYS_IN_MONTH) % DAYS_IN_MONTH) + 1;
+      ticks.push({ time, day });
     }
-    return result;
+
+    return ticks;
   });
 
   return {
     years,
     monthTicks,
-    dayTicks
+    dayTicks,
   };
 }

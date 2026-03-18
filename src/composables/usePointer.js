@@ -1,98 +1,52 @@
-import { onUnmounted, ref } from "vue";
+import { ref } from "vue";
 
-export function usePointer({ zoomMode, moveYear, moveMonth, moveDay }) {
-  const holdIntervalId = ref(null);
-  const holdTimeoutId = ref(null);
-  const suppressClick = ref(false);
-
-  function stopHold() {
-    if (holdTimeoutId.value) {
-      clearTimeout(holdTimeoutId.value);
-      holdTimeoutId.value = null;
-    }
-    if (holdIntervalId.value) {
-      clearInterval(holdIntervalId.value);
-      holdIntervalId.value = null;
-    }
-  }
-
-  function startHold(action) {
-    suppressClick.value = true;
-    stopHold();
-    action();
-    holdTimeoutId.value = setTimeout(() => {
-      holdIntervalId.value = setInterval(action, 100);
-    }, 300);
-  }
-
-  function handleNavClick(action) {
-    if (suppressClick.value) {
-      suppressClick.value = false;
-      return;
-    }
-    action();
-  }
-
-  const touchStartX = ref(0);
-  const touchStartY = ref(0);
+export function usePointer({ panByPixels }) {
   const touchActive = ref(false);
+  const touchPanActive = ref(false);
+  const lastTouchX = ref(0);
+  const lastTouchY = ref(0);
 
-  function onTouchStart(e) {
-    if (e.touches.length !== 1) return;
-    touchActive.value = true;
-    touchStartX.value = e.touches[0].clientX;
-    touchStartY.value = e.touches[0].clientY;
-  }
-
-  function onTouchMove(e) {
-    if (!touchActive.value || e.touches.length !== 1) return;
-
-    const diffX = e.touches[0].clientX - touchStartX.value;
-    const diffY = e.touches[0].clientY - touchStartY.value;
-
-    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 8) {
-      e.preventDefault();
-    }
-  }
-
-  function onTouchEnd(e) {
-    if (!touchActive.value) return;
+  function resetTouch() {
     touchActive.value = false;
-
-    const endX = e.changedTouches[0].clientX;
-    const endY = e.changedTouches[0].clientY;
-    const diffX = endX - touchStartX.value;
-    const diffY = endY - touchStartY.value;
-
-    if (Math.abs(diffX) < 40 || Math.abs(diffX) <= Math.abs(diffY)) return;
-
-    const delta = diffX < 0 ? 1 : -1;
-
-    switch (zoomMode.value) {
-      case "MONTH":
-        moveMonth(delta);
-        break;
-      case "DAY":
-        if (moveDay) moveDay(delta);
-        break;
-      case "YEAR":
-        moveYear(delta);
-        break;
-      default:
-        break;
-    }
+    touchPanActive.value = false;
   }
 
-  onUnmounted(() => {
-    stopHold();
-  });
+  function onTouchStart(event) {
+    if (event.touches.length !== 1) return;
+
+    touchActive.value = true;
+    touchPanActive.value = false;
+    lastTouchX.value = event.touches[0].clientX;
+    lastTouchY.value = event.touches[0].clientY;
+  }
+
+  function onTouchMove(event) {
+    if (!touchActive.value || event.touches.length !== 1) return;
+
+    const touch = event.touches[0];
+    const diffX = touch.clientX - lastTouchX.value;
+    const diffY = touch.clientY - lastTouchY.value;
+
+    if (!touchPanActive.value) {
+      if (Math.abs(diffX) < 8 && Math.abs(diffY) < 8) return;
+      touchPanActive.value = Math.abs(diffX) > Math.abs(diffY);
+    }
+
+    if (!touchPanActive.value) return;
+
+    event.preventDefault();
+    panByPixels(-diffX, event.currentTarget);
+    lastTouchX.value = touch.clientX;
+    lastTouchY.value = touch.clientY;
+  }
+
+  function onTouchEnd() {
+    resetTouch();
+  }
 
   return {
-    startHold,
-    stopHold,
-    handleNavClick,
     onTouchStart,
     onTouchMove,
-    onTouchEnd,
+    onTouchEnd
   };
 }

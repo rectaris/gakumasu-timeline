@@ -9,8 +9,9 @@ export default {
       id: "sumika_debut",
       start: { year: yearOf(1), month: 1 },
       end: { year: yearOf(1), month: 1 },
+      occurrenceType: "singleWithinRange",
       title: "初星学園入学",
-      detail: "不真面目系ギャルとしてアイドル活動開始"
-    }
-  ]
+      detail: "不真面目系ギャルとしてアイドル活動開始",
+    },
+  ],
 };

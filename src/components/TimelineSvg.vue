@@ -18,13 +18,14 @@ const props = defineProps({
   xPos: { type: Function, required: true },
   laneCenterY: { type: Function, required: true },
   yPos: { type: Function, required: true },
+  eventBarHeight: { type: Number, required: true },
   characters: { type: Array, required: true },
   visibleEvents: { type: Array, required: true },
-  isDayScale: { type: Boolean, required: true },
   isSingleWithinRange: { type: Function, required: true },
   invertHexColor: { type: Function, required: true },
   leftLabelWidth: { type: Number, required: true },
   yearLabel: { type: Function, required: true },
+  onWheel: { type: Function, required: true },
   onTouchStart: { type: Function, required: true },
   onTouchMove: { type: Function, required: true },
   onTouchEnd: { type: Function, required: true }
@@ -41,6 +42,7 @@ const CLIP_PADDING = 6;
     :height="svgHeight"
     :viewBox="`0 0 ${width} ${svgHeight}`"
     preserveAspectRatio="xMidYMin meet"
+    @wheel="onWheel"
     @touchstart="onTouchStart"
     @touchmove="onTouchMove"
     @touchend="onTouchEnd"
@@ -74,7 +76,9 @@ const CLIP_PADDING = 6;
       <TimelineScaleLines
         :years="years"
         :month-ticks="monthTicks"
+        :day-ticks="dayTicks"
         :show-month-scale="showMonthScale"
+        :show-day-scale="showDayScale"
         :x-pos="xPos"
         :timeline-viewport="timelineViewport"
       />
@@ -89,7 +93,7 @@ const CLIP_PADDING = 6;
         :visible-events="visibleEvents"
         :x-pos="xPos"
         :y-pos="yPos"
-        :is-day-scale="isDayScale"
+        :event-bar-height="eventBarHeight"
         :is-single-within-range="isSingleWithinRange"
         :year-label="yearLabel"
         @select="event => emit('select', event)"

@@ -2,7 +2,9 @@
 defineProps({
   years: { type: Array, required: true },
   monthTicks: { type: Array, required: true },
+  dayTicks: { type: Array, required: true },
   showMonthScale: { type: Boolean, required: true },
+  showDayScale: { type: Boolean, required: true },
   xPos: { type: Function, required: true },
   timelineViewport: { type: Object, required: true }
 });
@@ -28,6 +30,18 @@ defineProps({
           :x2="xPos(tick.time)"
           :y2="timelineViewport.y + timelineViewport.height"
           stroke="#e0e0e0"
+        />
+      </g>
+    </g>
+
+    <g v-if="showDayScale">
+      <g v-for="tick in dayTicks" :key="`day-${tick.time}`">
+        <line
+          :x1="xPos(tick.time)"
+          :y1="timelineViewport.y"
+          :x2="xPos(tick.time)"
+          :y2="timelineViewport.y + timelineViewport.height"
+          stroke="#f0f0f0"
         />
       </g>
     </g>

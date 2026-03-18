@@ -9,8 +9,9 @@ export default {
       id: "hiro_debut",
       start: { year: yearOf(1), month: 1 },
       end: { year: yearOf(1), month: 1 },
+      occurrenceType: "singleWithinRange",
       title: "初星学園入学",
-      detail: "ギフテッドなミステリアス少女として登場"
-    }
-  ]
+      detail: "ギフテッドなミステリアス少女として登場",
+    },
+  ],
 };

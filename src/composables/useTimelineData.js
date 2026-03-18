@@ -1,64 +1,64 @@
 import { computed } from "vue";
+import { DAYS_IN_MONTH } from "../utils/constants";
 import { dayTimeValue, timeValue } from "../utils/time";
+
+function normalizeEventTiming(event) {
+  return {
+    startTime: timeValue(event.start.year, event.start.month),
+    endTime: timeValue(event.end.year, event.end.month),
+    startTimeDay: dayTimeValue(
+      event.start.year,
+      event.start.month,
+      event.start.day ?? 1,
+    ),
+    endTimeDay: dayTimeValue(event.end.year, event.end.month, event.end.day ?? 1),
+    displayStartDay: dayTimeValue(
+      event.start.year,
+      event.start.month,
+      event.start.day ?? 1,
+    ),
+    displayEndDay: dayTimeValue(
+      event.end.year,
+      event.end.month,
+      event.end.day ?? DAYS_IN_MONTH,
+    ),
+  };
+}
 
 export function useTimelineData(characters, commonTimeline = null) {
   const allEvents = computed(() => {
-    // キャラクターごとのイベント
     const characterEvents = characters.value.flatMap((char, index) =>
-      char.events.map((ev) => {
-        const startTime = timeValue(ev.start.year, ev.start.month);
-        const endTime = timeValue(ev.end.year, ev.end.month);
-        const canonicalId = ev.id;
+      char.events.map((event) => {
+        const canonicalId = event.id;
 
         return {
-          ...ev,
+          ...event,
           canonicalId,
           instanceId: canonicalId,
           character: char.name,
           color: char.color,
           laneIndex: index,
-          startTime,
-          endTime,
-          startTimeDay: dayTimeValue(
-            ev.start.year,
-            ev.start.month,
-            ev.start.day ?? 1,
-          ),
-          endTimeDay: dayTimeValue(ev.end.year, ev.end.month, ev.end.day ?? 1),
+          ...normalizeEventTiming(event),
           isCommon: false,
         };
       }),
     );
 
-    // 共通イベント（全レーンに展開）
     const commonEvents =
       commonTimeline && commonTimeline.events
         ? characters.value.flatMap((char, laneIndex) =>
-            commonTimeline.events.map((ev) => {
-              const startTime = timeValue(ev.start.year, ev.start.month);
-              const endTime = timeValue(ev.end.year, ev.end.month);
-              const canonicalId = ev.id;
+            commonTimeline.events.map((event) => {
+              const canonicalId = event.id;
               const instanceId = `${canonicalId}__${char.id ?? laneIndex}`;
 
               return {
-                ...ev,
+                ...event,
                 canonicalId,
                 instanceId,
                 character: commonTimeline.name,
                 color: commonTimeline.color,
                 laneIndex,
-                startTime,
-                endTime,
-                startTimeDay: dayTimeValue(
-                  ev.start.year,
-                  ev.start.month,
-                  ev.start.day ?? 1,
-                ),
-                endTimeDay: dayTimeValue(
-                  ev.end.year,
-                  ev.end.month,
-                  ev.end.day ?? 1,
-                ),
+                ...normalizeEventTiming(event),
                 isCommon: true,
               };
             }),
@@ -69,14 +69,17 @@ export function useTimelineData(characters, commonTimeline = null) {
   });
 
   const times = computed(() => {
-    const values = allEvents.value.flatMap((e) => [e.startTime, e.endTime]);
+    const values = allEvents.value.flatMap((event) => [
+      event.startTime,
+      event.endTime,
+    ]);
     return values.length ? values : [0];
   });
 
   const timesDay = computed(() => {
-    const values = allEvents.value.flatMap((e) => [
-      e.startTimeDay,
-      e.endTimeDay,
+    const values = allEvents.value.flatMap((event) => [
+      event.displayStartDay,
+      event.displayEndDay,
     ]);
     return values.length ? values : [0];
   });

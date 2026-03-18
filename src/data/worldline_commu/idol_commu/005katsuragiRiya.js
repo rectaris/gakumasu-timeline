@@ -9,8 +9,9 @@ export default {
       id: "riya_debut",
       start: { year: yearOf(1), month: 1 },
       end: { year: yearOf(1), month: 1 },
+      occurrenceType: "singleWithinRange",
       title: "初星学園入学",
-      detail: "スウェーデン出身の留学生として登場"
-    }
-  ]
+      detail: "スウェーデン出身の留学生として登場",
+    },
+  ],
 };

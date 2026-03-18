@@ -7,7 +7,6 @@ import {
   supportCardCommus,
   commonTimeline
 } from "./data";
-import { useEventDisplay } from "./composables/useEventDisplay";
 import { useKeyboard } from "./composables/useKeyboard";
 import { useMenuState } from "./composables/useMenuState";
 import { usePointer } from "./composables/usePointer";
@@ -23,7 +22,7 @@ import SidePanel from "./components/SidePanel.vue";
 import TimelineSvg from "./components/TimelineSvg.vue";
 import { invertHexColor } from "./utils/colors";
 import { isSingleWithinRange } from "./utils/events";
-import { dayLabel, monthLabel, yearLabel } from "./utils/labels";
+import { yearLabel } from "./utils/labels";
 import { LEFT_LABEL_WIDTH, RIGHT_PADDING, WIDTH } from "./utils/constants";
 import manualContent from "../docs/manual.md?raw";
 
@@ -37,7 +36,6 @@ const {
   selectedCategory,
   laneOptions,
   activeLanes,
-  normalizedEvents,
   allSelected,
   isIndeterminate,
   isLaneSelected,
@@ -59,40 +57,34 @@ const {
   closeMenu: closeManual
 } = useMenuState();
 
-const { allEvents, times, timesDay } = useTimelineData(activeLanes, commonTimeline);
+const { allEvents, timesDay } = useTimelineData(activeLanes, commonTimeline);
 const { selectedEvent, selectEvent, closePanel } = useSelection(allEvents);
 
 const {
-  mode,
-  centerYear,
-  centerMonth,
-  centerDay,
-  zoomLabel,
   viewRange,
-  yearBounds,
-  monthBounds,
-  dayBounds,
-  isYearMode,
-  isMonthMode,
-  isDayMode,
-  isFullMode,
-  isDayScale,
+  horizontalSpan,
+  verticalScale,
+  horizontalZoomLabel,
+  verticalZoomLabel,
   showMonthScale,
   showDayScale,
-  moveYear,
-  moveMonth,
-  moveDay,
-  moveNext,
-  movePrev,
-  zoomIn,
-  zoomOut
-} = useZoomMachine(times, timesDay, selectedEvent);
-
-const { eventDisplayStart, eventDisplayEnd } = useEventDisplay(isDayScale);
+  canZoomInHorizontal,
+  canZoomOutHorizontal,
+  canZoomInVertical,
+  canZoomOutVertical,
+  panHorizontally,
+  panByViewportRatio,
+  zoomHorizontallyBy,
+  zoomInHorizontal,
+  zoomOutHorizontal,
+  resetHorizontalZoom,
+  zoomInVertical,
+  zoomOutVertical,
+  resetVerticalZoom
+} = useZoomMachine(timesDay, selectedEvent);
 
 const { years, monthTicks, dayTicks } = useTimelineScales({
   viewRange,
-  isDayScale,
   showMonthScale,
   showDayScale
 });
@@ -103,36 +95,73 @@ const {
   laneCenterY,
   yPos,
   visibleEvents,
-  xPos
+  xPos,
+  eventBarHeight
 } = useTimelineLayout({
   characters: activeLanes,
   allEvents,
   viewRange,
-  isDayScale,
-  eventDisplayStart,
-  eventDisplayEnd,
+  verticalScale,
   width: WIDTH,
   leftLabelWidth: LEFT_LABEL_WIDTH,
   rightPadding: RIGHT_PADDING
 });
 
-const {
-  startHold,
-  stopHold,
-  handleNavClick,
-  onTouchStart,
-  onTouchMove,
-  onTouchEnd
-} = usePointer({ zoomMode: mode, moveYear, moveMonth, moveDay });
+function getRenderedViewportWidth(svgElement) {
+  const rect = svgElement?.getBoundingClientRect?.();
+  if (!rect?.width) return 0;
 
-useKeyboard({ zoomMode: mode, moveYear, moveMonth, moveDay, closePanel });
+  return rect.width * (timelineViewport.value.width / WIDTH);
+}
 
-const prevYear = () => moveYear(-1);
-const nextYear = () => moveYear(1);
-const prevMonth = () => moveMonth(-1);
-const nextMonth = () => moveMonth(1);
-const prevDay = () => moveDay(-1);
-const nextDay = () => moveDay(1);
+function clampRatio(value) {
+  return Math.min(1, Math.max(0, value));
+}
+
+function panByPixels(deltaPixels, svgElement) {
+  const renderedViewportWidth = getRenderedViewportWidth(svgElement);
+  if (!renderedViewportWidth) return;
+
+  panHorizontally((deltaPixels / renderedViewportWidth) * horizontalSpan.value);
+}
+
+function handleTimelineWheel(event) {
+  const svgElement = event.currentTarget;
+  const panDeltaPixels =
+    Math.abs(event.deltaX) > Math.abs(event.deltaY)
+      ? event.deltaX
+      : event.deltaY;
+
+  if (event.ctrlKey || event.metaKey || event.altKey) {
+    event.preventDefault();
+
+    const rect = svgElement.getBoundingClientRect();
+    if (!rect.width) return;
+
+    const scaleX = WIDTH / rect.width;
+    const svgX = (event.clientX - rect.left) * scaleX;
+    const anchorRatio = clampRatio(
+      (svgX - timelineViewport.value.x) / timelineViewport.value.width
+    );
+
+    zoomHorizontallyBy(Math.exp(event.deltaY * 0.0015), anchorRatio);
+    return;
+  }
+
+  event.preventDefault();
+  panByPixels(panDeltaPixels, svgElement);
+}
+
+const { onTouchStart, onTouchMove, onTouchEnd } = usePointer({
+  panByPixels
+});
+
+useKeyboard({
+  panByViewportRatio,
+  zoomInHorizontal,
+  zoomOutHorizontal,
+  closePanel
+});
 
 const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
 </script>
@@ -231,35 +260,18 @@ const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
   </aside>
 
   <ZoomControls
-    :zoom-mode="mode"
-    :is-year-mode="isYearMode"
-    :is-month-mode="isMonthMode"
-    :is-day-mode="isDayMode"
-    :is-full-mode="isFullMode"
-    :zoom-label="zoomLabel"
-    :zoom-center-year="centerYear"
-    :zoom-center-month="centerMonth"
-    :zoom-center-day="centerDay"
-    :year-bounds="yearBounds"
-    :month-bounds="monthBounds"
-    :day-bounds="dayBounds"
-    :year-label="yearLabel"
-    :month-label="monthLabel"
-    :day-label="dayLabel"
-    :zoom-in="zoomIn"
-    :zoom-out="zoomOut"
-    :prev-year="prevYear"
-    :next-year="nextYear"
-    :prev-month="prevMonth"
-    :next-month="nextMonth"
-    :prev-day="prevDay"
-    :next-day="nextDay"
-    :start-hold="startHold"
-    :stop-hold="stopHold"
-    :handle-nav-click="handleNavClick"
-    @update:zoom-center-year="value => (centerYear = value)"
-    @update:zoom-center-month="value => (centerMonth = value)"
-    @update:zoom-center-day="value => (centerDay = value)"
+    :horizontal-zoom-label="horizontalZoomLabel"
+    :vertical-zoom-label="verticalZoomLabel"
+    :can-zoom-in-horizontal="canZoomInHorizontal"
+    :can-zoom-out-horizontal="canZoomOutHorizontal"
+    :can-zoom-in-vertical="canZoomInVertical"
+    :can-zoom-out-vertical="canZoomOutVertical"
+    :zoom-in-horizontal="zoomInHorizontal"
+    :zoom-out-horizontal="zoomOutHorizontal"
+    :reset-horizontal-zoom="resetHorizontalZoom"
+    :zoom-in-vertical="zoomInVertical"
+    :zoom-out-vertical="zoomOutVertical"
+    :reset-vertical-zoom="resetVerticalZoom"
   />
 
   <div class="timeline-shell">
@@ -276,13 +288,14 @@ const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
         :x-pos="xPos"
         :lane-center-y="laneCenterY"
         :y-pos="yPos"
+        :event-bar-height="eventBarHeight"
         :characters="activeLanes"
         :visible-events="visibleEvents"
-        :is-day-scale="isDayScale"
         :is-single-within-range="isSingleWithinRange"
         :invert-hex-color="invertHexColor"
         :left-label-width="LEFT_LABEL_WIDTH"
         :year-label="yearLabel"
+        :on-wheel="handleTimelineWheel"
         :on-touch-start="onTouchStart"
         :on-touch-move="onTouchMove"
         :on-touch-end="onTouchEnd"
