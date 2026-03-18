@@ -30,6 +30,7 @@ const idolCommuRef = ref(idolCommu);
 const hatsuboshiRef = ref(hatsuboshiCommus);
 const eventRef = ref(eventCommus);
 const supportRef = ref(supportCardCommus);
+const timelineStageRef = ref(null);
 
 const {
   categoryOptions,
@@ -125,6 +126,13 @@ function panByPixels(deltaPixels, svgElement) {
   panHorizontally((deltaPixels / renderedViewportWidth) * horizontalSpan.value);
 }
 
+function panVerticallyByPixels(deltaPixels) {
+  const stageElement = timelineStageRef.value;
+  if (!stageElement) return;
+
+  stageElement.scrollTop -= deltaPixels;
+}
+
 function handleTimelineWheel(event) {
   const svgElement = event.currentTarget;
   const isHorizontalWheel = Math.abs(event.deltaX) > Math.abs(event.deltaY);
@@ -156,7 +164,8 @@ const {
   onTouchMove,
   onTouchEnd
 } = usePointer({
-  panByPixels
+  panByPixels,
+  panVerticallyByPixels
 });
 
 useKeyboard({
@@ -278,7 +287,7 @@ const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
   />
 
   <div class="timeline-shell">
-    <div class="timeline-stage">
+    <div ref="timelineStageRef" class="timeline-stage">
       <TimelineSvg
         :width="WIDTH"
         :svg-height="svgHeight"

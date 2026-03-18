@@ -75,7 +75,7 @@ defineProps({
   </div>
 
   <div class="zoom-hints">
-    <p class="zoom-hint">ドラッグ: 左右に移動</p>
+    <p class="zoom-hint">ドラッグ: 上下左右に移動</p>
     <p class="zoom-hint">ホイール: 拡大・縮小</p>
     <p class="zoom-hint">横方向ホイール: 左右に移動</p>
     <p class="timeline-scale-note">日付は各月31日換算の抽象時系列です。</p>

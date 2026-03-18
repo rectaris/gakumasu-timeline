@@ -332,15 +332,21 @@ body {
 
 .timeline-shell {
     width: 100%;
-    min-height: calc(100vh - 56px);
-    padding: 12px 0 132px;
+    height: calc(100vh - 56px);
+    padding: 0;
     box-sizing: border-box;
 }
 
 .timeline-stage {
     width: 100%;
-    overflow: hidden;
+    height: 100%;
+    overflow: auto;
     padding: 0;
+    scrollbar-width: none;
+}
+
+.timeline-stage::-webkit-scrollbar {
+    display: none;
 }
 
 .timeline-svg {
@@ -351,7 +357,7 @@ body {
     cursor: grab;
     user-select: none;
     -webkit-user-select: none;
-    touch-action: pan-y;
+    touch-action: none;
 }
 
 .timeline-svg--dragging {

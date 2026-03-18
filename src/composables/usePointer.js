@@ -4,7 +4,7 @@ const MOUSE_DRAG_THRESHOLD = 4;
 const TOUCH_DRAG_THRESHOLD = 8;
 const CLICK_SUPPRESSION_MS = 80;
 
-export function usePointer({ panByPixels }) {
+export function usePointer({ panByPixels, panVerticallyByPixels }) {
   const mouseActive = ref(false);
   const mousePanActive = ref(false);
   const touchActive = ref(false);
@@ -79,6 +79,7 @@ export function usePointer({ panByPixels }) {
     }
 
     panByPixels(-diffX, dragSurfaceElement.value);
+    panVerticallyByPixels(diffY);
     lastPointerX.value = clientX;
     lastPointerY.value = clientY;
   }
@@ -107,13 +108,14 @@ export function usePointer({ panByPixels }) {
         return;
       }
 
-      touchPanActive.value = Math.abs(diffX) > Math.abs(diffY);
+      touchPanActive.value = true;
     }
 
     if (!touchPanActive.value) return;
 
     event.preventDefault();
     panByPixels(-diffX, event.currentTarget);
+    panVerticallyByPixels(diffY);
     lastPointerX.value = touch.clientX;
     lastPointerY.value = touch.clientY;
   }
