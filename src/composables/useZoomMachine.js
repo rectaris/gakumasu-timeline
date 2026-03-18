@@ -8,6 +8,7 @@ const MIN_VERTICAL_SCALE = 0.75;
 const MAX_VERTICAL_SCALE = 2.5;
 const VERTICAL_ZOOM_STEP = 1.15;
 const FOCUS_PADDING_DAYS = 4;
+const DAY_SCALE_THRESHOLD_MONTHS = 2.8;
 
 function formatSpanLabel(spanInDays) {
   const months = spanInDays / DAYS_IN_MONTH;
@@ -147,7 +148,7 @@ export function useZoomMachine(timesDay, selectedEvent) {
   );
 
   const showDayScale = computed(
-    () => horizontalSpan.value <= DAYS_IN_MONTH * 6,
+    () => horizontalSpan.value <= DAYS_IN_MONTH * DAY_SCALE_THRESHOLD_MONTHS,
   );
 
   const horizontalZoomLabel = computed(() =>

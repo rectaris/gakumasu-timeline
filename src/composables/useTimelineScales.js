@@ -2,6 +2,9 @@ import { computed } from "vue";
 import { DAYS_IN_MONTH } from "../utils/constants";
 import { timeToYearMonth } from "../utils/time";
 
+const COARSE_YEAR_STEP = 5;
+const COARSE_YEAR_THRESHOLD = DAYS_IN_MONTH * 12 * COARSE_YEAR_STEP;
+
 function monthStartTime(monthTime) {
   return monthTime * DAYS_IN_MONTH;
 }
@@ -12,9 +15,13 @@ export function useTimelineScales({ viewRange, showMonthScale, showDayScale }) {
     const endMonth = Math.floor(viewRange.value.max / DAYS_IN_MONTH);
     const startYear = Math.floor(startMonth / 12);
     const endYear = Math.floor(endMonth / 12);
+    const span = viewRange.value.max - viewRange.value.min;
+    const yearStep = span >= COARSE_YEAR_THRESHOLD ? COARSE_YEAR_STEP : 1;
+    const firstYear =
+      yearStep > 1 ? Math.floor(startYear / yearStep) * yearStep : startYear;
     const ticks = [];
 
-    for (let year = startYear; year <= endYear; year += 1) {
+    for (let year = firstYear; year <= endYear; year += yearStep) {
       ticks.push({
         year,
         time: monthStartTime(year * 12),
