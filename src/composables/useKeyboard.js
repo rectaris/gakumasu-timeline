@@ -5,7 +5,7 @@ export function useKeyboard({
   moveYear,
   moveMonth,
   moveDay,
-  closePanel
+  closePanel,
 }) {
   function handleKey(e) {
     if (e.key === "Escape") closePanel();
@@ -24,18 +24,22 @@ export function useKeyboard({
     const delta = e.key === "ArrowRight" ? 1 : -1;
 
     if (e.shiftKey) {
+      e.preventDefault();
       moveYear(delta);
       return;
     }
 
     switch (zoomMode.value) {
       case "MONTH":
+        e.preventDefault();
         moveMonth(delta);
         break;
       case "DAY":
+        e.preventDefault();
         if (moveDay) moveDay(delta);
         break;
       case "YEAR":
+        e.preventDefault();
         moveYear(delta);
         break;
       default:

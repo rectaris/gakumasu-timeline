@@ -46,6 +46,13 @@ export function usePointer({ zoomMode, moveYear, moveMonth, moveDay }) {
 
   function onTouchMove(e) {
     if (!touchActive.value || e.touches.length !== 1) return;
+
+    const diffX = e.touches[0].clientX - touchStartX.value;
+    const diffY = e.touches[0].clientY - touchStartY.value;
+
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 8) {
+      e.preventDefault();
+    }
   }
 
   function onTouchEnd(e) {
@@ -86,6 +93,6 @@ export function usePointer({ zoomMode, moveYear, moveMonth, moveDay }) {
     handleNavClick,
     onTouchStart,
     onTouchMove,
-    onTouchEnd
+    onTouchEnd,
   };
 }

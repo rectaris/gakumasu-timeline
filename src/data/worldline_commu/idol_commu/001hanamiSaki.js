@@ -11,7 +11,7 @@ export default {
       end: { year: yearsAgo(16), month: 4, day: 2 },
       title: "誕生",
       detail: "花海咲季、誕生",
-      participants: ["saki_hanami"]
+      participants: ["saki_hanami"],
     },
     {
       id: "001_born_ume",
@@ -19,7 +19,7 @@ export default {
       end: { year: yearsAgo(15), month: 4, day: 1 },
       title: "佑芽が生まれる",
       detail: "妹、佑芽が生まれる",
-      participants: ["saki_hanami", "ume_hanami"]
+      participants: ["saki_hanami", "ume_hanami"],
     },
     {
       id: "001_reason1",
@@ -28,7 +28,7 @@ export default {
       title: "世界一を目指す理由",
       detail: "咲季がアイドルで世界一を目指す理由が決まる",
       participants: ["saki_hanami", "ume_hanami"],
-      source: "親愛度10コミュ"
+      source: ["親愛度10コミュ"],
     },
     {
       id: "001_scout",
@@ -38,8 +38,8 @@ export default {
       detail: "プロデューサーにスカウトされ、アイドル活動を開始する",
       worldlineId: ["likability_story"],
       participants: ["saki_hanami"],
-      source: "初星コミュ1話",
-      note: "入学式当日の早朝か、それ以前からスカウトされている可能性がある。\n初星学園は私立の学校法人のため、入学式の日程にはばらつきがある可能性がある。\n初星学園は関東圏の学校である可能性が高いため、4月7日〜8日の間に入学式が行われたと推測される。"
+      source: ["初星コミュ1話"],
+      note: "入学式当日の早朝か、それ以前からスカウトされている可能性がある。\n初星学園は私立の学校法人のため、入学式の日程にはばらつきがある可能性がある。\n初星学園は関東圏の学校である可能性が高いため、4月7日〜8日の間に入学式が行われたと推測される。",
     },
     {
       id: "001_debut",
@@ -48,7 +48,7 @@ export default {
       title: "初星学園高等部入学式",
       detail: "初星学園高等部に入学、1年1組に配属される",
       participants: ["saki_hanami"],
-      note: "初星学園は私立の学校法人のため、入学式の日程にはばらつきがある可能性がある。\n初星学園は関東圏の学校である可能性が高いため、4月7日〜8日の間に入学式が行われたと推測される。"
-    }
-  ]
+      note: "初星学園は私立の学校法人のため、入学式の日程にはばらつきがある可能性がある。\n初星学園は関東圏の学校である可能性が高いため、4月7日〜8日の間に入学式が行われたと推測される。",
+    },
+  ],
 };

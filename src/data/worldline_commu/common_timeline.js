@@ -81,7 +81,7 @@ export default {
       title: "賀陽継が一番星になる日に、燐羽と手毬と美鈴が出会う",
       detail: "賀陽継が一番星になる日に、燐羽と手毬と美鈴が出会う",
       occurrenceType: "singleWithinRange",
-      participants: ["tsukimura_temari", "hataiya_misuzu"], //kaya_rinha
+      participants: ["temari_tsukimura", "misuzu_hataya"], //kaya_rinha
       source: [
         "月村手毬 雪解けに 第1話",
         "月村手毬 雪解けに 第2話",
@@ -97,7 +97,7 @@ export default {
       detail:
         "SyngUp!が結成される。メンバーは月村手毬、秦谷美鈴、賀陽燐羽の3人",
       occurrenceType: "singleWithinRange",
-      participants: ["tsukimura_temari", "hataiya_misuzu"], //kaya_rinha
+      participants: ["temari_tsukimura", "misuzu_hataya"], //kaya_rinha
       source: ["月村手毬 親愛度 第17話"],
     },
     {
@@ -107,7 +107,7 @@ export default {
       title: "燐羽がグレる",
       detail: "燐羽がグレる。継が関係している可能性が高い。",
       occurrenceType: "singleWithinRange",
-      participants: ["tsukimura_temari", "hataiya_misuzu"], //kaya_rinha
+      participants: ["temari_tsukimura", "misuzu_hataya"], //kaya_rinha
       source: [
         "秦谷美鈴 親愛度 第14話",
         "秦谷美鈴 親愛度 第15話",
@@ -143,7 +143,7 @@ export default {
       title: "SyngUp!解散",
       detail: "SyngUp!が解散する。",
       occurrenceType: "singleWithinRange",
-      participants: ["tsukimura_temari", "hataiya_misuzu"], //kaya_rinha
+      participants: ["temari_tsukimura", "misuzu_hataya"], //kaya_rinha
       source: [
         "月村手毬 親愛度 第3話",
         "月村手毬 親愛度 第4話",
@@ -163,7 +163,7 @@ export default {
       detail:
         "SyngUp!が解散し、炎上していた手毬を擁護する形で燐羽が批判を繰り返し、炎上する。",
       occurrenceType: "singleWithinRange",
-      participants: ["tsukimura_temari", "hataiya_misuzu"], //kaya_rinha
+      participants: ["temari_tsukimura", "misuzu_hataya"], //kaya_rinha
       source: [
         "月村手毬 親愛度 第11話",
         "月村手毬 親愛度 第15話",
