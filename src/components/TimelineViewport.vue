@@ -10,7 +10,7 @@ defineProps({
     :y="timelineViewport.y"
     :width="timelineViewport.width"
     :height="timelineViewport.height"
-    fill="#fafafa"
-    stroke="#ddd"
+    fill="var(--timeline-viewport-fill, var(--surface-soft))"
+    stroke="var(--timeline-viewport-stroke, var(--border))"
   />
 </template>

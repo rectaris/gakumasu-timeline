@@ -20,7 +20,7 @@ defineProps({
       :y="timelineViewport.y - 26"
       text-anchor="middle"
       font-size="12"
-      fill="#555"
+      fill="var(--timeline-year-label, var(--text-secondary))"
     >
       {{ yearLabel(y.year) }}
     </text>
@@ -32,7 +32,7 @@ defineProps({
         :y="timelineViewport.y - 12"
         text-anchor="middle"
         font-size="10"
-        fill="#777"
+        fill="var(--timeline-month-label, var(--text-muted))"
       >
         {{ tick.label }}
       </text>
@@ -44,7 +44,7 @@ defineProps({
         :y="timelineViewport.y - 2"
         text-anchor="middle"
         font-size="9"
-        fill="#bbb"
+        fill="var(--timeline-day-label, var(--text-faint))"
       >
         {{ tick.day }}
       </text>

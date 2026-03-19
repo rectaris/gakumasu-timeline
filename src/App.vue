@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import {
   idolCommu,
   hatsuboshiCommus,
@@ -58,8 +58,26 @@ const {
   openMenu: openManual,
   closeMenu: closeManual
 } = useMenuState();
+const {
+  isOpen: settingsOpen,
+  closeMenu: closeSettings,
+  toggleMenu: toggleSettings
+} = useMenuState();
 
-const { allEvents, timesDay } = useTimelineData(activeLanes, commonTimeline);
+const THEME_MODE_STORAGE_KEY = "gakumasu:theme-mode";
+const SHOW_ZOOM_HINTS_STORAGE_KEY = "gakumasu:show-zoom-hints";
+const SHOW_COMMON_EVENTS_STORAGE_KEY = "gakumasu:show-common-events";
+
+const themeMode = ref("system");
+const showZoomHints = ref(true);
+const showCommonEvents = ref(true);
+const settingsReady = ref(false);
+
+const { allEvents, timesDay } = useTimelineData(
+  activeLanes,
+  commonTimeline,
+  showCommonEvents
+);
 const { selectedEvent, selectEvent, closePanel } = useSelection(allEvents);
 
 const {
@@ -157,6 +175,38 @@ function handleTimelineWheel(event) {
   zoomHorizontallyBy(Math.exp(event.deltaY * 0.0015), anchorRatio);
 }
 
+function readBooleanSetting(storageKey, fallbackValue) {
+  const rawValue = window.localStorage.getItem(storageKey);
+  if (rawValue === null) return fallbackValue;
+  return rawValue === "true";
+}
+
+function applyThemeMode(mode) {
+  const root = document.documentElement;
+  if (mode === "system") {
+    root.removeAttribute("data-theme");
+    return;
+  }
+
+  root.setAttribute("data-theme", mode);
+}
+
+function toggleMainMenu() {
+  closeSettings();
+  toggleMenu();
+}
+
+function toggleSettingsMenu() {
+  closeMenu();
+  toggleSettings();
+}
+
+function openManualDialog() {
+  closeMenu();
+  closeSettings();
+  openManual();
+}
+
 const {
   isDragging,
   onMouseDown,
@@ -182,14 +232,42 @@ function handleGlobalEscape(event) {
 
   closeMenu();
   closeManual();
+  closeSettings();
 }
 
 onMounted(() => {
+  const storedThemeMode = window.localStorage.getItem(THEME_MODE_STORAGE_KEY);
+  if (storedThemeMode === "light" || storedThemeMode === "dark") {
+    themeMode.value = storedThemeMode;
+  }
+  showZoomHints.value = readBooleanSetting(SHOW_ZOOM_HINTS_STORAGE_KEY, true);
+  showCommonEvents.value = readBooleanSetting(
+    SHOW_COMMON_EVENTS_STORAGE_KEY,
+    true
+  );
+  applyThemeMode(themeMode.value);
+  settingsReady.value = true;
   window.addEventListener("keydown", handleGlobalEscape);
 });
 
 onUnmounted(() => {
   window.removeEventListener("keydown", handleGlobalEscape);
+});
+
+watch(themeMode, (mode) => {
+  applyThemeMode(mode);
+  if (!settingsReady.value) return;
+  window.localStorage.setItem(THEME_MODE_STORAGE_KEY, mode);
+});
+
+watch(showZoomHints, (value) => {
+  if (!settingsReady.value) return;
+  window.localStorage.setItem(SHOW_ZOOM_HINTS_STORAGE_KEY, String(value));
+});
+
+watch(showCommonEvents, (value) => {
+  if (!settingsReady.value) return;
+  window.localStorage.setItem(SHOW_COMMON_EVENTS_STORAGE_KEY, String(value));
 });
 </script>
 
@@ -200,14 +278,20 @@ onUnmounted(() => {
         class="menu-button"
         type="button"
         aria-label="メニューを開く"
-        @click="toggleMenu"
+        @click="toggleMainMenu"
       >☰</button>
       <button
         class="manual-button"
         type="button"
         aria-label="マニュアルを開く"
-        @click="openManual"
+        @click="openManualDialog"
       >？</button>
+      <button
+        class="settings-button"
+        type="button"
+        aria-label="設定を開く"
+        @click="toggleSettingsMenu"
+      >⚙</button>
     </div>
     <div class="app-title">キャラクタータイムライン</div>
   </header>
@@ -222,6 +306,12 @@ onUnmounted(() => {
     v-if="menuOpen"
     class="menu-overlay"
     @click="closeMenu"
+  ></div>
+
+  <div
+    v-if="settingsOpen"
+    class="menu-overlay"
+    @click="closeSettings"
   ></div>
 
   <aside class="side-menu" :class="{ open: menuOpen }">
@@ -286,6 +376,77 @@ onUnmounted(() => {
     </section>
   </aside>
 
+  <aside class="settings-menu" :class="{ open: settingsOpen }">
+    <div class="side-menu__header">
+      <span>設定</span>
+      <button
+        class="menu-close"
+        type="button"
+        aria-label="設定を閉じる"
+        @click="closeSettings"
+      >
+        ×
+      </button>
+    </div>
+
+    <section class="side-menu__section">
+      <p class="menu-section-title">配色モード</p>
+      <label class="menu-option">
+        <input
+          type="radio"
+          name="theme-mode"
+          value="system"
+          v-model="themeMode"
+        />
+        <span>システム設定に合わせる</span>
+      </label>
+      <label class="menu-option">
+        <input
+          type="radio"
+          name="theme-mode"
+          value="light"
+          v-model="themeMode"
+        />
+        <span>ホワイトモード</span>
+      </label>
+      <label class="menu-option">
+        <input
+          type="radio"
+          name="theme-mode"
+          value="dark"
+          v-model="themeMode"
+        />
+        <span>ダークモード</span>
+      </label>
+      <p class="settings-note">
+        既定では、お使いの OS / ブラウザ設定に合わせて配色を切り替えます。
+      </p>
+    </section>
+
+    <section class="side-menu__section">
+      <p class="menu-section-title">表示オプション</p>
+      <label class="menu-option">
+        <input
+          type="checkbox"
+          :checked="showCommonEvents"
+          @change="showCommonEvents = $event.target.checked"
+        />
+        <span>共通イベントを表示する</span>
+      </label>
+      <label class="menu-option">
+        <input
+          type="checkbox"
+          :checked="showZoomHints"
+          @change="showZoomHints = $event.target.checked"
+        />
+        <span>操作ヒントを表示する</span>
+      </label>
+      <p class="settings-note">
+        タイムラインの見え方や補助情報の表示を切り替えられます。
+      </p>
+    </section>
+  </aside>
+
   <ZoomControls
     :horizontal-zoom-label="horizontalZoomLabel"
     :vertical-zoom-label="verticalZoomLabel"
@@ -299,6 +460,7 @@ onUnmounted(() => {
     :zoom-in-vertical="zoomInVertical"
     :zoom-out-vertical="zoomOutVertical"
     :reset-vertical-zoom="resetVerticalZoom"
+    :show-hints="showZoomHints"
   />
 
   <div class="timeline-shell">

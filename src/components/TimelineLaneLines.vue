@@ -13,7 +13,7 @@ defineProps({
       :y1="laneCenterY(index)"
       :x2="timelineViewport.x + timelineViewport.width"
       :y2="laneCenterY(index)"
-      stroke="#ccc"
+      stroke="var(--timeline-lane-line, var(--border-strong))"
     />
   </g>
 </template>

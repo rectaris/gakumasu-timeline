@@ -52,13 +52,13 @@ function uncertaintyMarker(event, edge) {
       <polygon
         v-if="isSingleWithinRange(event)"
         :points="uncertaintyMarker(event, 'start')"
-        fill="#333"
+        fill="var(--timeline-event-stroke, var(--text-primary))"
       />
 
       <polygon
         v-if="isSingleWithinRange(event)"
         :points="uncertaintyMarker(event, 'end')"
-        fill="#333"
+        fill="var(--timeline-event-stroke, var(--text-primary))"
       />
 
       <circle
@@ -66,7 +66,7 @@ function uncertaintyMarker(event, edge) {
         :cy="yPos(event.laneIndex, event.subLaneIndex)"
         r="5"
         :fill="event.color"
-        stroke="#333"
+        stroke="var(--timeline-event-stroke, var(--text-primary))"
       />
 
       <circle
@@ -74,7 +74,7 @@ function uncertaintyMarker(event, edge) {
         :cy="yPos(event.laneIndex, event.subLaneIndex)"
         r="5"
         :fill="event.color"
-        stroke="#333"
+        stroke="var(--timeline-event-stroke, var(--text-primary))"
         stroke-width="1.5"
       />
     </g>

@@ -11,73 +11,76 @@ defineProps({
   resetHorizontalZoom: { type: Function, required: true },
   zoomInVertical: { type: Function, required: true },
   zoomOutVertical: { type: Function, required: true },
-  resetVerticalZoom: { type: Function, required: true }
+  resetVerticalZoom: { type: Function, required: true },
+  showHints: { type: Boolean, required: true }
 });
 </script>
 
 <template>
-  <div class="zoom-controls">
-    <div class="zoom-group">
-      <span class="zoom-group-label">横</span>
-      <button
-        class="zoom-button zoom-button--out"
-        type="button"
-        :disabled="!canZoomOutHorizontal"
-        @click="zoomOutHorizontal"
-      >
-        -
-      </button>
-      <button
-        class="zoom-button zoom-button--reset"
-        type="button"
-        @click="resetHorizontalZoom"
-      >
-        全体
-      </button>
-      <button
-        class="zoom-button zoom-button--in"
-        type="button"
-        :disabled="!canZoomInHorizontal"
-        @click="zoomInHorizontal"
-      >
-        +
-      </button>
-      <span class="zoom-status">{{ horizontalZoomLabel }}</span>
+  <div class="zoom-panel">
+    <div class="zoom-controls">
+      <div class="zoom-group">
+        <span class="zoom-group-label">横</span>
+        <button
+          class="zoom-button zoom-button--out"
+          type="button"
+          :disabled="!canZoomOutHorizontal"
+          @click="zoomOutHorizontal"
+        >
+          -
+        </button>
+        <button
+          class="zoom-button zoom-button--reset"
+          type="button"
+          @click="resetHorizontalZoom"
+        >
+          全体
+        </button>
+        <button
+          class="zoom-button zoom-button--in"
+          type="button"
+          :disabled="!canZoomInHorizontal"
+          @click="zoomInHorizontal"
+        >
+          +
+        </button>
+        <span class="zoom-status">{{ horizontalZoomLabel }}</span>
+      </div>
+
+      <div class="zoom-group">
+        <span class="zoom-group-label">縦</span>
+        <button
+          class="zoom-button zoom-button--out"
+          type="button"
+          :disabled="!canZoomOutVertical"
+          @click="zoomOutVertical"
+        >
+          -
+        </button>
+        <button
+          class="zoom-button zoom-button--reset"
+          type="button"
+          @click="resetVerticalZoom"
+        >
+          100%
+        </button>
+        <button
+          class="zoom-button zoom-button--in"
+          type="button"
+          :disabled="!canZoomInVertical"
+          @click="zoomInVertical"
+        >
+          +
+        </button>
+        <span class="zoom-status">{{ verticalZoomLabel }}</span>
+      </div>
     </div>
 
-    <div class="zoom-group">
-      <span class="zoom-group-label">縦</span>
-      <button
-        class="zoom-button zoom-button--out"
-        type="button"
-        :disabled="!canZoomOutVertical"
-        @click="zoomOutVertical"
-      >
-        -
-      </button>
-      <button
-        class="zoom-button zoom-button--reset"
-        type="button"
-        @click="resetVerticalZoom"
-      >
-        100%
-      </button>
-      <button
-        class="zoom-button zoom-button--in"
-        type="button"
-        :disabled="!canZoomInVertical"
-        @click="zoomInVertical"
-      >
-        +
-      </button>
-      <span class="zoom-status">{{ verticalZoomLabel }}</span>
+    <div v-if="showHints" class="zoom-hints">
+      <p class="zoom-hint">ドラッグ: 上下左右に移動</p>
+      <p class="zoom-hint">ホイール: 拡大・縮小</p>
+      <p class="zoom-hint">横方向ホイール: 左右に移動</p>
+      <p class="timeline-scale-note">日付は各月31日換算の抽象時系列です。</p>
     </div>
-  </div>
-
-  <div class="zoom-hints">
-    <p class="zoom-hint">ドラッグ: 上下左右に移動</p>
-    <p class="zoom-hint">ホイール: 拡大・縮小</p>
-    <p class="zoom-hint">横方向ホイール: 左右に移動</p>
-    <p class="timeline-scale-note">日付は各月31日換算の抽象時系列です。</p>
   </div>
 </template>

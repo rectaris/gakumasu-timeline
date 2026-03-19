@@ -18,7 +18,7 @@ defineProps({
         :y1="timelineViewport.y"
         :x2="xPos(y.time)"
         :y2="timelineViewport.y + timelineViewport.height"
-        stroke="#eee"
+        stroke="var(--timeline-year-line, var(--border-soft))"
       />
     </g>
 
@@ -29,7 +29,7 @@ defineProps({
           :y1="timelineViewport.y"
           :x2="xPos(tick.time)"
           :y2="timelineViewport.y + timelineViewport.height"
-          stroke="#e0e0e0"
+          stroke="var(--timeline-month-line, var(--border))"
         />
       </g>
     </g>
@@ -41,7 +41,7 @@ defineProps({
           :y1="timelineViewport.y"
           :x2="xPos(tick.time)"
           :y2="timelineViewport.y + timelineViewport.height"
-          stroke="#f0f0f0"
+          stroke="var(--timeline-day-line, var(--surface-soft))"
         />
       </g>
     </g>

@@ -50,7 +50,11 @@ function buildEventInstance({
   };
 }
 
-export function useTimelineData(characters, commonTimeline = null) {
+export function useTimelineData(
+  characters,
+  commonTimeline = null,
+  showCommonEvents = null,
+) {
   const allEvents = computed(() => {
     const characterEvents = characters.value.flatMap((char, index) =>
       char.events.map((event) =>
@@ -66,7 +70,9 @@ export function useTimelineData(characters, commonTimeline = null) {
     );
 
     const commonEvents =
-      commonTimeline && commonTimeline.events
+      commonTimeline &&
+      commonTimeline.events &&
+      (showCommonEvents?.value ?? true)
         ? characters.value.flatMap((char, laneIndex) =>
             commonTimeline.events.map((event) =>
               buildEventInstance({
