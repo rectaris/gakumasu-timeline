@@ -19,8 +19,8 @@ function handleSelect(event) {
 function uncertaintyMarker(event, edge) {
   const edgeX =
     edge === "start"
-      ? props.xPos(event.displayStartDay)
-      : props.xPos(event.displayEndDay);
+      ? props.xPos(event.renderStartDay)
+      : props.xPos(event.renderEndDay);
   const centerY = props.yPos(event.laneIndex, event.subLaneIndex);
   const direction = edge === "start" ? -1 : 1;
   const tipX = edgeX + UNCERTAINTY_MARKER_OFFSET * direction;
@@ -41,9 +41,9 @@ function uncertaintyMarker(event, edge) {
       <rect
         class="event-bar"
         :class="{ 'event-bar--single': isSingleWithinRange(event) }"
-        :x="xPos(event.displayStartDay)"
+        :x="xPos(event.renderStartDay)"
         :y="yPos(event.laneIndex, event.subLaneIndex) - eventBarHeight / 2"
-        :width="xPos(event.displayEndDay) - xPos(event.displayStartDay)"
+        :width="xPos(event.renderEndDay) - xPos(event.renderStartDay)"
         :height="eventBarHeight"
         :fill="event.color"
         rx="6"
@@ -62,7 +62,7 @@ function uncertaintyMarker(event, edge) {
       />
 
       <circle
-        :cx="xPos(event.displayStartDay)"
+        :cx="xPos(event.renderStartDay)"
         :cy="yPos(event.laneIndex, event.subLaneIndex)"
         r="5"
         :fill="event.color"
@@ -70,7 +70,7 @@ function uncertaintyMarker(event, edge) {
       />
 
       <circle
-        :cx="xPos(event.displayEndDay)"
+        :cx="xPos(event.renderEndDay)"
         :cy="yPos(event.laneIndex, event.subLaneIndex)"
         r="5"
         :fill="event.color"

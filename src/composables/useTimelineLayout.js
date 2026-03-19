@@ -145,7 +145,11 @@ export function useTimelineLayout({
       viewRange,
       eventDisplayStart: (event) => event.displayStartDay,
       eventDisplayEnd: (event) => event.displayEndDay,
-    }),
+    }).map((event) => ({
+      ...event,
+      renderStartDay: Math.max(event.displayStartDay, viewRange.value.min),
+      renderEndDay: Math.min(event.displayEndDay, viewRange.value.max),
+    })),
   );
 
   function xPos(time) {
