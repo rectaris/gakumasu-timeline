@@ -1,4 +1,4 @@
-import { onMounted, onUnmounted, ref } from "vue";
+import { ref } from "vue";
 
 export function useMenuState() {
   const isOpen = ref(false);
@@ -15,24 +15,10 @@ export function useMenuState() {
     isOpen.value = !isOpen.value;
   }
 
-  function handleKey(e) {
-    if (e.key === "Escape") {
-      closeMenu();
-    }
-  }
-
-  onMounted(() => {
-    window.addEventListener("keydown", handleKey);
-  });
-
-  onUnmounted(() => {
-    window.removeEventListener("keydown", handleKey);
-  });
-
   return {
     isOpen,
     openMenu,
     closeMenu,
-    toggleMenu
+    toggleMenu,
   };
 }

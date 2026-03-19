@@ -1,17 +1,9 @@
 import { computed } from "vue";
 import { DAYS_IN_MONTH } from "../utils/constants";
-import { dayTimeValue, timeValue } from "../utils/time";
+import { dayTimeValue } from "../utils/time";
 
 function normalizeEventTiming(event) {
   return {
-    startTime: timeValue(event.start.year, event.start.month),
-    endTime: timeValue(event.end.year, event.end.month),
-    startTimeDay: dayTimeValue(
-      event.start.year,
-      event.start.month,
-      event.start.day ?? 1,
-    ),
-    endTimeDay: dayTimeValue(event.end.year, event.end.month, event.end.day ?? 1),
     displayStartDay: dayTimeValue(
       event.start.year,
       event.start.month,
@@ -25,55 +17,72 @@ function normalizeEventTiming(event) {
   };
 }
 
+function normalizeBaseEvent(event, fallbackId) {
+  return {
+    ...event,
+    id: event.id || fallbackId,
+    title: event.title || "(無題)",
+    detail: event.detail || "",
+  };
+}
+
+function buildEventInstance({
+  event,
+  fallbackId,
+  character,
+  color,
+  laneIndex,
+  isCommon,
+  instanceIdSuffix = "",
+}) {
+  const normalizedEvent = normalizeBaseEvent(event, fallbackId);
+  const canonicalId = normalizedEvent.id;
+
+  return {
+    ...normalizedEvent,
+    canonicalId,
+    instanceId: `${canonicalId}${instanceIdSuffix}`,
+    character,
+    color,
+    laneIndex,
+    ...normalizeEventTiming(normalizedEvent),
+    isCommon,
+  };
+}
+
 export function useTimelineData(characters, commonTimeline = null) {
   const allEvents = computed(() => {
     const characterEvents = characters.value.flatMap((char, index) =>
-      char.events.map((event) => {
-        const canonicalId = event.id;
-
-        return {
-          ...event,
-          canonicalId,
-          instanceId: canonicalId,
+      char.events.map((event) =>
+        buildEventInstance({
+          event,
+          fallbackId: `${char.id ?? index}_event_${event.title || "unknown"}`,
           character: char.name,
           color: char.color,
           laneIndex: index,
-          ...normalizeEventTiming(event),
           isCommon: false,
-        };
-      }),
+        }),
+      ),
     );
 
     const commonEvents =
       commonTimeline && commonTimeline.events
         ? characters.value.flatMap((char, laneIndex) =>
-            commonTimeline.events.map((event) => {
-              const canonicalId = event.id;
-              const instanceId = `${canonicalId}__${char.id ?? laneIndex}`;
-
-              return {
-                ...event,
-                canonicalId,
-                instanceId,
+            commonTimeline.events.map((event) =>
+              buildEventInstance({
+                event,
+                fallbackId: `${commonTimeline.id ?? "common"}_event_${event.title || "unknown"}`,
                 character: commonTimeline.name,
                 color: commonTimeline.color,
                 laneIndex,
-                ...normalizeEventTiming(event),
                 isCommon: true,
-              };
-            }),
+                instanceIdSuffix: `__${char.id ?? laneIndex}`,
+              }),
+            ),
           )
         : [];
 
     return [...characterEvents, ...commonEvents];
-  });
-
-  const times = computed(() => {
-    const values = allEvents.value.flatMap((event) => [
-      event.startTime,
-      event.endTime,
-    ]);
-    return values.length ? values : [0];
   });
 
   const timesDay = computed(() => {
@@ -86,7 +95,6 @@ export function useTimelineData(characters, commonTimeline = null) {
 
   return {
     allEvents,
-    times,
     timesDay,
   };
 }

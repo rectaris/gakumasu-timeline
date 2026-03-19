@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 import {
   idolCommu,
   hatsuboshiCommus,
@@ -19,6 +19,7 @@ import { useZoomMachine } from "./composables/useZoomMachine";
 import ManualModal from "./components/ManualModal.vue";
 import ZoomControls from "./components/ZoomControls.vue";
 import SidePanel from "./components/SidePanel.vue";
+import TimelineScaleOverlay from "./components/TimelineScaleOverlay.vue";
 import TimelineSvg from "./components/TimelineSvg.vue";
 import { invertHexColor } from "./utils/colors";
 import { isSingleWithinRange } from "./utils/events";
@@ -49,7 +50,7 @@ const {
   supportCardCommus: supportRef
 });
 
-const { isOpen: menuOpen, openMenu, closeMenu, toggleMenu } =
+const { isOpen: menuOpen, closeMenu, toggleMenu } =
   useMenuState();
 
 const {
@@ -158,7 +159,6 @@ function handleTimelineWheel(event) {
 
 const {
   isDragging,
-  onClickCapture,
   onMouseDown,
   onTouchStart,
   onTouchMove,
@@ -176,6 +176,21 @@ useKeyboard({
 });
 
 const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
+
+function handleGlobalEscape(event) {
+  if (event.key !== "Escape") return;
+
+  closeMenu();
+  closeManual();
+}
+
+onMounted(() => {
+  window.addEventListener("keydown", handleGlobalEscape);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("keydown", handleGlobalEscape);
+});
 </script>
 
 <template>
@@ -287,10 +302,10 @@ const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
   />
 
   <div class="timeline-shell">
-    <div ref="timelineStageRef" class="timeline-stage">
-      <TimelineSvg
+    <div class="timeline-frame">
+      <TimelineScaleOverlay
         :width="WIDTH"
-        :svg-height="svgHeight"
+        :overlay-height="timelineViewport.y"
         :timeline-viewport="timelineViewport"
         :years="years"
         :month-ticks="monthTicks"
@@ -298,24 +313,36 @@ const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
         :show-month-scale="showMonthScale"
         :show-day-scale="showDayScale"
         :x-pos="xPos"
-        :lane-center-y="laneCenterY"
-        :y-pos="yPos"
-        :event-bar-height="eventBarHeight"
-        :characters="activeLanes"
-        :visible-events="visibleEvents"
-        :is-single-within-range="isSingleWithinRange"
-        :invert-hex-color="invertHexColor"
-        :left-label-width="LEFT_LABEL_WIDTH"
         :year-label="yearLabel"
-        :on-wheel="handleTimelineWheel"
-        :on-click-capture="onClickCapture"
-        :on-mouse-down="onMouseDown"
-        :on-touch-start="onTouchStart"
-        :on-touch-move="onTouchMove"
-        :on-touch-end="onTouchEnd"
-        :is-dragging="isDragging"
-        @select="selectEvent"
       />
+      <div ref="timelineStageRef" class="timeline-stage">
+        <TimelineSvg
+          :width="WIDTH"
+          :svg-height="svgHeight"
+          :timeline-viewport="timelineViewport"
+          :years="years"
+          :month-ticks="monthTicks"
+          :day-ticks="dayTicks"
+          :show-month-scale="showMonthScale"
+          :show-day-scale="showDayScale"
+          :x-pos="xPos"
+          :lane-center-y="laneCenterY"
+          :y-pos="yPos"
+          :event-bar-height="eventBarHeight"
+          :characters="activeLanes"
+          :visible-events="visibleEvents"
+          :is-single-within-range="isSingleWithinRange"
+          :invert-hex-color="invertHexColor"
+          :left-label-width="LEFT_LABEL_WIDTH"
+          :on-wheel="handleTimelineWheel"
+          :on-mouse-down="onMouseDown"
+          :on-touch-start="onTouchStart"
+          :on-touch-move="onTouchMove"
+          :on-touch-end="onTouchEnd"
+          :is-dragging="isDragging"
+          @select="selectEvent"
+        />
+      </div>
     </div>
   </div>
 

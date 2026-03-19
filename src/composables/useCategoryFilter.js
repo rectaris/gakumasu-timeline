@@ -1,6 +1,5 @@
 import { computed, reactive, ref, watch } from "vue";
 import { backgroundFromTextColor, normalizeHexColor } from "../utils/colors";
-import { timeValue } from "../utils/time";
 
 const CATEGORY_OPTIONS = [
   { id: "idol", label: "アイドルコミュ" },
@@ -20,26 +19,27 @@ function normalizeLaneLabel(lane) {
   return lane.name || lane.title || lane.label || lane.id || "(名称未設定)";
 }
 
-function normalizeEvent(event, laneMeta, category) {
+function hasValidEventRange(event, laneId, laneLabel, category) {
   if (!event?.start?.year || !event?.start?.month) {
-    console.warn("Invalid event start date", { event, laneMeta, category });
-    return null;
+    console.warn("Invalid event start date", {
+      event,
+      laneId,
+      laneLabel,
+      category,
+    });
+    return false;
   }
   if (!event?.end?.year || !event?.end?.month) {
-    console.warn("Invalid event end date", { event, laneMeta, category });
-    return null;
+    console.warn("Invalid event end date", {
+      event,
+      laneId,
+      laneLabel,
+      category,
+    });
+    return false;
   }
 
-  return {
-    ...event,
-    id: event.id || `${laneMeta.key}_event_${event.title || "unknown"}`,
-    category,
-    laneKey: laneMeta.key,
-    laneLabel: laneMeta.label,
-    time: timeValue(event.start.year, event.start.month),
-    title: event.title || "(無題)",
-    detail: event.detail,
-  };
+  return true;
 }
 
 function normalizeLanes(category, lanes) {
@@ -48,11 +48,9 @@ function normalizeLanes(category, lanes) {
     const laneLabel = normalizeLaneLabel(lane);
     const laneColor = normalizeLaneColor(lane, index);
     const events = Array.isArray(lane.events)
-      ? lane.events
-          .map((event) =>
-            normalizeEvent(event, { key: laneId, label: laneLabel }, category),
-          )
-          .filter(Boolean)
+      ? lane.events.filter((event) =>
+          hasValidEventRange(event, laneId, laneLabel, category),
+        )
       : [];
 
     return {
@@ -169,10 +167,6 @@ export function useCategoryFilter({
     return lanes.filter((lane) => selectedSet.has(lane.id));
   });
 
-  const normalizedEvents = computed(() =>
-    activeLanes.value.flatMap((lane) => lane.events),
-  );
-
   // TODO: カテゴリ別の一括選択・検索・並び替えを追加する
 
   return {
@@ -180,7 +174,6 @@ export function useCategoryFilter({
     selectedCategory,
     laneOptions,
     activeLanes,
-    normalizedEvents,
     allSelected,
     isIndeterminate,
     isLaneSelected,

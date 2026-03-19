@@ -7,8 +7,7 @@ const props = defineProps({
   xPos: { type: Function, required: true },
   yPos: { type: Function, required: true },
   eventBarHeight: { type: Number, required: true },
-  isSingleWithinRange: { type: Function, required: true },
-  yearLabel: { type: Function, required: false }
+  isSingleWithinRange: { type: Function, required: true }
 });
 
 const emit = defineEmits(["select"]);
@@ -17,16 +16,17 @@ function handleSelect(event) {
   emit("select", event);
 }
 
-function startUncertaintyMarker(event, xPos) {
-  const startX = xPos(event.displayStart);
+function uncertaintyMarker(event, edge) {
+  const edgeX =
+    edge === "start"
+      ? props.xPos(event.displayStartDay)
+      : props.xPos(event.displayEndDay);
   const centerY = props.yPos(event.laneIndex, event.subLaneIndex);
-  return `${startX - UNCERTAINTY_MARKER_OFFSET},${centerY} ${startX - 2},${centerY - UNCERTAINTY_MARKER_HALF_HEIGHT} ${startX - 2},${centerY + UNCERTAINTY_MARKER_HALF_HEIGHT}`;
-}
+  const direction = edge === "start" ? -1 : 1;
+  const tipX = edgeX + UNCERTAINTY_MARKER_OFFSET * direction;
+  const baseX = edgeX + 2 * direction;
 
-function endUncertaintyMarker(event, xPos) {
-  const endX = xPos(event.displayEnd);
-  const centerY = props.yPos(event.laneIndex, event.subLaneIndex);
-  return `${endX + UNCERTAINTY_MARKER_OFFSET},${centerY} ${endX + 2},${centerY - UNCERTAINTY_MARKER_HALF_HEIGHT} ${endX + 2},${centerY + UNCERTAINTY_MARKER_HALF_HEIGHT}`;
+  return `${tipX},${centerY} ${baseX},${centerY - UNCERTAINTY_MARKER_HALF_HEIGHT} ${baseX},${centerY + UNCERTAINTY_MARKER_HALF_HEIGHT}`;
 }
 </script>
 
@@ -41,9 +41,9 @@ function endUncertaintyMarker(event, xPos) {
       <rect
         class="event-bar"
         :class="{ 'event-bar--single': isSingleWithinRange(event) }"
-        :x="xPos(event.displayStart)"
+        :x="xPos(event.displayStartDay)"
         :y="yPos(event.laneIndex, event.subLaneIndex) - eventBarHeight / 2"
-        :width="xPos(event.displayEnd) - xPos(event.displayStart)"
+        :width="xPos(event.displayEndDay) - xPos(event.displayStartDay)"
         :height="eventBarHeight"
         :fill="event.color"
         rx="6"
@@ -51,18 +51,18 @@ function endUncertaintyMarker(event, xPos) {
 
       <polygon
         v-if="isSingleWithinRange(event)"
-        :points="startUncertaintyMarker(event, xPos)"
+        :points="uncertaintyMarker(event, 'start')"
         fill="#333"
       />
 
       <polygon
         v-if="isSingleWithinRange(event)"
-        :points="endUncertaintyMarker(event, xPos)"
+        :points="uncertaintyMarker(event, 'end')"
         fill="#333"
       />
 
       <circle
-        :cx="xPos(event.displayStart)"
+        :cx="xPos(event.displayStartDay)"
         :cy="yPos(event.laneIndex, event.subLaneIndex)"
         r="5"
         :fill="event.color"
@@ -70,7 +70,7 @@ function endUncertaintyMarker(event, xPos) {
       />
 
       <circle
-        :cx="xPos(event.displayEnd)"
+        :cx="xPos(event.displayEndDay)"
         :cy="yPos(event.laneIndex, event.subLaneIndex)"
         r="5"
         :fill="event.color"

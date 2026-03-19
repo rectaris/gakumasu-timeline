@@ -87,3 +87,8 @@
 - [docs/ui-behavior.md](docs/ui-behavior.md)
 - [docs/deploy.md](docs/deploy.md)
 - [docs/development.md](docs/development.md)
+
+保守・レビュー運用向けのメモは `docs/maintainers/` に分けています。
+
+- [docs/maintainers/maintenance.md](docs/maintainers/maintenance.md)
+- [docs/maintainers/review-checklist.md](docs/maintainers/review-checklist.md)

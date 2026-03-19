@@ -128,7 +128,7 @@ export function usePointer({ panByPixels, panVerticallyByPixels }) {
     resetTouch();
   }
 
-  function onClickCapture(event) {
+  function suppressClick(event) {
     if (!suppressNextClick.value) return;
 
     event.preventDefault();
@@ -153,7 +153,7 @@ export function usePointer({ panByPixels, panVerticallyByPixels }) {
   }
 
   function handleWindowClick(event) {
-    onClickCapture(event);
+    suppressClick(event);
   }
 
   onMounted(() => {
@@ -171,7 +171,6 @@ export function usePointer({ panByPixels, panVerticallyByPixels }) {
 
   return {
     isDragging,
-    onClickCapture,
     onMouseDown,
     onTouchStart,
     onTouchMove,

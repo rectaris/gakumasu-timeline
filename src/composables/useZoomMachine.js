@@ -192,8 +192,8 @@ export function useZoomMachine(timesDay, selectedEvent) {
   watch(selectedEvent, (event) => {
     if (!event) return;
 
-    const eventMin = event.displayStartDay ?? event.startTimeDay;
-    const eventMax = event.displayEndDay ?? event.endTimeDay;
+    const eventMin = event.displayStartDay;
+    const eventMax = event.displayEndDay;
     const requiredSpan = Math.max(
       horizontalSpan.value,
       eventMax - eventMin + FOCUS_PADDING_DAYS * 2,
