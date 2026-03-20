@@ -197,9 +197,22 @@ export function usePointer({
     lastPointerY.value = touch.clientY;
   }
 
-  function onTouchEnd() {
+  function onTouchEnd(event) {
     if (touchPanActive.value || touchPinchActive.value) {
       consumeNextClick();
+    }
+
+    if (event?.touches?.length === 1) {
+      const touch = event.touches[0];
+      touchActive.value = true;
+      touchPanActive.value = false;
+      touchPinchActive.value = false;
+      dragSurfaceElement.value =
+        event.currentTarget ?? dragSurfaceElement.value;
+      lastPointerX.value = touch.clientX;
+      lastPointerY.value = touch.clientY;
+      lastPinchDistance.value = 0;
+      return;
     }
 
     resetTouch();

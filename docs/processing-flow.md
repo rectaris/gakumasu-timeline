@@ -27,7 +27,7 @@
 `allEvents`（computed）で、選択済みレーンのイベント配列へフラット化します。
 
 - 入力: `activeLanes[n].events[m]`
-- 出力: `[{ ...event, character, color, laneIndex, canonicalId, instanceId, startTime, endTime, displayStartDay, displayEndDay }, ...]`
+- 出力: `[{ ...event, character, color, laneIndex, canonicalId, instanceId, displayStartDay, displayEndDay }, ...]`
 - 共通イベントは各レーンへ複製されます
 - URL 同期は `canonicalId`、描画キーは `instanceId` を使います
 
@@ -103,7 +103,7 @@
   - ドラッグでタイムライン領域を上下左右に移動
 - タッチ
   - 1 本指ドラッグでタイムライン領域を上下左右に移動
-  - 2 本指ピンチで水平方向に拡大縮小
+  - 2 本指ピンチで横方向と縦方向を同時に拡大縮小
 
 ## URL からの復元
 

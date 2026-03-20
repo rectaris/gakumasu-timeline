@@ -100,6 +100,7 @@ const {
   panHorizontally,
   panByViewportRatio,
   zoomHorizontallyBy,
+  zoomVerticallyBy,
   zoomInHorizontal,
   zoomOutHorizontal,
   resetHorizontalZoom,
@@ -179,6 +180,7 @@ function zoomByTouchPinch(factor, clientX, svgElement) {
   );
 
   zoomHorizontallyBy(factor, anchorRatio);
+  zoomVerticallyBy(factor);
 }
 
 function handleTimelineWheel(event) {

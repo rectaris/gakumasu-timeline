@@ -132,16 +132,16 @@ export function useZoomMachine(timesDay, selectedEvent) {
   }
 
   function zoomInVertical() {
-    verticalScale.value = clamp(
-      verticalScale.value * VERTICAL_ZOOM_STEP,
-      MIN_VERTICAL_SCALE,
-      MAX_VERTICAL_SCALE,
-    );
+    zoomVerticallyBy(VERTICAL_ZOOM_STEP);
   }
 
   function zoomOutVertical() {
+    zoomVerticallyBy(1 / VERTICAL_ZOOM_STEP);
+  }
+
+  function zoomVerticallyBy(factor) {
     verticalScale.value = clamp(
-      verticalScale.value / VERTICAL_ZOOM_STEP,
+      verticalScale.value * factor,
       MIN_VERTICAL_SCALE,
       MAX_VERTICAL_SCALE,
     );
@@ -236,6 +236,7 @@ export function useZoomMachine(timesDay, selectedEvent) {
     panHorizontally,
     panByViewportRatio,
     zoomHorizontallyBy,
+    zoomVerticallyBy,
     zoomInHorizontal,
     zoomOutHorizontal,
     resetHorizontalZoom,
