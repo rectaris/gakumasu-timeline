@@ -9,6 +9,10 @@ const MAX_VERTICAL_SCALE = 2.5;
 const VERTICAL_ZOOM_STEP = 1.15;
 const FOCUS_PADDING_DAYS = 4;
 const DAY_SCALE_THRESHOLD_MONTHS = 2.8;
+const DEFAULT_TIME_BOUNDS = {
+  min: -2,
+  max: 2,
+};
 
 function formatSpanLabel(spanInDays) {
   const months = spanInDays / DAYS_IN_MONTH;
@@ -29,18 +33,27 @@ export function useZoomMachine(timesDay, selectedEvent) {
   const horizontalSpan = ref(MIN_HORIZONTAL_SPAN);
   const verticalScale = ref(1);
   const hasInitialized = ref(false);
+  const resolvedTimeBounds = ref(DEFAULT_TIME_BOUNDS);
 
-  const timeBounds = computed(() => {
-    const minDay = Math.min(...timesDay.value);
-    const maxDay = Math.max(...timesDay.value);
-    const extent = Math.max(1, maxDay - minDay);
-    const padding = Math.max(2, extent * 0.05);
+  watch(
+    timesDay,
+    (values) => {
+      if (!values.length) return;
 
-    return {
-      min: minDay - padding,
-      max: maxDay + padding,
-    };
-  });
+      const minDay = Math.min(...values);
+      const maxDay = Math.max(...values);
+      const extent = Math.max(1, maxDay - minDay);
+      const padding = Math.max(2, extent * 0.05);
+
+      resolvedTimeBounds.value = {
+        min: minDay - padding,
+        max: maxDay + padding,
+      };
+    },
+    { immediate: true },
+  );
+
+  const timeBounds = computed(() => resolvedTimeBounds.value);
 
   const maxHorizontalSpan = computed(() =>
     Math.max(1, timeBounds.value.max - timeBounds.value.min),
@@ -176,8 +189,10 @@ export function useZoomMachine(timesDay, selectedEvent) {
   );
 
   watch(
-    timeBounds,
-    () => {
+    timesDay,
+    (values) => {
+      if (!values.length) return;
+
       if (!hasInitialized.value) {
         resetHorizontalZoom();
         hasInitialized.value = true;

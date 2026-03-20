@@ -21,7 +21,7 @@ function normalizeBaseEvent(event, fallbackId) {
   return {
     ...event,
     id: event.id || fallbackId,
-    title: event.title || "(無題)",
+    title: event.title || "(無顁E",
     detail: event.detail || "",
   };
 }
@@ -91,13 +91,12 @@ export function useTimelineData(
     return [...characterEvents, ...commonEvents];
   });
 
-  const timesDay = computed(() => {
-    const values = allEvents.value.flatMap((event) => [
+  const timesDay = computed(() =>
+    allEvents.value.flatMap((event) => [
       event.displayStartDay,
       event.displayEndDay,
-    ]);
-    return values.length ? values : [0];
-  });
+    ]),
+  );
 
   return {
     allEvents,
