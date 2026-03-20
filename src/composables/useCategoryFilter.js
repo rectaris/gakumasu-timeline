@@ -8,6 +8,13 @@ const CATEGORY_OPTIONS = [
   { id: "support", label: "サポートカードコミュ" },
 ];
 
+const SORT_OPTIONS = [
+  { id: "default", label: "デフォルト順" },
+  { id: "nameAsc", label: "名前順" },
+  { id: "nameDesc", label: "名前逆順" },
+  { id: "eventsDesc", label: "イベント数順" },
+];
+
 const FALLBACK_COLORS = ["#7a7a7a", "#4d7ea8", "#a26ea1", "#c2854b"];
 
 function normalizeLaneColor(lane, index) {
@@ -17,6 +24,29 @@ function normalizeLaneColor(lane, index) {
 
 function normalizeLaneLabel(lane) {
   return lane.name || lane.title || lane.label || lane.id || "(名称未設定)";
+}
+
+function normalizeSearchQuery(query) {
+  return query.trim().toLocaleLowerCase("ja-JP");
+}
+
+function sortLanes(lanes, sortMode) {
+  const sorted = lanes.slice();
+
+  switch (sortMode) {
+    case "nameAsc":
+      return sorted.sort((a, b) => a.name.localeCompare(b.name, "ja"));
+    case "nameDesc":
+      return sorted.sort((a, b) => b.name.localeCompare(a.name, "ja"));
+    case "eventsDesc":
+      return sorted.sort(
+        (a, b) =>
+          b.events.length - a.events.length ||
+          a.name.localeCompare(b.name, "ja"),
+      );
+    default:
+      return sorted;
+  }
 }
 
 function hasValidEventRange(event, laneId, laneLabel, category) {
@@ -84,6 +114,18 @@ export function useCategoryFilter({
     event: [],
     support: [],
   });
+  const laneSearchQueries = reactive({
+    idol: "",
+    hatsuboshi: "",
+    event: "",
+    support: "",
+  });
+  const laneSortModes = reactive({
+    idol: "default",
+    hatsuboshi: "default",
+    event: "default",
+    support: "default",
+  });
 
   const lanesByCategory = computed(() => ({
     idol: normalizeLanes("idol", idolCommu.value || []),
@@ -91,6 +133,27 @@ export function useCategoryFilter({
     event: normalizeLanes("event", eventCommus.value || []),
     support: normalizeLanes("support", supportCardCommus.value || []),
   }));
+
+  const sortedLanesByCategory = computed(() => ({
+    idol: sortLanes(lanesByCategory.value.idol, laneSortModes.idol),
+    hatsuboshi: sortLanes(
+      lanesByCategory.value.hatsuboshi,
+      laneSortModes.hatsuboshi,
+    ),
+    event: sortLanes(lanesByCategory.value.event, laneSortModes.event),
+    support: sortLanes(lanesByCategory.value.support, laneSortModes.support),
+  }));
+
+  function getVisibleLanes(category) {
+    const lanes = sortedLanesByCategory.value[category] || [];
+    const query = normalizeSearchQuery(laneSearchQueries[category]);
+
+    if (!query) return lanes;
+
+    return lanes.filter((lane) =>
+      lane.name.toLocaleLowerCase("ja-JP").includes(query),
+    );
+  }
 
   watch(
     lanesByCategory,
@@ -119,24 +182,49 @@ export function useCategoryFilter({
   );
 
   const laneOptions = computed(() => {
-    const lanes = lanesByCategory.value[selectedCategory.value] || [];
+    const lanes = getVisibleLanes(selectedCategory.value);
     return lanes.map((lane) => ({
       key: lane.id,
       label: lane.name,
+      eventCount: lane.events.length,
     }));
   });
 
+  const laneSearchQuery = computed({
+    get: () => laneSearchQueries[selectedCategory.value],
+    set: (value) => {
+      laneSearchQueries[selectedCategory.value] = value;
+    },
+  });
+
+  const laneSortMode = computed({
+    get: () => laneSortModes[selectedCategory.value],
+    set: (value) => {
+      laneSortModes[selectedCategory.value] = value;
+    },
+  });
+
+  const visibleLaneCount = computed(() => laneOptions.value.length);
+
+  const totalLaneCount = computed(
+    () => sortedLanesByCategory.value[selectedCategory.value]?.length ?? 0,
+  );
+
   const allSelected = computed(() => {
     const category = selectedCategory.value;
-    const lanes = lanesByCategory.value[category] || [];
+    const lanes = laneOptions.value;
     if (lanes.length === 0) return false;
-    return selectedLaneKeys[category].length === lanes.length;
+    const selectedSet = new Set(selectedLaneKeys[category]);
+    return lanes.every((lane) => selectedSet.has(lane.key));
   });
 
   const isIndeterminate = computed(() => {
     const category = selectedCategory.value;
-    const lanes = lanesByCategory.value[category] || [];
-    const selectedCount = selectedLaneKeys[category].length;
+    const lanes = laneOptions.value;
+    const selectedSet = new Set(selectedLaneKeys[category]);
+    const selectedCount = lanes.filter((lane) =>
+      selectedSet.has(lane.key),
+    ).length;
     return selectedCount > 0 && selectedCount < lanes.length;
   });
 
@@ -154,25 +242,40 @@ export function useCategoryFilter({
   }
 
   function toggleAll(category, enabled) {
-    const lanes = lanesByCategory.value[category] || [];
-    selectedLaneKeys[category] = enabled ? lanes.map((lane) => lane.id) : [];
+    const visibleLaneIds = getVisibleLanes(category).map((lane) => lane.id);
+    const visibleLaneIdSet = new Set(visibleLaneIds);
+    const selection = selectedLaneKeys[category];
+
+    if (enabled) {
+      selectedLaneKeys[category] = Array.from(
+        new Set([...selection, ...visibleLaneIds]),
+      );
+      return;
+    }
+
+    selectedLaneKeys[category] = selection.filter(
+      (key) => !visibleLaneIdSet.has(key),
+    );
   }
 
   const activeLanes = computed(() => {
     const category = selectedCategory.value;
-    const lanes = lanesByCategory.value[category] || [];
+    const lanes = sortedLanesByCategory.value[category] || [];
     const selection = selectedLaneKeys[category];
     if (selection.length === 0) return [];
     const selectedSet = new Set(selection);
     return lanes.filter((lane) => selectedSet.has(lane.id));
   });
 
-  // TODO: カテゴリ別の一括選択・検索・並び替えを追加する
-
   return {
     categoryOptions: CATEGORY_OPTIONS,
+    laneSortOptions: SORT_OPTIONS,
     selectedCategory,
+    laneSearchQuery,
+    laneSortMode,
     laneOptions,
+    visibleLaneCount,
+    totalLaneCount,
     activeLanes,
     allSelected,
     isIndeterminate,

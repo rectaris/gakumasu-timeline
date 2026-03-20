@@ -36,7 +36,12 @@ const timelineStageRef = ref(null);
 const {
   categoryOptions,
   selectedCategory,
+  laneSortOptions,
+  laneSearchQuery,
+  laneSortMode,
   laneOptions,
+  visibleLaneCount,
+  totalLaneCount,
   activeLanes,
   allSelected,
   isIndeterminate,
@@ -226,6 +231,7 @@ useKeyboard({
 });
 
 const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
+const hasAnyLaneInCurrentCategory = computed(() => totalLaneCount.value > 0);
 
 function handleGlobalEscape(event) {
   if (event.key !== "Escape") return;
@@ -355,8 +361,34 @@ watch(showCommonEvents, (value) => {
             @change="toggleAll(selectedCategory, $event.target.checked)"
             :disabled="isCurrentCategoryEmpty"
           />
-          <span>一括</span>
+          <span>表示中を一括</span>
         </label>
+      </div>
+      <div v-if="hasAnyLaneInCurrentCategory" class="lane-tools">
+        <label class="lane-search">
+          <span class="lane-search__label">検索</span>
+          <input
+            v-model="laneSearchQuery"
+            class="lane-search__input"
+            type="search"
+            placeholder="レーン名で絞り込み"
+          />
+        </label>
+        <label class="lane-sort">
+          <span class="lane-search__label">並び替え</span>
+          <select v-model="laneSortMode" class="lane-sort__select">
+            <option
+              v-for="option in laneSortOptions"
+              :key="option.id"
+              :value="option.id"
+            >
+              {{ option.label }}
+            </option>
+          </select>
+        </label>
+        <p class="lane-summary">
+          {{ visibleLaneCount }} / {{ totalLaneCount }} 件表示
+        </p>
       </div>
       <template v-if="!isCurrentCategoryEmpty">
         <label
@@ -370,9 +402,12 @@ watch(showCommonEvents, (value) => {
             @change="toggleLane(selectedCategory, lane.key)"
           />
           <span>{{ lane.label }}</span>
+          <span class="menu-option__meta">{{ lane.eventCount }}件</span>
         </label>
       </template>
-      <div v-else class="menu-empty">今後追加予定</div>
+      <div v-else class="menu-empty">
+        {{ hasAnyLaneInCurrentCategory ? "該当するレーンがありません" : "今後追加予定" }}
+      </div>
     </section>
   </aside>
 

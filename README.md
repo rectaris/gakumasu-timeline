@@ -51,7 +51,11 @@
 - 左上のメニューからカテゴリ（アイドル/初星/イベント/サポート）を選択できます
 - ヘッダーの設定ボタンから、配色モードと表示オプションを変更できます
 - カテゴリごとのレーンをチェックで表示/非表示にできます（初期は全選択）
-- 「一括」チェックでカテゴリ内の全レーンをまとめて選択/解除できます
+- レーン名で絞り込み検索できます
+- 並び替えでレーン一覧とタイムライン上の表示順を切り替えできます
+- 「表示中を一括」で、現在表示中のレーンだけをまとめて選択/解除できます
+- 表示レーンをすべて外しても、横方向の拡大率と表示位置は保持されます
+- レーンを再び表示すると、解除直前の表示状態で再開されます
 
 ### 設定
 
@@ -94,8 +98,3 @@
 - [docs/ui-behavior.md](docs/ui-behavior.md)
 - [docs/deploy.md](docs/deploy.md)
 - [docs/development.md](docs/development.md)
-
-保守・レビュー運用向けのメモは `docs/maintainers/` に分けています。
-
-- [docs/maintainers/maintenance.md](docs/maintainers/maintenance.md)
-- [docs/maintainers/review-checklist.md](docs/maintainers/review-checklist.md)

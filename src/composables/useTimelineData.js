@@ -21,7 +21,7 @@ function normalizeBaseEvent(event, fallbackId) {
   return {
     ...event,
     id: event.id || fallbackId,
-    title: event.title || "(無顁E",
+    title: event.title || "(無題)",
     detail: event.detail || "",
   };
 }

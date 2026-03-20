@@ -625,9 +625,51 @@ body {
     margin-bottom: 6px;
 }
 
+.menu-option__meta {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--text-faint);
+}
+
 .menu-empty {
     font-size: 13px;
     color: var(--text-faint);
+}
+
+.lane-tools {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.lane-search,
+.lane-sort {
+    display: grid;
+    gap: 4px;
+}
+
+.lane-search__label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+.lane-search__input,
+.lane-sort__select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface-chip);
+    color: var(--text-primary);
+    font: inherit;
+}
+
+.lane-summary {
+    margin: 0;
+    font-size: 12px;
+    color: var(--text-muted);
 }
 
 .settings-note {

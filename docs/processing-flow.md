@@ -15,9 +15,12 @@
 ## カテゴリ/レーンの選択
 
 - 左メニューでカテゴリとレーンを選択
+- カテゴリごとに検索語と並び替え状態を保持する
+- 検索はメニュー上の表示対象だけを絞り込む
+- 並び替えはメニュー表示順と `activeLanes` の並び順の両方に反映する
 - 選択結果は `activeLanes` としてタイムライン描画に反映
 - 初期状態はカテゴリ内の全レーン選択
-- 「一括」チェックでカテゴリ内の全レーンを選択/解除
+- 「表示中を一括」で現在見えているレーンを選択/解除
 
 ## 表示用イベントへの変換
 
@@ -45,10 +48,11 @@
   - 表示中心の日単位内部時刻
 - `horizontalSpan`
   - 表示幅（日数）
-- `viewRange.min/max`
-  - `horizontalCenter ± horizontalSpan / 2`
-- `timeBounds`
-  - 全イベントの `displayStartDay / displayEndDay` をもとに算出
+- iewRange.min/max 
+  - horizontalCenter ± horizontalSpan / 2 
+- 	imeBounds 
+  - 全イベントの displayStartDay / displayEndDay をもとに算出 
+  - 一時的に表示イベントが 0 件になった場合は、直前の有効な境界を維持
 - 選択イベントが表示範囲外に出る場合は、必要な幅まで span を広げて再センタリングします
 
 縦方向は `verticalScale` でレーン高さ・行間・バー高さを伸縮します。
