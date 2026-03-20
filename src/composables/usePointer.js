@@ -2,21 +2,42 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 
 const MOUSE_DRAG_THRESHOLD = 4;
 const TOUCH_DRAG_THRESHOLD = 8;
+const TOUCH_PINCH_THRESHOLD = 4;
 const CLICK_SUPPRESSION_MS = 80;
 
-export function usePointer({ panByPixels, panVerticallyByPixels }) {
+function pinchDistance(touchA, touchB) {
+  const diffX = touchA.clientX - touchB.clientX;
+  const diffY = touchA.clientY - touchB.clientY;
+  return Math.hypot(diffX, diffY);
+}
+
+function pinchMidpoint(touchA, touchB) {
+  return {
+    clientX: (touchA.clientX + touchB.clientX) / 2,
+    clientY: (touchA.clientY + touchB.clientY) / 2,
+  };
+}
+
+export function usePointer({
+  panByPixels,
+  panVerticallyByPixels,
+  zoomByPinch,
+}) {
   const mouseActive = ref(false);
   const mousePanActive = ref(false);
   const touchActive = ref(false);
   const touchPanActive = ref(false);
+  const touchPinchActive = ref(false);
   const suppressNextClick = ref(false);
   const dragSurfaceElement = ref(null);
   const lastPointerX = ref(0);
   const lastPointerY = ref(0);
+  const lastPinchDistance = ref(0);
   let clearSuppressionTimer = null;
 
   const isDragging = computed(
-    () => mousePanActive.value || touchPanActive.value,
+    () =>
+      mousePanActive.value || touchPanActive.value || touchPinchActive.value,
   );
 
   function clearClickSuppressionTimer() {
@@ -48,6 +69,9 @@ export function usePointer({ panByPixels, panVerticallyByPixels }) {
   function resetTouch() {
     touchActive.value = false;
     touchPanActive.value = false;
+    touchPinchActive.value = false;
+    dragSurfaceElement.value = null;
+    lastPinchDistance.value = 0;
   }
 
   function onMouseDown(event) {
@@ -85,15 +109,68 @@ export function usePointer({ panByPixels, panVerticallyByPixels }) {
   }
 
   function onTouchStart(event) {
+    dragSurfaceElement.value = event.currentTarget;
+
+    if (event.touches.length === 2) {
+      event.preventDefault();
+      touchActive.value = false;
+      touchPanActive.value = false;
+      touchPinchActive.value = true;
+      lastPinchDistance.value = pinchDistance(
+        event.touches[0],
+        event.touches[1],
+      );
+      const midpoint = pinchMidpoint(event.touches[0], event.touches[1]);
+      lastPointerX.value = midpoint.clientX;
+      lastPointerY.value = midpoint.clientY;
+      return;
+    }
+
     if (event.touches.length !== 1) return;
 
     touchActive.value = true;
     touchPanActive.value = false;
+    touchPinchActive.value = false;
     lastPointerX.value = event.touches[0].clientX;
     lastPointerY.value = event.touches[0].clientY;
   }
 
   function onTouchMove(event) {
+    if (event.touches.length === 2) {
+      const currentDistance = pinchDistance(event.touches[0], event.touches[1]);
+      const midpoint = pinchMidpoint(event.touches[0], event.touches[1]);
+
+      if (!touchPinchActive.value) {
+        touchActive.value = false;
+        touchPanActive.value = false;
+        touchPinchActive.value = true;
+        lastPinchDistance.value = currentDistance;
+        lastPointerX.value = midpoint.clientX;
+        lastPointerY.value = midpoint.clientY;
+        event.preventDefault();
+        return;
+      }
+
+      if (
+        Math.abs(currentDistance - lastPinchDistance.value) <
+        TOUCH_PINCH_THRESHOLD
+      ) {
+        event.preventDefault();
+        return;
+      }
+
+      event.preventDefault();
+      zoomByPinch(
+        lastPinchDistance.value / currentDistance,
+        midpoint.clientX,
+        dragSurfaceElement.value ?? event.currentTarget,
+      );
+      lastPinchDistance.value = currentDistance;
+      lastPointerX.value = midpoint.clientX;
+      lastPointerY.value = midpoint.clientY;
+      return;
+    }
+
     if (!touchActive.value || event.touches.length !== 1) return;
 
     const touch = event.touches[0];
@@ -121,7 +198,7 @@ export function usePointer({ panByPixels, panVerticallyByPixels }) {
   }
 
   function onTouchEnd() {
-    if (touchPanActive.value) {
+    if (touchPanActive.value || touchPinchActive.value) {
       consumeNextClick();
     }
 

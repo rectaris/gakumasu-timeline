@@ -168,6 +168,19 @@ function panVerticallyByPixels(deltaPixels) {
   stageElement.scrollTop -= deltaPixels;
 }
 
+function zoomByTouchPinch(factor, clientX, svgElement) {
+  const rect = svgElement?.getBoundingClientRect?.();
+  if (!rect?.width) return;
+
+  const scaleX = WIDTH / rect.width;
+  const svgX = (clientX - rect.left) * scaleX;
+  const anchorRatio = clampRatio(
+    (svgX - timelineViewport.value.x) / timelineViewport.value.width
+  );
+
+  zoomHorizontallyBy(factor, anchorRatio);
+}
+
 function handleTimelineWheel(event) {
   const svgElement = event.currentTarget;
   const isHorizontalWheel = Math.abs(event.deltaX) > Math.abs(event.deltaY);
@@ -231,7 +244,8 @@ const {
   onTouchEnd
 } = usePointer({
   panByPixels,
-  panVerticallyByPixels
+  panVerticallyByPixels,
+  zoomByPinch: zoomByTouchPinch
 });
 
 useKeyboard({
