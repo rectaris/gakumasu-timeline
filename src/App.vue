@@ -180,7 +180,7 @@ function zoomByTouchPinch(factor, clientX, svgElement) {
   );
 
   zoomHorizontallyBy(factor, anchorRatio);
-  zoomVerticallyBy(1 / factor);
+  zoomVerticallyBy(factor);
 }
 
 function handleTimelineWheel(event) {
