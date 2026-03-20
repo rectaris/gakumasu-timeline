@@ -16,6 +16,7 @@ const props = defineProps({
   showDayScale: { type: Boolean, required: true },
   xPos: { type: Function, required: true },
   laneCenterY: { type: Function, required: true },
+  laneLayouts: { type: Array, required: true },
   yPos: { type: Function, required: true },
   eventBarHeight: { type: Number, required: true },
   characters: { type: Array, required: true },
@@ -74,8 +75,7 @@ const CLIP_PADDING = 6;
       />
 
       <TimelineLaneLines
-        :characters="characters"
-        :lane-center-y="laneCenterY"
+        :lane-layouts="laneLayouts"
         :timeline-viewport="timelineViewport"
       />
 

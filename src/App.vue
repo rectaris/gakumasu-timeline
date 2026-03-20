@@ -115,6 +115,7 @@ const { years, monthTicks, dayTicks } = useTimelineScales({
 });
 
 const {
+  laneLayouts,
   svgHeight,
   timelineViewport,
   laneCenterY,
@@ -141,6 +142,16 @@ function getRenderedViewportWidth(svgElement) {
 
 function clampRatio(value) {
   return Math.min(1, Math.max(0, value));
+}
+
+function isFormElementTarget(target) {
+  const tagName = target?.tagName?.toLowerCase();
+  return (
+    tagName === "input" ||
+    tagName === "textarea" ||
+    tagName === "select" ||
+    target?.isContentEditable
+  );
 }
 
 function panByPixels(deltaPixels, svgElement) {
@@ -235,6 +246,7 @@ const hasAnyLaneInCurrentCategory = computed(() => totalLaneCount.value > 0);
 
 function handleGlobalEscape(event) {
   if (event.key !== "Escape") return;
+  if (isFormElementTarget(event.target)) return;
 
   closeMenu();
   closeManual();
@@ -523,6 +535,7 @@ watch(showCommonEvents, (value) => {
           :show-month-scale="showMonthScale"
           :show-day-scale="showDayScale"
           :x-pos="xPos"
+          :lane-layouts="laneLayouts"
           :lane-center-y="laneCenterY"
           :y-pos="yPos"
           :event-bar-height="eventBarHeight"

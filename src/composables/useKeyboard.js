@@ -1,26 +1,31 @@
 import { onMounted, onUnmounted } from "vue";
 
+function isFormElementTarget(target) {
+  const tagName = target?.tagName?.toLowerCase();
+  return (
+    tagName === "input" ||
+    tagName === "textarea" ||
+    tagName === "select" ||
+    target?.isContentEditable
+  );
+}
+
 export function useKeyboard({
   panByViewportRatio,
   zoomInHorizontal,
   zoomOutHorizontal,
-  closePanel
+  closePanel,
 }) {
   function handleKey(e) {
+    const target = e.target;
+    const isFormElement = isFormElementTarget(target);
+
+    if (isFormElement) return;
+
     if (e.key === "Escape") {
       closePanel();
       return;
     }
-
-    const target = e.target;
-    const tagName = target?.tagName?.toLowerCase();
-    const isFormElement =
-      tagName === "input" ||
-      tagName === "textarea" ||
-      tagName === "select" ||
-      target?.isContentEditable;
-
-    if (isFormElement) return;
 
     switch (e.key) {
       case "ArrowLeft":

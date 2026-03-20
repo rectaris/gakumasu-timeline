@@ -48,10 +48,10 @@
   - 表示中心の日単位内部時刻
 - `horizontalSpan`
   - 表示幅（日数）
-- iewRange.min/max 
-  - horizontalCenter ± horizontalSpan / 2 
-- 	imeBounds 
-  - 全イベントの displayStartDay / displayEndDay をもとに算出 
+- `viewRange.min/max`
+  - `horizontalCenter ± horizontalSpan / 2`
+- `timeBounds`
+  - 全イベントの `displayStartDay / displayEndDay` をもとに算出
   - 一時的に表示イベントが 0 件になった場合は、直前の有効な境界を維持
 - 選択イベントが表示範囲外に出る場合は、必要な幅まで span を広げて再センタリングします
 
