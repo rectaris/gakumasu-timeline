@@ -189,6 +189,11 @@ function handleTimelineWheel(event) {
 
   event.preventDefault();
 
+  if (event.ctrlKey) {
+    zoomVerticallyBy(Math.exp(event.deltaY * -0.0015));
+    return;
+  }
+
   if (isHorizontalWheel) {
     panByPixels(event.deltaX, svgElement);
     return;
