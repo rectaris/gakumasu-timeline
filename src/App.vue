@@ -155,6 +155,16 @@ function isFormElementTarget(target) {
   );
 }
 
+function shouldKeepPanelOpenFromClick(target) {
+  if (!target?.closest) return false;
+
+  return Boolean(
+    target.closest(".app-header") ||
+      target.closest(".side-panel") ||
+      target.closest(".event-group"),
+  );
+}
+
 function panByPixels(deltaPixels, svgElement) {
   const renderedViewportWidth = getRenderedViewportWidth(svgElement);
   if (!renderedViewportWidth) return;
@@ -274,6 +284,13 @@ function handleGlobalEscape(event) {
   closeSettings();
 }
 
+function handleGlobalClick(event) {
+  if (!selectedEvent.value) return;
+  if (shouldKeepPanelOpenFromClick(event.target)) return;
+
+  closePanel();
+}
+
 onMounted(() => {
   const storedThemeMode = window.localStorage.getItem(THEME_MODE_STORAGE_KEY);
   if (storedThemeMode === "light" || storedThemeMode === "dark") {
@@ -287,10 +304,12 @@ onMounted(() => {
   applyThemeMode(themeMode.value);
   settingsReady.value = true;
   window.addEventListener("keydown", handleGlobalEscape);
+  window.addEventListener("click", handleGlobalClick);
 });
 
 onUnmounted(() => {
   window.removeEventListener("keydown", handleGlobalEscape);
+  window.removeEventListener("click", handleGlobalClick);
 });
 
 watch(themeMode, (mode) => {

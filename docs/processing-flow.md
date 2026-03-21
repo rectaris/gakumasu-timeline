@@ -91,6 +91,7 @@
 - パネルを閉じる
   - `selectedEvent = null`
   - URL クエリから `event` を削除
+  - `Escape`、右上の閉じるボタン、またはヘッダー / 詳細パネル / イベント本体以外のクリックで実行
 - キーボード
   - `onMounted` で `keydown` リスナーを登録
   - `ArrowLeft / ArrowRight` で水平移動
