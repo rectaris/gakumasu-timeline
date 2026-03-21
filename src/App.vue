@@ -160,6 +160,9 @@ function shouldKeepPanelOpenFromClick(target) {
 
   return Boolean(
     target.closest(".app-header") ||
+      target.closest(".side-menu") ||
+      target.closest(".settings-menu") ||
+      target.closest(".manual-modal") ||
       target.closest(".side-panel") ||
       target.closest(".event-group"),
   );
