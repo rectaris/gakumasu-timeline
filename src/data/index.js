@@ -7,7 +7,7 @@ import hanamiSaki from "./worldline_commu/idol_commu/001hanamiSaki";
 import tsukimuraTemari from "./worldline_commu/idol_commu/002tsukimuraTemari";
 import fujitaKotone from "./worldline_commu/idol_commu/003fujitaKotone";
 import arimuraMao from "./worldline_commu/idol_commu/004arimuraMao";
-import katsuragiRiya from "./worldline_commu/idol_commu/005katsuragiRiya";
+import katsuragiLilja from "./worldline_commu/idol_commu/005katsuragiLilja";
 import kuramotoChina from "./worldline_commu/idol_commu/006kuramotoChina";
 import shiunSumika from "./worldline_commu/idol_commu/007shiunSumika";
 import shinosawaHiro from "./worldline_commu/idol_commu/008shinosawaHiro";
@@ -22,7 +22,7 @@ export const idolCommu = [
   tsukimuraTemari,
   fujitaKotone,
   arimuraMao,
-  katsuragiRiya,
+  katsuragiLilja,
   kuramotoChina,
   shiunSumika,
   shinosawaHiro,
