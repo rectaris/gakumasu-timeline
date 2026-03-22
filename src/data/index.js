@@ -18,43 +18,40 @@ import hatayaMisuzu from "./worldline_commu/idol_commu/012hatayaMisuzu";
 import amayaTsubame from "./worldline_commu/idol_commu/013amayaTsubame";
 
 export const idolCommu = [
-    hanamiSaki,
-    tsukimuraTemari,
-    fujitaKotone,
-    arimuraMao,
-    katsuragiRiya,
-    kuramotoChina,
-    shiunSumika,
-    shinosawaHiro,
-    himesakiRinami,
-    hanamiUme,
-    juoSena,
-    hatayaMisuzu,
-    amayaTsubame,
+  hanamiSaki,
+  tsukimuraTemari,
+  fujitaKotone,
+  arimuraMao,
+  katsuragiRiya,
+  kuramotoChina,
+  shiunSumika,
+  shinosawaHiro,
+  himesakiRinami,
+  hanamiUme,
+  juoSena,
+  hatayaMisuzu,
+  amayaTsubame,
 ];
 
 // 初星コミュ
 // src/data/worldline_commu/hatsuboshi_commu/
-import storyOfReiris from "./worldline_commu/hatsuboshi_commu/001HstoryOfReiris";
+import storyOfReiris from "./worldline_commu/hatsuboshi_commu/001storyOfReiris";
 
-export const hatsuboshiCommus = [
-    storyOfReiris,
-];
+export const hatsuboshiCommus = [storyOfReiris];
 
 // イベントコミュ
 // src/data/worldline_commu/event_commu/
 
 export const eventCommus = [
-    // 今後追加予定
+  // 今後追加予定
 ];
 
 // サポートカードコミュ
 // src/data/worldline_commu/support_story/
 
 export const supportCardCommus = [
-    // 今後追加予定
+  // 今後追加予定
 ];
 
 // 共通イベント（全レーンで表示）
 export { commonTimeline };
-

@@ -1,12 +1,12 @@
 import { yearsAgo, yearOf } from "../../utils/time";
 
 export default {
-  id: "riya_katsuragi",
+  id: "lilja_katsuragi",
   name: "葛城 リーリヤ",
   color: "#EAFDFF",
   events: [
     {
-      id: "riya_debut",
+      id: "lilja_debut",
       start: { year: yearOf(1), month: 1 },
       end: { year: yearOf(1), month: 1 },
       occurrenceType: "singleWithinRange",

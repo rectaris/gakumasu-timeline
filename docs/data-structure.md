@@ -36,7 +36,7 @@
 - `worldlineId?: string[]`
 - `participants?: string[]`
 - `source?: string[]`
-- `note?: string`
+- `note?: string[]`
 
 ## DateLike
 

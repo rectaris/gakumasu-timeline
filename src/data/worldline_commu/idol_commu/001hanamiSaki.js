@@ -24,14 +24,28 @@ export default {
       participants: ["saki_hanami", "ume_hanami"],
     },
     {
-      id: "001_reason1",
+      id: "001_top_reason1",
       start: { year: yearsAgo(13), month: 1, day: 1 },
       end: { year: yearsAgo(5), month: 1, day: 1 },
-      occurrenceType: "continuous",
+      occurrenceType: "singleWithinRange",
       title: "世界一を目指す理由",
       detail: "咲季がアイドルで世界一を目指す理由が決まる",
       participants: ["saki_hanami", "ume_hanami"],
-      source: ["親愛度10コミュ"],
+      source: ["花海咲季 親愛度 第10話"],
+    },
+    {
+      id: "001_idol_reason1",
+      start: { year: yearsAgo(1), month: 6, day: 1 },
+      end: { year: yearsAgo(1), month: 9, day: 31 },
+      occurrenceType: "singleWithinRange",
+      title: "アイドルを目指す理由",
+      detail: "咲季がアイドルになりたいと思った理由が決まる",
+      participants: ["saki_hanami", "juo_sena"],
+      source: ["花海咲季 親愛度 第21話", "花海咲季 親愛度 第26話"],
+      note: [
+        "咲季の入学前年に開催された夏のHIFに出場していた十王星南の優勝ライブで披露された「ENDLESS DANCE」を見てアイドルを志した。",
+        "この日近くからアイドルのレッスンを開始した。",
+      ],
     },
     {
       id: "001_scout",
@@ -43,7 +57,11 @@ export default {
       worldlineId: ["likability_story"],
       participants: ["saki_hanami"],
       source: ["初星コミュ1話"],
-      note: "入学式当日の早朝か、それ以前からスカウトされている可能性がある。\n初星学園は私立の学校法人のため、入学式の日程にはばらつきがある可能性がある。\n初星学園は関東圏の学校である可能性が高いため、4月7日〜8日の間に入学式が行われたと推測される。",
+      note: [
+        "入学式当日の早朝か、それ以前からスカウトされている可能性がある。",
+        "初星学園は私立の学校法人のため、入学式の日程にはばらつきがある可能性がある。",
+        "初星学園は関東圏の学校である可能性が高いため、4月7日〜8日の間に入学式が行われたと推測される。",
+      ],
     },
     {
       id: "001_debut",
@@ -53,7 +71,10 @@ export default {
       title: "初星学園高等部入学式",
       detail: "初星学園高等部に入学、1年1組に配属される",
       participants: ["saki_hanami"],
-      note: "初星学園は私立の学校法人のため、入学式の日程にはばらつきがある可能性がある。\n初星学園は関東圏の学校である可能性が高いため、4月7日〜8日の間に入学式が行われたと推測される。",
+      note: [
+        "初星学園は私立の学校法人のため、入学式の日程にはばらつきがある可能性がある。",
+        "初星学園は関東圏の学校である可能性が高いため、4月7日〜8日の間に入学式が行われたと推測される。",
+      ],
     },
   ],
 };

@@ -186,20 +186,20 @@ export default {
     },
     {
       id: "030",
-      name: "",
-      url: [],
+      name: "ノーロ皿",
+      url: ["https://www.youtube.com/@nohrosara_game"],
       tags: [""],
     },
     {
       id: "031",
-      name: "",
-      url: [],
+      name: "可惜夜シク",
+      url: ["https://www.youtube.com/@AtarayoShiku"],
       tags: [""],
     },
     {
       id: "032",
-      name: "",
-      url: [],
+      name: "月城むい",
+      url: ["https://www.youtube.com/@tsukishiromui"],
       tags: [""],
     },
     {
