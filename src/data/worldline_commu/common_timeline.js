@@ -63,7 +63,7 @@ export default {
     },
     {
       id: "kaya_kei_prima-stella",
-      start: { year: yearsAgo(9), month: 6, day: 1 }, //期間に関しては、継が一番星になるときの年齢や、SyngUp!アイドルの年齢が不明のため、期間を広くとっている（小学生低学年からライブに参加することは考えにくいため、4~6年前くらいが妥当かもしれない）
+      start: { year: yearsAgo(9), month: 7, day: 1 }, //期間に関しては、継が一番星になるときの年齢や、SyngUp!アイドルの年齢が不明のため、期間を広くとっている（小学生低学年からライブに参加することは考えにくいため、4~6年前くらいが妥当かもしれない）
       end: { year: yearsAgo(4), month: 3, day: 31 },
       title: "賀陽継が一番星になる",
       detail: "賀陽継が一番星になる",
@@ -84,7 +84,7 @@ export default {
     },
     {
       id: "rinha_temari_misuzu_meet",
-      start: { year: yearsAgo(9), month: 6, day: 1 }, //期間に関しては、継が一番星になるときの年齢や、SyngUp!アイドルの年齢が不明のため、期間を広くとっている（小学生低学年からライブに参加することは考えにくいため、4~6年前くらいが妥当かもしれない）
+      start: { year: yearsAgo(9), month: 7, day: 1 }, //期間に関しては、継が一番星になるときの年齢や、SyngUp!アイドルの年齢が不明のため、期間を広くとっている（小学生低学年からライブに参加することは考えにくいため、4~6年前くらいが妥当かもしれない）
       end: { year: yearsAgo(4), month: 3, day: 31 },
       title: "賀陽継が一番星になる日に、燐羽と手毬と美鈴が出会う",
       detail: "賀陽継が一番星になる日に、燐羽と手毬と美鈴が出会う",
@@ -135,7 +135,7 @@ export default {
     },
     {
       id: "summer-hif_sena_first_prima-stella",
-      start: { year: yearsAgo(1), month: 6, day: 1 },
+      start: { year: yearsAgo(1), month: 7, day: 1 },
       end: { year: yearsAgo(1), month: 9, day: 31 },
       title: "十王星南が夏のHIFで一番星になる",
       detail:
@@ -173,7 +173,6 @@ export default {
         "藤田ことね プロデュースコミュ NEXT IDLE AUDITION Normal End",
         "https://x.com/gkmas_official/status/1989531491727282186?s=20 (5-10ページまで)",
       ],
-      note: [""],
     },
     {
       id: "syngup_blow_up",
@@ -193,7 +192,6 @@ export default {
         "https://x.com/gkmas_official/status/1989531491727282186?s=20 (5-10ページまで)",
         "藤田ことね プロデュースコミュ NEXT IDLE AUDITION Normal End",
       ],
-      note: [""],
     },
     {
       id: "winter-hif_sena_first_prima-stella",
