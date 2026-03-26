@@ -55,11 +55,14 @@ function buildLabelItems(ticks, padding, getTime, getLabel) {
     };
   });
 
-  const lastLeftIndex = items.reduce(
-    (result, item, index) => (item.anchor === "start" ? index : result),
-    -1,
-  );
   const firstRightIndex = items.findIndex((item) => item.anchor === "end");
+  let lastLeftIndex = -1;
+
+  items.forEach((item, index) => {
+    if (item.anchor === "start") {
+      lastLeftIndex = index;
+    }
+  });
 
   return items.filter((item, index) => {
     if (item.anchor === "middle") return true;
