@@ -26,49 +26,25 @@ function labelBounds(padding) {
   };
 }
 
-function labelX(time, padding) {
-  const rawX = props.xPos(time);
+function isVisibleLabel(time, padding) {
+  const x = props.xPos(time);
   const { minX, maxX } = labelBounds(padding);
 
-  return Math.min(maxX, Math.max(minX, rawX));
-}
-
-function labelAnchor(time, padding) {
-  const rawX = props.xPos(time);
-  const { minX, maxX } = labelBounds(padding);
-
-  if (rawX <= minX) return "start";
-  if (rawX >= maxX) return "end";
-  return "middle";
+  return x >= minX && x <= maxX;
 }
 
 function buildLabelItems(ticks, padding, getTime, getLabel) {
-  const items = ticks.map((tick) => {
+  return ticks.flatMap((tick) => {
     const time = getTime(tick);
-    const anchor = labelAnchor(time, padding);
+    if (!isVisibleLabel(time, padding)) {
+      return [];
+    }
 
     return {
       key: time,
       text: getLabel(tick),
-      x: labelX(time, padding),
-      anchor,
+      x: props.xPos(time),
     };
-  });
-
-  const firstRightIndex = items.findIndex((item) => item.anchor === "end");
-  let lastLeftIndex = -1;
-
-  items.forEach((item, index) => {
-    if (item.anchor === "start") {
-      lastLeftIndex = index;
-    }
-  });
-
-  return items.filter((item, index) => {
-    if (item.anchor === "middle") return true;
-    if (item.anchor === "start") return index === lastLeftIndex;
-    if (item.anchor === "end") return index === firstRightIndex;
-    return false;
   });
 }
 
@@ -104,7 +80,7 @@ const dayLabelItems = computed(() =>
       :key="`year-label-${item.key}`"
       :x="item.x"
       :y="timelineViewport.y - 26"
-      :text-anchor="item.anchor"
+      text-anchor="middle"
       font-size="12"
       fill="var(--timeline-year-label, var(--text-secondary))"
     >
@@ -116,7 +92,7 @@ const dayLabelItems = computed(() =>
         :key="`month-label-${item.key}`"
         :x="item.x"
         :y="timelineViewport.y - 12"
-        :text-anchor="item.anchor"
+        text-anchor="middle"
         font-size="10"
         fill="var(--timeline-month-label, var(--text-muted))"
       >
@@ -128,7 +104,7 @@ const dayLabelItems = computed(() =>
         :key="`day-label-${item.key}`"
         :x="item.x"
         :y="timelineViewport.y - 2"
-        :text-anchor="item.anchor"
+        text-anchor="middle"
         font-size="9"
         fill="var(--timeline-day-label, var(--text-faint))"
       >
