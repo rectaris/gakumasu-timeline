@@ -1,4 +1,5 @@
 <script setup>
+import { getCurrentInstance } from "vue";
 import TimelineViewport from "./TimelineViewport.vue";
 import TimelineScaleLines from "./TimelineScaleLines.vue";
 import TimelineLaneLines from "./TimelineLaneLines.vue";
@@ -34,6 +35,7 @@ const props = defineProps({
 
 const emit = defineEmits(["select"]);
 const CLIP_PADDING = 6;
+const clipId = `timeline-clip-${getCurrentInstance()?.uid ?? "default"}`;
 </script>
 
 <template>
@@ -52,7 +54,7 @@ const CLIP_PADDING = 6;
     @touchcancel="onTouchEnd"
   >
     <defs>
-      <clipPath id="timeline-clip">
+      <clipPath :id="clipId">
         <rect
           :x="timelineViewport.x - CLIP_PADDING"
           :y="timelineViewport.y"
@@ -63,7 +65,7 @@ const CLIP_PADDING = 6;
     </defs>
 
     <TimelineViewport :timeline-viewport="timelineViewport" />
-    <g clip-path="url(#timeline-clip)">
+    <g :clip-path="`url(#${clipId})`">
       <TimelineScaleLines
         :years="years"
         :month-ticks="monthTicks"

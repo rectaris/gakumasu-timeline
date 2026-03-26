@@ -1,7 +1,8 @@
 <script setup>
+import { getCurrentInstance } from "vue";
 import TimelineScaleLabels from "./TimelineScaleLabels.vue";
 
-defineProps({
+const props = defineProps({
   width: { type: Number, required: true },
   overlayHeight: { type: Number, required: true },
   years: { type: Array, required: true },
@@ -13,6 +14,8 @@ defineProps({
   timelineViewport: { type: Object, required: true },
   yearLabel: { type: Function, required: true }
 });
+
+const clipId = `timeline-scale-overlay-clip-${getCurrentInstance()?.uid ?? "default"}`;
 </script>
 
 <template>
@@ -23,16 +26,28 @@ defineProps({
       :viewBox="`0 0 ${width} ${overlayHeight}`"
       preserveAspectRatio="none"
     >
-      <TimelineScaleLabels
-        :years="years"
-        :month-ticks="monthTicks"
-        :day-ticks="dayTicks"
-        :show-month-scale="showMonthScale"
-        :show-day-scale="showDayScale"
-        :x-pos="xPos"
-        :timeline-viewport="timelineViewport"
-        :year-label="yearLabel"
-      />
+      <defs>
+        <clipPath :id="clipId">
+          <rect
+            :x="props.timelineViewport.x"
+            y="0"
+            :width="props.timelineViewport.width"
+            :height="props.overlayHeight"
+          />
+        </clipPath>
+      </defs>
+      <g :clip-path="`url(#${clipId})`">
+        <TimelineScaleLabels
+          :years="props.years"
+          :month-ticks="props.monthTicks"
+          :day-ticks="props.dayTicks"
+          :show-month-scale="props.showMonthScale"
+          :show-day-scale="props.showDayScale"
+          :x-pos="props.xPos"
+          :timeline-viewport="props.timelineViewport"
+          :year-label="props.yearLabel"
+        />
+      </g>
     </svg>
   </div>
 </template>
