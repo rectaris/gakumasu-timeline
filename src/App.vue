@@ -1,461 +1,607 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from "vue";
-import { characters } from "./data";
-import { watch } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import {
+  idolCommu,
+  hatsuboshiCommus,
+  eventCommus,
+  supportCardCommus,
+  commonTimeline
+} from "./data";
+import { useKeyboard } from "./composables/useKeyboard";
+import { useMenuState } from "./composables/useMenuState";
+import { usePointer } from "./composables/usePointer";
+import { useCategoryFilter } from "./composables/useCategoryFilter";
+import { useSelection } from "./composables/useSelection";
+import { useTimelineData } from "./composables/useTimelineData";
+import { useTimelineLayout } from "./composables/useTimelineLayout";
+import { useTimelineScales } from "./composables/useTimelineScales";
+import { useZoomMachine } from "./composables/useZoomMachine";
+import ManualModal from "./components/ManualModal.vue";
+import ZoomControls from "./components/ZoomControls.vue";
+import SidePanel from "./components/SidePanel.vue";
+import TimelineScaleOverlay from "./components/TimelineScaleOverlay.vue";
+import TimelineSvg from "./components/TimelineSvg.vue";
+import { invertHexColor } from "./utils/colors";
+import { isSingleWithinRange } from "./utils/events";
+import { yearLabel } from "./utils/labels";
+import { LEFT_LABEL_WIDTH, RIGHT_PADDING, WIDTH } from "./utils/constants";
+import manualContent from "../docs/manual.md?raw";
 
-function timeValue(year, month) {
-  return year * 12 + (month - 1);
-}
+const idolCommuRef = ref(idolCommu);
+const hatsuboshiRef = ref(hatsuboshiCommus);
+const eventRef = ref(eventCommus);
+const supportRef = ref(supportCardCommus);
+const timelineStageRef = ref(null);
 
-const zoomMode = ref("all"); 
-// "all" | "year"
-
-const zoomCenterYear = ref(0);
-const zoomRangeYears = 1;
-
-watch(zoomMode, mode => {
-  if (mode === "year") {
-    // 現在の選択イベントがあればそこを中心に
-    if (selectedEvent.value) {
-      zoomCenterYear.value = selectedEvent.value.year;
-    }
-  }
+const {
+  categoryOptions,
+  selectedCategory,
+  laneSortOptions,
+  laneSearchQuery,
+  laneSortMode,
+  laneOptions,
+  visibleLaneCount,
+  totalLaneCount,
+  activeLanes,
+  allSelected,
+  isIndeterminate,
+  isLaneSelected,
+  toggleLane,
+  toggleAll
+} = useCategoryFilter({
+  idolCommu: idolCommuRef,
+  hatsuboshiCommus: hatsuboshiRef,
+  eventCommus: eventRef,
+  supportCardCommus: supportRef
 });
 
-const selectedEvent = ref(null);
+const { isOpen: menuOpen, closeMenu, toggleMenu } =
+  useMenuState();
 
-function selectEvent(event) {
-  selectedEvent.value = event;
-  updateUrl(event.id);
-}
+const {
+  isOpen: manualOpen,
+  openMenu: openManual,
+  closeMenu: closeManual
+} = useMenuState();
+const {
+  isOpen: settingsOpen,
+  closeMenu: closeSettings,
+  toggleMenu: toggleSettings
+} = useMenuState();
 
-function closePanel() {
-  selectedEvent.value = null;
-  updateUrl(null);
-}
+const THEME_MODE_STORAGE_KEY = "gakumasu:theme-mode";
+const SHOW_ZOOM_HINTS_STORAGE_KEY = "gakumasu:show-zoom-hints";
+const SHOW_COMMON_EVENTS_STORAGE_KEY = "gakumasu:show-common-events";
 
-function updateUrl(eventId) {
-  const params = new URLSearchParams(window.location.search);
+const themeMode = ref("system");
+const showZoomHints = ref(true);
+const showCommonEvents = ref(true);
+const settingsReady = ref(false);
 
-  if (eventId) {
-    params.set("event", eventId);
-  } else {
-    params.delete("event");
-  }
-
-  const query = params.toString();
-  const newUrl =
-    window.location.pathname + (query ? "?" + query : "");
-
-  history.replaceState(null, "", newUrl);
-}
-
-// レーン設定
-const laneHeight = 60;
-const topOffset = 80;
-const leftLabelWidth = 100;
-
-// 全イベント（キャラ情報付き）
-const allEvents = computed(() => {
-  return characters.flatMap((char, index) =>
-    char.events.map(ev => {
-      const startTime = timeValue(
-        ev.start.year,
-        ev.start.month
-      );
-      const endTime = timeValue(
-        ev.end.year,
-        ev.end.month
-      );
-
-      return {
-        ...ev,
-        character: char.name,
-        color: char.color,
-        laneIndex: index,
-        startTime,
-        endTime
-      };
-    })
-  );
-});
-
-const times = computed(() =>
-  allEvents.value.flatMap(e => [e.startTime, e.endTime])
+const { allEvents, timesDay } = useTimelineData(
+  activeLanes,
+  commonTimeline,
+  showCommonEvents
 );
+const { selectedEvent, selectEvent, closePanel } = useSelection(allEvents);
 
-const viewRange = computed(() => {
-  if (zoomMode.value === "year") {
-    const center = zoomCenterYear.value * 12;
-    return {
-      min: center - zoomRangeYears * 12,
-      max: center + zoomRangeYears * 12
-    };
-  }
+const {
+  viewRange,
+  horizontalSpan,
+  verticalScale,
+  horizontalZoomLabel,
+  verticalZoomLabel,
+  showMonthScale,
+  showDayScale,
+  canZoomInHorizontal,
+  canZoomOutHorizontal,
+  canZoomInVertical,
+  canZoomOutVertical,
+  panHorizontally,
+  panByViewportRatio,
+  zoomHorizontallyBy,
+  zoomVerticallyBy,
+  zoomInHorizontal,
+  zoomOutHorizontal,
+  resetHorizontalZoom,
+  zoomInVertical,
+  zoomOutVertical,
+  resetVerticalZoom
+} = useZoomMachine(timesDay, selectedEvent);
 
-  return {
-    min: Math.min(...times.value),
-    max: Math.max(...times.value)
-  };
+const { years, monthTicks, dayTicks } = useTimelineScales({
+  viewRange,
+  showMonthScale,
+  showDayScale
 });
 
-const yearBounds = computed(() => {
-  const minYear = Math.floor(Math.min(...times.value) / 12);
-  const maxYear = Math.floor(Math.max(...times.value) / 12);
-
-  if (maxYear - minYear < 2) {
-    return {
-      minYear: minYear - 1,
-      maxYear: maxYear + 1
-    };
-  }
-
-  return { minYear, maxYear };
+const {
+  laneLayouts,
+  svgHeight,
+  timelineViewport,
+  laneCenterY,
+  yPos,
+  visibleEvents,
+  xPos,
+  eventBarHeight
+} = useTimelineLayout({
+  characters: activeLanes,
+  allEvents,
+  viewRange,
+  verticalScale,
+  width: WIDTH,
+  leftLabelWidth: LEFT_LABEL_WIDTH,
+  rightPadding: RIGHT_PADDING
 });
 
-// SVGサイズ
-const width = 1100;
-const height =
-  topOffset + characters.length * laneHeight + 40;
+function getRenderedViewportWidth(svgElement) {
+  const rect = svgElement?.getBoundingClientRect?.();
+  if (!rect?.width) return 0;
 
-// time → x
-function xPos(time) {
-  const { min, max } = viewRange.value;
+  return rect.width * (timelineViewport.value.width / WIDTH);
+}
 
+function clampRatio(value) {
+  return Math.min(1, Math.max(0, value));
+}
+
+function isFormElementTarget(target) {
+  const tagName = target?.tagName?.toLowerCase();
   return (
-    leftLabelWidth +
-    ((time - min) / (max - min)) *
-      (width - leftLabelWidth - 40)
+    tagName === "input" ||
+    tagName === "textarea" ||
+    tagName === "select" ||
+    target?.isContentEditable
   );
 }
 
-// lane → y
-function yPos(laneIndex) {
-  return topOffset + laneIndex * laneHeight;
-}
+function shouldKeepPanelOpenFromClick(target) {
+  if (!target?.closest) return false;
 
-function isSingleWithinRange(event) {
-  return event.occurrenceType === "singleWithinRange";
-}
-
-function yearLabel(year) {
-  if (year === 1) return "1年目";
-
-  if (year > 1) {
-    return `${year}年目`;
-  }
-
-  // year < 1
-  const diff = 1 - year;
-  return `${diff}年前`;
-}
-
-// 年スケール
-const years = computed(() => {
-  const { min, max } = viewRange.value;
-  const startYear = Math.floor(min / 12);
-  const endYear = Math.floor(max / 12);
-
-  const result = [];
-  for (let y = startYear; y <= endYear; y++) {
-    result.push({
-      year: y,
-      time: y * 12
-    });
-  }
-  return result;
-});
-
-const visibleEvents = computed(() => {
-  const { min, max } = viewRange.value;
-  return allEvents.value.filter(e =>
-    e.endTime >= min && e.startTime <= max
+  return Boolean(
+    target.closest(".app-header") ||
+      target.closest(".side-menu") ||
+      target.closest(".settings-menu") ||
+      target.closest(".manual-modal") ||
+      target.closest(".side-panel") ||
+      target.closest(".event-group"),
   );
+}
+
+function panByPixels(deltaPixels, svgElement) {
+  const renderedViewportWidth = getRenderedViewportWidth(svgElement);
+  if (!renderedViewportWidth) return;
+
+  panHorizontally((deltaPixels / renderedViewportWidth) * horizontalSpan.value);
+}
+
+function panVerticallyByPixels(deltaPixels) {
+  const stageElement = timelineStageRef.value;
+  if (!stageElement) return;
+
+  stageElement.scrollTop -= deltaPixels;
+}
+
+function zoomByTouchPinch(factor, clientX, svgElement) {
+  const rect = svgElement?.getBoundingClientRect?.();
+  if (!rect?.width) return;
+
+  const scaleX = WIDTH / rect.width;
+  const svgX = (clientX - rect.left) * scaleX;
+  const anchorRatio = clampRatio(
+    (svgX - timelineViewport.value.x) / timelineViewport.value.width
+  );
+
+  zoomHorizontallyBy(factor, anchorRatio);
+  zoomVerticallyBy(factor);
+}
+
+function handleTimelineWheel(event) {
+  const svgElement = event.currentTarget;
+  const isHorizontalWheel = Math.abs(event.deltaX) > Math.abs(event.deltaY);
+
+  event.preventDefault();
+
+  if (event.ctrlKey) {
+    zoomVerticallyBy(Math.exp(event.deltaY * -0.0015));
+    return;
+  }
+
+  if (isHorizontalWheel) {
+    panByPixels(event.deltaX, svgElement);
+    return;
+  }
+
+  const rect = svgElement.getBoundingClientRect();
+  if (!rect.width) return;
+
+  const scaleX = WIDTH / rect.width;
+  const svgX = (event.clientX - rect.left) * scaleX;
+  const anchorRatio = clampRatio(
+    (svgX - timelineViewport.value.x) / timelineViewport.value.width
+  );
+
+  zoomHorizontallyBy(Math.exp(event.deltaY * 0.0015), anchorRatio);
+}
+
+function readBooleanSetting(storageKey, fallbackValue) {
+  const rawValue = window.localStorage.getItem(storageKey);
+  if (rawValue === null) return fallbackValue;
+  return rawValue === "true";
+}
+
+function applyThemeMode(mode) {
+  const root = document.documentElement;
+  if (mode === "system") {
+    root.removeAttribute("data-theme");
+    return;
+  }
+
+  root.setAttribute("data-theme", mode);
+}
+
+function toggleMainMenu() {
+  closeSettings();
+  toggleMenu();
+}
+
+function toggleSettingsMenu() {
+  closeMenu();
+  toggleSettings();
+}
+
+function openManualDialog() {
+  closeMenu();
+  closeSettings();
+  openManual();
+}
+
+const {
+  isDragging,
+  onMouseDown,
+  onTouchStart,
+  onTouchMove,
+  onTouchEnd
+} = usePointer({
+  panByPixels,
+  panVerticallyByPixels,
+  zoomByPinch: zoomByTouchPinch
 });
 
-function handleKey(e) {
-  if (e.key === "Escape") closePanel();
+useKeyboard({
+  panByViewportRatio,
+  zoomInHorizontal,
+  zoomOutHorizontal,
+  closePanel
+});
+
+const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
+const hasAnyLaneInCurrentCategory = computed(() => totalLaneCount.value > 0);
+
+function handleGlobalEscape(event) {
+  if (event.key !== "Escape") return;
+  if (isFormElementTarget(event.target)) return;
+
+  closeMenu();
+  closeManual();
+  closeSettings();
+}
+
+function handleGlobalClick(event) {
+  if (!selectedEvent.value) return;
+  if (shouldKeepPanelOpenFromClick(event.target)) return;
+
+  closePanel();
 }
 
 onMounted(() => {
-  // URLから event ID を取得
-  const params = new URLSearchParams(window.location.search);
-  const eventId = params.get("event");
-
-  if (eventId) {
-    const found = allEvents.value.find(e => e.id === eventId);
-    if (found) {
-      selectedEvent.value = found;
-    }
+  const storedThemeMode = window.localStorage.getItem(THEME_MODE_STORAGE_KEY);
+  if (storedThemeMode === "light" || storedThemeMode === "dark") {
+    themeMode.value = storedThemeMode;
   }
-
-  zoomCenterYear.value = 1;
-
-  window.addEventListener("keydown", handleKey);
+  showZoomHints.value = readBooleanSetting(SHOW_ZOOM_HINTS_STORAGE_KEY, true);
+  showCommonEvents.value = readBooleanSetting(
+    SHOW_COMMON_EVENTS_STORAGE_KEY,
+    true
+  );
+  applyThemeMode(themeMode.value);
+  settingsReady.value = true;
+  window.addEventListener("keydown", handleGlobalEscape);
+  window.addEventListener("click", handleGlobalClick);
 });
 
 onUnmounted(() => {
-  window.removeEventListener("keydown", handleKey);
+  window.removeEventListener("keydown", handleGlobalEscape);
+  window.removeEventListener("click", handleGlobalClick);
 });
 
+watch(themeMode, (mode) => {
+  applyThemeMode(mode);
+  if (!settingsReady.value) return;
+  window.localStorage.setItem(THEME_MODE_STORAGE_KEY, mode);
+});
+
+watch(showZoomHints, (value) => {
+  if (!settingsReady.value) return;
+  window.localStorage.setItem(SHOW_ZOOM_HINTS_STORAGE_KEY, String(value));
+});
+
+watch(showCommonEvents, (value) => {
+  if (!settingsReady.value) return;
+  window.localStorage.setItem(SHOW_COMMON_EVENTS_STORAGE_KEY, String(value));
+});
 </script>
 
 <template>
-  <h1>キャラクタータイムライン</h1>
+  <header class="app-header">
+    <div class="header-left">
+      <button
+        class="menu-button"
+        type="button"
+        aria-label="メニューを開く"
+        @click="toggleMainMenu"
+      >☰</button>
+      <button
+        class="manual-button"
+        type="button"
+        aria-label="マニュアルを開く"
+        @click="openManualDialog"
+      >？</button>
+      <button
+        class="settings-button"
+        type="button"
+        aria-label="設定を開く"
+        @click="toggleSettingsMenu"
+      >⚙</button>
+    </div>
+    <div class="app-title">キャラクタータイムライン</div>
+  </header>
 
-  <div class="zoom-controls">
-    <button @click="zoomMode = 'all'">全期間</button>
-    <button @click="zoomMode = 'year'">年ズーム</button>
-  </div>
+  <ManualModal
+    :open="manualOpen"
+    :content="manualContent"
+    :on-close="closeManual"
+  />
 
   <div
-    class="year-slider"
-    v-if="zoomMode === 'year'"
-  >
-    <label>
-      中心年：
-      {{ yearLabel(zoomCenterYear) }}
-    </label>
+    v-if="menuOpen"
+    class="menu-overlay"
+    @click="closeMenu"
+  ></div>
 
-    <input
-      type="range"
-      :min="yearBounds.minYear"
-      :max="yearBounds.maxYear"
-      v-model.number="zoomCenterYear"
-      step="1"
-    />
-  </div>
+  <div
+    v-if="settingsOpen"
+    class="menu-overlay"
+    @click="closeSettings"
+  ></div>
 
-  <svg :width="width" :height="height">
-
-    <!-- 年目盛り（全レーン共通） -->
-    <g v-for="y in years" :key="y.year">
-      <line
-        :x1="xPos(y.time)"
-        y1="40"
-        :x2="xPos(y.time)"
-        :y2="height - 20"
-        stroke="#eee"
-      />
-      <text
-        :x="xPos(y.time)"
-        y="30"
-        text-anchor="middle"
-        font-size="12"
-        fill="#555"
+  <aside class="side-menu" :class="{ open: menuOpen }">
+    <div class="side-menu__header">
+      <span>表示設定</span>
+      <button
+        class="menu-close"
+        type="button"
+        aria-label="メニューを閉じる"
+        @click="closeMenu"
       >
-        {{ yearLabel(y.year) }}
-      </text>
-    </g>
-
-    <!-- キャラレーン -->
-    <g v-for="(char, index) in characters" :key="char.id">
-
-      <!-- キャラ名 -->
-      <text
-        x="10"
-        :y="yPos(index) + 5"
-        font-size="13"
-        dominant-baseline="middle"
-        fill="#333"
-      >
-        {{ char.name }}
-      </text>
-
-      <!-- レーン線 -->
-      <line
-        :x1="leftLabelWidth"
-        :y1="yPos(index)"
-        :x2="width - 20"
-        :y2="yPos(index)"
-        stroke="#ccc"
-      />
-
-    </g>
-
-    <!-- イベント -->
-    <g v-for="event in visibleEvents" :key="event.id">
-      <g @click="selectEvent(event)" class="event-group">
-
-        <title>
-          {{ event.character }}
-          {{ yearLabel(event.start.year) }} {{ event.start.month }}月
-          <template v-if="
-            event.start.year !== event.end.year ||
-            event.start.month !== event.end.month
-          ">
-            〜 {{ yearLabel(event.end.year) }} {{ event.end.month }}月
-          </template>
-          <template v-if="isSingleWithinRange(event)">
-            （期間内の1日）
-          </template>
-          {{ event.title }}
-        </title>
-
-        <!-- 期間バー -->
-        <rect
-          class="event-bar"
-          :class="{ 'event-bar--single': isSingleWithinRange(event) }"
-          :x="xPos(event.startTime)"
-          :y="yPos(event.laneIndex) - 6"
-          :width="xPos(event.endTime) - xPos(event.startTime)"
-          height="12"
-          :fill="event.color"
-          rx="6"
-        />
-
-        <!-- 期間内1日イベントのマーカー -->
-        <circle
-          v-if="isSingleWithinRange(event)"
-          :cx="(xPos(event.startTime) + xPos(event.endTime)) / 2"
-          :cy="yPos(event.laneIndex)"
-          r="3"
-          fill="#333"
-        />
-
-        <!-- 開始点マーカー -->
-        <circle
-          :cx="xPos(event.startTime)"
-          :cy="yPos(event.laneIndex)"
-          r="5"
-          fill="#fff"
-          stroke="#333"
-        />
-      </g>
-    </g>
-
-  </svg>
-
-  <!-- サイド固定の詳細パネル -->
-  <aside
-    class="side-panel"
-    :class="{ open: selectedEvent }"
-  >
-    <div v-if="selectedEvent" class="panel-content">
-      <button class="close-btn" @click="closePanel">×</button>
-
-      <h2>{{ selectedEvent.title }}</h2>
-
-      <p class="meta">
-        {{ selectedEvent.character }}<br />
-        {{ yearLabel(selectedEvent.start.year) }}
-        {{ selectedEvent.start.month }}月
-        <template v-if="
-          selectedEvent.start.year !== selectedEvent.end.year ||
-          selectedEvent.start.month !== selectedEvent.end.month
-        ">
-          〜
-          {{ yearLabel(selectedEvent.end.year) }}
-          {{ selectedEvent.end.month }}月
-        </template>
-      </p>
-
-      <p class="detail">
-        {{ selectedEvent.detail }}
-      </p>
+        ×
+      </button>
     </div>
 
-    <div v-else class="panel-placeholder">
-      イベントを選択してください
-    </div>
+    <section class="side-menu__section">
+      <p class="menu-section-title">カテゴリ</p>
+      <label
+        v-for="option in categoryOptions"
+        :key="option.id"
+        class="menu-option"
+      >
+        <input
+          type="radio"
+          name="category"
+          :value="option.id"
+          v-model="selectedCategory"
+        />
+        <span>{{ option.label }}</span>
+      </label>
+    </section>
+
+    <section class="side-menu__section">
+      <div class="menu-section-header">
+        <p class="menu-section-title">表示レーン</p>
+        <label class="menu-bulk-toggle">
+          <input
+            type="checkbox"
+            :checked="allSelected"
+            :indeterminate="isIndeterminate"
+            @change="toggleAll(selectedCategory, $event.target.checked)"
+            :disabled="isCurrentCategoryEmpty"
+          />
+          <span>表示中を一括</span>
+        </label>
+      </div>
+      <div v-if="hasAnyLaneInCurrentCategory" class="lane-tools">
+        <label class="lane-search">
+          <span class="lane-search__label">検索</span>
+          <input
+            v-model="laneSearchQuery"
+            class="lane-search__input"
+            type="search"
+            placeholder="レーン名で絞り込み"
+          />
+        </label>
+        <label class="lane-sort">
+          <span class="lane-search__label">並び替え</span>
+          <select v-model="laneSortMode" class="lane-sort__select">
+            <option
+              v-for="option in laneSortOptions"
+              :key="option.id"
+              :value="option.id"
+            >
+              {{ option.label }}
+            </option>
+          </select>
+        </label>
+        <p class="lane-summary">
+          {{ visibleLaneCount }} / {{ totalLaneCount }} 件表示
+        </p>
+      </div>
+      <template v-if="!isCurrentCategoryEmpty">
+        <label
+          v-for="lane in laneOptions"
+          :key="lane.key"
+          class="menu-option"
+        >
+          <input
+            type="checkbox"
+            :checked="isLaneSelected(selectedCategory, lane.key)"
+            @change="toggleLane(selectedCategory, lane.key)"
+          />
+          <span>{{ lane.label }}</span>
+          <span class="menu-option__meta">{{ lane.eventCount }}件</span>
+        </label>
+      </template>
+      <div v-else class="menu-empty">
+        {{ hasAnyLaneInCurrentCategory ? "該当するレーンがありません" : "今後追加予定" }}
+      </div>
+    </section>
   </aside>
 
+  <aside class="settings-menu" :class="{ open: settingsOpen }">
+    <div class="side-menu__header">
+      <span>設定</span>
+      <button
+        class="menu-close"
+        type="button"
+        aria-label="設定を閉じる"
+        @click="closeSettings"
+      >
+        ×
+      </button>
+    </div>
+
+    <section class="side-menu__section">
+      <p class="menu-section-title">配色モード</p>
+      <label class="menu-option">
+        <input
+          type="radio"
+          name="theme-mode"
+          value="system"
+          v-model="themeMode"
+        />
+        <span>システム設定に合わせる</span>
+      </label>
+      <label class="menu-option">
+        <input
+          type="radio"
+          name="theme-mode"
+          value="light"
+          v-model="themeMode"
+        />
+        <span>ホワイトモード</span>
+      </label>
+      <label class="menu-option">
+        <input
+          type="radio"
+          name="theme-mode"
+          value="dark"
+          v-model="themeMode"
+        />
+        <span>ダークモード</span>
+      </label>
+      <p class="settings-note">
+        既定では、お使いの OS / ブラウザ設定に合わせて配色を切り替えます。
+      </p>
+    </section>
+
+    <section class="side-menu__section">
+      <p class="menu-section-title">表示オプション</p>
+      <label class="menu-option">
+        <input
+          type="checkbox"
+          :checked="showCommonEvents"
+          @change="showCommonEvents = $event.target.checked"
+        />
+        <span>共通イベントを表示する</span>
+      </label>
+      <label class="menu-option">
+        <input
+          type="checkbox"
+          :checked="showZoomHints"
+          @change="showZoomHints = $event.target.checked"
+        />
+        <span>操作ヒントを表示する</span>
+      </label>
+      <p class="settings-note">
+        タイムラインの見え方や補助情報の表示を切り替えられます。
+      </p>
+    </section>
+  </aside>
+
+  <ZoomControls
+    :horizontal-zoom-label="horizontalZoomLabel"
+    :vertical-zoom-label="verticalZoomLabel"
+    :can-zoom-in-horizontal="canZoomInHorizontal"
+    :can-zoom-out-horizontal="canZoomOutHorizontal"
+    :can-zoom-in-vertical="canZoomInVertical"
+    :can-zoom-out-vertical="canZoomOutVertical"
+    :zoom-in-horizontal="zoomInHorizontal"
+    :zoom-out-horizontal="zoomOutHorizontal"
+    :reset-horizontal-zoom="resetHorizontalZoom"
+    :zoom-in-vertical="zoomInVertical"
+    :zoom-out-vertical="zoomOutVertical"
+    :reset-vertical-zoom="resetVerticalZoom"
+    :show-hints="showZoomHints"
+  />
+
+  <div class="timeline-shell">
+    <div class="timeline-frame">
+      <TimelineScaleOverlay
+        :width="WIDTH"
+        :overlay-height="timelineViewport.y"
+        :timeline-viewport="timelineViewport"
+        :years="years"
+        :month-ticks="monthTicks"
+        :day-ticks="dayTicks"
+        :show-month-scale="showMonthScale"
+        :show-day-scale="showDayScale"
+        :x-pos="xPos"
+        :year-label="yearLabel"
+      />
+      <div ref="timelineStageRef" class="timeline-stage">
+        <TimelineSvg
+          :width="WIDTH"
+          :svg-height="svgHeight"
+          :timeline-viewport="timelineViewport"
+          :years="years"
+          :month-ticks="monthTicks"
+          :day-ticks="dayTicks"
+          :show-month-scale="showMonthScale"
+          :show-day-scale="showDayScale"
+          :x-pos="xPos"
+          :lane-layouts="laneLayouts"
+          :lane-center-y="laneCenterY"
+          :y-pos="yPos"
+          :event-bar-height="eventBarHeight"
+          :characters="activeLanes"
+          :visible-events="visibleEvents"
+          :is-single-within-range="isSingleWithinRange"
+          :invert-hex-color="invertHexColor"
+          :left-label-width="LEFT_LABEL_WIDTH"
+          :on-wheel="handleTimelineWheel"
+          :on-mouse-down="onMouseDown"
+          :on-touch-start="onTouchStart"
+          :on-touch-move="onTouchMove"
+          :on-touch-end="onTouchEnd"
+          :is-dragging="isDragging"
+          @select="selectEvent"
+        />
+      </div>
+    </div>
+  </div>
+
+  <SidePanel
+    :selected-event="selectedEvent"
+    :year-label="yearLabel"
+    :close-panel="closePanel"
+  />
 </template>
-
-<style>
-body {
-  font-family: system-ui, sans-serif;
-}
-
-.event-dot {
-  cursor: pointer;
-}
-
-.side-panel {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 320px;
-  height: 100vh;
-  background: #ffffff;
-  border-left: 1px solid #ddd;
-  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.1);
-  transform: translateX(100%);
-  transition: transform 0.3s ease;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-}
-
-.side-panel.open {
-  transform: translateX(0);
-}
-
-.panel-content {
-  padding: 20px;
-  overflow-y: auto;
-  flex: 1;
-}
-
-.panel-placeholder {
-  padding: 20px;
-  color: #888;
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.meta {
-  font-size: 13px;
-  color: #666;
-  margin-bottom: 10px;
-}
-
-.detail {
-  line-height: 1.6;
-}
-
-.zoom-controls {
-  margin-bottom: 10px;
-}
-
-.zoom-controls button {
-  margin-right: 6px;
-}
-
-.year-slider {
-  margin-bottom: 12px;
-}
-
-.year-slider label {
-  display: block;
-  font-size: 13px;
-  margin-bottom: 4px;
-}
-
-.year-slider input[type="range"] {
-  width: 300px;
-}
-
-.event-group {
-  cursor: pointer;
-}
-
-.event-group:hover rect {
-  opacity: 0.8;
-}
-
-.event-bar--single {
-  stroke: #333;
-  stroke-width: 1;
-  stroke-dasharray: 3 2;
-}
-
-</style>

@@ -1,10 +1,13 @@
+// 共通イベント
+import commonTimeline from "./worldline_commu/common_timeline";
+
 // アイドルコミュ
 // src/data/worldline_commu/idol_commu/
 import hanamiSaki from "./worldline_commu/idol_commu/001hanamiSaki";
 import tsukimuraTemari from "./worldline_commu/idol_commu/002tsukimuraTemari";
 import fujitaKotone from "./worldline_commu/idol_commu/003fujitaKotone";
 import arimuraMao from "./worldline_commu/idol_commu/004arimuraMao";
-import katsuragiRiya from "./worldline_commu/idol_commu/005katsuragiRiya";
+import katsuragiLilja from "./worldline_commu/idol_commu/005katsuragiLilja";
 import kuramotoChina from "./worldline_commu/idol_commu/006kuramotoChina";
 import shiunSumika from "./worldline_commu/idol_commu/007shiunSumika";
 import shinosawaHiro from "./worldline_commu/idol_commu/008shinosawaHiro";
@@ -14,26 +17,41 @@ import juoSena from "./worldline_commu/idol_commu/011juoSena";
 import hatayaMisuzu from "./worldline_commu/idol_commu/012hatayaMisuzu";
 import amayaTsubame from "./worldline_commu/idol_commu/013amayaTsubame";
 
-export const characters = [
-    hanamiSaki,
-    tsukimuraTemari,
-    fujitaKotone,
-    arimuraMao,
-    katsuragiRiya,
-    kuramotoChina,
-    shiunSumika,
-    shinosawaHiro,
-    himesakiRinami,
-    hanamiUme,
-    juoSena,
-    hatayaMisuzu,
-    amayaTsubame,
+export const idolCommu = [
+  hanamiSaki,
+  tsukimuraTemari,
+  fujitaKotone,
+  arimuraMao,
+  katsuragiLilja,
+  kuramotoChina,
+  shiunSumika,
+  shinosawaHiro,
+  himesakiRinami,
+  hanamiUme,
+  juoSena,
+  hatayaMisuzu,
+  amayaTsubame,
 ];
 
 // 初星コミュ
 // src/data/worldline_commu/hatsuboshi_commu/
-import storyOfReiris from "./worldline_commu/hatsuboshi_commu/001HstoryOfReiris";
+import storyOfReiris from "./worldline_commu/hatsuboshi_commu/001storyOfReiris";
 
-export const hatsuboshiCommus = [
-    storyOfReiris,
+export const hatsuboshiCommus = [storyOfReiris];
+
+// イベントコミュ
+// src/data/worldline_commu/event_commu/
+
+export const eventCommus = [
+  // 今後追加予定
 ];
+
+// サポートカードコミュ
+// src/data/worldline_commu/support_story/
+
+export const supportCardCommus = [
+  // 今後追加予定
+];
+
+// 共通イベント（全レーンで表示）
+export { commonTimeline };
