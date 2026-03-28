@@ -91,6 +91,13 @@ Human-facing explanations belong in `README.md` and `docs/`. Do not treat agent-
 4. Check consistency around common-event duplication, `canonicalId`, and `instanceId`.
 5. Report as many real issues as possible, clearly and accurately.
 
+## 9.5. Task Playbooks
+
+- Use `agents-rules/ui-change-playbook.md` for visible UI or interaction work.
+- Use `agents-rules/docs-sync-playbook.md` when behavior or user-facing text changed.
+- Use `agents-rules/timeline-regression-checklist.md` before closing timeline-related work.
+- These playbooks add task flow. They do not override the rules in this file.
+
 ## 10. Post-Change Checks
 
 - `npm run build`
@@ -129,6 +136,9 @@ Human-facing explanations belong in `README.md` and `docs/`. Do not treat agent-
 
 - `agents-rules/maintenance.md`
 - `agents-rules/review-checklist.md`
+- `agents-rules/ui-change-playbook.md`
+- `agents-rules/docs-sync-playbook.md`
+- `agents-rules/timeline-regression-checklist.md`
 - `docs/data-structure.md`
 - `docs/processing-flow.md`
 - `docs/ui-behavior.md`
