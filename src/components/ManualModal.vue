@@ -14,10 +14,21 @@ const renderedHtml = computed(() => marked.parse(props.content));
 <template>
   <div v-if="open">
     <div class="manual-overlay" @click="onClose"></div>
-    <div class="manual-modal" role="dialog" aria-modal="true">
+    <div
+      class="manual-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="manual-modal-title"
+    >
       <div class="manual-header">
-        <h2>操作マニュアル</h2>
-        <button class="manual-close" type="button" @click="onClose">
+        <h2 id="manual-modal-title">操作マニュアル</h2>
+        <button
+          class="manual-close"
+          type="button"
+          aria-label="操作マニュアルを閉じる"
+          title="操作マニュアルを閉じる"
+          @click="onClose"
+        >
           ×
         </button>
       </div>

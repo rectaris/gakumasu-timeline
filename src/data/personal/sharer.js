@@ -204,14 +204,14 @@ export default {
     },
     {
       id: "033",
-      name: "",
-      url: [],
+      name: "JIN-SAY",
+      url: ["https://www.youtube.com/@jin-say3119"],
       tags: [""],
     },
     {
       id: "034",
-      name: "",
-      url: [],
+      name: "三叉ぽけ",
+      url: ["https://www.youtube.com/@sansa_poke"],
       tags: [""],
     },
     {

@@ -60,9 +60,21 @@ function formatEventOccurrence(event) {
 </script>
 
 <template>
-  <aside class="side-panel" :class="{ open: selectedEvent }">
+  <aside
+    class="side-panel"
+    :class="{ open: selectedEvent }"
+    role="dialog"
+    aria-modal="false"
+    :aria-label="selectedEvent ? 'イベント詳細' : 'イベント詳細パネル'"
+  >
     <div v-if="selectedEvent" class="panel-content">
-      <button class="close-btn" @click="closePanel">×</button>
+      <button
+        class="close-btn"
+        type="button"
+        aria-label="詳細パネルを閉じる"
+        title="詳細パネルを閉じる"
+        @click="closePanel"
+      >×</button>
 
       <h2>{{ selectedEvent.title }}</h2>
 

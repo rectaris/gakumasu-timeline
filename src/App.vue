@@ -359,18 +359,21 @@ watch(showCommonEvents, (value) => {
         class="menu-button"
         type="button"
         aria-label="メニューを開く"
+        title="メニューを開く"
         @click="toggleMainMenu"
       >☰</button>
       <button
         class="manual-button"
         type="button"
         aria-label="マニュアルを開く"
+        title="マニュアルを開く"
         @click="openManualDialog"
       >？</button>
       <button
         class="settings-button"
         type="button"
         aria-label="設定を開く"
+        title="設定を開く"
         @click="toggleSettingsMenu"
       >⚙</button>
     </div>
@@ -395,13 +398,20 @@ watch(showCommonEvents, (value) => {
     @click="closeSettings"
   ></div>
 
-  <aside class="side-menu" :class="{ open: menuOpen }">
+  <aside
+    class="side-menu"
+    :class="{ open: menuOpen }"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="side-menu-title"
+  >
     <div class="side-menu__header">
-      <span>表示設定</span>
+      <span id="side-menu-title">表示設定</span>
       <button
         class="menu-close"
         type="button"
         aria-label="メニューを閉じる"
+        title="メニューを閉じる"
         @click="closeMenu"
       >
         ×
@@ -486,13 +496,20 @@ watch(showCommonEvents, (value) => {
     </section>
   </aside>
 
-  <aside class="settings-menu" :class="{ open: settingsOpen }">
+  <aside
+    class="settings-menu"
+    :class="{ open: settingsOpen }"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="settings-menu-title"
+  >
     <div class="side-menu__header">
-      <span>設定</span>
+      <span id="settings-menu-title">設定</span>
       <button
         class="menu-close"
         type="button"
         aria-label="設定を閉じる"
+        title="設定を閉じる"
         @click="closeSettings"
       >
         ×
@@ -578,7 +595,8 @@ watch(showCommonEvents, (value) => {
       <section
         v-if="showIntroGuide"
         class="intro-guide"
-        aria-label="初めて見る方向けの案内"
+        role="region"
+        aria-labelledby="intro-guide-title"
       >
         <div class="intro-guide__header">
           <p class="intro-guide__eyebrow">はじめて見る方向け</p>
@@ -586,21 +604,24 @@ watch(showCommonEvents, (value) => {
             class="intro-guide__close"
             type="button"
             aria-label="案内を閉じる"
+            title="案内を閉じる"
             @click="dismissIntroGuide"
           >
             ×
           </button>
         </div>
-        <h2 class="intro-guide__title">まずは 3 ステップで見始められます</h2>
+        <h2 id="intro-guide-title" class="intro-guide__title">まずは 3 ステップで見始められます</h2>
         <ol class="intro-guide__steps">
           <li>左上のメニューから見たいカテゴリやレーンを選ぶ</li>
-          <li>右上の表示期間 / レーン密度の操作とホイールで、見たい範囲へ寄る</li>
+          <li>画面下部の表示期間 / レーン密度の操作とホイールで、見たい範囲に合わせる</li>
           <li>イベントをクリックして右側の詳細を見る</li>
         </ol>
         <div class="intro-guide__actions">
           <button
             class="intro-guide__button intro-guide__button--primary"
             type="button"
+            aria-label="表示レーンを見る"
+            title="表示レーンを見る"
             @click="openLaneGuide"
           >
             表示レーンを見る
@@ -608,6 +629,8 @@ watch(showCommonEvents, (value) => {
           <button
             class="intro-guide__button"
             type="button"
+            aria-label="操作マニュアルを見る"
+            title="操作マニュアルを見る"
             @click="openManualDialog"
           >
             操作マニュアルを見る
