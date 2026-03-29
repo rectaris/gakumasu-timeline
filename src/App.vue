@@ -166,6 +166,8 @@ function shouldKeepPanelOpenFromClick(target) {
       target.closest(".settings-menu") ||
       target.closest(".manual-modal") ||
       target.closest(".side-panel") ||
+      target.closest(".zoom-panel") ||
+      target.closest(".zoom-controls") ||
       target.closest(".intro-guide") ||
       target.closest(".event-group"),
   );
