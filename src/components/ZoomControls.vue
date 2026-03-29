@@ -25,6 +25,8 @@ defineProps({
           class="zoom-button zoom-button--out"
           type="button"
           :disabled="!canZoomOutHorizontal"
+          aria-label="表示期間を広げる"
+          title="表示期間を広げる"
           @click="zoomOutHorizontal"
         >
           -
@@ -32,6 +34,8 @@ defineProps({
         <button
           class="zoom-button zoom-button--reset"
           type="button"
+          aria-label="表示期間を全体表示に戻す"
+          title="表示期間を全体表示に戻す"
           @click="resetHorizontalZoom"
         >
           全体
@@ -40,6 +44,8 @@ defineProps({
           class="zoom-button zoom-button--in"
           type="button"
           :disabled="!canZoomInHorizontal"
+          aria-label="表示期間を絞る"
+          title="表示期間を絞る"
           @click="zoomInHorizontal"
         >
           +
@@ -53,6 +59,8 @@ defineProps({
           class="zoom-button zoom-button--out"
           type="button"
           :disabled="!canZoomOutVertical"
+          aria-label="レーン密度を下げる"
+          title="レーン密度を下げる"
           @click="zoomOutVertical"
         >
           -
@@ -60,6 +68,8 @@ defineProps({
         <button
           class="zoom-button zoom-button--reset"
           type="button"
+          aria-label="レーン密度を標準に戻す"
+          title="レーン密度を標準に戻す"
           @click="resetVerticalZoom"
         >
           100%
@@ -68,6 +78,8 @@ defineProps({
           class="zoom-button zoom-button--in"
           type="button"
           :disabled="!canZoomInVertical"
+          aria-label="レーン密度を上げる"
+          title="レーン密度を上げる"
           @click="zoomInVertical"
         >
           +
@@ -75,10 +87,6 @@ defineProps({
         <span class="zoom-status">{{ verticalZoomLabel }}</span>
       </div>
     </div>
-
-    <p class="zoom-panel-note">
-      表示期間とレーン密度は、右上の操作ボタンから調整できます。
-    </p>
 
     <div v-if="showHints" class="zoom-hints">
       <p class="zoom-hint">ドラッグ: 上下左右に移動</p>
