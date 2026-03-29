@@ -135,8 +135,8 @@ export default {
     },
     {
       id: "020",
-      name: "",
-      url: [""],
+      name: "かたお",
+      url: ["https://www.youtube.com/@katatsumuri_mad"],
       tags: [""],
     },
     {

@@ -13,12 +13,14 @@ const renderedHtml = computed(() => marked.parse(props.content));
 
 <template>
   <div v-if="open">
-    <div class="manual-overlay" @click="onClose"></div>
+    <div class="manual-overlay" aria-hidden="true" @click="onClose"></div>
     <div
+      id="manual-modal"
       class="manual-modal"
       role="dialog"
       aria-modal="true"
       aria-labelledby="manual-modal-title"
+      aria-describedby="manual-modal-content"
     >
       <div class="manual-header">
         <h2 id="manual-modal-title">操作マニュアル</h2>
@@ -32,7 +34,11 @@ const renderedHtml = computed(() => marked.parse(props.content));
           ×
         </button>
       </div>
-      <div class="manual-content" v-html="renderedHtml"></div>
+      <div
+        id="manual-modal-content"
+        class="manual-content"
+        v-html="renderedHtml"
+      ></div>
     </div>
   </div>
 </template>

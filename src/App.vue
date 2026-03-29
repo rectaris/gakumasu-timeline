@@ -359,6 +359,9 @@ watch(showCommonEvents, (value) => {
         class="menu-button"
         type="button"
         aria-label="メニューを開く"
+        aria-haspopup="dialog"
+        aria-controls="side-menu"
+        :aria-expanded="menuOpen ? 'true' : 'false'"
         title="メニューを開く"
         @click="toggleMainMenu"
       >☰</button>
@@ -366,6 +369,9 @@ watch(showCommonEvents, (value) => {
         class="manual-button"
         type="button"
         aria-label="マニュアルを開く"
+        aria-haspopup="dialog"
+        aria-controls="manual-modal"
+        :aria-expanded="manualOpen ? 'true' : 'false'"
         title="マニュアルを開く"
         @click="openManualDialog"
       >？</button>
@@ -373,6 +379,9 @@ watch(showCommonEvents, (value) => {
         class="settings-button"
         type="button"
         aria-label="設定を開く"
+        aria-haspopup="dialog"
+        aria-controls="settings-menu"
+        :aria-expanded="settingsOpen ? 'true' : 'false'"
         title="設定を開く"
         @click="toggleSettingsMenu"
       >⚙</button>
@@ -389,16 +398,19 @@ watch(showCommonEvents, (value) => {
   <div
     v-if="menuOpen"
     class="menu-overlay"
+    aria-hidden="true"
     @click="closeMenu"
   ></div>
 
   <div
     v-if="settingsOpen"
     class="menu-overlay"
+    aria-hidden="true"
     @click="closeSettings"
   ></div>
 
   <aside
+    id="side-menu"
     class="side-menu"
     :class="{ open: menuOpen }"
     role="dialog"
@@ -418,8 +430,8 @@ watch(showCommonEvents, (value) => {
       </button>
     </div>
 
-    <section class="side-menu__section">
-      <p class="menu-section-title">カテゴリ</p>
+    <section class="side-menu__section" aria-labelledby="menu-category-title">
+      <p id="menu-category-title" class="menu-section-title">カテゴリ</p>
       <label
         v-for="option in categoryOptions"
         :key="option.id"
@@ -435,9 +447,9 @@ watch(showCommonEvents, (value) => {
       </label>
     </section>
 
-    <section class="side-menu__section">
+    <section class="side-menu__section" aria-labelledby="menu-lanes-title">
       <div class="menu-section-header">
-        <p class="menu-section-title">表示レーン</p>
+        <p id="menu-lanes-title" class="menu-section-title">表示レーン</p>
         <label class="menu-bulk-toggle">
           <input
             type="checkbox"
@@ -497,6 +509,7 @@ watch(showCommonEvents, (value) => {
   </aside>
 
   <aside
+    id="settings-menu"
     class="settings-menu"
     :class="{ open: settingsOpen }"
     role="dialog"
@@ -516,8 +529,8 @@ watch(showCommonEvents, (value) => {
       </button>
     </div>
 
-    <section class="side-menu__section">
-      <p class="menu-section-title">配色モード</p>
+    <section class="side-menu__section" aria-labelledby="settings-theme-title">
+      <p id="settings-theme-title" class="menu-section-title">配色モード</p>
       <label class="menu-option">
         <input
           type="radio"
@@ -550,8 +563,8 @@ watch(showCommonEvents, (value) => {
       </p>
     </section>
 
-    <section class="side-menu__section">
-      <p class="menu-section-title">表示オプション</p>
+    <section class="side-menu__section" aria-labelledby="settings-display-title">
+      <p id="settings-display-title" class="menu-section-title">表示オプション</p>
       <label class="menu-option">
         <input
           type="checkbox"
@@ -591,7 +604,11 @@ watch(showCommonEvents, (value) => {
   />
 
   <div class="timeline-shell">
-    <div class="timeline-frame">
+    <div
+      class="timeline-frame"
+      role="region"
+      aria-label="キャラクタータイムライン表示エリア"
+    >
       <section
         v-if="showIntroGuide"
         class="intro-guide"
@@ -621,6 +638,9 @@ watch(showCommonEvents, (value) => {
             class="intro-guide__button intro-guide__button--primary"
             type="button"
             aria-label="表示レーンを見る"
+            aria-haspopup="dialog"
+            aria-controls="side-menu"
+            :aria-expanded="menuOpen ? 'true' : 'false'"
             title="表示レーンを見る"
             @click="openLaneGuide"
           >
@@ -630,6 +650,9 @@ watch(showCommonEvents, (value) => {
             class="intro-guide__button"
             type="button"
             aria-label="操作マニュアルを見る"
+            aria-haspopup="dialog"
+            aria-controls="manual-modal"
+            :aria-expanded="manualOpen ? 'true' : 'false'"
             title="操作マニュアルを見る"
             @click="openManualDialog"
           >
@@ -653,7 +676,12 @@ watch(showCommonEvents, (value) => {
         :x-pos="xPos"
         :year-label="yearLabel"
       />
-      <div ref="timelineStageRef" class="timeline-stage">
+      <div
+        ref="timelineStageRef"
+        class="timeline-stage"
+        role="region"
+        aria-label="タイムライン本体"
+      >
         <TimelineSvg
           :width="WIDTH"
           :svg-height="svgHeight"

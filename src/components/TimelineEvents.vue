@@ -16,6 +16,13 @@ function handleSelect(event) {
   emit("select", event);
 }
 
+function eventTitleText(event) {
+  return [event.title, event.detail]
+    .map(value => String(value ?? "").trim())
+    .filter(Boolean)
+    .join(" / ");
+}
+
 function uncertaintyMarker(event, edge) {
   const edgeX =
     edge === "start"
@@ -33,10 +40,7 @@ function uncertaintyMarker(event, edge) {
 <template>
   <g v-for="event in visibleEvents" :key="event.instanceId ?? event.id">
     <g @click="handleSelect(event)" class="event-group">
-      <title>
-        title:  {{ event.title }}
-        detail: {{ event.detail }}
-      </title>
+      <title>{{ eventTitleText(event) }}</title>
 
       <rect
         class="event-bar"

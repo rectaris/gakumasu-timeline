@@ -66,6 +66,8 @@ function formatEventOccurrence(event) {
     role="dialog"
     aria-modal="false"
     :aria-label="selectedEvent ? 'イベント詳細' : 'イベント詳細パネル'"
+    :aria-labelledby="selectedEvent ? 'side-panel-title' : undefined"
+    :aria-describedby="selectedEvent ? 'side-panel-meta side-panel-detail' : undefined"
   >
     <div v-if="selectedEvent" class="panel-content">
       <button
@@ -76,14 +78,14 @@ function formatEventOccurrence(event) {
         @click="closePanel"
       >×</button>
 
-      <h2>{{ selectedEvent.title }}</h2>
+      <h2 id="side-panel-title">{{ selectedEvent.title }}</h2>
 
-      <p class="meta">
+      <p id="side-panel-meta" class="meta">
         {{ selectedEvent.character }}<br />
         {{ formatEventOccurrence(selectedEvent) }}
       </p>
 
-      <p class="detail">
+      <p id="side-panel-detail" class="detail">
         {{ selectedEvent.detail }}
       </p>
     </div>
