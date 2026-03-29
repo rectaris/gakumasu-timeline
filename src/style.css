@@ -337,6 +337,103 @@ body {
     stroke-dasharray: 3 2;
 }
 
+.intro-guide {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 30;
+    width: min(420px, calc(100% - 24px));
+    padding: 14px 16px 16px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(255, 247, 242, 0.94));
+    box-shadow: 0 10px 28px var(--shadow);
+    backdrop-filter: blur(10px);
+}
+
+:root[data-theme="dark"] .intro-guide {
+    background:
+        linear-gradient(145deg, rgba(27, 32, 37, 0.97), rgba(36, 42, 48, 0.94));
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .intro-guide {
+        background:
+            linear-gradient(145deg, rgba(27, 32, 37, 0.97), rgba(36, 42, 48, 0.94));
+    }
+}
+
+.intro-guide__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.intro-guide__eyebrow {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #b54d33;
+    letter-spacing: 0.04em;
+}
+
+.intro-guide__close {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--button-bg);
+    color: var(--button-text);
+    line-height: 1;
+}
+
+.intro-guide__title {
+    margin: 0 0 10px;
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--text-primary);
+}
+
+.intro-guide__steps {
+    margin: 0 0 14px 20px;
+    padding: 0;
+    color: var(--text-primary);
+}
+
+.intro-guide__steps li + li {
+    margin-top: 6px;
+}
+
+.intro-guide__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.intro-guide__button {
+    border: 1px solid var(--border-strong);
+    background: var(--button-bg);
+    color: var(--button-text);
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.intro-guide__button--primary {
+    background: var(--button-bg-strong);
+    color: var(--button-text-inverse);
+}
+
+.intro-guide__note {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
 .timeline-shell {
     width: 100%;
     height: calc(100vh - 56px);
@@ -677,4 +774,25 @@ body {
     font-size: 12px;
     line-height: 1.6;
     color: var(--text-muted);
+}
+
+@media (max-width: 720px) {
+    .intro-guide {
+        top: 8px;
+        left: 8px;
+        width: calc(100% - 16px);
+        padding: 12px 12px 14px;
+    }
+
+    .intro-guide__title {
+        font-size: 18px;
+    }
+
+    .intro-guide__actions {
+        flex-direction: column;
+    }
+
+    .intro-guide__button {
+        width: 100%;
+    }
 }

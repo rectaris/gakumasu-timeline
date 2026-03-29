@@ -55,7 +55,7 @@ const {
   supportCardCommus: supportRef
 });
 
-const { isOpen: menuOpen, closeMenu, toggleMenu } =
+const { isOpen: menuOpen, openMenu, closeMenu, toggleMenu } =
   useMenuState();
 
 const {
@@ -72,10 +72,12 @@ const {
 const THEME_MODE_STORAGE_KEY = "gakumasu:theme-mode";
 const SHOW_ZOOM_HINTS_STORAGE_KEY = "gakumasu:show-zoom-hints";
 const SHOW_COMMON_EVENTS_STORAGE_KEY = "gakumasu:show-common-events";
+const INTRO_GUIDE_DISMISSED_KEY = "gakumasu:intro-guide-dismissed";
 
 const themeMode = ref("system");
 const showZoomHints = ref(true);
 const showCommonEvents = ref(true);
+const showIntroGuide = ref(true);
 const settingsReady = ref(false);
 
 const { allEvents, timesDay } = useTimelineData(
@@ -164,6 +166,7 @@ function shouldKeepPanelOpenFromClick(target) {
       target.closest(".settings-menu") ||
       target.closest(".manual-modal") ||
       target.closest(".side-panel") ||
+      target.closest(".intro-guide") ||
       target.closest(".event-group"),
   );
 }
@@ -256,6 +259,17 @@ function openManualDialog() {
   openManual();
 }
 
+function openLaneGuide() {
+  closeSettings();
+  closeManual();
+  openMenu();
+}
+
+function dismissIntroGuide() {
+  showIntroGuide.value = false;
+  window.localStorage.setItem(INTRO_GUIDE_DISMISSED_KEY, "true");
+}
+
 const {
   isDragging,
   onMouseDown,
@@ -303,6 +317,10 @@ onMounted(() => {
   showCommonEvents.value = readBooleanSetting(
     SHOW_COMMON_EVENTS_STORAGE_KEY,
     true
+  );
+  showIntroGuide.value = !readBooleanSetting(
+    INTRO_GUIDE_DISMISSED_KEY,
+    false
   );
   applyThemeMode(themeMode.value);
   settingsReady.value = true;
@@ -555,6 +573,49 @@ watch(showCommonEvents, (value) => {
 
   <div class="timeline-shell">
     <div class="timeline-frame">
+      <section
+        v-if="showIntroGuide"
+        class="intro-guide"
+        aria-label="初めて見る方向けの案内"
+      >
+        <div class="intro-guide__header">
+          <p class="intro-guide__eyebrow">はじめて見る方向け</p>
+          <button
+            class="intro-guide__close"
+            type="button"
+            aria-label="案内を閉じる"
+            @click="dismissIntroGuide"
+          >
+            ×
+          </button>
+        </div>
+        <h2 class="intro-guide__title">まずは 3 ステップで見始められます</h2>
+        <ol class="intro-guide__steps">
+          <li>左上のメニューから見たいカテゴリやレーンを選ぶ</li>
+          <li>ドラッグとホイールで範囲を動かし、気になる時期へ寄る</li>
+          <li>イベントをクリックして右側の詳細を見る</li>
+        </ol>
+        <div class="intro-guide__actions">
+          <button
+            class="intro-guide__button intro-guide__button--primary"
+            type="button"
+            @click="openLaneGuide"
+          >
+            表示レーンを見る
+          </button>
+          <button
+            class="intro-guide__button"
+            type="button"
+            @click="openManualDialog"
+          >
+            操作マニュアルを見る
+          </button>
+        </div>
+        <p class="intro-guide__note">
+          日付は各月 31 日換算の抽象時系列です。実カレンダーとは一致しません。
+        </p>
+      </section>
+
       <TimelineScaleOverlay
         :width="WIDTH"
         :overlay-height="timelineViewport.y"

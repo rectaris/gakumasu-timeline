@@ -12,28 +12,19 @@ This document is agent-only workflow guidance for visible UI or interaction chan
 
 ## Workflow
 
-1. Read the high-risk files first.
-   - `src/App.vue`
-   - `src/composables/useTimelineLayout.js`
-   - `src/composables/useZoomMachine.js`
-   - `src/composables/usePointer.js`
-   - Relevant component files
-2. Identify the source of truth before editing.
-   - Rendering and visibility: `displayStartDay` / `displayEndDay`
-   - URL selection: `canonicalId`
-   - Render-instance identity: `instanceId`
-3. Prefer one implementation path.
-   - Do not add a second rendering path for the same UI
-   - Do not duplicate derived calculations in components
-4. Check interaction feel after the edit.
-   - Wheel zoom
-   - Drag movement
-   - Click/tap selection
-   - `Escape` behavior
-5. Review affected human-facing docs.
-   - `README.md`
-   - `docs/manual.md`
-   - Relevant files under `docs/`
+1. Read the canonical rules in `AGENTS.md` before editing.
+   - Use Section 2 for the high-priority files to inspect first.
+   - Use Section 3 and Section 7 for timeline invariants and ID/display-time ownership.
+   - Use Section 8 for documentation review scope.
+   - Use Section 10 for required post-change verification.
+2. Narrow the write scope to the smallest set of files that owns the behavior.
+   - Keep rendering in components and shared derivation in composables/helpers.
+   - If more than one file appears to compute the same UI value, consolidate instead of adding a parallel path.
+3. Identify the user-visible behavior being changed before editing.
+   - Confirm whether the change affects rendering, interaction, panel behavior, menu behavior, or theme/display text.
+   - Use that boundary to decide which components and composables actually own the change.
+4. Re-check interaction feel after the edit using the verification items from `AGENTS.md`.
+5. Update only the human-facing docs whose current text is made inaccurate by the change, following `AGENTS.md`.
 
 ## Mandatory Questions Before Finishing
 
@@ -42,7 +33,7 @@ This document is agent-only workflow guidance for visible UI or interaction chan
 - Did this change require text updates in app UI or docs?
 - Did this create a new edge case near viewport boundaries?
 
-## Minimum Verification
+## Verification Reference
 
-- `npm run build`
-- Real browser verification when behavior changed
+- Follow `AGENTS.md` Section 10 for the required verification set and preferred real-device coverage.
+- If the UI change alters behavior, execute the relevant interaction checks from that section instead of maintaining a separate checklist here.

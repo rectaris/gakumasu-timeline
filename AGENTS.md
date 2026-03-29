@@ -45,6 +45,12 @@ Human-facing explanations belong in `README.md` and `docs/`. Do not treat agent-
 - Do not keep code only because it might be used later.
 - Keep UI components focused on rendering. Move data normalization and ID normalization into composables/helpers.
 - Move reusable derived calculations into composables/helpers instead of duplicating them inside components.
+- Before adding a new dependency, helper, abstraction, or workflow, first check whether the repository already has a suitable implementation.
+- If the repository does not already cover it, check official docs and maintained external solutions before building custom code.
+- Prefer adopt / extend over build when it keeps this repository simpler and easier to maintain.
+- If custom implementation is still the right choice, keep it minimal and make the reason clear in the task report.
+- Use Japanese by default for user-facing responses, reports, and explanations unless the user explicitly asks for another language.
+- For implementation, prefer the language and style that keep the target file readable for future agents and maintainers. Follow the dominant language already used in the file/repo unless there is a clear reason not to.
 
 ## 5. Approval Boundary
 
@@ -59,6 +65,7 @@ Human-facing explanations belong in `README.md` and `docs/`. Do not treat agent-
 
 - Do not change character names or commu text as a side effect of UI work.
 - Do not change the meaning of data content unless explicitly requested.
+- Do not make destructive changes unless explicitly requested and clearly necessary for the task.
 
 ## 7. Naming And Responsibility
 
@@ -139,6 +146,8 @@ Human-facing explanations belong in `README.md` and `docs/`. Do not treat agent-
 - `agents-rules/ui-change-playbook.md`
 - `agents-rules/docs-sync-playbook.md`
 - `agents-rules/timeline-regression-checklist.md`
+- `agents-rules/workspace/README.md`
 - `docs/data-structure.md`
+- `docs/ads-plan.md`
 - `docs/processing-flow.md`
 - `docs/ui-behavior.md`

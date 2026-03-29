@@ -25,6 +25,22 @@ npm run dev
 npm run build
 ```
 
+## テスト
+
+```bash
+npm run test
+```
+
+抽象時間変換やイベント正規化など、UI 回帰を起こしやすい基礎ロジックの確認に使います。
+
+## 検証
+
+```bash
+npm run verify
+```
+
+`verify` は `test` と `build` を順に実行します。
+
 ## ローカルプレビュー
 
 ```bash
