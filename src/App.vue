@@ -594,7 +594,7 @@ watch(showCommonEvents, (value) => {
         <h2 class="intro-guide__title">まずは 3 ステップで見始められます</h2>
         <ol class="intro-guide__steps">
           <li>左上のメニューから見たいカテゴリやレーンを選ぶ</li>
-          <li>ドラッグとホイールで範囲を動かし、気になる時期へ寄る</li>
+          <li>右上の表示期間 / レーン密度の操作とホイールで、見たい範囲へ寄る</li>
           <li>イベントをクリックして右側の詳細を見る</li>
         </ol>
         <div class="intro-guide__actions">

@@ -20,7 +20,7 @@ defineProps({
   <div class="zoom-panel">
     <div class="zoom-controls">
       <div class="zoom-group">
-        <span class="zoom-group-label">横</span>
+        <span class="zoom-group-label">表示期間</span>
         <button
           class="zoom-button zoom-button--out"
           type="button"
@@ -48,7 +48,7 @@ defineProps({
       </div>
 
       <div class="zoom-group">
-        <span class="zoom-group-label">縦</span>
+        <span class="zoom-group-label">レーン密度</span>
         <button
           class="zoom-button zoom-button--out"
           type="button"
@@ -76,10 +76,14 @@ defineProps({
       </div>
     </div>
 
+    <p class="zoom-panel-note">
+      表示期間とレーン密度は、右上の操作ボタンから調整できます。
+    </p>
+
     <div v-if="showHints" class="zoom-hints">
       <p class="zoom-hint">ドラッグ: 上下左右に移動</p>
-      <p class="zoom-hint">ホイール: 横方向を拡大・縮小</p>
-      <p class="zoom-hint">Ctrl + ホイール: 縦倍率を調整</p>
+      <p class="zoom-hint">ホイール: 表示期間を拡大・縮小</p>
+      <p class="zoom-hint">Ctrl + ホイール: レーン密度を調整</p>
       <p class="zoom-hint">横方向ホイール: 左右に移動</p>
       <p class="timeline-scale-note">日付は各月31日換算の抽象時系列です。</p>
     </div>
