@@ -135,8 +135,11 @@ export default {
     },
     {
       id: "020",
-      name: "かたお",
-      url: ["https://www.youtube.com/@katatsumuri_mad"],
+      name: "おかた",
+      url: [
+        "https://www.nicovideo.jp/user/86386795",
+        "https://www.youtube.com/@katatsumuri_mad",
+      ],
       tags: [""],
     },
     {

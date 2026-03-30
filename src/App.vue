@@ -416,6 +416,7 @@ watch(showCommonEvents, (value) => {
     role="dialog"
     aria-modal="true"
     aria-labelledby="side-menu-title"
+    :aria-describedby="hasAnyLaneInCurrentCategory ? 'lane-summary' : 'menu-empty-state'"
   >
     <div class="side-menu__header">
       <span id="side-menu-title">表示設定</span>
@@ -468,12 +469,21 @@ watch(showCommonEvents, (value) => {
             v-model="laneSearchQuery"
             class="lane-search__input"
             type="search"
+            aria-label="表示レーンを検索"
+            :aria-describedby="hasAnyLaneInCurrentCategory ? 'lane-summary' : undefined"
+            title="表示レーンを検索"
             placeholder="レーン名で絞り込み"
           />
         </label>
         <label class="lane-sort">
           <span class="lane-search__label">並び替え</span>
-          <select v-model="laneSortMode" class="lane-sort__select">
+          <select
+            v-model="laneSortMode"
+            class="lane-sort__select"
+            aria-label="表示レーンの並び順を選ぶ"
+            :aria-describedby="hasAnyLaneInCurrentCategory ? 'lane-summary' : undefined"
+            title="表示レーンの並び順を選ぶ"
+          >
             <option
               v-for="option in laneSortOptions"
               :key="option.id"
@@ -483,7 +493,7 @@ watch(showCommonEvents, (value) => {
             </option>
           </select>
         </label>
-        <p class="lane-summary">
+        <p id="lane-summary" class="lane-summary">
           {{ visibleLaneCount }} / {{ totalLaneCount }} 件表示
         </p>
       </div>
@@ -502,7 +512,7 @@ watch(showCommonEvents, (value) => {
           <span class="menu-option__meta">{{ lane.eventCount }}件</span>
         </label>
       </template>
-      <div v-else class="menu-empty">
+      <div id="menu-empty-state" v-else class="menu-empty">
         {{ hasAnyLaneInCurrentCategory ? "該当するレーンがありません" : "今後追加予定" }}
       </div>
     </section>
@@ -515,6 +525,7 @@ watch(showCommonEvents, (value) => {
     role="dialog"
     aria-modal="true"
     aria-labelledby="settings-menu-title"
+    aria-describedby="settings-display-note"
   >
     <div class="side-menu__header">
       <span id="settings-menu-title">設定</span>
@@ -529,7 +540,11 @@ watch(showCommonEvents, (value) => {
       </button>
     </div>
 
-    <section class="side-menu__section" aria-labelledby="settings-theme-title">
+    <section
+      class="side-menu__section"
+      aria-labelledby="settings-theme-title"
+      aria-describedby="settings-theme-note"
+    >
       <p id="settings-theme-title" class="menu-section-title">配色モード</p>
       <label class="menu-option">
         <input
@@ -558,12 +573,16 @@ watch(showCommonEvents, (value) => {
         />
         <span>ダークモード</span>
       </label>
-      <p class="settings-note">
+      <p id="settings-theme-note" class="settings-note">
         既定では、お使いの OS / ブラウザ設定に合わせて配色を切り替えます。
       </p>
     </section>
 
-    <section class="side-menu__section" aria-labelledby="settings-display-title">
+    <section
+      class="side-menu__section"
+      aria-labelledby="settings-display-title"
+      aria-describedby="settings-display-note"
+    >
       <p id="settings-display-title" class="menu-section-title">表示オプション</p>
       <label class="menu-option">
         <input
@@ -581,7 +600,7 @@ watch(showCommonEvents, (value) => {
         />
         <span>操作ヒントを表示する</span>
       </label>
-      <p class="settings-note">
+      <p id="settings-display-note" class="settings-note">
         タイムラインの見え方や補助情報の表示を切り替えられます。
       </p>
     </section>
