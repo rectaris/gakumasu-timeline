@@ -67,7 +67,7 @@ function formatEventOccurrence(event) {
     aria-modal="false"
     :aria-label="selectedEvent ? 'イベント詳細' : 'イベント詳細パネル'"
     :aria-labelledby="selectedEvent ? 'side-panel-title' : undefined"
-    :aria-describedby="selectedEvent ? 'side-panel-meta side-panel-close-note side-panel-detail' : undefined"
+    :aria-describedby="selectedEvent ? 'side-panel-meta side-panel-detail' : undefined"
   >
     <div v-if="selectedEvent" class="panel-content">
       <button
@@ -83,10 +83,6 @@ function formatEventOccurrence(event) {
       <p id="side-panel-meta" class="meta">
         {{ selectedEvent.character }}<br />
         {{ formatEventOccurrence(selectedEvent) }}
-      </p>
-
-      <p id="side-panel-close-note" class="panel-note">
-        Escape キーまたは外側のクリック / タップで閉じられます。
       </p>
 
       <p id="side-panel-detail" class="detail">
