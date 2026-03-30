@@ -165,13 +165,20 @@ body {
 }
 
 .meta {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.panel-note {
+  margin: 0 0 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-faint);
 }
 
 .detail {
-    line-height: 1.6;
+  line-height: 1.6;
 }
 
 .zoom-panel {
