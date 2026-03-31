@@ -74,7 +74,7 @@ const THEME_MODE_STORAGE_KEY = "gakumasu:theme-mode";
 const SHOW_ZOOM_HINTS_STORAGE_KEY = "gakumasu:show-zoom-hints";
 const SHOW_COMMON_EVENTS_STORAGE_KEY = "gakumasu:show-common-events";
 const INTRO_GUIDE_DISMISSED_KEY = "gakumasu:intro-guide-dismissed";
-const TIMELINE_FOOTER_AD_SLOT = "";
+const TIMELINE_FOOTER_AD_SLOT = "1582586734";
 
 const themeMode = ref("system");
 const showZoomHints = ref(true);
