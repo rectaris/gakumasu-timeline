@@ -405,6 +405,29 @@ body {
     box-sizing: border-box;
 }
 
+.timeline-footer-ad {
+    margin: 0 16px 24px;
+}
+
+.ad-slot {
+    padding: 16px;
+    border-top: 1px solid var(--border-soft);
+    background: var(--surface-elevated);
+    box-shadow: 0 -4px 14px var(--shadow);
+}
+
+.ad-slot__label {
+    margin: 0 0 10px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+}
+
+.ad-slot__unit {
+    min-height: 120px;
+}
+
 .timeline-frame {
     position: relative;
     width: 100%;
@@ -760,5 +783,9 @@ body {
 
     .intro-guide__button {
         width: 100%;
+    }
+
+    .timeline-footer-ad {
+        margin: 0 8px 16px;
     }
 }

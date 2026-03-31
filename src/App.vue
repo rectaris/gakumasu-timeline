@@ -19,6 +19,7 @@ import { useZoomMachine } from "./composables/useZoomMachine";
 import ManualModal from "./components/ManualModal.vue";
 import ZoomControls from "./components/ZoomControls.vue";
 import SidePanel from "./components/SidePanel.vue";
+import AdSlot from "./components/AdSlot.vue";
 import TimelineScaleOverlay from "./components/TimelineScaleOverlay.vue";
 import TimelineSvg from "./components/TimelineSvg.vue";
 import { invertHexColor } from "./utils/colors";
@@ -73,6 +74,7 @@ const THEME_MODE_STORAGE_KEY = "gakumasu:theme-mode";
 const SHOW_ZOOM_HINTS_STORAGE_KEY = "gakumasu:show-zoom-hints";
 const SHOW_COMMON_EVENTS_STORAGE_KEY = "gakumasu:show-common-events";
 const INTRO_GUIDE_DISMISSED_KEY = "gakumasu:intro-guide-dismissed";
+const TIMELINE_FOOTER_AD_SLOT = "";
 
 const themeMode = ref("system");
 const showZoomHints = ref(true);
@@ -731,6 +733,13 @@ watch(showCommonEvents, (value) => {
       </div>
     </div>
   </div>
+
+  <AdSlot
+    v-if="TIMELINE_FOOTER_AD_SLOT"
+    class="timeline-footer-ad"
+    label="広告"
+    :ad-slot="TIMELINE_FOOTER_AD_SLOT"
+  />
 
   <SidePanel
     :selected-event="selectedEvent"
