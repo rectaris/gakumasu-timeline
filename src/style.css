@@ -28,6 +28,7 @@
     --shadow: rgba(0, 0, 0, 0.12);
     --timeline-overlay-top: rgba(255, 255, 255, 0.98);
     --timeline-overlay-mid: rgba(255, 255, 255, 0.92);
+    --timeline-footer-ad-offset: 16px;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -176,7 +177,7 @@ body {
 
 .zoom-panel {
     position: fixed;
-    bottom: 16px;
+    bottom: var(--timeline-footer-ad-offset);
     left: 50%;
     transform: translateX(-50%);
     display: inline-flex;
@@ -398,15 +399,23 @@ body {
     color: var(--text-muted);
 }
 
+.timeline-app {
+    min-height: calc(100vh - 56px);
+}
+
 .timeline-shell {
     width: 100%;
     height: calc(100vh - 56px);
+    display: flex;
+    flex-direction: column;
     padding: 0;
     box-sizing: border-box;
 }
 
 .timeline-footer-ad {
-    margin: 0 16px 24px;
+    flex: 0 0 auto;
+    padding: 0 16px 16px;
+    background: var(--app-bg);
 }
 
 .ad-slot {
@@ -431,7 +440,8 @@ body {
 .timeline-frame {
     position: relative;
     width: 100%;
-    height: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
 }
 
 .timeline-scale-overlay {
@@ -458,6 +468,7 @@ body {
 .timeline-stage {
     width: 100%;
     height: 100%;
+    min-height: 0;
     overflow: auto;
     padding: 0;
     scrollbar-width: none;
@@ -786,6 +797,6 @@ body {
     }
 
     .timeline-footer-ad {
-        margin: 0 8px 16px;
+        padding: 0 8px 8px;
     }
 }

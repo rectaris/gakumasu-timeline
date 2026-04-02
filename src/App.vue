@@ -33,6 +33,9 @@ const hatsuboshiRef = ref(hatsuboshiCommus);
 const eventRef = ref(eventCommus);
 const supportRef = ref(supportCardCommus);
 const timelineStageRef = ref(null);
+const timelineFooterAdRef = ref(null);
+const timelineFooterAdOffset = ref(16);
+let timelineFooterAdResizeObserver = null;
 
 const {
   categoryOptions,
@@ -312,6 +315,11 @@ function handleGlobalClick(event) {
   closePanel();
 }
 
+function updateTimelineFooterAdOffset() {
+  const footerHeight = timelineFooterAdRef.value?.offsetHeight ?? 0;
+  timelineFooterAdOffset.value = footerHeight > 0 ? footerHeight + 16 : 16;
+}
+
 onMounted(() => {
   const storedThemeMode = window.localStorage.getItem(THEME_MODE_STORAGE_KEY);
   if (storedThemeMode === "light" || storedThemeMode === "dark") {
@@ -328,11 +336,21 @@ onMounted(() => {
   );
   applyThemeMode(themeMode.value);
   settingsReady.value = true;
+  updateTimelineFooterAdOffset();
+  window.addEventListener("resize", updateTimelineFooterAdOffset);
+  if (window.ResizeObserver && timelineFooterAdRef.value) {
+    timelineFooterAdResizeObserver = new window.ResizeObserver(
+      updateTimelineFooterAdOffset
+    );
+    timelineFooterAdResizeObserver.observe(timelineFooterAdRef.value);
+  }
   window.addEventListener("keydown", handleGlobalEscape);
   window.addEventListener("click", handleGlobalClick);
 });
 
 onUnmounted(() => {
+  timelineFooterAdResizeObserver?.disconnect();
+  window.removeEventListener("resize", updateTimelineFooterAdOffset);
   window.removeEventListener("keydown", handleGlobalEscape);
   window.removeEventListener("click", handleGlobalClick);
 });
@@ -355,7 +373,11 @@ watch(showCommonEvents, (value) => {
 </script>
 
 <template>
-  <header class="app-header">
+  <div
+    class="timeline-app"
+    :style="{ '--timeline-footer-ad-offset': `${timelineFooterAdOffset}px` }"
+  >
+    <header class="app-header">
     <div class="header-left">
       <button
         class="menu-button"
@@ -389,29 +411,29 @@ watch(showCommonEvents, (value) => {
       >⚙</button>
     </div>
     <div class="app-title">キャラクタータイムライン</div>
-  </header>
+    </header>
 
-  <ManualModal
-    :open="manualOpen"
-    :content="manualContent"
-    :on-close="closeManual"
-  />
+    <ManualModal
+      :open="manualOpen"
+      :content="manualContent"
+      :on-close="closeManual"
+    />
 
-  <div
-    v-if="menuOpen"
-    class="menu-overlay"
-    aria-hidden="true"
-    @click="closeMenu"
-  ></div>
+    <div
+      v-if="menuOpen"
+      class="menu-overlay"
+      aria-hidden="true"
+      @click="closeMenu"
+    ></div>
 
-  <div
-    v-if="settingsOpen"
-    class="menu-overlay"
-    aria-hidden="true"
-    @click="closeSettings"
-  ></div>
+    <div
+      v-if="settingsOpen"
+      class="menu-overlay"
+      aria-hidden="true"
+      @click="closeSettings"
+    ></div>
 
-  <aside
+    <aside
     id="side-menu"
     class="side-menu"
     :class="{ open: menuOpen }"
@@ -518,9 +540,9 @@ watch(showCommonEvents, (value) => {
         {{ hasAnyLaneInCurrentCategory ? "該当するレーンがありません" : "今後追加予定" }}
       </div>
     </section>
-  </aside>
+    </aside>
 
-  <aside
+    <aside
     id="settings-menu"
     class="settings-menu"
     :class="{ open: settingsOpen }"
@@ -606,30 +628,30 @@ watch(showCommonEvents, (value) => {
         タイムラインの見え方や補助情報の表示を切り替えられます。
       </p>
     </section>
-  </aside>
+    </aside>
 
-  <ZoomControls
-    :horizontal-zoom-label="horizontalZoomLabel"
-    :vertical-zoom-label="verticalZoomLabel"
-    :can-zoom-in-horizontal="canZoomInHorizontal"
-    :can-zoom-out-horizontal="canZoomOutHorizontal"
-    :can-zoom-in-vertical="canZoomInVertical"
-    :can-zoom-out-vertical="canZoomOutVertical"
-    :zoom-in-horizontal="zoomInHorizontal"
-    :zoom-out-horizontal="zoomOutHorizontal"
-    :reset-horizontal-zoom="resetHorizontalZoom"
-    :zoom-in-vertical="zoomInVertical"
-    :zoom-out-vertical="zoomOutVertical"
-    :reset-vertical-zoom="resetVerticalZoom"
-    :show-hints="showZoomHints"
-  />
+    <ZoomControls
+      :horizontal-zoom-label="horizontalZoomLabel"
+      :vertical-zoom-label="verticalZoomLabel"
+      :can-zoom-in-horizontal="canZoomInHorizontal"
+      :can-zoom-out-horizontal="canZoomOutHorizontal"
+      :can-zoom-in-vertical="canZoomInVertical"
+      :can-zoom-out-vertical="canZoomOutVertical"
+      :zoom-in-horizontal="zoomInHorizontal"
+      :zoom-out-horizontal="zoomOutHorizontal"
+      :reset-horizontal-zoom="resetHorizontalZoom"
+      :zoom-in-vertical="zoomInVertical"
+      :zoom-out-vertical="zoomOutVertical"
+      :reset-vertical-zoom="resetVerticalZoom"
+      :show-hints="showZoomHints"
+    />
 
-  <div class="timeline-shell">
-    <div
-      class="timeline-frame"
-      role="region"
-      aria-label="キャラクタータイムライン表示エリア"
-    >
+    <div class="timeline-shell">
+      <div
+        class="timeline-frame"
+        role="region"
+        aria-label="キャラクタータイムライン表示エリア"
+      >
       <section
         v-if="showIntroGuide"
         class="intro-guide"
@@ -697,12 +719,12 @@ watch(showCommonEvents, (value) => {
         :x-pos="xPos"
         :year-label="yearLabel"
       />
-      <div
-        ref="timelineStageRef"
-        class="timeline-stage"
-        role="region"
-        aria-label="タイムライン本体"
-      >
+        <div
+          ref="timelineStageRef"
+          class="timeline-stage"
+          role="region"
+          aria-label="タイムライン本体"
+        >
         <TimelineSvg
           :width="WIDTH"
           :svg-height="svgHeight"
@@ -730,20 +752,22 @@ watch(showCommonEvents, (value) => {
           :is-dragging="isDragging"
           @select="selectEvent"
         />
+        </div>
+      </div>
+
+      <div
+        v-if="TIMELINE_FOOTER_AD_SLOT"
+        ref="timelineFooterAdRef"
+        class="timeline-footer-ad"
+      >
+        <AdSlot label="広告" :ad-slot="TIMELINE_FOOTER_AD_SLOT" />
       </div>
     </div>
+
+    <SidePanel
+      :selected-event="selectedEvent"
+      :year-label="yearLabel"
+      :close-panel="closePanel"
+    />
   </div>
-
-  <AdSlot
-    v-if="TIMELINE_FOOTER_AD_SLOT"
-    class="timeline-footer-ad"
-    label="広告"
-    :ad-slot="TIMELINE_FOOTER_AD_SLOT"
-  />
-
-  <SidePanel
-    :selected-event="selectedEvent"
-    :year-label="yearLabel"
-    :close-panel="closePanel"
-  />
 </template>
