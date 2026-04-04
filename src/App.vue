@@ -681,7 +681,7 @@ watch(showCommonEvents, (value) => {
           </button>
         </div>
         <p class="intro-guide__note">
-          日付は各月 31 日換算の抽象時系列です。実カレンダーとは一致しません。
+          日付ラベルは実際の月日ではなく、前後関係を見やすくするために各月を 31 日換算で並べた抽象時系列です。
         </p>
       </section>
 

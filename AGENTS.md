@@ -139,6 +139,16 @@ Human-facing explanations belong in `README.md` and `docs/`. Do not treat agent-
 - Unverified risks
   - Environments or operations not yet checked
 
+## 12.5. Continuous Development & Autonomy
+
+To maintain development momentum and avoid unnecessary pauses:
+
+- **Directive Execution:** When a task is clearly a directive (e.g., "Implement the next 3 candidates"), do not stop after the first step. Continue through implementation and validation for the entire set unless an error prevents further progress.
+- **Multi-Role Chain Execution:** When a task requires both PM (planning) and Engineering (implementation), transition between these roles automatically in the same session. Do not wait for user input between the planning and execution phases.
+- **Iteration Protocol:** Follow the `.company/pm/projects/pm-iteration-protocol.md` for continuous improvements. When a PM execution order is defined, execute it sequentially.
+- **Batch Tasks:** Use the `generalist` sub-agent for multi-file or repetitive tasks to keep the main context lean and the workflow continuous.
+- **Validation Mandate:** Validation is required for finality. For autonomous sequences, verify each step as it's completed.
+
 ## 13. Related Documents
 
 - `agents-rules/maintenance.md`
