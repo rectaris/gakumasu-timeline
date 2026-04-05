@@ -21,3 +21,10 @@
 - 意思決定は `notes/YYYY-MM-DD-decisions.md` に記録する
 - 同じ日付のファイルがすでにある場合は追記する
 - ファイル操作前に必ず今日の日付を確認する
+
+## Task Lifecycle & Archiving
+- **Intake:** `inbox/handoff-latest.md` を常に確認し、現在のターンの開始地点を把握する。
+- **Pruning:** `todos/` や `pm/projects/` でタスクが完了したら、即座に：
+  1. 完了タスクをログ形式に整える。
+  2. `run_shell_command` の `echo "..." >> notes/completed-tasks-archive.md` を使用して、末尾に追記（ブラインド追記）する。
+  3. アクティブな `todos/` やプロジェクトファイルからタスクを削除し、コンテキストサイズを小さく保つ。

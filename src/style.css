@@ -137,6 +137,7 @@ body {
 
 .panel-content {
     padding: 20px;
+    padding-bottom: 120px;
     overflow-y: auto;
     flex: 1;
 }
