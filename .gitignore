@@ -22,4 +22,11 @@ dist-ssr
 *.sln
 *.sw?
 
+# .company hybrid management
+.company/**/_archive/
+.company/**/debug-log/
+.company/**/inbox/
+.company/research/topics/
+.company/marketing/campaigns/
+
 .github/**.md
