@@ -28,7 +28,7 @@ This document defines rules for code cleanliness, environment handling, and docu
 
 ## 3. Post-Change Checks
 - `npm run build`
-- Real browser verification
+- Real browser verification (Mandatory: Use the `agent-browser` skill to automate and perform these checks autonomously)
 - Wheel-based horizontal zoom
 - Drag-based movement in both axes
 - `Escape` closing menu / manual / panel
@@ -36,8 +36,8 @@ This document defines rules for code cleanliness, environment handling, and docu
 - `singleWithinRange` rendering and detail text
 
 ### Preferred Real Devices
-- Highest priority: Windows Chrome
-- Next priority: mobile view
+- Highest priority: Windows Chrome (via `agent-browser`)
+- Next priority: mobile view (via `agent-browser set viewport 375 812` etc.)
 
 ## 4. Documentation Updates
 - If UI or visible behavior changes, review app text plus `README.md` and relevant files under `docs/`.
