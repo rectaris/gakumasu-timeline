@@ -30,3 +30,15 @@ dist-ssr
 .company/marketing/campaigns/
 
 .github/**.md
+
+# project-agent-workflow local caches
+*.pyc
+__pycache__/
+.pytest_cache/
+.venv/
+.venv-*/
+.uv-cache/
+.uv-home/
+.uv-tools/
+coverage/
+tmp/

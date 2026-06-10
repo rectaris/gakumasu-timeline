@@ -1,0 +1,47 @@
+# Validation
+
+Generated for primary language: `typescript`.
+
+## Baseline
+
+- Validate every non-trivial change.
+- Choose the smallest complete command set for the files changed.
+- Record commands that could not run and why.
+
+## Matrix
+
+- Docs-only: `git diff --check`.
+- Shell scripts: `sh -n <script>` and a smoke run when possible.
+- Python scripts: `python3 -m py_compile <files>` and tests when available.
+- JavaScript/TypeScript: project build, unit tests, and lint when available.
+- Agent workflow docs or hooks: structure lint plus syntax checks.
+- Plan lifecycle, archive, handoff, or completion tooling: plan lint plus script syntax checks.
+- Codex hook Python: Python compile validation.
+- Codex config or custom agent TOML: TOML parse validation.
+- GitHub Actions or maintained scripts: static security checks when enabled.
+- TypeScript default: run the package's build and unit-test commands when present, commonly `npm run build` and `npm run test`.
+
+## Completion
+
+Before final report:
+
+1. Run required validation.
+2. Run `scripts/validate-changes.py` when change-aware validation is enabled.
+3. Run `scripts/check-agent-completion.sh` when plan lifecycle is enabled.
+4. Inspect `git status --short`.
+5. Commit coherent changes unless the user requested otherwise.
+6. Report touched repositories, link changes, validation, and commit hash.
+
+## Change-Aware Validation
+
+- Use `scripts/validate-changes.py` to select the smallest complete validation set from changed files.
+- It inspects staged files first, then unstaged files, unless `--all` is supplied.
+- Use `--print-only` to review selected commands without running them.
+- Treat selected commands as a floor, not a ceiling; add focused tests when risk requires it.
+
+## Optional Checks
+
+- Static security: `python3 scripts/security-static-check.py`
+- Structure scanner: `python3 scripts/structure-map.py --check`
+- Plan lint: `python3 scripts/lint-plan-docs.py`
+- Plan format check: `python3 scripts/format-plan-docs.py --check`
