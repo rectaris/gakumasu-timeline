@@ -9,6 +9,8 @@
   - `supportCardCommus`（サポートカードコミュ）
 - 個別キャラ: `src/data/worldline_commu/**/` 配下の各モジュール
 - 時間ユーティリティ: `src/utils/time.js`
+  - `src/data/utils/time.js` は既存データ import 向けの互換 shim
+- 型定義: `src/types/timeline.d.ts`
 - 世界線一覧: `src/data/worldlines.js`
 - キャラクター一覧: `src/data/characterCatalog.js`
 
@@ -91,6 +93,6 @@
 ## データ追加の手順（現状）
 
 1. `src/data/worldline_commu/` 配下の適切な世界線ディレクトリにキャラファイルを追加
-2. `src/data/index.js` で import して配列へ追加
+2. アイドルコミュは `src/data/worldline_commu/idol_commu/` に番号付きファイル名で置くと `src/data/index.js` が自動集約する
 3. `events` の `id` は他キャラと衝突しない命名にする
 4. `occurrenceType` を `continuous` / `singleWithinRange` のどちらかで明示する

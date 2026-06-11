@@ -1,14 +1,5 @@
 import { onMounted, onUnmounted } from "vue";
-
-function isFormElementTarget(target) {
-  const tagName = target?.tagName?.toLowerCase();
-  return (
-    tagName === "input" ||
-    tagName === "textarea" ||
-    tagName === "select" ||
-    target?.isContentEditable
-  );
-}
+import { isFormElementTarget } from "../utils/dom";
 
 export function useKeyboard({
   panByViewportRatio,

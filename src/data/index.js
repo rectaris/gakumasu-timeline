@@ -1,37 +1,23 @@
 // 共通イベント
 import commonTimeline from "./worldline_commu/common_timeline";
 
+function sortedDefaultExports(modules) {
+  return Object.entries(modules)
+    .sort(([pathA], [pathB]) => pathA.localeCompare(pathB, "en"))
+    .map(([, moduleDefault]) => moduleDefault);
+}
+
 // アイドルコミュ
 // src/data/worldline_commu/idol_commu/
-import hanamiSaki from "./worldline_commu/idol_commu/001hanamiSaki";
-import tsukimuraTemari from "./worldline_commu/idol_commu/002tsukimuraTemari";
-import fujitaKotone from "./worldline_commu/idol_commu/003fujitaKotone";
-import arimuraMao from "./worldline_commu/idol_commu/004arimuraMao";
-import katsuragiLilja from "./worldline_commu/idol_commu/005katsuragiLilja";
-import kuramotoChina from "./worldline_commu/idol_commu/006kuramotoChina";
-import shiunSumika from "./worldline_commu/idol_commu/007shiunSumika";
-import shinosawaHiro from "./worldline_commu/idol_commu/008shinosawaHiro";
-import himesakiRinami from "./worldline_commu/idol_commu/009himesakiRinami";
-import hanamiUme from "./worldline_commu/idol_commu/010hanamiUme";
-import juoSena from "./worldline_commu/idol_commu/011juoSena";
-import hatayaMisuzu from "./worldline_commu/idol_commu/012hatayaMisuzu";
-import amayaTsubame from "./worldline_commu/idol_commu/013amayaTsubame";
+const idolCommuModules = import.meta.glob(
+  "./worldline_commu/idol_commu/*.js",
+  {
+    eager: true,
+    import: "default",
+  },
+);
 
-export const idolCommu = [
-  hanamiSaki,
-  tsukimuraTemari,
-  fujitaKotone,
-  arimuraMao,
-  katsuragiLilja,
-  kuramotoChina,
-  shiunSumika,
-  shinosawaHiro,
-  himesakiRinami,
-  hanamiUme,
-  juoSena,
-  hatayaMisuzu,
-  amayaTsubame,
-];
+export const idolCommu = sortedDefaultExports(idolCommuModules);
 
 // 初星コミュ
 // src/data/worldline_commu/hatsuboshi_commu/

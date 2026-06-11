@@ -2,3 +2,4 @@
 
 id	path
 002	docs/plan/checked/002-adopt-project-agent-workflow.md
+003	docs/plan/checked/003-timeline-refactor-foundation.md

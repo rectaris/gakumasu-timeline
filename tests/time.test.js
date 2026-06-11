@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { yearLabel } from "../src/utils/labels";
-import { dayTimeValue, timeToYearMonth, timeValue } from "../src/utils/time";
+import {
+  dayTimeValue,
+  timeToYearMonth,
+  timeValue,
+  yearOf,
+  yearsAgo,
+} from "../src/utils/time";
 
 describe("time utilities", () => {
   it("treats each month as 31 days", () => {
@@ -17,6 +23,8 @@ describe("time utilities", () => {
   });
 
   it("formats labels for years before and after year 1", () => {
+    expect(yearOf(1)).toBe(1);
+    expect(yearsAgo(16)).toBe(-15);
     expect(yearLabel(1)).toBe("1年目");
     expect(yearLabel(5)).toBe("5年目");
     expect(yearLabel(0)).toBe("1年前");

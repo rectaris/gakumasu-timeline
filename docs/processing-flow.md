@@ -10,6 +10,7 @@
 ## データの取り込み
 
 - `src/App.vue` が `src/data/index.js` から `idolCommu` / `hatsuboshiCommus` / `eventCommus` / `supportCardCommus` を import
+- アイドルコミュは `import.meta.glob` により番号付きファイル名順で自動集約される
 - カテゴリ別のレーン情報は正規化され、選択されたレーンのみ表示対象になる
 
 ## カテゴリ/レーンの選択

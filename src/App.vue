@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 import {
   idolCommu,
   hatsuboshiCommus,
@@ -16,13 +16,16 @@ import { useTimelineData } from "./composables/useTimelineData";
 import { useTimelineLayout } from "./composables/useTimelineLayout";
 import { useTimelineScales } from "./composables/useTimelineScales";
 import { useZoomMachine } from "./composables/useZoomMachine";
+import { usePersistedSettings } from "./composables/usePersistedSettings";
 import ManualModal from "./components/ManualModal.vue";
 import ZoomControls from "./components/ZoomControls.vue";
 import SidePanel from "./components/SidePanel.vue";
 import AdSlot from "./components/AdSlot.vue";
+import IntroGuide from "./components/IntroGuide.vue";
 import TimelineScaleOverlay from "./components/TimelineScaleOverlay.vue";
 import TimelineSvg from "./components/TimelineSvg.vue";
 import { invertHexColor } from "./utils/colors";
+import { isFormElementTarget } from "./utils/dom";
 import { isSingleWithinRange } from "./utils/events";
 import { yearLabel } from "./utils/labels";
 import { LEFT_LABEL_WIDTH, RIGHT_PADDING, WIDTH } from "./utils/constants";
@@ -70,17 +73,15 @@ const {
   toggleMenu: toggleSettings
 } = useMenuState();
 
-const THEME_MODE_STORAGE_KEY = "gakumasu:theme-mode";
-const SHOW_ZOOM_HINTS_STORAGE_KEY = "gakumasu:show-zoom-hints";
-const SHOW_COMMON_EVENTS_STORAGE_KEY = "gakumasu:show-common-events";
-const INTRO_GUIDE_DISMISSED_KEY = "gakumasu:intro-guide-dismissed";
 const TIMELINE_FOOTER_AD_SLOT = "1582586734";
 
-const themeMode = ref("system");
-const showZoomHints = ref(true);
-const showCommonEvents = ref(true);
-const showIntroGuide = ref(true);
-const settingsReady = ref(false);
+const {
+  themeMode,
+  showZoomHints,
+  showCommonEvents,
+  showIntroGuide,
+  dismissIntroGuide
+} = usePersistedSettings();
 
 const { allEvents, timesDay } = useTimelineData(
   activeLanes,
@@ -138,6 +139,27 @@ const {
   rightPadding: RIGHT_PADDING
 });
 
+const timelineRenderContext = computed(() => ({
+  width: WIDTH,
+  svgHeight: svgHeight.value,
+  timelineViewport: timelineViewport.value,
+  years: years.value,
+  monthTicks: monthTicks.value,
+  dayTicks: dayTicks.value,
+  showMonthScale: showMonthScale.value,
+  showDayScale: showDayScale.value,
+  xPos,
+  laneLayouts: laneLayouts.value,
+  laneCenterY,
+  yPos,
+  eventBarHeight: eventBarHeight.value,
+  characters: activeLanes.value,
+  visibleEvents: visibleEvents.value,
+  isSingleWithinRange,
+  invertHexColor,
+  leftLabelWidth: LEFT_LABEL_WIDTH
+}));
+
 function getRenderedViewportWidth(svgElement) {
   const rect = svgElement?.getBoundingClientRect?.();
   if (!rect?.width) return 0;
@@ -147,16 +169,6 @@ function getRenderedViewportWidth(svgElement) {
 
 function clampRatio(value) {
   return Math.min(1, Math.max(0, value));
-}
-
-function isFormElementTarget(target) {
-  const tagName = target?.tagName?.toLowerCase();
-  return (
-    tagName === "input" ||
-    tagName === "textarea" ||
-    tagName === "select" ||
-    target?.isContentEditable
-  );
 }
 
 function shouldKeepPanelOpenFromClick(target) {
@@ -231,22 +243,6 @@ function handleTimelineWheel(event) {
   zoomHorizontallyBy(Math.exp(event.deltaY * 0.0015), anchorRatio);
 }
 
-function readBooleanSetting(storageKey, fallbackValue) {
-  const rawValue = window.localStorage.getItem(storageKey);
-  if (rawValue === null) return fallbackValue;
-  return rawValue === "true";
-}
-
-function applyThemeMode(mode) {
-  const root = document.documentElement;
-  if (mode === "system") {
-    root.removeAttribute("data-theme");
-    return;
-  }
-
-  root.setAttribute("data-theme", mode);
-}
-
 function toggleMainMenu() {
   closeSettings();
   toggleMenu();
@@ -269,11 +265,6 @@ function openLaneGuide() {
   openMenu();
 }
 
-function dismissIntroGuide() {
-  showIntroGuide.value = false;
-  window.localStorage.setItem(INTRO_GUIDE_DISMISSED_KEY, "true");
-}
-
 const {
   isDragging,
   onMouseDown,
@@ -285,6 +276,14 @@ const {
   panVerticallyByPixels,
   zoomByPinch: zoomByTouchPinch
 });
+
+const timelineInteractionHandlers = {
+  onMouseDown,
+  onWheel: handleTimelineWheel,
+  onTouchStart,
+  onTouchMove,
+  onTouchEnd
+};
 
 useKeyboard({
   panByViewportRatio,
@@ -313,21 +312,6 @@ function handleGlobalClick(event) {
 }
 
 onMounted(() => {
-  const storedThemeMode = window.localStorage.getItem(THEME_MODE_STORAGE_KEY);
-  if (storedThemeMode === "light" || storedThemeMode === "dark") {
-    themeMode.value = storedThemeMode;
-  }
-  showZoomHints.value = readBooleanSetting(SHOW_ZOOM_HINTS_STORAGE_KEY, true);
-  showCommonEvents.value = readBooleanSetting(
-    SHOW_COMMON_EVENTS_STORAGE_KEY,
-    true
-  );
-  showIntroGuide.value = !readBooleanSetting(
-    INTRO_GUIDE_DISMISSED_KEY,
-    false
-  );
-  applyThemeMode(themeMode.value);
-  settingsReady.value = true;
   window.addEventListener("keydown", handleGlobalEscape);
   window.addEventListener("click", handleGlobalClick);
 });
@@ -337,21 +321,6 @@ onUnmounted(() => {
   window.removeEventListener("click", handleGlobalClick);
 });
 
-watch(themeMode, (mode) => {
-  applyThemeMode(mode);
-  if (!settingsReady.value) return;
-  window.localStorage.setItem(THEME_MODE_STORAGE_KEY, mode);
-});
-
-watch(showZoomHints, (value) => {
-  if (!settingsReady.value) return;
-  window.localStorage.setItem(SHOW_ZOOM_HINTS_STORAGE_KEY, String(value));
-});
-
-watch(showCommonEvents, (value) => {
-  if (!settingsReady.value) return;
-  window.localStorage.setItem(SHOW_COMMON_EVENTS_STORAGE_KEY, String(value));
-});
 </script>
 
 <template>
@@ -630,60 +599,14 @@ watch(showCommonEvents, (value) => {
       role="region"
       aria-label="キャラクタータイムライン表示エリア"
     >
-      <section
+      <IntroGuide
         v-if="showIntroGuide"
-        class="intro-guide"
-        role="region"
-        aria-labelledby="intro-guide-title"
-      >
-        <div class="intro-guide__header">
-          <p class="intro-guide__eyebrow">はじめて見る方向け</p>
-          <button
-            class="intro-guide__close"
-            type="button"
-            aria-label="案内を閉じる"
-            title="案内を閉じる"
-            @click="dismissIntroGuide"
-          >
-            ×
-          </button>
-        </div>
-        <h2 id="intro-guide-title" class="intro-guide__title">まずは 3 ステップで見始められます</h2>
-        <ol class="intro-guide__steps">
-          <li>左上のメニューから見たいカテゴリやレーンを選ぶ</li>
-          <li>画面下部の表示期間 / レーン密度の操作とホイールで、見たい範囲に合わせる</li>
-          <li>イベントをクリックして右側の詳細を見る</li>
-        </ol>
-        <div class="intro-guide__actions">
-          <button
-            class="intro-guide__button intro-guide__button--primary"
-            type="button"
-            aria-label="表示レーンを見る"
-            aria-haspopup="dialog"
-            aria-controls="side-menu"
-            :aria-expanded="menuOpen ? 'true' : 'false'"
-            title="表示レーンを見る"
-            @click="openLaneGuide"
-          >
-            表示レーンを見る
-          </button>
-          <button
-            class="intro-guide__button"
-            type="button"
-            aria-label="操作マニュアルを見る"
-            aria-haspopup="dialog"
-            aria-controls="manual-modal"
-            :aria-expanded="manualOpen ? 'true' : 'false'"
-            title="操作マニュアルを見る"
-            @click="openManualDialog"
-          >
-            操作マニュアルを見る
-          </button>
-        </div>
-        <p class="intro-guide__note">
-          日付ラベルは実際の月日ではなく、前後関係を見やすくするために各月を 31 日換算で並べた抽象時系列です。
-        </p>
-      </section>
+        :menu-open="menuOpen"
+        :manual-open="manualOpen"
+        :on-dismiss="dismissIntroGuide"
+        :on-open-lane-guide="openLaneGuide"
+        :on-open-manual="openManualDialog"
+      />
 
       <TimelineScaleOverlay
         :width="WIDTH"
@@ -706,29 +629,8 @@ watch(showCommonEvents, (value) => {
         <div class="timeline-scroll-content">
           <div class="timeline-svg-wrap">
             <TimelineSvg
-              :width="WIDTH"
-              :svg-height="svgHeight"
-              :timeline-viewport="timelineViewport"
-              :years="years"
-              :month-ticks="monthTicks"
-              :day-ticks="dayTicks"
-              :show-month-scale="showMonthScale"
-              :show-day-scale="showDayScale"
-              :x-pos="xPos"
-              :lane-layouts="laneLayouts"
-              :lane-center-y="laneCenterY"
-              :y-pos="yPos"
-              :event-bar-height="eventBarHeight"
-              :characters="activeLanes"
-              :visible-events="visibleEvents"
-              :is-single-within-range="isSingleWithinRange"
-              :invert-hex-color="invertHexColor"
-              :left-label-width="LEFT_LABEL_WIDTH"
-              :on-wheel="handleTimelineWheel"
-              :on-mouse-down="onMouseDown"
-              :on-touch-start="onTouchStart"
-              :on-touch-move="onTouchMove"
-              :on-touch-end="onTouchEnd"
+              :render-context="timelineRenderContext"
+              :interaction-handlers="timelineInteractionHandlers"
               :is-dragging="isDragging"
               @select="selectEvent"
             />
