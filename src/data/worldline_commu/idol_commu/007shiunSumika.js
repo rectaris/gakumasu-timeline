@@ -15,3 +15,4 @@ export default {
     },
   ],
 };
+// 幼少期にスウェーデン留学 https://asobichannel.asobistore.jp/watch/pqgov816y

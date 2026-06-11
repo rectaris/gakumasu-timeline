@@ -216,14 +216,14 @@ export default {
     },
     {
       id: "035",
-      name: "",
-      url: [],
+      name: "希絶モノ",
+      url: ["https://www.youtube.com/@kizetsumono"],
       tags: [""],
     },
     {
       id: "036",
-      name: "",
-      url: [],
+      name: "白妙とき",
+      url: ["https://www.youtube.com/@rag_toki"],
       tags: [""],
     },
     {
