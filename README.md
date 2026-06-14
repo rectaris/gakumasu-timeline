@@ -6,7 +6,7 @@
 
 このプロジェクトは GitHub Pages 上で動作することを前提としています。
 
-- URL: `https://rectaris.github.io/gakumasu-timeline/`
+- URL: `https://rectaris.github.io/timeline/`
 
 ## 使い方（サイト操作）
 

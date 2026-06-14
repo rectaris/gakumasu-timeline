@@ -2,8 +2,8 @@
 
 ## 前提
 
-- Vite の `base` は GitHub Pages のリポジトリ名に合わせてあります
-  - `vite.config.js`: `base: '/gakumasu-timeline/'`
+- Vite の `base` は `rectaris.github.io` 配下の公開パスに合わせてあります
+  - `vite.config.js`: `base: '/timeline/'`
 
 ## コマンド
 
@@ -15,5 +15,5 @@
 
 ## よくある注意点
 
-- リポジトリ名や Pages の公開パスを変えたら、`vite.config.js` の `base` も合わせて変更してください
+- Pages の公開パスを変えたら、`vite.config.js` の `base` と `rectaris.github.io` 側のリンクも合わせて変更してください
 - 404 になる場合は、Pages の設定（公開ブランチ/ディレクトリ）と `base` の不一致が多いです

@@ -6,7 +6,7 @@
 ## 現在の前提
 
 - `rectaris.github.io` は入口用のポータルとして利用する
-- `gakumasu-timeline` は引き続き project site として公開する
+- `gakumasu-timeline` は `rectaris.github.io/timeline/` 配下のツールとして公開する
 - 広告は操作感を落とさないことを最優先とする
 - Auto ads は使わず、手動配置の ad unit を前提とする
 

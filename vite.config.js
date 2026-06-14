@@ -5,6 +5,6 @@ export default defineConfig(({ mode }) => ({
   plugins: [vue()],
   base:
     mode === "dev"
-      ? "/gakumasu-timeline/dev/"
-      : "/gakumasu-timeline/"
+      ? "/timeline/dev/"
+      : "/timeline/"
 }));

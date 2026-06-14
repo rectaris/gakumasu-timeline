@@ -6,3 +6,4 @@ id	path
 004	docs/plan/checked/004-agent-standards-decisions.md
 005	docs/plan/checked/005-agent-standards-decision-rules.md
 006	docs/plan/checked/006-agent-standards-operational-gaps.md
+001	docs/plan/checked/001-static-integration.md
