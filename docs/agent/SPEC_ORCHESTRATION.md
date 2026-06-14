@@ -37,6 +37,14 @@ Consider delegation or a separate review when:
 - a change affects validation rules, hooks, security checks, or orchestration
 - repeated low-level lookup would distract from final integration
 
+## Helper Trigger Policy
+
+- Default to local execution for small or cohesive changes.
+- Use helpers for bounded discovery, independent implementation scopes, focused review, or repeated failures after local attempts.
+- Use a read-only review helper for broad UI, data, validation, security, or workflow changes when available and worth the coordination cost.
+- Do not require helpers for normal work merely because a helper exists.
+- If a named helper or optimization path is unavailable, continue locally and report the fallback only when it affects scope, confidence, or validation.
+
 ## Stop Review Gate
 
 - A deterministic Stop hook may request a final review pass for broad or high-risk diffs.

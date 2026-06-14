@@ -21,6 +21,16 @@ This workflow is generated for `gakumasu-timeline`.
 - Treat Copier-managed workflow files as shared template surface; avoid local-only edits unless the repository intentionally diverges.
 - Preserve explicit contracts for public APIs, generated artifacts, runtime data paths, and integration boundaries.
 - Keep README files human-facing; move reusable agent policy into `docs/agent/SPEC_*.md`.
+- Treat `docs/agent/SPEC_*.md` as the mandatory routing layer for agent-facing decisions.
+- Treat `agents-rules/` as detailed playbooks, invariants, and review checklists linked from the specs or `AGENTS.md`.
+
+## Data Integrity
+
+- Do not change character names, commu text, event meaning, source claims, or timeline interpretation as an incidental side effect.
+- Ask before changing data semantics, chronology, source attribution, or URL-facing IDs.
+- Mechanical data-shape changes are allowed when scoped, validated, and behavior-preserving.
+- Preserve `canonicalId` compatibility for shared URLs. If an ID must change, document the migration or compatibility decision before implementation.
+- Represent uncertainty explicitly. Do not turn unknown single-day timing into a fake concrete date.
 
 ## Review Classes
 

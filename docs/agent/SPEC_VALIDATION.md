@@ -21,6 +21,21 @@ Generated for primary language: `typescript`.
 - GitHub Actions or maintained scripts: static security checks when enabled.
 - TypeScript default: run the package's build and unit-test commands when present, commonly `npm run build` and `npm run test`.
 
+## Project-Specific Minimums
+
+- Docs-only policy changes: `git diff --check`, plan lint when plan files changed, and structure scan when agent workflow files changed.
+- Runtime logic changes: `npm run test` plus `npm run build`, or `npm run verify` when it covers both.
+- Timeline data normalization or time math changes: include the focused Vitest files that cover data and time behavior.
+- UI interaction or layout changes: `npm run build` plus browser or visual verification when available.
+- Public path, asset, or deploy config changes: `npm run build` and inspect or preview generated asset paths.
+- Dependency changes: run `npm run test` and `npm run build`; run a security/audit check when the dependency change is security-relevant or broad.
+
+## Browser Verification
+
+- Use browser automation when available for timeline zoom, drag, panel, menu, and mobile viewport checks.
+- If an expected browser helper is unavailable, use Playwright, Vite preview, or manual browser verification through the local stack when practical.
+- If browser verification cannot run, report the exact blocker and identify which interaction or viewport remains unverified.
+
 ## Completion
 
 Before final report:

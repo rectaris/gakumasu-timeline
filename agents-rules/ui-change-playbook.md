@@ -12,11 +12,12 @@ This document is agent-only workflow guidance for visible UI or interaction chan
 
 ## Workflow
 
-1. Read the canonical rules in `AGENTS.md` before editing.
-   - Use Section 2 for the high-priority files to inspect first.
-   - Use Section 3 and Section 7 for timeline invariants and ID/display-time ownership.
-   - Use Section 8 for documentation review scope.
-   - Use Section 10 for required post-change verification.
+1. Read the canonical routing rules before editing.
+   - Use `AGENTS.md` for repository priority and timeline rule entry points.
+   - Use `docs/agent/SPEC_UI_DESIGN.md` for UI quality, accessibility, viewport, and browser verification policy.
+   - Use `agents-rules/invariants.md` for timeline invariants and ID/display-time ownership.
+   - Use `agents-rules/docs-sync-playbook.md` for documentation review scope.
+   - Use `agents-rules/timeline-regression-checklist.md` for behavior-sensitive regression checks.
 2. Narrow the write scope to the smallest set of files that owns the behavior.
    - Keep rendering in components and shared derivation in composables/helpers.
    - If more than one file appears to compute the same UI value, consolidate instead of adding a parallel path.
@@ -35,5 +36,5 @@ This document is agent-only workflow guidance for visible UI or interaction chan
 
 ## Verification Reference
 
-- Follow `AGENTS.md` Section 10 for the required verification set and preferred real-device coverage.
-- If the UI change alters behavior, execute the relevant interaction checks from that section instead of maintaining a separate checklist here.
+- Follow `docs/agent/SPEC_UI_DESIGN.md` for required browser and viewport verification.
+- If the UI change alters timeline behavior, execute the relevant interaction checks from `agents-rules/timeline-regression-checklist.md`.

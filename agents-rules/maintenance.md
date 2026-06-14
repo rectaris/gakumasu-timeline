@@ -28,16 +28,18 @@ This document defines rules for code cleanliness, environment handling, and docu
 
 ## 3. Post-Change Checks
 - `npm run build`
-- Real browser verification (Mandatory: Use the `agent-browser` skill to automate and perform these checks autonomously)
+- Real browser verification for UI and interaction changes when available
+- If a named browser helper is unavailable, use Playwright, Vite preview, or manual browser verification through the local stack when practical
 - Wheel-based horizontal zoom
 - Drag-based movement in both axes
 - `Escape` closing menu / manual / panel
 - Common-event selection and URL restore
 - `singleWithinRange` rendering and detail text
 
-### Preferred Real Devices
-- Highest priority: Windows Chrome (via `agent-browser`)
-- Next priority: mobile view (via `agent-browser set viewport 375 812` etc.)
+### Preferred Viewports
+- Highest priority: desktop Chromium/Chrome-sized viewport
+- Next priority: mobile viewport around `375x812`
+- Additional browser coverage only when pointer/touch/CSS compatibility risk requires it
 
 ## 4. Documentation Updates
 - If UI or visible behavior changes, review app text plus `README.md` and relevant files under `docs/`.
@@ -54,3 +56,5 @@ This document defines rules for code cleanliness, environment handling, and docu
 ## 6. Forbidden Changes
 - Do not change character names or commu text as a side effect of UI work.
 - Do not change data meaning unless explicitly requested.
+- Do not change URL-facing IDs as incidental cleanup.
+- Do not add dependencies as a shortcut without checking existing project utilities and documenting the reason.
