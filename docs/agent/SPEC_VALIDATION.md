@@ -35,8 +35,11 @@ Generated for primary language: `typescript`.
 
 - Use browser automation when available for timeline zoom, drag, panel, menu, and mobile viewport checks.
 - If an expected browser helper is unavailable, use Playwright, Vite preview, or manual browser verification through the local stack when practical.
+- For UI, route, asset, or interaction changes, inspect browser console errors and failed network requests when browser tooling exposes them.
+- Treat new runtime errors, asset 404s, and failed app-data requests as validation failures unless they are proven unrelated and reported.
 - If browser verification cannot run, report the exact blocker and identify which interaction or viewport remains unverified.
 - For visual or interaction changes, report the viewport, scenario, saved evidence path when useful, and any remaining unverified risk.
+- Save screenshots or logs only when they materially help review; keep them temporary unless a task explicitly requires tracked evidence.
 
 ## Failure Escalation
 

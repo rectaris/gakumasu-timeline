@@ -15,6 +15,8 @@ The main agent owns task interpretation, integration, validation acceptance, pla
 - Delegate only bounded, independently useful tasks.
 - Keep write scopes non-overlapping.
 - Treat helper output as advisory until accepted.
+- Before accepting helper output, the main agent must review the diff or findings against the requested scope, relevant specs, user-change preservation, and validation needs.
+- Do not commit helper-authored changes until the main agent has run or explicitly accepted the required validation.
 - Prefer local work when coordination cost is higher than task complexity.
 - Keep final interpretation, integration, validation acceptance, planning updates, commits, and completion reports in the main session.
 - Use durable handoff directories only when direct helper output is not enough for continuity or review.

@@ -202,3 +202,97 @@ advisory until the main agent reviews and accepts it.
 - Do not deploy unless explicitly requested or explicitly authorized by policy.
 - If a commit cannot be made, report the exact dirty-worktree or validation
   blocker.
+
+## 16. Dirty Worktree And Same-File Changes
+
+Inspect `git status --short` before non-trivial edits. If unrelated files are
+dirty, leave them untouched and continue. If a file in the planned edit scope is
+dirty, inspect the diff before editing.
+
+Allowed continuation:
+
+- the existing change is clearly unrelated
+- the intended edit can be made without touching the same lines or behavior
+- the final staged set can exclude unrelated user changes
+
+Stop or ask when:
+
+- the same lines, data meaning, behavior, or generated artifact are involved
+- preserving the user change would require guessing intent
+- a clean commit would require staging unrelated dirty files
+
+## 17. Scope Creep And Related Findings
+
+Fix directly related issues when they are necessary for the requested change,
+validation, or regression prevention. Do not expand a task to include unrelated
+cleanup, design changes, or opportunistic refactors.
+
+When an unrelated issue is discovered, record it in the active plan, backlog, or
+final report with enough context to recover it later. Ask before folding it into
+the current work if it changes review class, public behavior, data semantics, or
+validation scope.
+
+## 18. Browser Console, Network, And Evidence
+
+For UI, route, asset, or interaction changes, browser verification includes
+checking console errors and failed network requests when tooling exposes them.
+New runtime errors, asset 404s, or failed app-data requests block completion
+unless proven unrelated and reported.
+
+Save screenshots, traces, logs, or videos only when they materially improve
+review. Prefer temporary or plan-linked locations. Do not commit evidence
+artifacts unless the task explicitly requires a tracked artifact and documents
+retention and freshness.
+
+## 19. Performance Regression Acceptance
+
+Use representative interaction checks as the default performance gate:
+
+- wheel zoom remains responsive
+- drag and touch pan do not feel delayed or jumpy
+- click suppression still prevents accidental selections after drag
+- filters and lane visibility do not break viewport restoration
+- selected event and panel interactions remain reachable
+
+Add numeric profiling only when a regression is observed, data/rendering volume
+is materially increased, or the user requests performance work.
+
+## 20. Helper Output Acceptance
+
+Helper output is not accepted merely because a helper completed. The main agent
+must review:
+
+- whether the output stayed inside the assigned read/write scope
+- whether user changes were preserved
+- whether relevant specs and invariants were followed
+- whether tests, build, browser checks, or docs updates are still required
+- whether any fallback or confidence gap affects completion
+
+Reject or revise helper output that changes product meaning, public contracts,
+release authority, or unrelated files outside the approved scope.
+
+## 21. External Content And Source Material
+
+Use external content conservatively. Facts, short summaries, source references,
+and provenance notes are acceptable when they improve data quality. Do not add
+long quoted passages, copied game text, images, or assets with unclear rights
+unless the user explicitly requests that path and the repository records the
+source, license/permission basis, and reason it must be included.
+
+When source material conflicts, represent uncertainty or ask for a decision
+instead of collapsing the conflict into an unsupported interpretation.
+
+## 22. Dependency Updates, Secret Exposure, And Deployment Follow-Up
+
+Routine dependency refreshes should be separate from feature work. Security
+updates may be included when they are relevant and scoped to the minimum
+compatible change that resolves the finding.
+
+If secret material is discovered, do not quote it in reports, commits, helper
+prompts, or logs. Stop the risky operation, identify the affected path without
+revealing the value, and ask for rotation or cleanup guidance when needed.
+
+For approved deployments, validation is not complete at command success alone.
+Confirm the published URL or asset path when practical. If a deployment fails
+after a write-capable step, report the observed state and rollback or retry
+options before attempting broader changes.

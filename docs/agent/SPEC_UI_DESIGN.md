@@ -50,6 +50,8 @@ accessibility, screenshot, and visual QA decisions.
 
 - Changes that affect rendering volume, zoom, drag, filters, layout calculation, or data shape must preserve the representative timeline interaction feel.
 - Check wheel zoom, drag movement, event selection, and relevant filter/lane behavior when touched.
+- During these checks, watch for obvious jank, delayed click suppression, broken viewport restoration, unexpected selection loss, or controls becoming unreachable.
+- Add measurement or profiling only when observation shows a regression, the change increases rendering/data volume materially, or the user requests performance work.
 - Numeric performance budgets are optional until repeatable performance tooling exists; do not replace interaction checks with prose-only claims.
 
 ## Browser And Visual Verification
@@ -60,6 +62,7 @@ accessibility, screenshot, and visual QA decisions.
   - mobile viewport around `375x812`
 - If browser automation is available, use it for smoke interaction and screenshots.
 - If the named browser automation helper is unavailable, use the local stack instead: `npm run build`, `npm run preview` or Vite dev server, and Playwright/browser checks when practical.
+- Inspect console errors and failed network requests for UI, route, asset, or data-loading changes when tooling allows it.
 - If browser verification cannot run, record the exact blocker and the remaining visual or interaction risk.
 
 ## Documentation Boundary

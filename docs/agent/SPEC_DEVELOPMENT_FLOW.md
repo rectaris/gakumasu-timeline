@@ -16,6 +16,8 @@ This workflow is generated for `gakumasu-timeline`.
 - Keep changes scoped to the task.
 - Prefer existing project patterns.
 - Separate product logic, UI, data, and process changes when practical.
+- Fix directly related issues only when they are necessary to complete the requested work or prevent an immediate regression.
+- Record unrelated bugs, cleanup ideas, or design concerns in the active plan/backlog instead of expanding the current diff.
 - Move mechanically checkable rules into scripts, tests, type checks, or linters.
 - Escalate ambiguous high-impact changes before editing.
 - Treat Copier-managed workflow files as shared template surface; avoid local-only edits unless the repository intentionally diverges.
@@ -40,6 +42,7 @@ This workflow is generated for `gakumasu-timeline`.
 - Class C: directional architecture, product, story, frame, or philosophy. Requires explicit approval.
 - If a task spans classes, use the highest class.
 - Treat timeline data semantics, published IDs, public URL behavior, data contracts, visual philosophy, and write-capable external-service changes as Class C unless the user explicitly requested the exact change.
+- Treat broad policy changes to `AGENTS.md`, `docs/agent/`, hooks, validation gates, or helper orchestration as at least Class B; use Class C when the change alters cross-repository workflow, release authority, or human approval boundaries.
 
 ## Completion
 

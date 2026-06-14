@@ -13,6 +13,9 @@
 - Avoid destructive operations.
 - Use Git to inspect changes before cleanup.
 - Keep generated, cache, build, dependency, and local tool folders out of commits.
+- When a target file already has user edits, read the existing diff first.
+- If the diff is unrelated and a minimal non-overlapping edit is clear, preserve it and continue.
+- If the same lines or behavior are affected, stop for user direction or split the work so the user change remains intact.
 
 ## Backup And Generated Files
 
@@ -25,3 +28,4 @@
 - Do not read or print likely secret-bearing files without explicit need.
 - Never commit credentials, tokens, private keys, `.env` contents, or local environment files.
 - Keep external service credentials in environment variables or platform secret stores.
+- If secret material is discovered, do not quote it in reports or helper prompts; isolate the affected file path and ask for rotation or cleanup guidance when needed.

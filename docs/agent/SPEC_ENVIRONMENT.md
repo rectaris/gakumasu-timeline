@@ -38,7 +38,8 @@ Keep secrets out of repository files. Use environment variables or the platform 
 - `npm run deploy` publishes `dist/` through `gh-pages`.
 - Do not deploy unless the user explicitly asks for deployment or an approved repository policy says to deploy.
 - A normal implementation task may build and preview locally without publishing.
-- If deployment is requested, run the relevant validation first and report the published target or any deployment blocker.
+- If deployment is requested, run the relevant validation first, confirm the published URL or asset path when practical, and report the published target or any deployment blocker.
+- If deployment fails after a write-capable step, stop and report the command, observed state, and rollback or retry options; do not keep retrying blindly.
 
 ## Dependencies
 
@@ -46,8 +47,16 @@ Keep secrets out of repository files. Use environment variables or the platform 
 - Prefer extending current Vue/Vite/Playwright/Vitest tooling over adding a new package.
 - Compare maintained external options before custom code when custom implementation would be complex.
 - For a new dependency or major update, record the reason, expected maintenance impact, and validation run in the task report.
+- Separate routine dependency refreshes from feature work unless the update is required for the feature or fixes a relevant security issue.
+- For security updates, prefer the smallest compatible update that resolves the finding and keep lockfile churn scoped.
 - Do not introduce packages that require secrets, external services, or write-capable network behavior without explicit user intent and documented boundaries.
 - Keep lockfile changes scoped to the dependency operation. Do not mix unrelated package churn with feature work.
+
+## Evidence Artifacts
+
+- Screenshots, traces, local logs, and preview output are validation aids, not durable source files by default.
+- Store temporary evidence outside tracked source or under the relevant plan/handoff only when it materially helps review.
+- Do not commit evidence artifacts unless the task explicitly requires them and the source of truth, retention reason, and freshness check are documented.
 
 ## Supported Verification Targets
 
