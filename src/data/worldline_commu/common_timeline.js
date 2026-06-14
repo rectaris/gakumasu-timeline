@@ -12,11 +12,11 @@ export default {
       title: "初星学園建学",
       detail: "初星学園が建学される",
       occurrenceType: "singleWithinRange",
-      participants: [""], //juo_kunio
       source: [
         "https://gakuen.idolmaster-official.jp/media/fankit/schoolguidebook-view/ 2ページ",
       ],
       note: [
+        "機械参照できる参加者IDは未登録（juo_kunio）。",
         "おそらく普通科のみ、中等部と高等部が存在する。",
         "設立年月日は1990年5月16日だが、学マス世界では何年が学マス世界線の開始年かわからないため、生徒がスマホを持っている、未来すぎる時空を描きすぎることはないだろうという想定で、30～40年前としている。",
       ],
@@ -28,11 +28,13 @@ export default {
       title: "講堂メインステージ着工",
       detail: "講堂メインステージ着工",
       occurrenceType: "singleWithinRange",
-      participants: [""], //juo_kunio
       source: [
         "https://gakuen.idolmaster-official.jp/media/fankit/schoolguidebook-view/ 7ページ",
       ],
-      note: ["約150億円の建設費を投じられたメインステージ"],
+      note: [
+        "機械参照できる参加者IDは未登録（juo_kunio）。",
+        "約150億円の建設費を投じられたメインステージ",
+      ],
     },
     {
       id: "hatsuboshi_founding_idol_course",
@@ -41,11 +43,11 @@ export default {
       title: "高等部アイドル科設立",
       detail: "初星学園に高等部アイドル科が設立される",
       occurrenceType: "singleWithinRange",
-      participants: [""], //juo_kunio
       source: [
         "https://gakuen.idolmaster-official.jp/media/fankit/schoolguidebook-view/ 2ページ",
       ],
       note: [
+        "機械参照できる参加者IDは未登録（juo_kunio）。",
         "高等部アイドル科が設立されるが、同じ時期に中等部アイドルコースも設立される？おなじくプロデュース科も設立？",
       ],
     },
@@ -56,10 +58,10 @@ export default {
       title: "講堂メインステージ竣工",
       detail: "講堂メインステージ竣工",
       occurrenceType: "singleWithinRange",
-      participants: [""], //juo_kunio
       source: [
         "https://gakuen.idolmaster-official.jp/media/fankit/schoolguidebook-view/ 7ページ",
       ],
+      note: ["機械参照できる参加者IDは未登録（juo_kunio）。"],
     },
     {
       id: "kaya_kei_prima-stella",
@@ -68,7 +70,6 @@ export default {
       title: "賀陽継が一番星になる",
       detail: "賀陽継が一番星になる",
       occurrenceType: "singleWithinRange",
-      participants: [""], //kaya_kei
       source: [
         "月村手毬 雪解けに 第1話",
         "月村手毬 雪解けに 第2話",
@@ -78,6 +79,7 @@ export default {
         "雨夜燕 親愛度 第8話",
       ],
       note: [
+        "機械参照できる参加者IDは未登録（kaya_kei）。",
         "手毬が小学生のころ、継が一番星となる。おそらく手毬、美鈴か小学生後半の時期。夏季か冬季のどちらかは決まっていない。",
         "「十王星南は、初星学園で別格」「星南は初星学園史上最高の『一番星』」という言葉から、賀陽継は2年生から一番星である十王星南には劣っている可能性が高いため、継は3年時の夏冬のどちらかで一番星となっている可能性がある。（もしかしたら2年生冬の可能性もある）",
         "雪解け手毬で継が一番星になった話が語られるため、時期的には冬のHIFで一番星になった可能性が高い、そのため、継が一番星になったのは2年生の冬HIFか、３年生の冬HIFのどちらかになる",
@@ -142,7 +144,7 @@ export default {
       detail:
         "十王星南が夏のHIFで一番星になる、参加は3回目（選抜試験？）、本戦出場は2回目",
       occurrenceType: "singleWithinRange",
-      participants: ["juo_sena", "amaya_tsubame"],
+      participants: ["sena_juo", "tsubame_amaya"],
       source: [
         "十王星南 親愛度 第2話",
         "十王星南 親愛度 第25話",
@@ -202,7 +204,7 @@ export default {
       detail:
         "十王星南が冬のHIFで一番星になる、参加は4回目（選抜試験？）、本戦出場は3回目",
       occurrenceType: "singleWithinRange",
-      participants: ["juo_sena"],
+      participants: ["sena_juo"],
       source: ["十王星南 親愛度 第25話"],
       note: ["星南、燕ともにHIFの参加は4回目、本戦の出場は3回目。"],
     },

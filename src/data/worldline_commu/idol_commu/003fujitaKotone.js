@@ -21,7 +21,7 @@ export default {
       occurrenceType: "singleWithinRange",
       title: "プロデューサーにスカウトされる",
       detail: "プロデューサーにスカウトされ、アイドル活動を開始する",
-      worldlineId: ["story_of_reiris", "likability_story"],
+      worldlineId: ["hatsuboshi_commu", "idol_story"],
       participants: ["kotone_fujita"],
     },
     {

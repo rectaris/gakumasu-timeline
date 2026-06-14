@@ -32,7 +32,8 @@
 - `title: string`
 - `detail: string`
 - `occurrenceType?: "continuous" | "singleWithinRange"`
-  - 省略時は `continuous` 扱い
+  - 表示正規化では省略時に `continuous` 扱いできます
+  - `src/data/worldline_commu/` 配下の耐久データでは必ず明示します
   - `continuous` は `start` から `end` まで継続している期間を示します
   - `singleWithinRange` は `start` から `end` までの範囲内のどこか1日を示します
 - `worldlineId?: string[]`
@@ -96,3 +97,22 @@
 2. アイドルコミュは `src/data/worldline_commu/idol_commu/` に番号付きファイル名で置くと `src/data/index.js` が自動集約する
 3. `events` の `id` は他キャラと衝突しない命名にする
 4. `occurrenceType` を `continuous` / `singleWithinRange` のどちらかで明示する
+5. 追加後に `npm run validate:data` を実行する
+
+## データ検証
+
+`npm run validate:data` は `src/data/worldline_commu/` 配下の耐久データを検証します。`template.js` は雛形なので対象外です。
+
+検証対象:
+
+- イベント ID が重複していないこと
+- `start` / `end` が `{ year, month, day? }` の形で、月が 1〜12、日が 1〜31 の範囲にあること
+- `start` が `end` より後になっていないこと
+- `occurrenceType` が明示され、`continuous` / `singleWithinRange` のどちらかであること
+- `participants` が `src/data/characterCatalog.js` の ID を参照していること
+- `worldlineId` が `src/data/worldlines.js` の ID を参照していること
+- `source` / `note` / `participants` / `worldlineId` の配列に空文字や空白だけの値がないこと
+
+失敗時は、元ファイル、カテゴリ、レーン、イベント ID / title、フィールド、理由が表示されます。
+
+未登録人物は `participants` に空文字や仮 ID を入れず、必要なら `note` に自然文で残してください。機械参照できる参加者 ID のモデル拡張は後続のデータモデル強化で扱います。

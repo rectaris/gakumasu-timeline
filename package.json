@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "test": "vitest run",
-    "verify": "npm run test && npm run build",
+    "validate:data": "node scripts/validate-data.mjs",
+    "verify": "npm run validate:data && npm run test && npm run build",
     "build": "vite build",
     "deploy": "gh-pages -d dist",
     "preview": "vite preview"

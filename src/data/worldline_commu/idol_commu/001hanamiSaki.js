@@ -40,7 +40,7 @@ export default {
       occurrenceType: "singleWithinRange",
       title: "アイドルを目指す理由",
       detail: "咲季がアイドルになりたいと思った理由が決まる",
-      participants: ["saki_hanami", "juo_sena"],
+      participants: ["saki_hanami", "sena_juo"],
       source: ["花海咲季 親愛度 第21話", "花海咲季 親愛度 第26話"],
       note: [
         "咲季の入学前年に開催された夏のHIFに出場していた十王星南の優勝ライブで披露された「ENDLESS DANCE」を見てアイドルを志した。",
@@ -54,7 +54,7 @@ export default {
       occurrenceType: "singleWithinRange",
       title: "プロデューサーにスカウトされる",
       detail: "プロデューサーにスカウトされ、アイドル活動を開始する",
-      worldlineId: ["likability_story"],
+      worldlineId: ["idol_story"],
       participants: ["saki_hanami"],
       source: ["初星コミュ1話"],
       note: [
