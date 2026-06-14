@@ -37,12 +37,20 @@ accessibility, screenshot, and visual QA decisions.
 
 ## Accessibility
 
+- Practical WCAG AA is the target for user-facing UI changes.
 - Icon-only buttons need accessible labels.
 - Menu, settings, manual, and detail panel close actions must remain keyboard reachable.
 - `Escape` should close the currently open menu, manual, settings panel, or detail panel without breaking selection state.
 - Focusable controls must have visible focus states.
 - Modal or panel changes must preserve sensible focus order and avoid trapping focus without a reachable close path.
 - Color changes must preserve readable contrast for labels, controls, and event text in light and dark modes.
+- Do not rely on color alone for selection, uncertainty, or warning states.
+
+## Performance And Interaction Baseline
+
+- Changes that affect rendering volume, zoom, drag, filters, layout calculation, or data shape must preserve the representative timeline interaction feel.
+- Check wheel zoom, drag movement, event selection, and relevant filter/lane behavior when touched.
+- Numeric performance budgets are optional until repeatable performance tooling exists; do not replace interaction checks with prose-only claims.
 
 ## Browser And Visual Verification
 

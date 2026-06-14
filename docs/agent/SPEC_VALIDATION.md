@@ -26,6 +26,7 @@ Generated for primary language: `typescript`.
 - Docs-only policy changes: `git diff --check`, plan lint when plan files changed, and structure scan when agent workflow files changed.
 - Runtime logic changes: `npm run test` plus `npm run build`, or `npm run verify` when it covers both.
 - Timeline data normalization or time math changes: include the focused Vitest files that cover data and time behavior.
+- URL restore, common-event selection, ID handling, filters, lane visibility, or `singleWithinRange` changes require focused tests when a concise regression test is practical.
 - UI interaction or layout changes: `npm run build` plus browser or visual verification when available.
 - Public path, asset, or deploy config changes: `npm run build` and inspect or preview generated asset paths.
 - Dependency changes: run `npm run test` and `npm run build`; run a security/audit check when the dependency change is security-relevant or broad.
@@ -35,6 +36,14 @@ Generated for primary language: `typescript`.
 - Use browser automation when available for timeline zoom, drag, panel, menu, and mobile viewport checks.
 - If an expected browser helper is unavailable, use Playwright, Vite preview, or manual browser verification through the local stack when practical.
 - If browser verification cannot run, report the exact blocker and identify which interaction or viewport remains unverified.
+- For visual or interaction changes, report the viewport, scenario, saved evidence path when useful, and any remaining unverified risk.
+
+## Failure Escalation
+
+- If the same validation or implementation problem fails three times, stop broad trial-and-error.
+- Isolate the smallest failing command or scenario, reread the relevant spec/source, and use a reviewer/helper when available and useful.
+- Ask the user when the blocker is a product decision, data interpretation, approval boundary, or external-state dependency.
+- Record unresolved blockers in the active or checked plan.
 
 ## Completion
 

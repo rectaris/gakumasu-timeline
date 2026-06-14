@@ -57,3 +57,5 @@ Consider delegation or a separate review when:
 - Choose fallback by the original task purpose, not by a fixed global ranking.
 - External helpers are optional and advisory.
 - Do not include secrets, credentials, or unrelated local context in helper prompts.
+- Give helpers the smallest useful task context: goal, allowed scope, relevant files or snippets, expected output, and explicit exclusions.
+- Keep private user intent, local environment details, and unrelated repository context out of helper prompts.

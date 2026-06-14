@@ -36,6 +36,7 @@ Maintain the Gakumasu timeline application, data, and UI interactions.
 - Preserve user changes you did not make.
 - Prefer deterministic checks over prose-only rules.
 - Ask before high-impact or ambiguous changes to timeline data structures or core interactions.
+- Use `agents-rules/decision-boundaries.md` for approval, validation, data, dependency, helper, and release decisions.
 - Treat `docs/plan/checked.md` and checked archives as lookup-only history; search metadata first when possible.
 - Keep human-facing README files separate from agent-facing operational policy.
 

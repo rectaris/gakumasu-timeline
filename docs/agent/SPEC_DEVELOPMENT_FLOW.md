@@ -23,6 +23,7 @@ This workflow is generated for `gakumasu-timeline`.
 - Keep README files human-facing; move reusable agent policy into `docs/agent/SPEC_*.md`.
 - Treat `docs/agent/SPEC_*.md` as the mandatory routing layer for agent-facing decisions.
 - Treat `agents-rules/` as detailed playbooks, invariants, and review checklists linked from the specs or `AGENTS.md`.
+- Use `agents-rules/decision-boundaries.md` before making approval-sensitive, dependency, generated-artifact, public URL, helper, or release decisions.
 
 ## Data Integrity
 
@@ -37,6 +38,8 @@ This workflow is generated for `gakumasu-timeline`.
 - Class A: local or mechanical work.
 - Class B: semantic implementation work.
 - Class C: directional architecture, product, story, frame, or philosophy. Requires explicit approval.
+- If a task spans classes, use the highest class.
+- Treat timeline data semantics, published IDs, public URL behavior, data contracts, visual philosophy, and write-capable external-service changes as Class C unless the user explicitly requested the exact change.
 
 ## Completion
 

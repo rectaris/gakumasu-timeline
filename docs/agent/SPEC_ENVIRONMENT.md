@@ -22,6 +22,7 @@ Keep secrets out of repository files. Use environment variables or the platform 
 - GitHub Pages public-path behavior is part of the product surface.
 - Keep `vite.config.*`, `docs/deploy.md`, and any public links consistent when the repository name or hosted subdirectory changes.
 - Treat public path changes as high-impact unless the user explicitly scoped the task to deployment/routing.
+- Ask before changing public URL semantics unless the task explicitly requests that change.
 - Verify built asset paths after public path changes with `npm run build` and, when practical, `npm run preview`.
 - State public-path or link changes in the final report.
 
@@ -30,6 +31,7 @@ Keep secrets out of repository files. Use environment variables or the platform 
 - Do not commit `dist/`, dependency folders, local caches, tool output, screenshots, or ad hoc backups unless a task explicitly requires a tracked artifact.
 - Generated output may be inspected for validation, but source files and documented scripts remain the durable change surface.
 - If a generated artifact becomes part of the workflow, document the generator, command, and validation path before committing it.
+- Treat tracked generated artifacts as exceptional; document the source of truth and freshness check before adding one.
 
 ## Deployment Boundary
 
@@ -42,6 +44,7 @@ Keep secrets out of repository files. Use environment variables or the platform 
 
 - Before adding a dependency, check whether the repository already has a suitable helper, composable, utility, or existing dependency.
 - Prefer extending current Vue/Vite/Playwright/Vitest tooling over adding a new package.
+- Compare maintained external options before custom code when custom implementation would be complex.
 - For a new dependency or major update, record the reason, expected maintenance impact, and validation run in the task report.
 - Do not introduce packages that require secrets, external services, or write-capable network behavior without explicit user intent and documented boundaries.
 - Keep lockfile changes scoped to the dependency operation. Do not mix unrelated package churn with feature work.
