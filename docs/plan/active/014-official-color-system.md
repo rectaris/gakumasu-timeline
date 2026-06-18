@@ -6,14 +6,17 @@ review_class: C
 human_design_required: yes
 human_approval_status: approved
 target_files:
+  - src/data/colorSources.js
   - src/data/characterCatalog.js
   - src/data/worldlines.js
   - src/data/worldline_commu/
+  - src/utils/colorTokens.js
   - src/utils/colors.js
   - src/style.css
   - src/components/TimelineLaneLabels.vue
   - src/components/TimelineEvents.vue
   - src/components/SidePanel.vue
+  - docs/color-system.md
   - docs/manual.md
   - docs/ui-behavior.md
 target_json:
@@ -52,10 +55,13 @@ The approved direction is to keep official Gakumasu colors, character colors, co
 
 - [ ] Audit where colors currently come from: character data, generated label colors, CSS variables, hard-coded UI colors, and SVG rendering.
 - [ ] Define source-of-truth policy for official colors, including source citation or local provenance notes where practical.
+- [ ] Create `src/data/colorSources.js` as the source-color catalog for official CSS colors, game-image sampled colors, legacy colors, provenance, source URLs, and review notes.
 - [ ] Add or designate a color token module for character, commu, worldline, common-event, game-system, uncertainty, and neutral UI colors.
+- [ ] Create `src/utils/colorTokens.js` to derive UI roles from `colorSources.js` without mixing provenance data into rendering components.
 - [ ] Define priority rules when an event could inherit multiple colors: selected state, event type, commu, character, worldline, common event.
 - [ ] Replace direct broad fills with derived roles: thin accents, event bars, markers, borders, tags, selected state, and panel heading accents.
 - [ ] Preserve official color recognition while deriving readable light and dark variants with OKLCH or the existing color utilities.
+- [ ] Document the color data model, provenance levels, and role priority in `docs/color-system.md`.
 - [ ] Document color semantics in `docs/ui-behavior.md` and visible user-facing explanation only where necessary.
 - [ ] Verify contrast and identity at desktop and narrow mobile viewports in light and dark modes.
 
@@ -86,6 +92,26 @@ The approved direction is to keep official Gakumasu colors, character colors, co
 - Validate the color system with token contrast checks plus desktop/mobile light/dark browser screenshots. Full visual-regression infrastructure is out of scope unless regressions make it necessary.
 - Cache or precompute derived color roles per character, commu, worldline, and state. Do not compute expensive color conversions inside hot SVG render loops.
 - Keep user-facing docs focused on visible meaning. Put token names, priority rules, provenance policy, and implementation details in developer-facing docs or this plan.
+
+## Color Data Storage Plan
+
+- Store source colors and provenance in `src/data/colorSources.js`.
+  - Include character colors, official brand/UI colors, commu/worldline colors, common-event colors, and game-image sampled colors.
+  - Keep fields such as `sourceColor`, `legacyColor`, `provenance`, `sourceUrl`, `sourceSelector` or `sampleRegion`, `confidence`, and `note` where applicable.
+  - Use provenance levels such as `official-css`, `official-image-sampled`, `local-legacy`, `inferred`, and `temporary`.
+- Store derived UI role generation in `src/utils/colorTokens.js`.
+  - Generate roles such as `accent`, `accentSoft`, `accentStrong`, `accentText`, `eventFill`, `eventStroke`, `selectedStroke`, `uncertainMarker`, `commonEvent`, and `panelAccent`.
+  - Read from `colorSources.js`; do not duplicate source hex values in component files.
+  - Resolve light/dark variants deterministically with OKLCH or existing color utilities.
+- Keep app chrome and stable neutral theme variables in `src/style.css`.
+  - Use CSS variables for surfaces, text, borders, shadows, overlays, and stable brand accents.
+  - Do not encode per-character dynamic SVG colors only in CSS.
+- Keep existing data `color` fields during the first migration.
+  - Treat them as compatibility/source fallback fields until `colorSources.js` is wired through the event and lane data flow.
+  - Do not remove or rename `event.color` in the first pass.
+- Add `docs/color-system.md` as the human-reviewable color design reference.
+  - Document source-of-truth policy, provenance levels, official CSS-derived colors, sampled image colors, token roles, priority rules, and validation expectations.
+  - Keep `docs/ui-behavior.md` focused on user-visible semantics and avoid exposing implementation-only token names there unless necessary.
 
 ## Out Of Scope
 
