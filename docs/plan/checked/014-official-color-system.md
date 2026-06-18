@@ -1,6 +1,6 @@
 # Official Color System
 
-status: active
+status: completed
 task_type: ui_layout
 review_class: C
 human_design_required: yes
@@ -53,17 +53,17 @@ The approved direction is to keep official Gakumasu colors, character colors, co
 
 ## Tasks
 
-- [ ] Audit where colors currently come from: character data, generated label colors, CSS variables, hard-coded UI colors, and SVG rendering.
-- [ ] Define source-of-truth policy for official colors, including source citation or local provenance notes where practical.
-- [ ] Create `src/data/colorSources.js` as the source-color catalog for official CSS colors, game-image sampled colors, legacy colors, provenance, source URLs, and review notes.
-- [ ] Add or designate a color token module for character, commu, worldline, common-event, game-system, uncertainty, and neutral UI colors.
-- [ ] Create `src/utils/colorTokens.js` to derive UI roles from `colorSources.js` without mixing provenance data into rendering components.
-- [ ] Define priority rules when an event could inherit multiple colors: selected state, event type, commu, character, worldline, common event.
-- [ ] Replace direct broad fills with derived roles: thin accents, event bars, markers, borders, tags, selected state, and panel heading accents.
-- [ ] Preserve official color recognition while deriving readable light and dark variants with OKLCH or the existing color utilities.
-- [ ] Document the color data model, provenance levels, and role priority in `docs/color-system.md`.
-- [ ] Document color semantics in `docs/ui-behavior.md` and visible user-facing explanation only where necessary.
-- [ ] Verify contrast and identity at desktop and narrow mobile viewports in light and dark modes.
+- [x] Audit where colors currently come from: character data, generated label colors, CSS variables, hard-coded UI colors, and SVG rendering.
+- [x] Define source-of-truth policy for official colors, including source citation or local provenance notes where practical.
+- [x] Create `src/data/colorSources.js` as the source-color catalog for official CSS colors, game-image sampled colors, legacy colors, provenance, source URLs, and review notes.
+- [x] Add or designate a color token module for character, commu, worldline, common-event, game-system, uncertainty, and neutral UI colors.
+- [x] Create `src/utils/colorTokens.js` to derive UI roles from `colorSources.js` without mixing provenance data into rendering components.
+- [x] Define priority rules when an event could inherit multiple colors: selected state, event type, commu, character, worldline, common event.
+- [x] Replace direct broad fills with derived roles: thin accents, event bars, markers, borders, tags, selected state, and panel heading accents.
+- [x] Preserve official color recognition while deriving readable light and dark variants with OKLCH or the existing color utilities.
+- [x] Document the color data model, provenance levels, and role priority in `docs/color-system.md`.
+- [x] Document color semantics in `docs/ui-behavior.md` and visible user-facing explanation only where necessary.
+- [x] Verify contrast and identity at desktop and narrow mobile viewports in light and dark modes.
 
 ## Design Notes
 
@@ -118,3 +118,20 @@ The approved direction is to keep official Gakumasu colors, character colors, co
 - Changing event chronology or interpretation.
 - Replacing the custom timeline renderer.
 - Adding new official color data without a traceable source decision.
+
+## Completion Notes
+
+- Added `src/data/colorSources.js` for official CSS colors, sampled official image colors, legacy color values, provenance, source URLs, and confidence levels.
+- Added `src/utils/colorTokens.js` to resolve source colors into lane labels, event fills/strokes, common-event roles, selected outlines, uncertainty markers, and panel accents.
+- Wired `colorSource` and `colorRoles` through normalized lanes and event instances while preserving `event.color` as a compatibility/source-color field.
+- Updated timeline rendering to use derived roles, show selected events with an outline instead of replacing identity color, and render common events with a semantic neutral fill plus lane accent.
+- Updated side-panel accents, stable CSS variables, type declarations, `docs/color-system.md`, `docs/manual.md`, and `docs/ui-behavior.md`.
+- Added focused token and timeline-data tests.
+
+## Completion Validation
+
+- `npm run test`
+- `npm run build`
+- `npm run verify`
+- Browser verification: desktop light and mobile dark preview at `http://127.0.0.1:4174/timeline/`; screenshots saved temporarily to `/tmp/gakumasu-color-desktop-light.png` and `/tmp/gakumasu-color-mobile-dark.png`.
+- Known unrelated console warning remains: existing `yearOf(1)` data yields `year: 0`, which trips the pre-existing `Invalid event start date` warning in `useCategoryFilter`.

@@ -1,5 +1,6 @@
 import { computed, reactive, ref, watch } from "vue";
-import { backgroundFromTextColor, normalizeHexColor } from "../utils/colors";
+import { normalizeHexColor } from "../utils/colors";
+import { resolveColorDesign } from "../utils/colorTokens";
 
 const CATEGORY_OPTIONS = [
   { id: "idol", label: "アイドルコミュ" },
@@ -76,7 +77,13 @@ function normalizeLanes(category, lanes) {
   return lanes.map((lane, index) => {
     const laneId = lane.id || `${category}_${index}`;
     const laneLabel = normalizeLaneLabel(lane);
-    const laneColor = normalizeLaneColor(lane, index);
+    const fallbackColor = normalizeLaneColor(lane, index);
+    const { colorSource, colorRoles } = resolveColorDesign(lane, {
+      category,
+      fallbackColor,
+      fallbackIndex: index
+    });
+    const laneColor = colorSource.sourceColor ?? fallbackColor;
     const events = Array.isArray(lane.events)
       ? lane.events.filter((event) =>
           hasValidEventRange(event, laneId, laneLabel, category),
@@ -88,8 +95,10 @@ function normalizeLanes(category, lanes) {
       id: laneId,
       name: laneLabel,
       color: laneColor,
-      textColor: laneColor,
-      labelBgColor: backgroundFromTextColor(laneColor),
+      colorSource,
+      colorRoles,
+      textColor: colorRoles.labelText,
+      labelBgColor: colorRoles.labelBg,
       events,
     };
   });

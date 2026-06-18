@@ -1,4 +1,5 @@
 import { idolCommu } from "./index";
+import { characterColorSources } from "./colorSources";
 
 // 登場キャラクターデータの記述方法
 // - 各キャラクターの基礎情報は src/data/worldline_commu/ 配下のモジュールを更新する。
@@ -9,4 +10,5 @@ export const characterCatalog = idolCommu.map(({ id, name, color }) => ({
   id,
   name,
   color,
+  colorSource: characterColorSources[id] ?? null,
 }));

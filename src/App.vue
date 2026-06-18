@@ -155,6 +155,7 @@ const timelineRenderContext = computed(() => ({
   eventBarHeight: eventBarHeight.value,
   characters: activeLanes.value,
   visibleEvents: visibleEvents.value,
+  selectedEvent: selectedEvent.value,
   isSingleWithinRange,
   invertHexColor,
   leftLabelWidth: LEFT_LABEL_WIDTH

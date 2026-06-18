@@ -59,7 +59,7 @@ function textX(text) {
       :y="laneCenterY(index) - rectHeight() / 2"
       :width="rectWidth(char.name)"
       :height="rectHeight()"
-      :fill="char.labelBgColor ?? char.color"
+      :fill="char.colorRoles?.labelBg ?? char.labelBgColor ?? char.color"
       rx="6"
     />
     <text
@@ -69,7 +69,7 @@ function textX(text) {
       :font-weight="FONT_WEIGHT"
       dominant-baseline="middle"
       text-anchor="middle"
-      :fill="char.textColor ?? invertHexColor(char.color)"
+      :fill="char.colorRoles?.labelText ?? char.textColor ?? invertHexColor(char.color)"
     >
       {{ char.name }}
     </text>

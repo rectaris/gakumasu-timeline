@@ -57,6 +57,11 @@ function formatEventOccurrence(event) {
     ? formatSingleWithinRange(event)
     : formatContinuousRange(event);
 }
+
+function panelAccentStyle(event) {
+  const accent = event?.colorRoles?.panelAccent;
+  return accent ? { "--panel-accent": accent } : {};
+}
 </script>
 
 <template>
@@ -69,7 +74,11 @@ function formatEventOccurrence(event) {
     :aria-labelledby="selectedEvent ? 'side-panel-title' : undefined"
     :aria-describedby="selectedEvent ? 'side-panel-meta side-panel-detail' : undefined"
   >
-    <div v-if="selectedEvent" class="panel-content">
+    <div
+      v-if="selectedEvent"
+      class="panel-content"
+      :style="panelAccentStyle(selectedEvent)"
+    >
       <button
         class="close-btn"
         type="button"
@@ -81,6 +90,7 @@ function formatEventOccurrence(event) {
       <h2 id="side-panel-title">{{ selectedEvent.title }}</h2>
 
       <p id="side-panel-meta" class="meta">
+        <span class="event-accent" aria-hidden="true"></span>
         {{ selectedEvent.character }}<br />
         {{ formatEventOccurrence(selectedEvent) }}
       </p>

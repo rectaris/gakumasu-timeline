@@ -22,7 +22,7 @@ export function invertHexColor(color) {
     .padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
 }
 
-function hexToRgb(hex) {
+export function hexToRgb(hex) {
   const normalized = normalizeHexColor(hex);
   if (!normalized) return null;
   return {
@@ -43,14 +43,14 @@ function linearToSrgb(channel) {
     : 1.055 * Math.pow(channel, 1 / 2.4) - 0.055;
 }
 
-function relativeLuminance({ r, g, b }) {
+export function relativeLuminance({ r, g, b }) {
   const R = srgbToLinear(r);
   const G = srgbToLinear(g);
   const B = srgbToLinear(b);
   return 0.2126 * R + 0.7152 * G + 0.0722 * B;
 }
 
-function contrastRatio(rgbA, rgbB) {
+export function contrastRatio(rgbA, rgbB) {
   const l1 = relativeLuminance(rgbA);
   const l2 = relativeLuminance(rgbB);
   const lighter = Math.max(l1, l2);
@@ -108,10 +108,40 @@ function oklchToRgb({ L, C, h }) {
   };
 }
 
-function rgbToHex({ r, g, b }) {
+export function rgbToHex({ r, g, b }) {
   return `#${r.toString(16).padStart(2, "0")}${g
     .toString(16)
     .padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+}
+
+export function contrastRatioFromHex(colorA, colorB) {
+  const rgbA = hexToRgb(colorA);
+  const rgbB = hexToRgb(colorB);
+  if (!rgbA || !rgbB) return 1;
+  return contrastRatio(rgbA, rgbB);
+}
+
+export function mixHexColors(color, targetColor, amount) {
+  const source = hexToRgb(color);
+  const target = hexToRgb(targetColor);
+  if (!source || !target) return normalizeHexColor(color) ?? "#000000";
+  const clampedAmount = Math.min(1, Math.max(0, amount));
+  const mixChannel = (sourceValue, targetValue) =>
+    Math.round(sourceValue + (targetValue - sourceValue) * clampedAmount);
+
+  return rgbToHex({
+    r: mixChannel(source.r, target.r),
+    g: mixChannel(source.g, target.g),
+    b: mixChannel(source.b, target.b)
+  });
+}
+
+export function readableTextColor(backgroundColor, options = {}) {
+  const lightColor = options.lightColor ?? "#ffffff";
+  const darkColor = options.darkColor ?? "#1a1a1a";
+  const lightContrast = contrastRatioFromHex(backgroundColor, lightColor);
+  const darkContrast = contrastRatioFromHex(backgroundColor, darkColor);
+  return lightContrast >= darkContrast ? lightColor : darkColor;
 }
 
 /**

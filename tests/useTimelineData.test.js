@@ -32,6 +32,8 @@ describe("useTimelineData", () => {
     expect(event.displayStartDay).toBe(dayTimeValue(1, 4, 1));
     expect(event.displayEndDay).toBe(dayTimeValue(1, 5, 31));
     expect(isSingleWithinRange(event)).toBe(true);
+    expect(event.color).toBe("#ff0000");
+    expect(event.colorRoles.eventFill).toBe("#ff0000");
     expect(timesDay.value).toEqual([event.displayStartDay, event.displayEndDay]);
   });
 
@@ -83,6 +85,11 @@ describe("useTimelineData", () => {
     ]);
     expect(allEvents.value.map((event) => event.laneIndex)).toEqual([0, 1]);
     expect(allEvents.value.every((event) => event.isCommon)).toBe(true);
+    expect(
+      allEvents.value.every((event) =>
+        event.colorRoles.eventFill.includes("--timeline-common-event-fill"),
+      ),
+    ).toBe(true);
   });
 
   it("omits common events when the display option is disabled", () => {

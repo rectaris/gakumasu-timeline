@@ -7,7 +7,8 @@ const props = defineProps({
   xPos: { type: Function, required: true },
   yPos: { type: Function, required: true },
   eventBarHeight: { type: Number, required: true },
-  isSingleWithinRange: { type: Function, required: true }
+  isSingleWithinRange: { type: Function, required: true },
+  selectedEvent: { type: Object, default: null }
 });
 
 const emit = defineEmits(["select"]);
@@ -21,6 +22,35 @@ function eventTitleText(event) {
     .map(value => String(value ?? "").trim())
     .filter(Boolean)
     .join(" / ");
+}
+
+function eventFill(event) {
+  return event.colorRoles?.eventFill ?? event.color;
+}
+
+function eventStroke(event) {
+  return event.colorRoles?.eventStroke ?? "var(--timeline-event-stroke, var(--text-primary))";
+}
+
+function markerFill(event) {
+  return event.colorRoles?.markerFill ?? eventFill(event);
+}
+
+function selectedStroke(event) {
+  return event.colorRoles?.selectedStroke ?? "var(--timeline-selected-event-stroke, var(--text-primary))";
+}
+
+function uncertainMarkerFill(event) {
+  return event.colorRoles?.uncertainMarker ?? "var(--timeline-uncertain-marker, var(--text-primary))";
+}
+
+function isSelectedEvent(event) {
+  const selected = props.selectedEvent;
+  if (!selected) return false;
+  if (selected.instanceId && event.instanceId) {
+    return selected.instanceId === event.instanceId;
+  }
+  return selected.canonicalId === event.canonicalId;
 }
 
 function uncertaintyMarker(event, edge) {
@@ -39,7 +69,11 @@ function uncertaintyMarker(event, edge) {
 
 <template>
   <g v-for="event in visibleEvents" :key="event.instanceId ?? event.id">
-    <g @click="handleSelect(event)" class="event-group">
+    <g
+      @click="handleSelect(event)"
+      class="event-group"
+      :class="{ 'event-group--selected': isSelectedEvent(event) }"
+    >
       <title>{{ eventTitleText(event) }}</title>
 
       <rect
@@ -49,37 +83,53 @@ function uncertaintyMarker(event, edge) {
         :y="yPos(event.laneIndex, event.subLaneIndex) - eventBarHeight / 2"
         :width="xPos(event.renderEndDay) - xPos(event.renderStartDay)"
         :height="eventBarHeight"
-        :fill="event.color"
+        :fill="eventFill(event)"
+        :stroke="eventStroke(event)"
+        stroke-width="1"
         rx="6"
+      />
+
+      <rect
+        v-if="isSelectedEvent(event)"
+        class="event-selection-ring"
+        :x="xPos(event.renderStartDay) - 2"
+        :y="yPos(event.laneIndex, event.subLaneIndex) - eventBarHeight / 2 - 2"
+        :width="xPos(event.renderEndDay) - xPos(event.renderStartDay) + 4"
+        :height="eventBarHeight + 4"
+        fill="none"
+        :stroke="selectedStroke(event)"
+        stroke-width="3"
+        rx="8"
       />
 
       <polygon
         v-if="isSingleWithinRange(event)"
         :points="uncertaintyMarker(event, 'start')"
-        fill="var(--timeline-event-stroke, var(--text-primary))"
+        :fill="uncertainMarkerFill(event)"
       />
 
       <polygon
         v-if="isSingleWithinRange(event)"
         :points="uncertaintyMarker(event, 'end')"
-        fill="var(--timeline-event-stroke, var(--text-primary))"
+        :fill="uncertainMarkerFill(event)"
       />
 
       <circle
         :cx="xPos(event.renderStartDay)"
         :cy="yPos(event.laneIndex, event.subLaneIndex)"
         r="5"
-        :fill="event.color"
-        stroke="var(--timeline-event-stroke, var(--text-primary))"
+        :fill="markerFill(event)"
+        :stroke="isSelectedEvent(event) ? selectedStroke(event) : eventStroke(event)"
+        :stroke-width="isSelectedEvent(event) ? 2.5 : 1.5"
       />
 
       <circle
         :cx="xPos(event.renderEndDay)"
         :cy="yPos(event.laneIndex, event.subLaneIndex)"
         r="5"
-        :fill="event.color"
-        stroke="var(--timeline-event-stroke, var(--text-primary))"
-        stroke-width="1.5"
+        :fill="markerFill(event)"
+        :stroke="isSelectedEvent(event) ? selectedStroke(event) : eventStroke(event)"
+        :stroke-width="isSelectedEvent(event) ? 2.5 : 1.5"
       />
     </g>
   </g>
