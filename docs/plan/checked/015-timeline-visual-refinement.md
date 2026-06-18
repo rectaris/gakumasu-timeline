@@ -1,6 +1,6 @@
 # Timeline Visual Refinement
 
-status: active
+status: completed
 task_type: ui_layout
 review_class: C
 human_design_required: yes
@@ -47,6 +47,7 @@ acceptance_focus:
   - mobile polish
 expected_output: implementation-plan
 checked_summary_ja: タイムライン本体の見た目を高品質な情報可視化として刷新する。
+completed_at: 2026-06-18
 ## Goal
 
 Remove the cheap appearance while preserving dense timeline utility and Gakumasu color identity.
@@ -60,15 +61,15 @@ Remove the cheap appearance while preserving dense timeline utility and Gakumasu
 
 ## Tasks
 
-- [ ] Redesign the app chrome so the header, page background, side surfaces, and controls are neutral and restrained.
-- [ ] Refine the timeline grid with clearer major/minor line hierarchy and less default-looking borders.
-- [ ] Redesign lane labels from full-color chips into stable fixed-dimension labels with neutral readable surfaces and official-color accents.
-- [ ] Add professional event states: default, hover, selected, keyboard focus, disabled/filtered, common event, uncertain event.
-- [ ] Redesign `singleWithinRange` from black dashed prototype styling into a candidate-range uncertainty visual that cannot be mistaken for a concrete date.
-- [ ] Tune marker size, bar height, radii, stroke weights, opacity, and spacing so repeated rows look intentional.
-- [ ] Reduce first-run `IntroGuide` visual dominance and avoid covering too much of the timeline.
-- [ ] Shrink or restyle bottom zoom controls so they are a tool surface, not the visual center of the app.
-- [ ] Verify that labels, controls, and event marks do not overlap at desktop and 375px mobile width.
+- [x] Redesign the app chrome so the header, page background, side surfaces, and controls are neutral and restrained.
+- [x] Refine the timeline grid with clearer major/minor line hierarchy and less default-looking borders.
+- [x] Redesign lane labels from full-color chips into stable fixed-dimension labels with neutral readable surfaces and official-color accents.
+- [x] Add professional event states: default, hover, selected, keyboard focus, disabled/filtered, common event, uncertain event.
+- [x] Redesign `singleWithinRange` from black dashed prototype styling into a candidate-range uncertainty visual that cannot be mistaken for a concrete date.
+- [x] Tune marker size, bar height, radii, stroke weights, opacity, and spacing so repeated rows look intentional.
+- [x] Reduce first-run `IntroGuide` visual dominance and avoid covering too much of the timeline.
+- [x] Shrink or restyle bottom zoom controls so they are a tool surface, not the visual center of the app.
+- [x] Verify that labels, controls, and event marks do not overlap at desktop and 375px mobile width.
 
 ## Resolved Planning Decisions
 
@@ -187,3 +188,26 @@ Remove the cheap appearance while preserving dense timeline utility and Gakumasu
 - Timeline library replacement.
 - New source-color collection or provenance changes beyond using the color data already created in 014.
 - Event label-density rules owned by plan 016, except minimal safeguards needed for non-overlap.
+
+## Completion Notes
+
+- Added neutral app chrome and timeline-specific CSS variables while preserving official/source colors as event and lane accent signals.
+- Converted grid, scale labels, lane labels, viewport, and event SVG styling to class/variable-driven presentation.
+- Reworked lane labels into fixed neutral labels with compact official-color accents and one-line truncation.
+- Added composed event visuals for hover, selection, keyboard focus, common events, and `singleWithinRange` candidate ranges.
+- Reduced `IntroGuide` and bottom zoom controls, including compact hint text and mobile-only hint suppression.
+- Updated `docs/manual.md` and `docs/ui-behavior.md` for the shorter visible zoom labels.
+
+## Validation Notes
+
+- `npm run build`
+- `npm run verify`
+- `python3 scripts/lint-plan-docs.py`
+- `git diff --check`
+- `python3 scripts/validate-changes.py`
+- Browser/visual verification with Playwright:
+  - `/tmp/gakumasu-timeline-desktop-light-review.png`
+  - `/tmp/gakumasu-timeline-desktop-dark-review.png`
+  - `/tmp/gakumasu-timeline-mobile-light-review.png`
+  - `/tmp/gakumasu-timeline-mobile-dark-review.png`
+  - `/tmp/gakumasu-timeline-selection.png`

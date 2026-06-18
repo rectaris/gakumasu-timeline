@@ -20,7 +20,7 @@ defineProps({
   <div class="zoom-panel" role="region" aria-label="ズーム操作エリア">
     <div class="zoom-controls" role="group" aria-label="タイムラインの表示調整">
       <div class="zoom-group" role="group" aria-labelledby="horizontal-zoom-label">
-        <span id="horizontal-zoom-label" class="zoom-group-label">表示期間（横軸）</span>
+        <span id="horizontal-zoom-label" class="zoom-group-label">期間</span>
         <button
           class="zoom-button zoom-button--out"
           type="button"
@@ -54,7 +54,7 @@ defineProps({
       </div>
 
       <div class="zoom-group" role="group" aria-labelledby="vertical-zoom-label">
-        <span id="vertical-zoom-label" class="zoom-group-label">レーン密度（縦軸）</span>
+        <span id="vertical-zoom-label" class="zoom-group-label">密度</span>
         <button
           class="zoom-button zoom-button--out"
           type="button"
@@ -89,11 +89,8 @@ defineProps({
     </div>
 
     <div v-if="showHints" class="zoom-hints" role="list" aria-label="操作ヒント">
-      <p class="zoom-hint" role="listitem">ドラッグ: 上下左右に移動</p>
-      <p class="zoom-hint" role="listitem">ホイール: 横軸の表示期間を拡大・縮小</p>
-      <p class="zoom-hint" role="listitem">Ctrl + ホイール: 縦軸のレーン密度を調整</p>
-      <p class="zoom-hint" role="listitem">横方向ホイール: 左右に移動</p>
-      <p class="timeline-scale-note" role="listitem">日付は実カレンダーの日数差ではなく、前後関係を見やすくするために各月を31日換算で並べた抽象時系列です。</p>
+      <p class="zoom-hint" role="listitem">ドラッグ: 移動</p>
+      <p class="zoom-hint" role="listitem">ホイール: 期間 / Ctrl + ホイール: 密度</p>
     </div>
   </div>
 </template>

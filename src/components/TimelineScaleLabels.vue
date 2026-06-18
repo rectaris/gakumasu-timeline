@@ -78,11 +78,10 @@ const dayLabelItems = computed(() =>
     <text
       v-for="item in yearLabelItems"
       :key="`year-label-${item.key}`"
+      class="timeline-scale-label timeline-scale-label--year"
       :x="item.x"
       :y="timelineViewport.y - 26"
       text-anchor="middle"
-      font-size="12"
-      fill="var(--timeline-year-label, var(--text-secondary))"
     >
       {{ item.text }}
     </text>
@@ -90,11 +89,10 @@ const dayLabelItems = computed(() =>
       <text
         v-for="item in monthLabelItems"
         :key="`month-label-${item.key}`"
+        class="timeline-scale-label timeline-scale-label--month"
         :x="item.x"
         :y="timelineViewport.y - 12"
         text-anchor="middle"
-        font-size="10"
-        fill="var(--timeline-month-label, var(--text-muted))"
       >
         {{ item.text }}
       </text>
@@ -102,11 +100,10 @@ const dayLabelItems = computed(() =>
         v-if="showDayScale"
         v-for="item in dayLabelItems"
         :key="`day-label-${item.key}`"
+        class="timeline-scale-label timeline-scale-label--day"
         :x="item.x"
         :y="timelineViewport.y - 2"
         text-anchor="middle"
-        font-size="9"
-        fill="var(--timeline-day-label, var(--text-faint))"
       >
         {{ item.text }}
       </text>

@@ -9,3 +9,4 @@ id	path
 001	docs/plan/checked/001-static-integration.md
 007	docs/plan/checked/007-data-validation-foundation.md
 014	docs/plan/checked/014-official-color-system.md
+015	docs/plan/checked/015-timeline-visual-refinement.md

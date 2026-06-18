@@ -17,6 +17,12 @@ function handleSelect(event) {
   emit("select", event);
 }
 
+function handleKeydown(event, timelineEvent) {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  event.preventDefault();
+  handleSelect(timelineEvent);
+}
+
 function eventTitleText(event) {
   return [event.title, event.detail]
     .map(value => String(value ?? "").trim())
@@ -42,6 +48,16 @@ function selectedStroke(event) {
 
 function uncertainMarkerFill(event) {
   return event.colorRoles?.uncertainMarker ?? "var(--timeline-uncertain-marker, var(--text-primary))";
+}
+
+function eventStyle(event) {
+  return {
+    "--event-fill": eventFill(event),
+    "--event-stroke": eventStroke(event),
+    "--event-marker-fill": markerFill(event),
+    "--event-selected-stroke": selectedStroke(event),
+    "--event-uncertain-marker": uncertainMarkerFill(event),
+  };
 }
 
 function isSelectedEvent(event) {
@@ -71,10 +87,29 @@ function uncertaintyMarker(event, edge) {
   <g v-for="event in visibleEvents" :key="event.instanceId ?? event.id">
     <g
       @click="handleSelect(event)"
+      @keydown="handleKeydown($event, event)"
       class="event-group"
-      :class="{ 'event-group--selected': isSelectedEvent(event) }"
+      :class="{
+        'event-group--selected': isSelectedEvent(event),
+        'event-group--single': isSingleWithinRange(event),
+        'event-group--common': event.isCommon,
+      }"
+      :style="eventStyle(event)"
+      tabindex="0"
+      role="button"
+      :aria-label="eventTitleText(event)"
     >
       <title>{{ eventTitleText(event) }}</title>
+
+      <rect
+        v-if="isSingleWithinRange(event)"
+        class="event-uncertainty-band"
+        :x="xPos(event.renderStartDay)"
+        :y="yPos(event.laneIndex, event.subLaneIndex) - eventBarHeight / 2 - 3"
+        :width="xPos(event.renderEndDay) - xPos(event.renderStartDay)"
+        :height="eventBarHeight + 6"
+        rx="7"
+      />
 
       <rect
         class="event-bar"
@@ -83,9 +118,6 @@ function uncertaintyMarker(event, edge) {
         :y="yPos(event.laneIndex, event.subLaneIndex) - eventBarHeight / 2"
         :width="xPos(event.renderEndDay) - xPos(event.renderStartDay)"
         :height="eventBarHeight"
-        :fill="eventFill(event)"
-        :stroke="eventStroke(event)"
-        stroke-width="1"
         rx="6"
       />
 
@@ -97,39 +129,43 @@ function uncertaintyMarker(event, edge) {
         :width="xPos(event.renderEndDay) - xPos(event.renderStartDay) + 4"
         :height="eventBarHeight + 4"
         fill="none"
-        :stroke="selectedStroke(event)"
-        stroke-width="3"
         rx="8"
       />
 
-      <polygon
-        v-if="isSingleWithinRange(event)"
-        :points="uncertaintyMarker(event, 'start')"
-        :fill="uncertainMarkerFill(event)"
+      <rect
+        class="event-focus-ring"
+        :x="xPos(event.renderStartDay) - 4"
+        :y="yPos(event.laneIndex, event.subLaneIndex) - eventBarHeight / 2 - 4"
+        :width="xPos(event.renderEndDay) - xPos(event.renderStartDay) + 8"
+        :height="eventBarHeight + 8"
+        fill="none"
+        rx="9"
       />
 
       <polygon
         v-if="isSingleWithinRange(event)"
+        class="event-uncertainty-marker"
+        :points="uncertaintyMarker(event, 'start')"
+      />
+
+      <polygon
+        v-if="isSingleWithinRange(event)"
+        class="event-uncertainty-marker"
         :points="uncertaintyMarker(event, 'end')"
-        :fill="uncertainMarkerFill(event)"
       />
 
       <circle
+        class="event-end-marker"
         :cx="xPos(event.renderStartDay)"
         :cy="yPos(event.laneIndex, event.subLaneIndex)"
-        r="5"
-        :fill="markerFill(event)"
-        :stroke="isSelectedEvent(event) ? selectedStroke(event) : eventStroke(event)"
-        :stroke-width="isSelectedEvent(event) ? 2.5 : 1.5"
+        r="4.8"
       />
 
       <circle
+        class="event-end-marker"
         :cx="xPos(event.renderEndDay)"
         :cy="yPos(event.laneIndex, event.subLaneIndex)"
-        r="5"
-        :fill="markerFill(event)"
-        :stroke="isSelectedEvent(event) ? selectedStroke(event) : eventStroke(event)"
-        :stroke-width="isSelectedEvent(event) ? 2.5 : 1.5"
+        r="4.8"
       />
     </g>
   </g>
