@@ -225,3 +225,86 @@ export function visibleEventLayouts(laneEventLayouts, range, options = {}) {
 
   return events;
 }
+
+function uniqueCanonicalEventCount(events) {
+  return new Set(events.map(eventCanonicalKey).filter(Boolean)).size;
+}
+
+function roundMetric(value, precision = 2) {
+  if (!Number.isFinite(value)) return 0;
+
+  const factor = 10 ** precision;
+  return Math.round(value * factor) / factor;
+}
+
+function sourceVisibleEvents(laneEventLayouts, range) {
+  if (!range) return [];
+
+  return laneEventLayouts.flatMap((lane) =>
+    (lane.events ?? []).filter((event) => eventIntersectsRange(event, range)),
+  );
+}
+
+export function buildTimelineRenderMetrics({
+  lanes = [],
+  allEvents = [],
+  filteredEvents = [],
+  laneEventLayouts = [],
+  visibleEvents = [],
+  range = null,
+  timelineViewport = null,
+} = {}) {
+  const laneCount = lanes.length || laneEventLayouts.length;
+  const sourceEvents = sourceVisibleEvents(laneEventLayouts, range);
+  const summaryItems = visibleEvents.filter((event) => event.isSummary);
+  const renderedEvents = visibleEvents.filter((event) => !event.isSummary);
+  const summaryMemberEvents = summaryItems.flatMap(
+    (summary) => summary.memberEvents ?? [],
+  );
+  const subLaneCounts = laneEventLayouts.map((lane) => lane.subLaneCount ?? 1);
+  const subLaneTotal = subLaneCounts.reduce((total, count) => total + count, 0);
+  const maxSubLaneCount = Math.max(0, ...subLaneCounts);
+  const viewportPixels =
+    (timelineViewport?.width ?? 0) * (timelineViewport?.height ?? 0);
+  const pixelUnit = viewportPixels > 0 ? viewportPixels / 100000 : 0;
+
+  return {
+    laneCount,
+    totalEventInstances: allEvents.length,
+    totalCanonicalEvents: uniqueCanonicalEventCount(allEvents),
+    filteredEventInstances: filteredEvents.length,
+    filteredCanonicalEvents: uniqueCanonicalEventCount(filteredEvents),
+    sourceVisibleEventInstances: sourceEvents.length,
+    sourceVisibleCanonicalEvents: uniqueCanonicalEventCount(sourceEvents),
+    renderedItemCount: visibleEvents.length,
+    renderedEventInstances: renderedEvents.length,
+    summaryItemCount: summaryItems.length,
+    summaryMemberEventInstances: summaryMemberEvents.length,
+    summaryMemberCanonicalEvents: uniqueCanonicalEventCount(summaryMemberEvents),
+    summaryCompressionRatio: summaryItems.length
+      ? roundMetric(summaryMemberEvents.length / summaryItems.length)
+      : 0,
+    summaryReducedItemCount: Math.max(
+      0,
+      summaryMemberEvents.length - summaryItems.length,
+    ),
+    subLaneTotal,
+    maxSubLaneCount,
+    averageSubLanesPerLane: laneCount
+      ? roundMetric(subLaneTotal / laneCount)
+      : 0,
+    sourceVisibleEventsPerLane: laneCount
+      ? roundMetric(sourceEvents.length / laneCount)
+      : 0,
+    renderedItemsPerLane: laneCount
+      ? roundMetric(visibleEvents.length / laneCount)
+      : 0,
+    sourceVisibleEventsPer100kPixels: pixelUnit
+      ? roundMetric(sourceEvents.length / pixelUnit)
+      : 0,
+    renderedItemsPer100kPixels: pixelUnit
+      ? roundMetric(visibleEvents.length / pixelUnit)
+      : 0,
+    viewportPixels: roundMetric(viewportPixels, 0),
+  };
+}

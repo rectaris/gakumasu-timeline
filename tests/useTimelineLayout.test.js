@@ -1,7 +1,9 @@
 import { ref } from "vue";
 import { describe, expect, it } from "vitest";
 import {
+  buildLaneLayout,
   groupEventsByLane,
+  buildTimelineRenderMetrics,
   summarizeDenseEventsForLane,
   useTimelineLayout,
   visibleEventLayouts,
@@ -202,5 +204,49 @@ describe("useTimelineLayout", () => {
       "dense-2",
       "dense-3",
     ]);
+  });
+
+  it("separates source-visible events from rendered summary items in metrics", () => {
+    const denseEvents = [0, 1, 2, 3].map((offset) =>
+      event({
+        id: `dense-${offset}`,
+        displayStartDay: 10 + offset,
+        displayEndDay: 11 + offset,
+      }),
+    );
+    const laneLayout = {
+      laneIndex: 0,
+      ...buildLaneLayout(denseEvents),
+    };
+    const visible = visibleEventLayouts(
+      [laneLayout],
+      { min: 0, max: 100 },
+      { enabled: true, viewportWidth: 120, minEvents: 4 },
+    );
+
+    expect(
+      buildTimelineRenderMetrics({
+        lanes: [{ id: "lane-a" }],
+        allEvents: denseEvents,
+        filteredEvents: denseEvents,
+        laneEventLayouts: [laneLayout],
+        visibleEvents: visible,
+        range: { min: 0, max: 100 },
+        timelineViewport: { width: 120, height: 80 },
+      }),
+    ).toMatchObject({
+      laneCount: 1,
+      totalEventInstances: 4,
+      totalCanonicalEvents: 4,
+      sourceVisibleEventInstances: 4,
+      renderedItemCount: 1,
+      renderedEventInstances: 0,
+      summaryItemCount: 1,
+      summaryMemberEventInstances: 4,
+      summaryCompressionRatio: 4,
+      summaryReducedItemCount: 3,
+      subLaneTotal: 2,
+      maxSubLaneCount: 2,
+    });
   });
 });

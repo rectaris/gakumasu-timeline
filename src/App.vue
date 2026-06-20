@@ -18,6 +18,7 @@ import { useSelection } from "./composables/useSelection";
 import { useEventDetailContext } from "./composables/useEventDetailContext";
 import { useTimelineData } from "./composables/useTimelineData";
 import { useTimelineLayout } from "./composables/useTimelineLayout";
+import { useTimelineMetrics } from "./composables/useTimelineMetrics";
 import { useTimelineScales } from "./composables/useTimelineScales";
 import { useZoomMachine } from "./composables/useZoomMachine";
 import { usePersistedSettings } from "./composables/usePersistedSettings";
@@ -47,6 +48,7 @@ const DEFAULT_LANE_SORT_MODE = "default";
 const DEFAULT_VERTICAL_SCALE = 1;
 const URL_SYNC_DELAY_MS = 150;
 const MAX_COMPARE_LANES = 4;
+const TIMELINE_DEBUG_METRICS_STORAGE_KEY = "gakumasu:debug-metrics";
 const initialViewState = parseTimelineViewState(window.location.search);
 
 const occurrenceTypeLabels = {
@@ -62,6 +64,35 @@ const uncertaintyLabels = {
   uncertain: "不確定",
 };
 const auditCategoryLabels = EVENT_AUDIT_CATEGORY_LABELS;
+
+function isDebugFlagEnabled(value) {
+  const normalized = String(value ?? "1").trim().toLowerCase();
+  return ["", "1", "true", "yes", "on"].includes(normalized);
+}
+
+function readTimelineDebugMetricsSetting() {
+  if (!import.meta.env.DEV) return false;
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.has("debugMetrics")) {
+    const enabled = isDebugFlagEnabled(params.get("debugMetrics"));
+    try {
+      window.localStorage.setItem(
+        TIMELINE_DEBUG_METRICS_STORAGE_KEY,
+        enabled ? "1" : "0",
+      );
+    } catch {
+      // Ignore local developer storage failures.
+    }
+    return enabled;
+  }
+
+  try {
+    return window.localStorage.getItem(TIMELINE_DEBUG_METRICS_STORAGE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
 
 const idolCommuRef = ref(idolCommu);
 const hatsuboshiRef = ref(hatsuboshiCommus);
@@ -261,6 +292,7 @@ const {
 } = useZoomMachine(timesDay, selectedEvent);
 
 const {
+  laneEventLayouts,
   laneLayouts,
   svgHeight,
   timelineViewport,
@@ -718,6 +750,64 @@ const selectedEventHiddenByDisplayConditions = computed(
     (!selectedEventVisibleInDisplay.value ||
       (hasActiveEventFilters.value && !isEventInFilteredSet(selectedEvent.value))),
 );
+const timelineMetricsDebugEnabled = ref(readTimelineDebugMetricsSetting());
+const timelineMetricsEnabled = computed(
+  () => import.meta.env.DEV && timelineMetricsDebugEnabled.value,
+);
+const { timelineMetrics } = useTimelineMetrics({
+  enabled: timelineMetricsEnabled,
+  lanes: timelineLanes,
+  allEvents,
+  filteredEvents,
+  laneEventLayouts,
+  visibleEvents,
+  viewRange,
+  timelineViewport,
+  selectedEventHidden: selectedEventHiddenByDisplayConditions,
+});
+const timelineMetricsRows = computed(() => {
+  const metrics = timelineMetrics.value;
+  if (!metrics) return [];
+
+  return [
+    {
+      label: "lanes",
+      value: `${metrics.laneCount} / sub ${metrics.subLaneTotal} / max ${metrics.maxSubLaneCount}`,
+    },
+    {
+      label: "events",
+      value: `${metrics.totalEventInstances} inst / ${metrics.totalCanonicalEvents} canon`,
+    },
+    {
+      label: "filtered",
+      value: `${metrics.filteredEventInstances} inst / ${metrics.filteredCanonicalEvents} canon`,
+    },
+    {
+      label: "visible",
+      value: `${metrics.sourceVisibleEventInstances} src / ${metrics.sourceVisibleCanonicalEvents} canon`,
+    },
+    {
+      label: "render",
+      value: `${metrics.renderedItemCount} items / ${metrics.renderedEventInstances} events`,
+    },
+    {
+      label: "summary",
+      value: `${metrics.summaryItemCount} items / ${metrics.summaryMemberEventInstances} members / -${metrics.summaryReducedItemCount}`,
+    },
+    {
+      label: "density",
+      value: `${metrics.sourceVisibleEventsPerLane} src/lane / ${metrics.renderedItemsPerLane} item/lane`,
+    },
+    {
+      label: "screen",
+      value: `${metrics.sourceVisibleEventsPer100kPixels} src / ${metrics.renderedItemsPer100kPixels} item per 100kpx`,
+    },
+    {
+      label: "selected",
+      value: metrics.selectedEventHidden ? "hidden" : "visible/none",
+    },
+  ];
+});
 
 const currentLaneIds = computed(() =>
   allLaneIdsForCategory(selectedCategory.value),
@@ -1680,6 +1770,23 @@ onUnmounted(() => {
         <p v-if="viewShareStatus" class="active-state-status" role="status">
           {{ viewShareStatus }}
         </p>
+      </div>
+
+      <div
+        v-if="timelineMetrics"
+        class="timeline-debug-metrics"
+        aria-hidden="true"
+      >
+        <p class="timeline-debug-metrics__title">render metrics</p>
+        <dl class="timeline-debug-metrics__list">
+          <template
+            v-for="row in timelineMetricsRows"
+            :key="row.label"
+          >
+            <dt>{{ row.label }}</dt>
+            <dd>{{ row.value }}</dd>
+          </template>
+        </dl>
       </div>
 
       <div

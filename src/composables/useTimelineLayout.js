@@ -8,6 +8,7 @@ import {
 } from "../utils/constants";
 import {
   buildLaneLayout,
+  buildTimelineRenderMetrics,
   groupEventsByLane,
   summarizeDenseEventsForLane,
   visibleEventLayouts,
@@ -15,6 +16,7 @@ import {
 
 export {
   buildLaneLayout,
+  buildTimelineRenderMetrics,
   groupEventsByLane,
   summarizeDenseEventsForLane,
   visibleEventLayouts,

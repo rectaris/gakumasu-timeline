@@ -26,3 +26,4 @@ id	path
 023	docs/plan/checked/023-lane-comparison-and-dense-event-summary.md
 024	docs/plan/checked/024-evidence-quality-audit-navigation.md
 025	docs/plan/checked/025-mobile-inspection-experience.md
+026	docs/plan/checked/026-performance-observability-and-scaling.md
