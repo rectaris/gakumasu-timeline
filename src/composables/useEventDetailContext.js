@@ -2,6 +2,7 @@ import { computed } from "vue";
 import {
   eventUncertaintySummary,
   isUncertainEvent,
+  sourceKeysForEvent,
 } from "../utils/events.js";
 
 const RELATED_LIMIT = 3;
@@ -58,6 +59,12 @@ function sharesParticipant(a, b) {
   const participants = new Set(asArray(a?.participants));
   if (!participants.size) return false;
   return asArray(b?.participants).some((id) => participants.has(id));
+}
+
+function sharesSource(a, b) {
+  const sourceKeys = new Set(sourceKeysForEvent(a));
+  if (!sourceKeys.size) return false;
+  return sourceKeysForEvent(b).some((key) => sourceKeys.has(key));
 }
 
 function preferSelectedLaneInstance(events, selectedEvent) {
@@ -162,6 +169,7 @@ export function resolveEventDetailContext({
   const sameParticipant = allEvents.filter((event) =>
     sharesParticipant(selectedEvent, event),
   );
+  const sameSource = allEvents.filter((event) => sharesSource(selectedEvent, event));
 
   return {
     shareUrl: createEventShareUrl(selectedEvent, locationLike),
@@ -199,6 +207,13 @@ export function resolveEventDetailContext({
           selectedEvent,
         ),
         events: commonEvents,
+        selectedEvent,
+      }),
+      relatedSection({
+        id: "same-source",
+        title: "同じ出典",
+        description: "出典キーが共通するイベントです。",
+        events: sameSource,
         selectedEvent,
       }),
       relatedSection({

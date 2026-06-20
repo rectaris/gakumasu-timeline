@@ -298,6 +298,17 @@ select:focus-visible {
   background: var(--surface-soft);
 }
 
+.detail-chip--button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.detail-chip--button:hover,
+.detail-chip--button:focus-visible {
+  border-color: var(--border-strong);
+  background: var(--button-bg);
+}
+
 .detail-chip--warning {
   border-color: var(--timeline-uncertain-marker);
   background: var(--timeline-uncertain-band-fill);
@@ -410,6 +421,26 @@ select:focus-visible {
   display: block;
   color: var(--text-muted);
   font-size: 12px;
+}
+
+.detail-source-action {
+  display: inline;
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--button-text);
+  font: inherit;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+  text-align: left;
+  cursor: pointer;
+}
+
+.detail-source-action:hover,
+.detail-source-action:focus-visible {
+  color: var(--timeline-focus-stroke);
+  text-decoration: underline;
 }
 
 .related-section {
@@ -1523,9 +1554,18 @@ select:focus-visible {
 }
 
 .menu-option__meta {
+    display: grid;
+    gap: 2px;
     margin-left: auto;
     font-size: 12px;
     color: var(--text-faint);
+    text-align: right;
+}
+
+.menu-option__quality {
+    color: var(--text-muted);
+    font-size: 11px;
+    overflow-wrap: anywhere;
 }
 
 .menu-empty {

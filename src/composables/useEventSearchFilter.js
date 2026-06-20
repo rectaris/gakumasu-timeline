@@ -1,10 +1,14 @@
 import { computed, ref } from "vue";
 import {
+  EVENT_AUDIT_CATEGORY_LABELS,
+  EVENT_AUDIT_CATEGORY_OPTIONS,
   SOURCE_CLAIM_TARGET_LABELS,
+  eventAuditCategories,
   eventOccurrenceType,
   eventUncertaintyState,
   eventUncertaintySummary,
   isUncertainEvent,
+  sourceKeysForEvent,
 } from "../utils/events.js";
 
 const ALL_OPTION = "all";
@@ -18,6 +22,7 @@ const UNCERTAINTY_FILTER_OPTIONS = [
   "certain",
   "uncertain",
 ];
+const AUDIT_FILTER_OPTIONS = EVENT_AUDIT_CATEGORY_OPTIONS;
 
 function normalizeValue(value) {
   return String(value ?? "").trim().toLocaleLowerCase("ja-JP");
@@ -158,6 +163,40 @@ function countedOptions(ids, labelForId) {
     .sort((a, b) => a.label.localeCompare(b.label, "ja"));
 }
 
+function collectSourceOptions(events) {
+  const sourceByKey = new Map();
+
+  events.forEach((event) => {
+    const seenInEvent = new Set();
+    const addSource = (key, label) => {
+      if (!key || seenInEvent.has(key)) return;
+
+      const existing = sourceByKey.get(key);
+      sourceByKey.set(key, {
+        id: key,
+        label: existing?.label ?? label,
+        count: (existing?.count ?? 0) + 1,
+      });
+      seenInEvent.add(key);
+    };
+
+    asArray(event.sourceDetails).forEach((sourceDetail) => {
+      const keys = sourceKeysForEvent({ sourceDetails: [sourceDetail] });
+      const key = keys[0];
+      addSource(key, sourceDetail.label || sourceDetail.id || sourceDetail.url || key);
+    });
+
+    asArray(event.source).forEach((source) => {
+      const key = sourceKeysForEvent({ source: [source] })[0];
+      addSource(key, source);
+    });
+  });
+
+  return Array.from(sourceByKey.values()).sort((a, b) =>
+    a.label.localeCompare(b.label, "ja"),
+  );
+}
+
 export function filterEvents(events, filters, context) {
   return events.filter((event) => {
     if (!eventMatchesQuery(event, filters.query, context)) return false;
@@ -180,6 +219,22 @@ export function filterEvents(events, filters, context) {
     if (
       !["all", "certain", "uncertain"].includes(filters.uncertainty) &&
       eventUncertaintyState(event) !== filters.uncertainty
+    ) {
+      return false;
+    }
+
+    const auditCategory = filters.auditCategory ?? ALL_OPTION;
+    if (
+      auditCategory !== ALL_OPTION &&
+      !eventAuditCategories(event).includes(auditCategory)
+    ) {
+      return false;
+    }
+
+    const sourceKey = filters.sourceKey ?? ALL_OPTION;
+    if (
+      sourceKey !== ALL_OPTION &&
+      !sourceKeysForEvent(event).includes(sourceKey)
     ) {
       return false;
     }
@@ -216,6 +271,8 @@ export function useEventSearchFilter({
   const eventSearchQuery = ref("");
   const occurrenceTypeFilter = ref(ALL_OPTION);
   const uncertaintyFilter = ref(ALL_OPTION);
+  const auditCategoryFilter = ref(ALL_OPTION);
+  const sourceFilter = ref(ALL_OPTION);
   const participantFilter = ref(ALL_OPTION);
   const commuFilter = ref(ALL_OPTION);
   const worldlineFilter = ref(ALL_OPTION);
@@ -230,6 +287,8 @@ export function useEventSearchFilter({
     query: eventSearchQuery.value,
     occurrenceType: occurrenceTypeFilter.value,
     uncertainty: uncertaintyFilter.value,
+    auditCategory: auditCategoryFilter.value,
+    sourceKey: sourceFilter.value,
     participant: participantFilter.value,
     commu: commuFilter.value,
     worldline: worldlineFilter.value,
@@ -250,6 +309,8 @@ export function useEventSearchFilter({
       Boolean(normalizeValue(eventSearchQuery.value)) ||
       occurrenceTypeFilter.value !== ALL_OPTION ||
       uncertaintyFilter.value !== ALL_OPTION ||
+      auditCategoryFilter.value !== ALL_OPTION ||
+      sourceFilter.value !== ALL_OPTION ||
       participantFilter.value !== ALL_OPTION ||
       commuFilter.value !== ALL_OPTION ||
       worldlineFilter.value !== ALL_OPTION,
@@ -284,6 +345,18 @@ export function useEventSearchFilter({
     ),
   );
 
+  const auditCategoryOptions = computed(() =>
+    EVENT_AUDIT_CATEGORY_OPTIONS.filter((id) => id !== ALL_OPTION).map((id) => ({
+      id,
+      label: EVENT_AUDIT_CATEGORY_LABELS[id] ?? id,
+      count: allEvents.value.filter((event) =>
+        eventAuditCategories(event).includes(id),
+      ).length,
+    })).filter((option) => option.count > 0),
+  );
+
+  const sourceOptions = computed(() => collectSourceOptions(allEvents.value));
+
   const resultSummary = computed(() => ({
     visible: filteredEvents.value.length,
     canonical: navigationEvents.value.length,
@@ -305,6 +378,8 @@ export function useEventSearchFilter({
     participantFilter.value = ALL_OPTION;
     commuFilter.value = ALL_OPTION;
     worldlineFilter.value = ALL_OPTION;
+    auditCategoryFilter.value = ALL_OPTION;
+    sourceFilter.value = ALL_OPTION;
   }
 
   function setEventFilters(nextFilters) {
@@ -320,6 +395,17 @@ export function useEventSearchFilter({
 
     if (UNCERTAINTY_FILTER_OPTIONS.includes(nextFilters.uncertainty)) {
       uncertaintyFilter.value = nextFilters.uncertainty;
+    }
+
+    if (AUDIT_FILTER_OPTIONS.includes(nextFilters.auditCategory)) {
+      auditCategoryFilter.value = nextFilters.auditCategory;
+    }
+
+    if (
+      nextFilters.sourceKey === ALL_OPTION ||
+      sourceOptions.value.some((option) => option.id === nextFilters.sourceKey)
+    ) {
+      sourceFilter.value = nextFilters.sourceKey;
     }
 
     if (
@@ -348,6 +434,8 @@ export function useEventSearchFilter({
     eventSearchQuery,
     occurrenceTypeFilter,
     uncertaintyFilter,
+    auditCategoryFilter,
+    sourceFilter,
     participantFilter,
     commuFilter,
     worldlineFilter,
@@ -357,6 +445,8 @@ export function useEventSearchFilter({
     participantOptions,
     commuOptions,
     worldlineOptions,
+    auditCategoryOptions,
+    sourceOptions,
     resultSummary,
     isEventInFilteredSet,
     resetEventFilters,

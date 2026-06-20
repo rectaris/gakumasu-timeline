@@ -176,6 +176,60 @@ describe("event search and filters", () => {
     ).toEqual(["conflict"]);
   });
 
+  it("filters by derived audit categories and source keys", () => {
+    const events = [
+      event({
+        id: "missing-source",
+        canonicalId: "missing-source",
+        source: undefined,
+        sourceStatus: "unsourced",
+      }),
+      event({
+        id: "same-source-a",
+        canonicalId: "same-source-a",
+        sourceDetails: [{ id: "shared-source", label: "共有出典" }],
+      }),
+      event({
+        id: "same-source-b",
+        canonicalId: "same-source-b",
+        sourceDetails: [{ id: "shared-source", label: "共有出典" }],
+      }),
+    ];
+
+    expect(
+      filterEvents(
+        events,
+        {
+          query: "",
+          occurrenceType: "all",
+          uncertainty: "all",
+          auditCategory: "missingSource",
+          sourceKey: "all",
+          participant: "all",
+          commu: "all",
+          worldline: "all",
+        },
+        context,
+      ).map((item) => item.id),
+    ).toEqual(["missing-source"]);
+    expect(
+      filterEvents(
+        events,
+        {
+          query: "",
+          occurrenceType: "all",
+          uncertainty: "all",
+          auditCategory: "all",
+          sourceKey: "id:shared-source",
+          participant: "all",
+          commu: "all",
+          worldline: "all",
+        },
+        context,
+      ).map((item) => item.id),
+    ).toEqual(["same-source-a", "same-source-b"]);
+  });
+
   it("collapses duplicated common events by canonical id for navigation", () => {
     const events = [
       event({
@@ -239,5 +293,43 @@ describe("event search and filters", () => {
       total: 2,
     });
     expect(search.hasActiveEventFilters.value).toBe(true);
+  });
+
+  it("exposes audit and source option counts for the current event set", () => {
+    const allEvents = ref([
+      event({
+        id: "source-a",
+        canonicalId: "source-a",
+        sourceDetails: [{ id: "source-shared", label: "共有出典" }],
+      }),
+      event({
+        id: "source-b",
+        canonicalId: "source-b",
+        sourceDetails: [{ id: "source-shared", label: "共有出典" }],
+      }),
+      event({
+        id: "unsourced",
+        canonicalId: "unsourced",
+        source: undefined,
+        sourceStatus: "unsourced",
+      }),
+    ]);
+    const search = useEventSearchFilter({
+      allEvents,
+      lanes: computed(() => lanes),
+      characterCatalog: characters,
+      worldlines,
+    });
+
+    expect(search.auditCategoryOptions.value).toContainEqual({
+      id: "missingSource",
+      label: "出典なし",
+      count: 1,
+    });
+    expect(search.sourceOptions.value).toContainEqual({
+      id: "id:source-shared",
+      label: "共有出典",
+      count: 2,
+    });
   });
 });

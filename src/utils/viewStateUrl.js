@@ -9,6 +9,8 @@ const VIEW_PARAM_NAMES = [
   "q",
   "occ",
   "unc",
+  "audit",
+  "src",
   "part",
   "commu",
   "wl",
@@ -122,6 +124,8 @@ export function parseTimelineViewState(search) {
       query: params.get("q") ?? undefined,
       occurrenceType: cleanString(params.get("occ")),
       uncertainty: cleanString(params.get("unc")),
+      auditCategory: cleanString(params.get("audit")),
+      sourceKey: cleanString(params.get("src")),
       participant: cleanString(params.get("part")),
       commu: cleanString(params.get("commu")),
       worldline: cleanString(params.get("wl")),
@@ -176,6 +180,14 @@ export function createTimelineViewStateParams(
 
   if (filters.uncertainty && filters.uncertainty !== DEFAULT_FILTER_VALUE) {
     params.set("unc", filters.uncertainty);
+  }
+
+  if (filters.auditCategory && filters.auditCategory !== DEFAULT_FILTER_VALUE) {
+    params.set("audit", filters.auditCategory);
+  }
+
+  if (filters.sourceKey && filters.sourceKey !== DEFAULT_FILTER_VALUE) {
+    params.set("src", filters.sourceKey);
   }
 
   if (filters.participant && filters.participant !== DEFAULT_FILTER_VALUE) {

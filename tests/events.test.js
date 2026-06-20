@@ -1,8 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
+  eventAuditSummary,
   eventUncertaintyState,
   eventUncertaintySummary,
   isUncertainEvent,
+  sourceKeysForEvent,
+  summarizeEventAuditQuality,
 } from "../src/utils/events";
 
 describe("event uncertainty helpers", () => {
@@ -59,6 +62,58 @@ describe("event uncertainty helpers", () => {
       stateLabel: "出典矛盾",
       sourceStatus: "conflicting",
       isUncertain: true,
+    });
+  });
+
+  it("derives ordered audit categories without changing the primary uncertainty state", () => {
+    const audit = eventAuditSummary({
+      occurrenceType: "singleWithinRange",
+      dateConfidence: "inferred",
+      sourceStatus: "unsourced",
+    });
+
+    expect(audit.categories).toEqual(["missingSource", "inferred"]);
+    expect(audit.labels).toEqual(["出典なし", "推定"]);
+    expect(audit.missingSource).toBe(true);
+    expect(
+      eventAuditSummary({
+        occurrenceType: "continuous",
+        sourceStatus: "inferred",
+      }).categories,
+    ).toContain("inferred");
+  });
+
+  it("creates source keys from structured sources before display text", () => {
+    expect(
+      sourceKeysForEvent({
+        sourceDetails: [
+          { id: "source-a", label: "出典A" },
+          { url: "https://example.test/source-b", label: "出典B" },
+          { label: "出典C" },
+        ],
+        source: ["出典D"],
+      }),
+    ).toEqual([
+      "id:source-a",
+      "url:https://example.test/source-b",
+      "text:出典c",
+      "text:出典d",
+    ]);
+  });
+
+  it("summarizes lane-owned audit quality counts from derived categories", () => {
+    expect(
+      summarizeEventAuditQuality([
+        { occurrenceType: "singleWithinRange", source: ["source-a"] },
+        { occurrenceType: "continuous", sourceStatus: "unsourced" },
+        { occurrenceType: "continuous", conflicts: [{ summary: "矛盾" }] },
+      ]),
+    ).toEqual({
+      issueCount: 3,
+      conflictCount: 1,
+      missingSourceCount: 1,
+      inferredCount: 0,
+      rangeOnlyCount: 1,
     });
   });
 });

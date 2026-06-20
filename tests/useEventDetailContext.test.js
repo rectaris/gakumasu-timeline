@@ -156,6 +156,50 @@ describe("event detail context", () => {
     expect(commonSection.items).toEqual([commonLaneZero]);
   });
 
+  it("adds same-source context without implying event causality", () => {
+    const selectedEvent = event({
+      source: undefined,
+      sourceDetails: [{ id: "shared-source", label: "共有出典" }],
+    });
+    const sameSource = event({
+      id: "same-source",
+      canonicalId: "same-source",
+      instanceId: "same-source",
+      title: "同じ出典のイベント",
+      source: undefined,
+      sourceDetails: [{ id: "shared-source", label: "共有出典" }],
+      displayStartDay: 20,
+      displayEndDay: 20,
+    });
+    const differentSource = event({
+      id: "different-source",
+      canonicalId: "different-source",
+      instanceId: "different-source",
+      source: undefined,
+      sourceDetails: [{ id: "other-source", label: "別出典" }],
+    });
+
+    const context = resolveEventDetailContext({
+      selectedEvent,
+      allEvents: [selectedEvent, sameSource, differentSource],
+      visibleEvents: [selectedEvent, sameSource, differentSource],
+      characterCatalog,
+      worldlines,
+      locationLike: {
+        href: "https://example.test/",
+        pathname: "/",
+        search: "",
+      },
+    });
+    const sourceSection = context.relatedSections.find(
+      (section) => section.id === "same-source",
+    );
+
+    expect(sourceSection.title).toBe("同じ出典");
+    expect(sourceSection.description).toBe("出典キーが共通するイベントです。");
+    expect(sourceSection.items.map((item) => item.id)).toEqual(["same-source"]);
+  });
+
   it("uses visible events for visible-period context and caps related sections", () => {
     const selectedEvent = event();
     const visibleRelated = event({

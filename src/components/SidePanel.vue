@@ -4,6 +4,8 @@ import {
   SOURCE_CLAIM_TARGET_LABELS,
   SOURCE_STATUS_LABELS,
   eventUncertaintySummary,
+  sourceKeyForSourceDetail,
+  sourceKeyForSourceLabel,
 } from "../utils/events.js";
 
 const props = defineProps({
@@ -14,11 +16,13 @@ const props = defineProps({
   closePanel: { type: Function, required: true },
   focusEventLane: { type: Function, required: true },
   compareEventLane: { type: Function, required: true },
+  selectSourceFilter: { type: Function, required: true },
   selectRelatedEvent: { type: Function, required: true }
 });
 
 const shareStatus = ref("");
 const showShareFallback = ref(false);
+const showAllSourceDetails = ref(false);
 const SOURCE_DETAIL_PREVIEW_LIMIT = 3;
 
 function hasExplicitDay(date) {
@@ -119,6 +123,10 @@ function conflictMeta(conflict) {
 }
 
 function visibleSourceDetails(sourceDetails) {
+  if (showAllSourceDetails.value) {
+    return Array.isArray(sourceDetails) ? sourceDetails : [];
+  }
+
   return Array.isArray(sourceDetails)
     ? sourceDetails.slice(0, SOURCE_DETAIL_PREVIEW_LIMIT)
     : [];
@@ -138,6 +146,16 @@ function relatedMeta(event) {
     .map((value) => String(value ?? "").trim())
     .filter(Boolean)
     .join(" / ");
+}
+
+function selectSourceLabel(source) {
+  const key = sourceKeyForSourceLabel(source);
+  if (key) props.selectSourceFilter(key);
+}
+
+function selectSourceDetail(sourceDetail) {
+  const key = sourceKeyForSourceDetail(sourceDetail);
+  if (key) props.selectSourceFilter(key);
 }
 
 async function copyShareUrl() {
@@ -166,6 +184,7 @@ watch(
   () => {
     shareStatus.value = "";
     showShareFallback.value = false;
+    showAllSourceDetails.value = false;
   },
 );
 </script>
@@ -278,11 +297,14 @@ watch(
           <dt>出典</dt>
           <dd>
             <template v-if="hasListItems(detailContext.sources)">
-              <span
+              <button
                 v-for="source in detailContext.sources"
                 :key="source"
-                class="detail-chip detail-chip--source"
-              >{{ source }}</span>
+                class="detail-chip detail-chip--source detail-chip--button"
+                type="button"
+                title="同じ出典で絞り込む"
+                @click.stop="selectSourceLabel(source)"
+              >{{ source }}</button>
             </template>
             <span v-else class="detail-empty">未設定</span>
           </dd>
@@ -300,7 +322,12 @@ watch(
             v-for="sourceDetail in visibleSourceDetails(detailContext.sourceDetails)"
             :key="sourceDetail.id ?? sourceDetail.label"
           >
-            <span>{{ sourceDetail.label }}</span>
+            <button
+              class="detail-source-action"
+              type="button"
+              title="同じ出典で絞り込む"
+              @click.stop="selectSourceDetail(sourceDetail)"
+            >{{ sourceDetail.label }}</button>
             <span
               v-if="sourceDetailMeta(sourceDetail)"
               class="detail-list__meta"
@@ -310,7 +337,13 @@ watch(
             v-if="sourceDetailsOverflowCount(detailContext.sourceDetails)"
             class="related-overflow"
           >
-            ほか {{ sourceDetailsOverflowCount(detailContext.sourceDetails) }} 件
+            <button
+              class="detail-source-action"
+              type="button"
+              @click="showAllSourceDetails = !showAllSourceDetails"
+            >
+              {{ showAllSourceDetails ? "先頭のみ表示" : `ほか ${sourceDetailsOverflowCount(detailContext.sourceDetails)} 件を表示` }}
+            </button>
           </li>
         </ul>
       </section>

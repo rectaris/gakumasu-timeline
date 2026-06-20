@@ -68,6 +68,21 @@
 
 詳細パネルでは、`participants` は `src/data/characterCatalog.js`、`worldlineId` は `src/data/worldlines.js` を使って表示名へ解決します。未解決 ID は ID のまま表示し、`source` または `worldlineId` が空の場合は未設定として表示します。
 
+## 証拠品質の派生カテゴリ
+
+UI の監査フィルタとレーン品質サマリーは、イベント本体に新しい分類フィールドを追加せず、既存メタデータから派生します。
+
+- `conflict`: `sourceStatus` の派生結果が `conflicting` のイベント
+- `missingSource`: `sourceStatus` の派生結果が `unsourced` のイベント
+- `unreviewedSource`: `sourceStatus` の派生結果が `unreviewed` のイベント
+- `unknownSource`: `sourceStatus` の派生結果が `unknown` のイベント
+- `inferred`: `dateConfidence`、`sourceBasis`、`sourceStatus` の派生結果のいずれかが `inferred` のイベント
+- `rangeOnly`: `dateConfidence` の派生結果が `rangeOnly` のイベント
+
+1つのイベントは複数の監査カテゴリに同時に入ります。出典なし、未確認、分類不能、出典矛盾は別の状態として扱い、まとめて汎用警告にはしません。
+
+同じ出典の探索は `sourceDetails[].id`、`sourceDetails[].url`、`sourceDetails[].label`、`source[]` の順で安定キーを作ります。曖昧一致や部分一致では同じ出典とみなしません。
+
 ## DateLike
 
 - `year: number`

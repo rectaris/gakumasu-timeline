@@ -29,7 +29,10 @@ import IntroGuide from "./components/IntroGuide.vue";
 import TimelineScaleOverlay from "./components/TimelineScaleOverlay.vue";
 import TimelineSvg from "./components/TimelineSvg.vue";
 import { invertHexColor } from "./utils/colors";
-import { isSingleWithinRange } from "./utils/events";
+import {
+  EVENT_AUDIT_CATEGORY_LABELS,
+  isSingleWithinRange,
+} from "./utils/events";
 import { yearLabel } from "./utils/labels";
 import {
   parseTimelineViewState,
@@ -58,6 +61,7 @@ const uncertaintyLabels = {
   certain: "確定",
   uncertain: "不確定",
 };
+const auditCategoryLabels = EVENT_AUDIT_CATEGORY_LABELS;
 
 const idolCommuRef = ref(idolCommu);
 const hatsuboshiRef = ref(hatsuboshiCommus);
@@ -195,6 +199,8 @@ const {
   eventSearchQuery,
   occurrenceTypeFilter,
   uncertaintyFilter,
+  auditCategoryFilter,
+  sourceFilter,
   participantFilter,
   commuFilter,
   worldlineFilter,
@@ -204,6 +210,8 @@ const {
   participantOptions,
   commuOptions,
   worldlineOptions,
+  auditCategoryOptions,
+  sourceOptions,
   resultSummary,
   isEventInFilteredSet,
   resetEventFilters,
@@ -735,6 +743,8 @@ const timelineViewStateSnapshot = computed(() => ({
     query: eventSearchQuery.value,
     occurrenceType: occurrenceTypeFilter.value,
     uncertainty: uncertaintyFilter.value,
+    auditCategory: auditCategoryFilter.value,
+    sourceKey: sourceFilter.value,
     participant: participantFilter.value,
     commu: commuFilter.value,
     worldline: worldlineFilter.value,
@@ -749,6 +759,19 @@ const timelineViewStateSnapshot = computed(() => ({
 
 function optionLabel(options, id) {
   return options.find((option) => option.id === id)?.label ?? id;
+}
+
+function laneQualityText(summary) {
+  if (!summary?.issueCount) return "";
+
+  return [
+    summary.conflictCount ? `矛盾${summary.conflictCount}` : "",
+    summary.missingSourceCount ? `出典なし${summary.missingSourceCount}` : "",
+    summary.inferredCount ? `推定${summary.inferredCount}` : "",
+    summary.rangeOnlyCount ? `期間内${summary.rangeOnlyCount}` : "",
+  ]
+    .filter(Boolean)
+    .join(" / ");
 }
 
 function currentCategoryLabel() {
@@ -817,6 +840,30 @@ const activeStateChips = computed(() => {
         `確度: ${uncertaintyLabels[uncertaintyFilter.value] ?? uncertaintyFilter.value}`,
         () => {
           uncertaintyFilter.value = DEFAULT_FILTER_VALUE;
+        },
+      ),
+    );
+  }
+
+  if (auditCategoryFilter.value !== DEFAULT_FILTER_VALUE) {
+    chips.push(
+      activeChip(
+        "audit",
+        `監査: ${auditCategoryLabels[auditCategoryFilter.value] ?? auditCategoryFilter.value}`,
+        () => {
+          auditCategoryFilter.value = DEFAULT_FILTER_VALUE;
+        },
+      ),
+    );
+  }
+
+  if (sourceFilter.value !== DEFAULT_FILTER_VALUE) {
+    chips.push(
+      activeChip(
+        "source",
+        `出典: ${optionLabel(sourceOptions.value, sourceFilter.value)}`,
+        () => {
+          sourceFilter.value = DEFAULT_FILTER_VALUE;
         },
       ),
     );
@@ -962,6 +1009,12 @@ function clearDisplayState() {
   resetVerticalZoom();
   showCommonEvents.value = true;
   closeDenseSummary();
+}
+
+function applySourceFilter(sourceKey) {
+  if (!sourceKey) return;
+  sourceFilter.value = sourceKey;
+  openMenu();
 }
 
 watch(activeLanes, (lanes) => {
@@ -1243,7 +1296,15 @@ onUnmounted(() => {
             />
             <span>{{ lane.label }}</span>
           </label>
-          <span class="menu-option__meta">{{ lane.eventCount }}件</span>
+          <span class="menu-option__meta">
+            {{ lane.eventCount }}件
+            <span
+              v-if="laneQualityText(lane.qualitySummary)"
+              class="menu-option__quality"
+            >
+              {{ laneQualityText(lane.qualitySummary) }}
+            </span>
+          </span>
           <button
             class="menu-inline-button menu-inline-button--compact"
             type="button"
@@ -1316,6 +1377,42 @@ onUnmounted(() => {
             <option value="inferred">推定</option>
             <option value="rangeOnly">期間内の1日</option>
             <option value="conflicting">出典矛盾</option>
+          </select>
+        </label>
+
+        <label v-if="auditCategoryOptions.length" class="event-filter">
+          <span class="lane-search__label">監査</span>
+          <select
+            v-model="auditCategoryFilter"
+            class="lane-sort__select"
+            aria-label="証拠品質で絞り込む"
+          >
+            <option value="all">すべて</option>
+            <option
+              v-for="option in auditCategoryOptions"
+              :key="option.id"
+              :value="option.id"
+            >
+              {{ option.label }}（{{ option.count }}）
+            </option>
+          </select>
+        </label>
+
+        <label v-if="sourceOptions.length" class="event-filter">
+          <span class="lane-search__label">出典</span>
+          <select
+            v-model="sourceFilter"
+            class="lane-sort__select"
+            aria-label="出典で絞り込む"
+          >
+            <option value="all">すべて</option>
+            <option
+              v-for="option in sourceOptions"
+              :key="option.id"
+              :value="option.id"
+            >
+              {{ option.label }}（{{ option.count }}）
+            </option>
           </select>
         </label>
 
@@ -1671,6 +1768,7 @@ onUnmounted(() => {
     :close-panel="closePanel"
     :focus-event-lane="focusLaneFromEvent"
     :compare-event-lane="compareEventLane"
+    :select-source-filter="applySourceFilter"
     :select-related-event="selectEventAndReveal"
   />
 </template>

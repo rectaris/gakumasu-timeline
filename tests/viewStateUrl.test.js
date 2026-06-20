@@ -15,6 +15,8 @@ function snapshot(overrides = {}) {
       query: "",
       occurrenceType: "all",
       uncertainty: "all",
+      auditCategory: "all",
+      sourceKey: "all",
       participant: "all",
       commu: "all",
       worldline: "all",
@@ -44,6 +46,8 @@ describe("timeline view state URL", () => {
           query: "咲季 屋上",
           occurrenceType: "singleWithinRange",
           uncertainty: "inferred",
+          auditCategory: "missingSource",
+          sourceKey: "id:source-a",
           participant: "saki_hanami",
           commu: "lane-a",
           worldline: "idol_story",
@@ -63,6 +67,8 @@ describe("timeline view state URL", () => {
     expect(params.get("q")).toBe("咲季 屋上");
     expect(params.get("occ")).toBe("singleWithinRange");
     expect(params.get("unc")).toBe("inferred");
+    expect(params.get("audit")).toBe("missingSource");
+    expect(params.get("src")).toBe("id:source-a");
     expect(params.get("part")).toBe("saki_hanami");
     expect(params.get("commu")).toBe("lane-a");
     expect(params.get("wl")).toBe("idol_story");
@@ -113,6 +119,8 @@ describe("timeline view state URL", () => {
           query: "new",
           occurrenceType: "all",
           uncertainty: "all",
+          auditCategory: "all",
+          sourceKey: "all",
           participant: "all",
           commu: "all",
           worldline: "all",

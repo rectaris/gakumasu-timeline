@@ -1,6 +1,7 @@
 import { computed, reactive, ref, watch } from "vue";
 import { normalizeHexColor } from "../utils/colors";
 import { resolveColorDesign } from "../utils/colorTokens";
+import { summarizeEventAuditQuality } from "../utils/events";
 
 const CATEGORY_OPTIONS = [
   { id: "idol", label: "アイドルコミュ" },
@@ -200,6 +201,7 @@ export function useCategoryFilter({
       key: lane.id,
       label: lane.name,
       eventCount: lane.events.length,
+      qualitySummary: summarizeEventAuditQuality(lane.events),
     }));
   });
 
