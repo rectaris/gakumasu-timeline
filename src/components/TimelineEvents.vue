@@ -218,6 +218,8 @@ function uncertaintyMarker(event, edge) {
       :style="eventStyle(event)"
       tabindex="0"
       role="button"
+      :data-event-key="eventKey(event)"
+      :data-canonical-id="event.canonicalId ?? event.id"
       :aria-label="eventTitleText(event)"
       @mouseenter="setHoveredEvent(event)"
       @mouseleave="clearHoveredEvent(event)"

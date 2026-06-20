@@ -58,14 +58,29 @@ Make timeline exploration efficient for keyboard-heavy users without adding hidd
 - Navigation should use canonical event collapse rules already defined for filtered next/previous behavior.
 - Any shortcut that opens or focuses UI must leave focus in a predictable element.
 
+## Decisions
+
+- Keep `useKeyboard.js` as the shortcut owner and expose a small registry-style handler from it.
+- Use `/` to open the side menu and focus the existing event search input instead of adding a new global search field.
+- Use `n` / `p` for next/previous navigation across the current canonical navigation list, whether or not filters are active.
+- Preserve the existing wraparound behavior at the first/last navigation event.
+- After keyboard navigation selects an event, move DOM focus to the selected timeline event when it is rendered.
+- Keep `/` focused in the menu for query entry, but close the menu after `n` / `p` selects an event.
+- Treat Escape as a top-layer close action in this order: manual, settings, menu, detail panel.
+- Ignore app shortcuts from form controls and contenteditable targets except for Escape; always ignore IME composition and Ctrl/Alt/Meta modified key events.
+- Keep existing arrow-key pan, `+` / `-` zoom, and `r` selected-event return shortcuts; do not add vertical event/lane navigation in this plan.
+- Keep URL updates on the existing `replaceState` path and do not add browser-history or command-history behavior.
+- Document shortcuts in `docs/manual.md` and `docs/ui-behavior.md`; avoid adding a full shortcut palette.
+- Add focused unit tests for shortcut guards and handler dispatch, then verify UI behavior in browser.
+
 ## Suggested Task Breakdown
 
-- [ ] Inventory current key handling and define a non-conflicting shortcut map.
-- [ ] Add search focus and filtered next/previous shortcuts.
-- [ ] Add selected-event return shortcut if plan 021 or equivalent behavior exists.
-- [ ] Consider vertical nearest-event navigation after horizontal/event navigation is stable.
-- [ ] Add focused tests for shortcut guards and navigation target selection.
-- [ ] Update manual and behavior docs.
+- [x] Inventory current key handling and define a non-conflicting shortcut map.
+- [x] Add search focus and filtered next/previous shortcuts.
+- [x] Add selected-event return shortcut if plan 021 or equivalent behavior exists.
+- [x] Consider vertical nearest-event navigation after horizontal/event navigation is stable.
+- [x] Add focused tests for shortcut guards and navigation target selection.
+- [x] Update manual and behavior docs.
 
 ## Out Of Scope
 

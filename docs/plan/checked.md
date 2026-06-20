@@ -22,3 +22,4 @@ id	path
 009	docs/plan/checked/009-generated-data-pipeline.md
 020	docs/plan/checked/020-view-state-persistence-and-sharing.md
 021	docs/plan/checked/021-orientation-range-navigation.md
+022	docs/plan/checked/022-keyboard-command-navigation.md

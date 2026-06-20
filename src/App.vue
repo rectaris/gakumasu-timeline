@@ -29,7 +29,6 @@ import IntroGuide from "./components/IntroGuide.vue";
 import TimelineScaleOverlay from "./components/TimelineScaleOverlay.vue";
 import TimelineSvg from "./components/TimelineSvg.vue";
 import { invertHexColor } from "./utils/colors";
-import { isFormElementTarget } from "./utils/dom";
 import { isSingleWithinRange } from "./utils/events";
 import { yearLabel } from "./utils/labels";
 import {
@@ -64,6 +63,8 @@ const hatsuboshiRef = ref(hatsuboshiCommus);
 const eventRef = ref(eventCommus);
 const supportRef = ref(supportCardCommus);
 const timelineStageRef = ref(null);
+const eventSearchInputRef = ref(null);
+const menuButtonRef = ref(null);
 
 const {
   categoryOptions,
@@ -408,23 +409,49 @@ function scrollLaneIntoView(laneIndex) {
   });
 }
 
-function selectEventAndReveal(event) {
+function eventDomKey(event) {
+  return String(event?.instanceId ?? event?.id ?? event?.canonicalId ?? "");
+}
+
+function focusTimelineEventElement(event) {
+  const stageElement = timelineStageRef.value;
+  const key = eventDomKey(event);
+  if (!stageElement || !key) return;
+
+  const eventElement = Array.from(
+    stageElement.querySelectorAll("[data-event-key]"),
+  ).find((element) => element.dataset.eventKey === key);
+
+  eventElement?.focus({ preventScroll: true });
+}
+
+function selectEventAndReveal(event, { focusTimelineEvent = false } = {}) {
   selectEvent(event);
   nextTick(() => {
     scrollLaneIntoView(event.laneIndex);
+    if (focusTimelineEvent) {
+      focusTimelineEventElement(event);
+    }
   });
 }
 
 const canReturnToSelectedEvent = computed(() => Boolean(selectedEvent.value));
 
-function returnToSelectedEvent() {
+function returnToSelectedEvent({ focusTimelineEvent = false } = {}) {
   if (!selectedEvent.value) return;
 
   revealSelectedEvent();
   nextTick(() => {
     if (!selectedEvent.value) return;
     scrollLaneIntoView(selectedEvent.value.laneIndex);
+    if (focusTimelineEvent) {
+      focusTimelineEventElement(selectedEvent.value);
+    }
   });
+}
+
+function returnToSelectedEventFromKeyboard() {
+  returnToSelectedEvent({ focusTimelineEvent: true });
 }
 
 function navigationIndexForSelection() {
@@ -437,7 +464,7 @@ function navigationIndexForSelection() {
 
 function goToNavigationEvent(direction) {
   const events = navigationEvents.value;
-  if (!events.length) return;
+  if (!events.length) return false;
 
   const currentIndex = navigationIndexForSelection();
   const nextIndex =
@@ -445,8 +472,9 @@ function goToNavigationEvent(direction) {
       ? direction > 0 ? 0 : events.length - 1
       : (currentIndex + direction + events.length) % events.length;
 
-  selectEventAndReveal(events[nextIndex]);
+  selectEventAndReveal(events[nextIndex], { focusTimelineEvent: true });
   closeMenu();
+  return true;
 }
 
 function goToPreviousEvent() {
@@ -475,12 +503,46 @@ function clearLaneFocus() {
   focusedLaneId.value = null;
 }
 
+function focusEventSearch() {
+  closeManual();
+  closeSettings();
+  openMenu();
+  nextTick(() => {
+    eventSearchInputRef.value?.focus();
+  });
+}
+
+function closeTopLayer() {
+  if (manualOpen.value) {
+    closeManual();
+    return;
+  }
+
+  if (settingsOpen.value) {
+    closeSettings();
+    return;
+  }
+
+  if (menuOpen.value) {
+    closeMenu();
+    nextTick(() => {
+      menuButtonRef.value?.focus();
+    });
+    return;
+  }
+
+  closePanel();
+}
+
 useKeyboard({
   panByViewportRatio,
   zoomInHorizontal,
   zoomOutHorizontal,
-  returnToSelectedEvent,
-  closePanel
+  returnToSelectedEvent: returnToSelectedEventFromKeyboard,
+  closeTopLayer,
+  focusEventSearch,
+  goToNextEvent,
+  goToPreviousEvent
 });
 
 const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
@@ -744,15 +806,6 @@ watch(
   { deep: true },
 );
 
-function handleGlobalEscape(event) {
-  if (event.key !== "Escape") return;
-  if (isFormElementTarget(event.target)) return;
-
-  closeMenu();
-  closeManual();
-  closeSettings();
-}
-
 function handleGlobalClick(event) {
   if (!selectedEvent.value) return;
   if (shouldKeepPanelOpenFromClick(event.target)) return;
@@ -775,7 +828,6 @@ function restoreInitialLaneFocus() {
 }
 
 onMounted(async () => {
-  window.addEventListener("keydown", handleGlobalEscape);
   window.addEventListener("click", handleGlobalClick);
 
   if (initialViewState.hasViewState) {
@@ -796,7 +848,6 @@ onMounted(async () => {
 });
 
 onUnmounted(() => {
-  window.removeEventListener("keydown", handleGlobalEscape);
   window.removeEventListener("click", handleGlobalClick);
   if (viewShareStatusTimer) {
     window.clearTimeout(viewShareStatusTimer);
@@ -812,6 +863,7 @@ onUnmounted(() => {
   <header class="app-header">
     <div class="header-left">
       <button
+        ref="menuButtonRef"
         class="menu-button"
         type="button"
         aria-label="メニューを開く"
@@ -989,6 +1041,7 @@ onUnmounted(() => {
       <label class="lane-search">
         <span class="lane-search__label">検索</span>
         <input
+          ref="eventSearchInputRef"
           v-model="eventSearchQuery"
           class="lane-search__input"
           type="search"
