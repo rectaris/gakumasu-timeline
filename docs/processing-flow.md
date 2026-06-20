@@ -11,11 +11,14 @@
 
 - `src/App.vue` が `src/data/index.js` から `idolCommu` / `hatsuboshiCommus` / `eventCommus` / `supportCardCommus` を import
 - アイドルコミュは `import.meta.glob` により番号付きファイル名順で自動集約される
+- 初星コミュは pilot として `data/raw/worldline_commu/hatsuboshi_commu/` から `src/data/generated/worldline_commu/hatsuboshi_commu/` へ生成され、`src/data/index.js` は生成済みモジュールを import する
+- 生成済みデータは `npm run generate:data` で更新し、`npm run validate:data` で raw との鮮度一致を確認する
 - カテゴリ別のレーン情報は正規化され、選択されたレーンのみ表示対象になる
 
 ## データ検証
 
-- `npm run validate:data` が `src/data/worldline_commu/` 配下の耐久データを検証する
+- `npm run validate:data` が生成済みデータの鮮度を確認し、耐久データを検証する
+- 移行済みデータでは `data/raw/` を source of truth とし、検証エラーは raw 側の source file を指す
 - `npm run validate:data -- <path>` は指定ファイルまたは指定ディレクトリを主対象にした focused validation を実行する
 - focused validation でも、イベント ID の重複と参加者/世界線参照は全データ文脈を使って確認する
 - 検証は表示用正規化の前に、イベント ID、日付範囲、`occurrenceType`、参加者参照、世界線参照、空文字値、不確実性メタデータを確認する

@@ -1,13 +1,19 @@
 # データ構造
 
-データは `src/data/worldline_commu/` 配下の JS モジュールとして定義されています。
+データは段階的に raw/generated 分離へ移行しています。
+
+- 移行済みデータの source of truth: `data/raw/`
+- 移行済みデータのアプリ用生成物: `src/data/generated/`
+- 未移行データ: `src/data/worldline_commu/`
+
+`src/data/generated/` は `npm run generate:data` で生成されるため、手編集しません。`npm run validate:data` は生成物が raw から再生成した内容と一致するか確認します。
 
 - 集約: `src/data/index.js`
   - `idolCommu`（アイドルコミュ）
   - `hatsuboshiCommus`（初星コミュ）
   - `eventCommus`（イベントコミュ）
   - `supportCardCommus`（サポートカードコミュ）
-- 個別キャラ: `src/data/worldline_commu/**/` 配下の各モジュール
+- 個別キャラ: `src/data/worldline_commu/**/` または `data/raw/worldline_commu/**/` 配下の各モジュール
 - 時間ユーティリティ: `src/utils/time.js`
   - `src/data/utils/time.js` は既存データ import 向けの互換 shim
 - 型定義: `src/types/timeline.d.ts`
@@ -115,14 +121,17 @@
 ## データ追加・編集チェックリスト
 
 1. 追加先を決める
+   - 移行済みカテゴリ: `data/raw/worldline_commu/` 配下を編集し、`npm run generate:data` を実行します
+   - 未移行カテゴリ: `src/data/worldline_commu/` 配下を編集します
    - アイドルコミュ: `src/data/worldline_commu/idol_commu/`
-   - 初星コミュ: `src/data/worldline_commu/hatsuboshi_commu/`
+   - 初星コミュ: `data/raw/worldline_commu/hatsuboshi_commu/`
    - イベントコミュ: `src/data/worldline_commu/event_commu/`
    - サポートカードコミュ: `src/data/worldline_commu/support_story/`
    - 共通イベント: `src/data/worldline_commu/common_timeline.js`
 2. 読み込み方法を確認する
    - アイドルコミュは `src/data/worldline_commu/idol_commu/*.js` がファイル名順に自動集約されます
-   - 初星コミュ、イベントコミュ、サポートカードコミュは現状 `src/data/index.js` への登録が必要です
+   - 初星コミュは raw から生成された `src/data/generated/worldline_commu/hatsuboshi_commu/*.js` を `src/data/index.js` が読みます
+   - イベントコミュ、サポートカードコミュは現状 `src/data/index.js` への登録が必要です
 3. `src/data/worldline_commu/template.js` を参考にファイルを作る
    - コピー先がカテゴリサブディレクトリの場合、time utility の import は `../../utils/time` にします
    - 空文字入り配列を残さず、不要な任意フィールドは削除します
@@ -166,24 +175,29 @@
 13. `note` に補足を残す
     - 日付幅の根拠、推測理由、未登録人物、矛盾候補などを自然文で書きます
     - `note` は機械判定用フィールドではありません
-14. focused validation を実行する
+14. 移行済みデータでは生成する
+    - `npm run generate:data`
+    - 生成された `src/data/generated/` は raw と同じ変更単位でコミットします
+15. focused validation を実行する
     - 単一ファイル: `npm run validate:data -- src/data/worldline_commu/idol_commu/001hanamiSaki.js`
     - ディレクトリ: `npm run validate:data -- src/data/worldline_commu/idol_commu`
-15. 全体検証を実行する
+16. 全体検証を実行する
     - `npm run validate:data`
     - 実装変更を含む場合は `npm run test` と `npm run build` も実行します
-16. ローカル表示を確認する
+17. ローカル表示を確認する
     - 編集中は `npm run dev`
     - build 後の確認が必要な場合は `npm run build` の後に `npm run preview`
 
 ## データ検証
 
-`npm run validate:data` は `src/data/worldline_commu/` 配下の耐久データを検証します。`template.js` は雛形なので対象外です。
+`npm run validate:data` は生成済みデータの鮮度を確認したうえで、耐久データを検証します。`template.js` は雛形なので対象外です。
+
+移行済みデータでは `data/raw/` を source of truth とし、`src/data/generated/` をアプリが読む生成物として扱います。生成物が古い場合は `npm run validate:data` が失敗するため、`npm run generate:data` を実行して差分を確認してください。
 
 単一ファイルやディレクトリだけを確認したい場合は、パスを渡します。
 
 ```bash
-npm run validate:data -- src/data/worldline_commu/hatsuboshi_commu/001storyOfReiris.js
+npm run validate:data -- data/raw/worldline_commu/hatsuboshi_commu/001storyOfReiris.js
 npm run validate:data -- src/data/worldline_commu/idol_commu
 ```
 

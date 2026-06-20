@@ -19,3 +19,4 @@ id	path
 012	docs/plan/checked/012-data-authoring-workflow.md
 013	docs/plan/checked/013-domain-uncertainty-semantics.md
 008	docs/plan/checked/008-data-source-model-hardening.md
+009	docs/plan/checked/009-generated-data-pipeline.md

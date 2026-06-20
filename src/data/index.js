@@ -20,8 +20,8 @@ const idolCommuModules = import.meta.glob(
 export const idolCommu = sortedDefaultExports(idolCommuModules);
 
 // 初星コミュ
-// src/data/worldline_commu/hatsuboshi_commu/
-import storyOfReiris from "./worldline_commu/hatsuboshi_commu/001storyOfReiris";
+// src/data/generated/worldline_commu/hatsuboshi_commu/
+import storyOfReiris from "./generated/worldline_commu/hatsuboshi_commu/001storyOfReiris";
 
 export const hatsuboshiCommus = [storyOfReiris];
 

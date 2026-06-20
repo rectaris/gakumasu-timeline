@@ -10,7 +10,23 @@ const durableTimelineModules = import.meta.glob("./worldline_commu/**/*.js", {
   import: "default",
 });
 
+const generatedTimelineModules = import.meta.glob(
+  "./generated/worldline_commu/**/*.js",
+  {
+    eager: true,
+    import: "default",
+  },
+);
+
+const migratedLegacyModulePaths = new Set([
+  "./worldline_commu/hatsuboshi_commu/001storyOfReiris.js",
+]);
+
 function sourceFileForModulePath(modulePath) {
+  if (modulePath.startsWith("./generated/worldline_commu/")) {
+    return `data/raw/${modulePath.replace(/^\.\/generated\//, "")}`;
+  }
+
   return `src/data/${modulePath.replace(/^\.\//, "")}`;
 }
 
@@ -39,7 +55,12 @@ function categoryForModulePath(modulePath) {
 }
 
 export function getTimelineDataEntries() {
-  return Object.entries(durableTimelineModules)
+  return [
+    ...Object.entries(durableTimelineModules).filter(
+      ([modulePath]) => !migratedLegacyModulePaths.has(modulePath),
+    ),
+    ...Object.entries(generatedTimelineModules),
+  ]
     .filter(([modulePath]) => !modulePath.endsWith("/template.js"))
     .sort(([pathA], [pathB]) => pathA.localeCompare(pathB, "en"))
     .map(([modulePath, lane]) => ({
