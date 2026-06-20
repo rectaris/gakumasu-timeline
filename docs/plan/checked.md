@@ -12,3 +12,4 @@ id	path
 015	docs/plan/checked/015-timeline-visual-refinement.md
 016	docs/plan/checked/016-event-information-hierarchy.md
 017	docs/plan/checked/017-navigation-search-filter-experience.md
+018	docs/plan/checked/018-detail-related-context-panel.md

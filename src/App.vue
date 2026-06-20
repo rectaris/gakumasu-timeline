@@ -15,6 +15,7 @@ import { usePointer } from "./composables/usePointer";
 import { useCategoryFilter } from "./composables/useCategoryFilter";
 import { useEventSearchFilter } from "./composables/useEventSearchFilter";
 import { useSelection } from "./composables/useSelection";
+import { useEventDetailContext } from "./composables/useEventDetailContext";
 import { useTimelineData } from "./composables/useTimelineData";
 import { useTimelineLayout } from "./composables/useTimelineLayout";
 import { useTimelineScales } from "./composables/useTimelineScales";
@@ -166,6 +167,14 @@ const {
   width: WIDTH,
   leftLabelWidth: LEFT_LABEL_WIDTH,
   rightPadding: RIGHT_PADDING
+});
+
+const eventDetailContext = useEventDetailContext({
+  selectedEvent,
+  allEvents,
+  visibleEvents,
+  characterCatalog,
+  worldlines,
 });
 
 const { years, monthTicks, dayTicks, showMonthScale, showDayScale } =
@@ -905,9 +914,11 @@ onUnmounted(() => {
 
   <SidePanel
     :selected-event="selectedEvent"
+    :detail-context="eventDetailContext"
     :selected-event-hidden="selectedEventHiddenByFilters"
     :year-label="yearLabel"
     :close-panel="closePanel"
     :focus-event-lane="focusLaneFromEvent"
+    :select-related-event="selectEventAndReveal"
   />
 </template>

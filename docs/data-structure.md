@@ -41,6 +41,8 @@
 - `source?: string[]`
 - `note?: string[]`
 
+詳細パネルでは、`participants` は `src/data/characterCatalog.js`、`worldlineId` は `src/data/worldlines.js` を使って表示名へ解決します。未解決 ID は ID のまま表示し、`source` または `worldlineId` が空の場合は未設定として表示します。
+
 ## DateLike
 
 - `year: number`
