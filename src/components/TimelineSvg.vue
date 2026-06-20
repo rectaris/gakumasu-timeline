@@ -12,7 +12,7 @@ const props = defineProps({
   isDragging: { type: Boolean, required: true }
 });
 
-const emit = defineEmits(["select", "focus-lane"]);
+const emit = defineEmits(["select", "select-summary", "focus-lane"]);
 const CLIP_PADDING = 6;
 const clipId = `timeline-clip-${getCurrentInstance()?.uid ?? "default"}`;
 </script>
@@ -71,6 +71,7 @@ const clipId = `timeline-clip-${getCurrentInstance()?.uid ?? "default"}`;
         :selected-event="renderContext.selectedEvent"
         :timeline-viewport="renderContext.timelineViewport"
         @select="event => emit('select', event)"
+        @select-summary="summary => emit('select-summary', summary)"
       />
     </g>
 

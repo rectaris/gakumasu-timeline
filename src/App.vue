@@ -43,6 +43,7 @@ const DEFAULT_FILTER_VALUE = "all";
 const DEFAULT_LANE_SORT_MODE = "default";
 const DEFAULT_VERTICAL_SCALE = 1;
 const URL_SYNC_DELAY_MS = 150;
+const MAX_COMPARE_LANES = 4;
 const initialViewState = parseTimelineViewState(window.location.search);
 
 const occurrenceTypeLabels = {
@@ -111,13 +112,42 @@ if (initialViewState.hasViewState) {
 }
 
 const focusedLaneId = ref(null);
+const compareLaneIds = ref([]);
+const compareStatus = ref("");
+const selectedDenseSummary = ref(null);
+let compareStatusTimer = null;
+
+const validCompareLaneIds = computed(() => {
+  const activeIds = new Set(activeLanes.value.map((lane) => lane.id));
+  return compareLaneIds.value.filter((id) => activeIds.has(id));
+});
+const isComparisonMode = computed(() => validCompareLaneIds.value.length >= 2);
+const timelineDisplayMode = computed(() => {
+  if (focusedLaneId.value) return "focus";
+  if (isComparisonMode.value) return "compare";
+  return "all";
+});
 const timelineLanes = computed(() => {
-  if (!focusedLaneId.value) return activeLanes.value;
-  return activeLanes.value.filter((lane) => lane.id === focusedLaneId.value);
+  if (timelineDisplayMode.value === "focus") {
+    return activeLanes.value.filter((lane) => lane.id === focusedLaneId.value);
+  }
+
+  if (timelineDisplayMode.value === "compare") {
+    const pinned = new Set(validCompareLaneIds.value);
+    return activeLanes.value.filter((lane) => pinned.has(lane.id));
+  }
+
+  return activeLanes.value;
 });
 const focusedLaneLabel = computed(() => {
   if (!focusedLaneId.value) return "";
   return activeLanes.value.find((lane) => lane.id === focusedLaneId.value)?.name ?? "";
+});
+const comparisonLaneLabels = computed(() => {
+  const lanesById = new Map(activeLanes.value.map((lane) => [lane.id, lane]));
+  return validCompareLaneIds.value
+    .map((id) => lanesById.get(id)?.name ?? id)
+    .filter(Boolean);
 });
 
 const { isOpen: menuOpen, openMenu, closeMenu, toggleMenu } =
@@ -151,7 +181,16 @@ const { allEvents, timesDay } = useTimelineData(
   commonTimeline,
   showCommonEvents
 );
-const { selectedEvent, selectEvent, closePanel } = useSelection(allEvents);
+const { selectedEvent, selectEvent, closePanel } = useSelection(allEvents, {
+  shouldPreserveMissingSelection(event) {
+    const laneId = event?.laneId;
+    if (!laneId) return false;
+
+    const activeIds = new Set(activeLanes.value.map((lane) => lane.id));
+    const displayIds = new Set(timelineLanes.value.map((lane) => lane.id));
+    return activeIds.has(laneId) && !displayIds.has(laneId);
+  },
+});
 const {
   eventSearchQuery,
   occurrenceTypeFilter,
@@ -227,6 +266,7 @@ const {
   allEvents: filteredEvents,
   viewRange,
   verticalScale,
+  selectedEvent,
   width: WIDTH,
   leftLabelWidth: LEFT_LABEL_WIDTH,
   rightPadding: RIGHT_PADDING
@@ -294,8 +334,10 @@ function shouldKeepPanelOpenFromClick(target) {
       target.closest(".zoom-panel") ||
       target.closest(".zoom-controls") ||
       target.closest(".intro-guide") ||
+      target.closest(".dense-summary-popover") ||
       target.closest(".lane-label") ||
-      target.closest(".event-group"),
+      target.closest(".event-group") ||
+      target.closest(".event-summary-group"),
   );
 }
 
@@ -377,6 +419,57 @@ function openLaneGuide() {
   openMenu();
 }
 
+function setCompareStatus(message) {
+  compareStatus.value = message;
+  if (compareStatusTimer) {
+    window.clearTimeout(compareStatusTimer);
+  }
+  compareStatusTimer = window.setTimeout(() => {
+    compareStatus.value = "";
+  }, 2400);
+}
+
+function isLanePinnedForComparison(laneId) {
+  return compareLaneIds.value.includes(laneId);
+}
+
+function pinLaneForComparison(laneId) {
+  if (!laneId || isLanePinnedForComparison(laneId)) return true;
+  if (!activeLanes.value.some((lane) => lane.id === laneId)) return false;
+
+  if (validCompareLaneIds.value.length >= MAX_COMPARE_LANES) {
+    setCompareStatus(`比較できるレーンは${MAX_COMPARE_LANES}件までです`);
+    return false;
+  }
+
+  focusedLaneId.value = null;
+  compareLaneIds.value = [...compareLaneIds.value, laneId];
+  return true;
+}
+
+function unpinLaneForComparison(laneId) {
+  compareLaneIds.value = compareLaneIds.value.filter((id) => id !== laneId);
+}
+
+function toggleComparisonLane(laneId) {
+  if (isLanePinnedForComparison(laneId)) {
+    unpinLaneForComparison(laneId);
+    return;
+  }
+
+  pinLaneForComparison(laneId);
+}
+
+function clearComparison() {
+  compareLaneIds.value = [];
+}
+
+function compareEventLane(event) {
+  const laneId = event?.laneId;
+  if (!laneId) return;
+  pinLaneForComparison(laneId);
+}
+
 const {
   isDragging,
   onMouseDown,
@@ -413,6 +506,16 @@ function eventDomKey(event) {
   return String(event?.instanceId ?? event?.id ?? event?.canonicalId ?? "");
 }
 
+function displayLaneIndexForEvent(event) {
+  if (!event) return null;
+  if (event.laneId) {
+    const laneIndex = timelineLanes.value.findIndex((lane) => lane.id === event.laneId);
+    if (laneIndex !== -1) return laneIndex;
+  }
+
+  return Number.isInteger(event.laneIndex) ? event.laneIndex : null;
+}
+
 function focusTimelineEventElement(event) {
   const stageElement = timelineStageRef.value;
   const key = eventDomKey(event);
@@ -426,13 +529,50 @@ function focusTimelineEventElement(event) {
 }
 
 function selectEventAndReveal(event, { focusTimelineEvent = false } = {}) {
+  selectedDenseSummary.value = null;
   selectEvent(event);
   nextTick(() => {
-    scrollLaneIntoView(event.laneIndex);
+    const laneIndex = displayLaneIndexForEvent(event);
+    if (laneIndex !== null) {
+      scrollLaneIntoView(laneIndex);
+    }
     if (focusTimelineEvent) {
       focusTimelineEventElement(event);
     }
   });
+}
+
+function denseSummaryLabel(summary) {
+  if (!summary) return "";
+  const count =
+    summary.canonicalCount && summary.canonicalCount !== summary.eventCount
+      ? `${summary.canonicalCount}/${summary.eventCount}件`
+      : `${summary.eventCount}件`;
+  return summary.summaryKind === "uncertain"
+    ? `期間内の1日 ${count}`
+    : `密集イベント ${count}`;
+}
+
+function denseSummaryMemberMeta(event) {
+  const lane = activeLanes.value.find((item) => item.id === event.laneId) ??
+    timelineLanes.value[event.laneIndex];
+  return [lane?.name ?? event.character, event.isCommon ? "共通" : ""]
+    .filter(Boolean)
+    .join(" / ");
+}
+
+function selectDenseSummary(summary) {
+  selectedDenseSummary.value = summary;
+}
+
+function closeDenseSummary() {
+  selectedDenseSummary.value = null;
+}
+
+function zoomToDenseSummary(summary) {
+  if (!summary) return;
+  const padding = Math.max(2, (summary.displayEndDay - summary.displayStartDay) * 0.15);
+  setHorizontalRange(summary.displayStartDay - padding, summary.displayEndDay + padding);
 }
 
 const canReturnToSelectedEvent = computed(() => Boolean(selectedEvent.value));
@@ -443,7 +583,10 @@ function returnToSelectedEvent({ focusTimelineEvent = false } = {}) {
   revealSelectedEvent();
   nextTick(() => {
     if (!selectedEvent.value) return;
-    scrollLaneIntoView(selectedEvent.value.laneIndex);
+    const laneIndex = displayLaneIndexForEvent(selectedEvent.value);
+    if (laneIndex !== null) {
+      scrollLaneIntoView(laneIndex);
+    }
     if (focusTimelineEvent) {
       focusTimelineEventElement(selectedEvent.value);
     }
@@ -487,6 +630,7 @@ function goToNextEvent() {
 
 function focusLane(laneId) {
   focusedLaneId.value = laneId;
+  clearComparison();
   closeMenu();
   nextTick(() => {
     scrollLaneIntoView(0);
@@ -494,7 +638,8 @@ function focusLane(laneId) {
 }
 
 function focusLaneFromEvent(event) {
-  const lane = timelineLanes.value[event?.laneIndex];
+  const lane = activeLanes.value.find((item) => item.id === event?.laneId) ??
+    timelineLanes.value[event?.laneIndex];
   if (!lane) return;
   focusLane(lane.id);
 }
@@ -513,6 +658,11 @@ function focusEventSearch() {
 }
 
 function closeTopLayer() {
+  if (selectedDenseSummary.value) {
+    closeDenseSummary();
+    return;
+  }
+
   if (manualOpen.value) {
     closeManual();
     return;
@@ -547,11 +697,18 @@ useKeyboard({
 
 const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
 const hasAnyLaneInCurrentCategory = computed(() => totalLaneCount.value > 0);
-const selectedEventHiddenByFilters = computed(
+const selectedEventVisibleInDisplay = computed(() => {
+  if (!selectedEvent.value) return false;
+  const selectedInstanceId = selectedEvent.value.instanceId ?? selectedEvent.value.id;
+  return allEvents.value.some(
+    (event) => (event.instanceId ?? event.id) === selectedInstanceId,
+  );
+});
+const selectedEventHiddenByDisplayConditions = computed(
   () =>
     Boolean(selectedEvent.value) &&
-    hasActiveEventFilters.value &&
-    !isEventInFilteredSet(selectedEvent.value),
+    (!selectedEventVisibleInDisplay.value ||
+      (hasActiveEventFilters.value && !isEventInFilteredSet(selectedEvent.value))),
 );
 
 const currentLaneIds = computed(() =>
@@ -586,6 +743,7 @@ const timelineViewStateSnapshot = computed(() => ({
   fullRange: timeBounds.value,
   verticalScale: verticalScale.value,
   focusedLaneId: focusedLaneId.value,
+  compareLaneIds: validCompareLaneIds.value,
   showCommonEvents: showCommonEvents.value,
 }));
 
@@ -710,6 +868,26 @@ const activeStateChips = computed(() => {
     );
   }
 
+  if (validCompareLaneIds.value.length === 1) {
+    chips.push(
+      activeChip(
+        "compare-setup",
+        `比較準備: ${comparisonLaneLabels.value[0]}`,
+        clearComparison,
+      ),
+    );
+  }
+
+  if (isComparisonMode.value) {
+    chips.push(
+      activeChip(
+        "compare",
+        `比較: ${comparisonLaneLabels.value.join(" / ")}`,
+        clearComparison,
+      ),
+    );
+  }
+
   if (hasNonDefaultHorizontalRange.value) {
     chips.push(activeChip("range", "表示範囲", resetHorizontalZoom));
   }
@@ -779,9 +957,11 @@ function clearDisplayState() {
   selectedCategory.value = DEFAULT_CATEGORY_ID;
   resetEventFilters();
   clearLaneFocus();
+  clearComparison();
   resetHorizontalZoom();
   resetVerticalZoom();
   showCommonEvents.value = true;
+  closeDenseSummary();
 }
 
 watch(activeLanes, (lanes) => {
@@ -789,6 +969,20 @@ watch(activeLanes, (lanes) => {
   if (!lanes.some((lane) => lane.id === focusedLaneId.value)) {
     clearLaneFocus();
   }
+});
+
+watch(activeLanes, (lanes) => {
+  const activeIds = new Set(lanes.map((lane) => lane.id));
+  const nextIds = compareLaneIds.value.filter((id) => activeIds.has(id));
+  if (nextIds.length !== compareLaneIds.value.length) {
+    compareLaneIds.value = nextIds;
+  }
+});
+
+watch(selectedCategory, () => {
+  clearLaneFocus();
+  clearComparison();
+  closeDenseSummary();
 });
 
 watch(
@@ -806,16 +1000,31 @@ watch(
   { deep: true },
 );
 
+watch(visibleEvents, (events) => {
+  const summary = selectedDenseSummary.value;
+  if (!summary) return;
+  if (!events.some((event) => event.summaryId === summary.summaryId)) {
+    closeDenseSummary();
+  }
+});
+
 function handleGlobalClick(event) {
-  if (!selectedEvent.value) return;
   if (shouldKeepPanelOpenFromClick(event.target)) return;
 
-  closePanel();
+  if (selectedDenseSummary.value) {
+    closeDenseSummary();
+  }
+
+  if (selectedEvent.value) {
+    closePanel();
+  }
 }
 
 function selectedEventLaneId() {
   if (!selectedEvent.value) return null;
-  return activeLanes.value[selectedEvent.value.laneIndex]?.id ?? null;
+  return selectedEvent.value.laneId ??
+    activeLanes.value[selectedEvent.value.laneIndex]?.id ??
+    null;
 }
 
 function restoreInitialLaneFocus() {
@@ -827,11 +1036,23 @@ function restoreInitialLaneFocus() {
   focusedLaneId.value = focusedLane;
 }
 
+function restoreInitialComparison() {
+  if (focusedLaneId.value) return;
+  const requestedIds = initialViewState.compareLaneIds ?? [];
+  if (!requestedIds.length) return;
+
+  const activeIds = new Set(activeLanes.value.map((lane) => lane.id));
+  compareLaneIds.value = requestedIds
+    .filter((id) => activeIds.has(id))
+    .slice(0, MAX_COMPARE_LANES);
+}
+
 onMounted(async () => {
   window.addEventListener("click", handleGlobalClick);
 
   if (initialViewState.hasViewState) {
     restoreInitialLaneFocus();
+    restoreInitialComparison();
     await nextTick();
 
     if (initialViewState.verticalScale) {
@@ -854,6 +1075,9 @@ onUnmounted(() => {
   }
   if (viewStateUrlSyncTimer) {
     window.clearTimeout(viewStateUrlSyncTimer);
+  }
+  if (compareStatusTimer) {
+    window.clearTimeout(compareStatusTimer);
   }
 });
 
@@ -1006,21 +1230,35 @@ onUnmounted(() => {
         </p>
       </div>
       <template v-if="!isCurrentCategoryEmpty">
-        <label
+        <div
           v-for="lane in laneOptions"
           :key="lane.key"
-          class="menu-option"
+          class="menu-option menu-option--lane"
         >
-          <input
-            type="checkbox"
-            :checked="isLaneSelected(selectedCategory, lane.key)"
-            @change="toggleLane(selectedCategory, lane.key)"
-          />
-          <span>{{ lane.label }}</span>
+          <label class="menu-option__main">
+            <input
+              type="checkbox"
+              :checked="isLaneSelected(selectedCategory, lane.key)"
+              @change="toggleLane(selectedCategory, lane.key)"
+            />
+            <span>{{ lane.label }}</span>
+          </label>
           <span class="menu-option__meta">{{ lane.eventCount }}件</span>
-        </label>
+          <button
+            class="menu-inline-button menu-inline-button--compact"
+            type="button"
+            :disabled="!isLaneSelected(selectedCategory, lane.key)"
+            :aria-pressed="isLanePinnedForComparison(lane.key) ? 'true' : 'false'"
+            @click="toggleComparisonLane(lane.key)"
+          >
+            {{ isLanePinnedForComparison(lane.key) ? "比較中" : "比較" }}
+          </button>
+        </div>
       </template>
-      <div id="menu-empty-state" v-else class="menu-empty">
+      <p v-if="compareStatus" class="lane-summary" role="status">
+        {{ compareStatus }}
+      </p>
+      <div id="menu-empty-state" v-if="isCurrentCategoryEmpty" class="menu-empty">
         {{ hasAnyLaneInCurrentCategory ? "該当するレーンがありません" : "今後追加予定" }}
       </div>
     </section>
@@ -1164,6 +1402,15 @@ onUnmounted(() => {
         <span>{{ focusedLaneLabel }} に集中表示中</span>
         <button class="menu-inline-button" type="button" @click="clearLaneFocus">
           全レーン
+        </button>
+      </div>
+      <div v-if="validCompareLaneIds.length" class="focus-status">
+        <span>
+          {{ isComparisonMode ? "比較表示中" : "比較準備中" }}:
+          {{ comparisonLaneLabels.join(" / ") }}
+        </span>
+        <button class="menu-inline-button" type="button" @click="clearComparison">
+          解除
         </button>
       </div>
     </section>
@@ -1337,6 +1584,48 @@ onUnmounted(() => {
         </p>
       </div>
 
+      <div
+        v-if="selectedDenseSummary"
+        class="dense-summary-popover"
+        role="dialog"
+        aria-label="密集イベント一覧"
+      >
+        <div class="dense-summary-popover__header">
+          <span>{{ denseSummaryLabel(selectedDenseSummary) }}</span>
+          <button
+            class="menu-inline-button menu-inline-button--compact"
+            type="button"
+            @click="closeDenseSummary"
+          >
+            閉じる
+          </button>
+        </div>
+        <div class="dense-summary-popover__actions">
+          <button
+            class="menu-inline-button"
+            type="button"
+            @click="zoomToDenseSummary(selectedDenseSummary)"
+          >
+            この範囲へ拡大
+          </button>
+        </div>
+        <ul class="dense-summary-list">
+          <li
+            v-for="event in selectedDenseSummary.memberEvents"
+            :key="event.instanceId ?? event.id"
+          >
+            <button
+              class="dense-summary-event"
+              type="button"
+              @click="selectEventAndReveal(event, { focusTimelineEvent: true })"
+            >
+              <span class="dense-summary-event__title">{{ event.title }}</span>
+              <span class="dense-summary-event__meta">{{ denseSummaryMemberMeta(event) }}</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
       <TimelineScaleOverlay
         :width="WIDTH"
         :overlay-height="timelineViewport.y"
@@ -1362,6 +1651,7 @@ onUnmounted(() => {
               :interaction-handlers="timelineInteractionHandlers"
               :is-dragging="isDragging"
               @select="selectEventAndReveal"
+              @select-summary="selectDenseSummary"
               @focus-lane="focusLane"
             />
           </div>
@@ -1376,10 +1666,11 @@ onUnmounted(() => {
   <SidePanel
     :selected-event="selectedEvent"
     :detail-context="eventDetailContext"
-    :selected-event-hidden="selectedEventHiddenByFilters"
+    :selected-event-hidden="selectedEventHiddenByDisplayConditions"
     :year-label="yearLabel"
     :close-panel="closePanel"
     :focus-event-lane="focusLaneFromEvent"
+    :compare-event-lane="compareEventLane"
     :select-related-event="selectEventAndReveal"
   />
 </template>

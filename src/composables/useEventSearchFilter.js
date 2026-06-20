@@ -41,6 +41,11 @@ function lookupMap(items) {
 }
 
 function eventLane(event, lanes) {
+  if (event?.laneId) {
+    const lane = lanes.find((item) => item.id === event.laneId);
+    if (lane) return lane;
+  }
+
   return lanes[event.laneIndex] ?? null;
 }
 

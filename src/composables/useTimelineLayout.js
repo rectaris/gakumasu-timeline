@@ -9,16 +9,23 @@ import {
 import {
   buildLaneLayout,
   groupEventsByLane,
+  summarizeDenseEventsForLane,
   visibleEventLayouts,
 } from "../utils/timelineLayout.js";
 
-export { buildLaneLayout, groupEventsByLane, visibleEventLayouts };
+export {
+  buildLaneLayout,
+  groupEventsByLane,
+  summarizeDenseEventsForLane,
+  visibleEventLayouts,
+};
 
 export function useTimelineLayout({
   characters,
   allEvents,
   viewRange,
   verticalScale,
+  selectedEvent = null,
   width,
   leftLabelWidth,
   rightPadding,
@@ -51,8 +58,15 @@ export function useTimelineLayout({
     })),
   );
 
+  const viewportWidth = computed(() => width - leftLabelWidth - rightPadding);
+
   const visibleEvents = computed(() =>
-    visibleEventLayouts(laneEventLayouts.value, viewRange.value),
+    visibleEventLayouts(laneEventLayouts.value, viewRange.value, {
+      enabled: true,
+      viewportWidth: viewportWidth.value,
+      selectedEvent: selectedEvent?.value ?? null,
+      crowdedSubLaneCount: verticalScale.value < 0.95 ? 3 : 4,
+    }),
   );
 
   const laneLayouts = computed(() => {

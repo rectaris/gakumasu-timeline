@@ -15,6 +15,7 @@ const VIEW_PARAM_NAMES = [
   "range",
   "scale",
   "focus",
+  "compare",
   "common",
 ];
 
@@ -131,6 +132,7 @@ export function parseTimelineViewState(search) {
         : null,
     verticalScale: verticalScale !== null && verticalScale > 0 ? verticalScale : null,
     focusedLaneId: cleanString(params.get("focus")),
+    compareLaneIds: cleanIdList(params.get("compare")),
     showCommonEvents:
       params.get("common") === "0"
         ? false
@@ -206,6 +208,9 @@ export function createTimelineViewStateParams(
   }
 
   setIfValue(params, "focus", snapshot.focusedLaneId);
+  if (Array.isArray(snapshot.compareLaneIds) && snapshot.compareLaneIds.length) {
+    params.set("compare", snapshot.compareLaneIds.join(","));
+  }
 
   if (includeCommonEvents && snapshot.showCommonEvents === false) {
     params.set("common", "0");

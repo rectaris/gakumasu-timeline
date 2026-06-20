@@ -13,6 +13,7 @@ const props = defineProps({
   yearLabel: { type: Function, required: true },
   closePanel: { type: Function, required: true },
   focusEventLane: { type: Function, required: true },
+  compareEventLane: { type: Function, required: true },
   selectRelatedEvent: { type: Function, required: true }
 });
 
@@ -335,7 +336,7 @@ watch(
       </section>
 
       <p v-if="selectedEventHidden" class="panel-status">
-        現在の検索・絞り込み条件では非表示です。
+        現在の表示条件では非表示です。
       </p>
 
       <div class="panel-actions">
@@ -345,6 +346,13 @@ watch(
           @click.stop="focusEventLane(selectedEvent)"
         >
           このレーンに集中
+        </button>
+        <button
+          class="panel-action"
+          type="button"
+          @click.stop="compareEventLane(selectedEvent)"
+        >
+          比較に追加
         </button>
         <button
           class="panel-action"

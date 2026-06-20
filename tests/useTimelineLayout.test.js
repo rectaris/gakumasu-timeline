@@ -2,6 +2,7 @@ import { ref } from "vue";
 import { describe, expect, it } from "vitest";
 import {
   groupEventsByLane,
+  summarizeDenseEventsForLane,
   useTimelineLayout,
   visibleEventLayouts,
 } from "../src/composables/useTimelineLayout";
@@ -103,5 +104,103 @@ describe("useTimelineLayout", () => {
       renderStartDay: 55,
       renderEndDay: 60,
     });
+  });
+
+  it("summarizes dense visible event clusters without creating canonical events", () => {
+    const denseEvents = [0, 1, 2, 3].map((offset) =>
+      event({
+        id: `dense-${offset}`,
+        displayStartDay: 10 + offset,
+        displayEndDay: 11 + offset,
+      }),
+    );
+    const visible = visibleEventLayouts(
+      [{ events: denseEvents }],
+      { min: 0, max: 100 },
+      { enabled: true, viewportWidth: 120, minEvents: 4 },
+    );
+
+    expect(visible).toHaveLength(1);
+    expect(visible[0]).toMatchObject({
+      isSummary: true,
+      summaryKind: "timed",
+      eventCount: 4,
+      canonicalCount: 4,
+    });
+    expect(visible[0].canonicalId).toBeUndefined();
+    expect(visible[0].memberEvents.map((item) => item.id)).toEqual([
+      "dense-0",
+      "dense-1",
+      "dense-2",
+      "dense-3",
+    ]);
+  });
+
+  it("keeps uncertain single-within-range summaries separate from timed summaries", () => {
+    const denseEvents = [
+      event({ id: "timed-a", displayStartDay: 10, displayEndDay: 11 }),
+      event({ id: "timed-b", displayStartDay: 11, displayEndDay: 12 }),
+      event({
+        id: "uncertain-a",
+        displayStartDay: 10,
+        displayEndDay: 20,
+        occurrenceType: "singleWithinRange",
+      }),
+      event({
+        id: "uncertain-b",
+        displayStartDay: 11,
+        displayEndDay: 21,
+        occurrenceType: "singleWithinRange",
+      }),
+    ];
+
+    const visible = summarizeDenseEventsForLane(
+      denseEvents.map((item) => ({
+        ...item,
+        renderStartDay: item.displayStartDay,
+        renderEndDay: item.displayEndDay,
+        subLaneIndex: 0,
+      })),
+      { min: 0, max: 100 },
+      { enabled: true, viewportWidth: 120, minEvents: 2 },
+    );
+
+    expect(visible.map((item) => item.summaryKind)).toEqual([
+      "timed",
+      "uncertain",
+    ]);
+    expect(visible.map((item) => item.eventCount)).toEqual([2, 2]);
+  });
+
+  it("does not hide the selected event inside a dense summary", () => {
+    const denseEvents = [0, 1, 2, 3].map((offset) =>
+      event({
+        id: `dense-${offset}`,
+        displayStartDay: 10 + offset,
+        displayEndDay: 11 + offset,
+      }),
+    );
+    const visible = summarizeDenseEventsForLane(
+      denseEvents.map((item, index) => ({
+        ...item,
+        renderStartDay: item.displayStartDay,
+        renderEndDay: item.displayEndDay,
+        subLaneIndex: index,
+      })),
+      { min: 0, max: 100 },
+      {
+        enabled: true,
+        viewportWidth: 120,
+        minEvents: 3,
+        selectedEvent: denseEvents[0],
+      },
+    );
+
+    expect(visible.some((item) => item.id === "dense-0")).toBe(true);
+    expect(visible.find((item) => item.isSummary)?.memberEvents.map((item) => item.id)).toEqual([
+      "dense-1",
+      "dense-2",
+      "dense-3",
+    ]);
   });
 });

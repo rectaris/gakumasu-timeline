@@ -23,3 +23,4 @@ id	path
 020	docs/plan/checked/020-view-state-persistence-and-sharing.md
 021	docs/plan/checked/021-orientation-range-navigation.md
 022	docs/plan/checked/022-keyboard-command-navigation.md
+023	docs/plan/checked/023-lane-comparison-and-dense-event-summary.md

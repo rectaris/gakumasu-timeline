@@ -23,6 +23,7 @@ function snapshot(overrides = {}) {
     fullRange: { min: 0, max: 100 },
     verticalScale: 1,
     focusedLaneId: null,
+    compareLaneIds: [],
     showCommonEvents: true,
     ...overrides,
   };
@@ -50,6 +51,7 @@ describe("timeline view state URL", () => {
         range: { min: 1.234, max: 22.987 },
         verticalScale: 1.234,
         focusedLaneId: "lane-a",
+        compareLaneIds: ["lane-b", "lane-c"],
       }),
     );
 
@@ -67,6 +69,7 @@ describe("timeline view state URL", () => {
     expect(params.get("range")).toBe("1.23,22.99");
     expect(params.get("scale")).toBe("1.23");
     expect(params.get("focus")).toBe("lane-a");
+    expect(params.get("compare")).toBe("lane-b,lane-c");
   });
 
   it("uses exclude lane mode when it is shorter", () => {
@@ -82,7 +85,7 @@ describe("timeline view state URL", () => {
 
   it("parses malformed optional state without failing the whole view state", () => {
     const state = parseTimelineViewState(
-      "?view=1&cat=event&lm=include&lanes=lane-a,lane-b&range=10,bad&scale=-1&common=0",
+      "?view=1&cat=event&lm=include&lanes=lane-a,lane-b&range=10,bad&scale=-1&compare=lane-a,lane-b&common=0",
     );
 
     expect(state.hasViewState).toBe(true);
@@ -94,6 +97,7 @@ describe("timeline view state URL", () => {
     });
     expect(state.range).toBeNull();
     expect(state.verticalScale).toBeNull();
+    expect(state.compareLaneIds).toEqual(["lane-a", "lane-b"]);
     expect(state.showCommonEvents).toBe(false);
   });
 

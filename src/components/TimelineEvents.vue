@@ -24,12 +24,16 @@ const props = defineProps({
   timelineViewport: { type: Object, required: true }
 });
 
-const emit = defineEmits(["select"]);
+const emit = defineEmits(["select", "select-summary"]);
 const hoveredEventKey = ref(null);
 const focusedEventKey = ref(null);
 
 function handleSelect(event) {
   emit("select", event);
+}
+
+function handleSummarySelect(summary) {
+  emit("select-summary", summary);
 }
 
 function handleKeydown(event, timelineEvent) {
@@ -38,7 +42,15 @@ function handleKeydown(event, timelineEvent) {
   handleSelect(timelineEvent);
 }
 
+function handleSummaryKeydown(event, summary) {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  event.preventDefault();
+  handleSummarySelect(summary);
+}
+
 function eventTitleText(event) {
+  if (event.isSummary) return summaryTitleText(event);
+
   return [event.title, event.detail]
     .map(value => String(value ?? "").trim())
     .filter(Boolean)
@@ -46,6 +58,7 @@ function eventTitleText(event) {
 }
 
 function eventKey(event) {
+  if (event.isSummary) return event.summaryId;
   return event.instanceId ?? event.id ?? event.canonicalId;
 }
 
@@ -122,6 +135,32 @@ function eventVisibleWidth(event) {
     0,
     props.xPos(event.renderEndDay) - props.xPos(event.renderStartDay),
   );
+}
+
+function summaryVisibleWidth(summary) {
+  return Math.max(28, eventVisibleWidth(summary));
+}
+
+function summaryX(summary) {
+  return eventCenterX(summary) - summaryVisibleWidth(summary) / 2;
+}
+
+function summaryLabel(summary) {
+  const countLabel =
+    summary.canonicalCount && summary.canonicalCount !== summary.eventCount
+      ? `${summary.canonicalCount}/${summary.eventCount}件`
+      : `${summary.eventCount}件`;
+  return summary.summaryKind === "uncertain"
+    ? `期間内 ${countLabel}`
+    : countLabel;
+}
+
+function summaryTitleText(summary) {
+  const rangeKind =
+    summary.summaryKind === "uncertain"
+      ? "期間内の1日イベント"
+      : "密集イベント";
+  return `${rangeKind}: ${summaryLabel(summary)}`;
 }
 
 function eventCenterX(event) {
@@ -204,8 +243,39 @@ function uncertaintyMarker(event, edge) {
 </script>
 
 <template>
-  <g v-for="event in visibleEvents" :key="event.instanceId ?? event.id">
+  <g v-for="event in visibleEvents" :key="event.summaryId ?? event.instanceId ?? event.id">
     <g
+      v-if="event.isSummary"
+      class="event-summary-group"
+      :class="{ 'event-summary-group--uncertain': event.summaryKind === 'uncertain' }"
+      tabindex="0"
+      role="button"
+      :data-event-key="event.summaryId"
+      :aria-label="summaryTitleText(event)"
+      @click="handleSummarySelect(event)"
+      @keydown="handleSummaryKeydown($event, event)"
+    >
+      <title>{{ summaryTitleText(event) }}</title>
+      <rect
+        class="event-summary-bar"
+        :x="summaryX(event)"
+        :y="yPos(event.laneIndex, event.subLaneIndex) - eventBarHeight / 2 - 2"
+        :width="summaryVisibleWidth(event)"
+        :height="eventBarHeight + 4"
+        rx="6"
+      />
+      <text
+        class="event-summary-label"
+        :x="eventCenterX(event)"
+        :y="eventCenterY(event)"
+        text-anchor="middle"
+        dominant-baseline="middle"
+      >
+        {{ summaryLabel(event) }}
+      </text>
+    </g>
+    <g
+      v-else
       @click="handleSelect(event)"
       @keydown="handleKeydown($event, event)"
       class="event-group"
