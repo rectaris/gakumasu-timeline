@@ -1,5 +1,6 @@
 import { computed, ref } from "vue";
 import {
+  SOURCE_CLAIM_TARGET_LABELS,
   eventOccurrenceType,
   eventUncertaintyState,
   eventUncertaintySummary,
@@ -47,9 +48,14 @@ export function buildEventSearchText(event, { lanes = [], characters = [], world
   ]);
   const uncertainty = eventUncertaintySummary(event);
   const sourceDetails = asArray(event.sourceDetails).flatMap((sourceDetail) => [
+    sourceDetail.id,
     sourceDetail.label,
     sourceDetail.claim,
     sourceDetail.status,
+    ...asArray(sourceDetail.supports),
+    ...asArray(sourceDetail.supports).map(
+      (target) => SOURCE_CLAIM_TARGET_LABELS[target],
+    ),
   ]);
   const conflicts = asArray(event.conflicts).flatMap((conflict) => [
     conflict.summary,

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import {
+  SOURCE_CLAIM_TARGET_LABELS,
   SOURCE_STATUS_LABELS,
   eventUncertaintySummary,
 } from "../utils/events.js";
@@ -17,6 +18,7 @@ const props = defineProps({
 
 const shareStatus = ref("");
 const showShareFallback = ref(false);
+const SOURCE_DETAIL_PREVIEW_LIMIT = 3;
 
 function hasExplicitDay(date) {
   return Number.isInteger(date?.day);
@@ -88,8 +90,19 @@ function hasListItems(items) {
 
 function sourceDetailMeta(sourceDetail) {
   const statusLabel = SOURCE_STATUS_LABELS[sourceDetail.status] ?? "";
+  const supports = Array.isArray(sourceDetail.supports)
+    ? sourceDetail.supports
+        .map((target) => SOURCE_CLAIM_TARGET_LABELS[target] ?? target)
+        .filter(Boolean)
+        .join(" / ")
+    : "";
 
-  return [statusLabel, sourceDetail.claim]
+  return [
+    sourceDetail.id ? `ID: ${sourceDetail.id}` : "",
+    statusLabel,
+    supports ? `対象: ${supports}` : "",
+    sourceDetail.claim,
+  ]
     .map((value) => String(value ?? "").trim())
     .filter(Boolean)
     .join(" / ");
@@ -102,6 +115,18 @@ function conflictMeta(conflict) {
   ]
     .filter(Boolean)
     .join(" / ");
+}
+
+function visibleSourceDetails(sourceDetails) {
+  return Array.isArray(sourceDetails)
+    ? sourceDetails.slice(0, SOURCE_DETAIL_PREVIEW_LIMIT)
+    : [];
+}
+
+function sourceDetailsOverflowCount(sourceDetails) {
+  return Array.isArray(sourceDetails)
+    ? Math.max(0, sourceDetails.length - SOURCE_DETAIL_PREVIEW_LIMIT)
+    : 0;
 }
 
 function relatedMeta(event) {
@@ -271,14 +296,20 @@ watch(
         <h3 id="side-panel-source-details-title">出典詳細</h3>
         <ul class="detail-list">
           <li
-            v-for="sourceDetail in detailContext.sourceDetails"
-            :key="sourceDetail.label"
+            v-for="sourceDetail in visibleSourceDetails(detailContext.sourceDetails)"
+            :key="sourceDetail.id ?? sourceDetail.label"
           >
             <span>{{ sourceDetail.label }}</span>
             <span
               v-if="sourceDetailMeta(sourceDetail)"
               class="detail-list__meta"
             >{{ sourceDetailMeta(sourceDetail) }}</span>
+          </li>
+          <li
+            v-if="sourceDetailsOverflowCount(detailContext.sourceDetails)"
+            class="related-overflow"
+          >
+            ほか {{ sourceDetailsOverflowCount(detailContext.sourceDetails) }} 件
           </li>
         </ul>
       </section>

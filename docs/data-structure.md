@@ -42,17 +42,20 @@
   - `rangeOnly` は `occurrenceType: "singleWithinRange"` のときだけ使います
 - `sourceBasis?: "explicit" | "inferred" | "mixed" | "unknown"`
   - 時期判断の根拠が出典明記か、推論か、混在か、未分類かを示します
-- `sourceStatus?: "confirmed" | "inferred" | "conflicting" | "unknown"`
+- `sourceStatus?: "confirmed" | "inferred" | "conflicting" | "unreviewed" | "unsourced" | "unknown"`
   - 出典状態を示します
   - `conflicts` がある場合、明示するなら `conflicting` にします
+  - `unreviewed` は未確認、`unsourced` は出典なし、`unknown` は分類不能を示します
 - `rangeReason?: "monthOnly" | "sourceRange" | "chapterOrder" | "relativeOrder" | "unknown"`
   - `singleWithinRange` の候補範囲理由を示します
 - `worldlineId?: string[]`
 - `participants?: string[]`
 - `source?: string[]`
   - 既存互換の出典ラベル配列です
-- `sourceDetails?: { label: string; url?: string; status?: SourceStatus; claim?: string }[]`
+- `sourceDetails?: { id?: string; label: string; url?: string; status?: SourceStatus; claim?: string; supports?: SourceClaimTarget[] }[]`
   - 出典ごとの状態や主張が必要な場合だけ使います
+  - `id` は任意の安定 ID です
+  - `supports` は `event` / `date` / `detail` / `worldline` / `participants` のどれを支える出典かを示します
 - `conflicts?: { summary: string; sources?: string[]; resolution?: string }[]`
   - 出典同士の時期主張が矛盾する場合だけ使います
 - `note?: string[]`
@@ -154,8 +157,11 @@
     - 新規データでは原則として出典を入れます
     - 例: コミュ名、章、話数、公式資料 URL、ページ番号など
     - 現行検証では未設定を hard fail にしませんが、出典なしの断定は避けます
+    - `source` は互換用の簡易出典欄として残します。構造化が必要な場合は `sourceDetails` を併用します
 12. `sourceDetails` / `conflicts` を必要な場合だけ入れる
     - 複数出典の主張を分けたい場合は `sourceDetails[].claim` を使います
+    - 出典を再利用・追跡したい場合は `sourceDetails[].id` を入れます
+    - 出典が支える対象を明示したい場合は `sourceDetails[].supports` を入れます
     - 出典同士の時期主張が矛盾する場合は `conflicts[].summary` に未解決内容を残します
 13. `note` に補足を残す
     - 日付幅の根拠、推測理由、未登録人物、矛盾候補などを自然文で書きます
@@ -195,8 +201,14 @@ focused validation は指定ファイルを主対象にしますが、イベン�
 - `dateConfidence` / `sourceBasis` / `sourceStatus` / `rangeReason` が許可値であること
 - `dateConfidence: "rangeOnly"` と `rangeReason` は `occurrenceType: "singleWithinRange"` のときだけ使うこと
 - `sourceDetails` は配列で、各要素の `label` が空でないこと
+- `sourceDetails[].id` は任意ですが、入れる場合は空でないこと
+- `sourceDetails[].id` は同一イベント内で重複しないこと
+- `sourceDetails[].supports` は配列で、許可された対象だけを含むこと
 - `conflicts` は配列で、各要素の `summary` が空でないこと
 - `conflicts` があり `sourceStatus` を明示する場合は `conflicting` であること
+- `sourceStatus: "conflicting"` の場合は `conflicts` があること
+- `sourceStatus: "unsourced"` は `source` または `sourceDetails` があるイベントには使わないこと
+- `sourceStatus: "confirmed"` は `source` または `sourceDetails` があるイベントにだけ使うこと
 
 失敗時は、元ファイル、カテゴリ、レーン、イベント ID / title、フィールド、理由が表示されます。
 
@@ -210,7 +222,10 @@ focused validation は指定ファイルを主対象にしますが、イベン�
 - `duplicate event id`: URL 復元に使うイベント ID が他イベントと衝突しています。新規イベント側の ID を安定した別名にしてください。
 - `dateConfidence rangeOnly requires occurrenceType "singleWithinRange"`: 範囲内の単日として扱う確度を、継続期間イベントに付けています。
 - `sourceDetails[n].label must not be empty`: 構造化出典の表示名が空です。不要なら要素ごと削除してください。
+- `duplicate source detail id`: 同じイベント内で構造化出典 ID が重複しています。
+- `sourceDetails[n].supports[0] must be one of`: `supports` に許可されていない対象を入れています。
 - `sourceStatus must be "conflicting" when conflicts are present`: 出典矛盾を持つイベントに矛盾以外の出典状態を明示しています。
+- `sourceStatus must not be "unsourced" when source or sourceDetails are present`: 出典があるイベントに出典なし状態を付けています。
 
 ## 承認境界
 

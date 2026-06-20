@@ -12,8 +12,22 @@ export default {
       title: "初星学園建学",
       detail: "初星学園が建学される",
       occurrenceType: "singleWithinRange",
+      dateConfidence: "rangeOnly",
+      sourceBasis: "mixed",
+      sourceStatus: "confirmed",
+      rangeReason: "relativeOrder",
       source: [
         "https://gakuen.idolmaster-official.jp/media/fankit/schoolguidebook-view/ 2ページ",
+      ],
+      sourceDetails: [
+        {
+          id: "schoolguidebook_p2",
+          label:
+            "https://gakuen.idolmaster-official.jp/media/fankit/schoolguidebook-view/ 2ページ",
+          status: "confirmed",
+          claim: "初星学園の建学日と学園設定の根拠。抽象時系列上の年幅は推定を含む。",
+          supports: ["event", "detail"],
+        },
       ],
       note: [
         "機械参照できる参加者IDは未登録（juo_kunio）。",

@@ -2,6 +2,7 @@ import {
   VALID_DATE_CONFIDENCE,
   VALID_RANGE_REASON,
   VALID_SOURCE_BASIS,
+  VALID_SOURCE_CLAIM_TARGET,
   VALID_SOURCE_STATUS,
 } from "../utils/events.js";
 
@@ -227,6 +228,39 @@ function validateOptionalString(entry, event, eventIndex, field, value, errors) 
   }
 }
 
+function validateEnumArrayValue(
+  entry,
+  event,
+  eventIndex,
+  field,
+  value,
+  allowedValues,
+  errors,
+) {
+  if (value === undefined) {
+    return;
+  }
+
+  if (!Array.isArray(value)) {
+    errors.push(createError(entry, event, eventIndex, field, "must be an array"));
+    return;
+  }
+
+  value.forEach((item, itemIndex) => {
+    if (typeof item !== "string" || !allowedValues.has(item)) {
+      errors.push(
+        createError(
+          entry,
+          event,
+          eventIndex,
+          `${field}[${itemIndex}]`,
+          `must be one of: ${Array.from(allowedValues).join(", ")}`,
+        ),
+      );
+    }
+  });
+}
+
 function validateSourceDetails(entry, event, eventIndex, errors) {
   const value = event?.sourceDetails;
 
@@ -241,6 +275,7 @@ function validateSourceDetails(entry, event, eventIndex, errors) {
     return;
   }
 
+  const sourceDetailIds = new Set();
   value.forEach((sourceDetail, sourceIndex) => {
     if (
       !sourceDetail ||
@@ -259,6 +294,28 @@ function validateSourceDetails(entry, event, eventIndex, errors) {
       return;
     }
 
+    validateOptionalString(
+      entry,
+      event,
+      eventIndex,
+      `sourceDetails[${sourceIndex}].id`,
+      sourceDetail.id,
+      errors,
+    );
+    if (typeof sourceDetail.id === "string" && sourceDetail.id.trim() !== "") {
+      if (sourceDetailIds.has(sourceDetail.id)) {
+        errors.push(
+          createError(
+            entry,
+            event,
+            eventIndex,
+            `sourceDetails[${sourceIndex}].id`,
+            `duplicate source detail id "${sourceDetail.id}"`,
+          ),
+        );
+      }
+      sourceDetailIds.add(sourceDetail.id);
+    }
     validateOptionalString(
       entry,
       event,
@@ -301,6 +358,15 @@ function validateSourceDetails(entry, event, eventIndex, errors) {
       `sourceDetails[${sourceIndex}].status`,
       sourceDetail.status,
       VALID_SOURCE_STATUS,
+      errors,
+    );
+    validateEnumArrayValue(
+      entry,
+      event,
+      eventIndex,
+      `sourceDetails[${sourceIndex}].supports`,
+      sourceDetail.supports,
+      VALID_SOURCE_CLAIM_TARGET,
       errors,
     );
   });
@@ -451,6 +517,52 @@ function validateUncertaintyMetadata(entry, event, eventIndex, errors) {
         eventIndex,
         "sourceStatus",
         'must be "conflicting" when conflicts are present',
+      ),
+    );
+  }
+
+  if (
+    event.sourceStatus === "conflicting" &&
+    (!Array.isArray(event.conflicts) || event.conflicts.length === 0)
+  ) {
+    errors.push(
+      createError(
+        entry,
+        event,
+        eventIndex,
+        "conflicts",
+        'must be present when sourceStatus is "conflicting"',
+      ),
+    );
+  }
+
+  if (
+    event.sourceStatus === "unsourced" &&
+    (Array.isArray(event.source) || Array.isArray(event.sourceDetails))
+  ) {
+    errors.push(
+      createError(
+        entry,
+        event,
+        eventIndex,
+        "sourceStatus",
+        'must not be "unsourced" when source or sourceDetails are present',
+      ),
+    );
+  }
+
+  if (
+    event.sourceStatus === "confirmed" &&
+    !Array.isArray(event.source) &&
+    !Array.isArray(event.sourceDetails)
+  ) {
+    errors.push(
+      createError(
+        entry,
+        event,
+        eventIndex,
+        "sourceStatus",
+        'confirmed requires source or sourceDetails',
       ),
     );
   }

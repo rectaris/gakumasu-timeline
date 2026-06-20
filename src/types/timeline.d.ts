@@ -1,7 +1,19 @@
 export type OccurrenceType = "continuous" | "singleWithinRange";
 export type DateConfidence = "confirmed" | "inferred" | "rangeOnly";
 export type SourceBasis = "explicit" | "inferred" | "mixed" | "unknown";
-export type SourceStatus = "confirmed" | "inferred" | "conflicting" | "unknown";
+export type SourceStatus =
+  | "confirmed"
+  | "inferred"
+  | "conflicting"
+  | "unreviewed"
+  | "unsourced"
+  | "unknown";
+export type SourceClaimTarget =
+  | "event"
+  | "date"
+  | "detail"
+  | "worldline"
+  | "participants";
 export type RangeReason =
   | "monthOnly"
   | "sourceRange"
@@ -10,10 +22,12 @@ export type RangeReason =
   | "unknown";
 
 export interface SourceDetail {
+  id?: string;
   label: string;
   url?: string;
   status?: SourceStatus;
   claim?: string;
+  supports?: SourceClaimTarget[];
 }
 
 export interface SourceConflict {

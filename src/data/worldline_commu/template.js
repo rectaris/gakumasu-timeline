@@ -25,7 +25,7 @@ export default {
       dateConfidence: "rangeOnly",
       // 任意。sourceBasis: explicit / inferred / mixed / unknown
       sourceBasis: "explicit",
-      // 任意。sourceStatus: confirmed / inferred / conflicting / unknown
+      // 任意。sourceStatus: confirmed / inferred / conflicting / unreviewed / unsourced / unknown
       sourceStatus: "confirmed",
       // 任意。singleWithinRangeの候補範囲理由。
       // monthOnly / sourceRange / chapterOrder / relativeOrder / unknown
@@ -39,9 +39,11 @@ export default {
       // 任意。出典ごとの主張や状態が必要な場合だけ使う。
       sourceDetails: [
         {
+          id: "source_id_optional",
           label: "出典コミュ名 第1話",
           status: "confirmed",
           claim: "候補期間の根拠",
+          supports: ["event", "date"],
         },
       ],
       // 任意。出典同士の時期主張が矛盾する場合だけ使う。

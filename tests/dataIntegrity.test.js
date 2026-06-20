@@ -196,9 +196,11 @@ describe("timeline data integrity", () => {
           rangeReason: "chapterOrder",
           sourceDetails: [
             {
+              id: "reiris_1_1",
               label: "Story of Re;IRIS 1章 第1話",
               status: "confirmed",
               claim: "候補期間の開始を示す",
+              supports: ["event", "date"],
             },
           ],
           conflicts: [
@@ -225,7 +227,36 @@ describe("timeline data integrity", () => {
           rangeReason: "sourceRange",
           sourceStatus: "confirmed",
           conflicts: [{ summary: "出典矛盾あり" }],
-          sourceDetails: [{ label: "", status: "invalid" }],
+          sourceDetails: [
+            {
+              id: "",
+              label: "",
+              status: "invalid",
+              supports: ["invalid-target"],
+            },
+          ],
+        }),
+        validEvent({
+          id: "event-b",
+          sourceStatus: "unsourced",
+          source: ["source-a"],
+        }),
+        validEvent({
+          id: "event-c",
+          sourceStatus: "confirmed",
+          source: undefined,
+        }),
+        validEvent({
+          id: "event-d",
+          sourceStatus: "conflicting",
+          conflicts: undefined,
+        }),
+        validEvent({
+          id: "event-e",
+          sourceDetails: [
+            { id: "duplicate-source", label: "Source A" },
+            { id: "duplicate-source", label: "Source B" },
+          ],
         }),
       ]),
       ids,
@@ -246,12 +277,36 @@ describe("timeline data integrity", () => {
           reason: 'must be "conflicting" when conflicts are present',
         }),
         expect.objectContaining({
+          field: "sourceDetails[0].id",
+          reason: "must not be empty",
+        }),
+        expect.objectContaining({
           field: "sourceDetails[0].label",
           reason: "must not be empty",
         }),
         expect.objectContaining({
           field: "sourceDetails[0].status",
           reason: expect.stringContaining("must be one of"),
+        }),
+        expect.objectContaining({
+          field: "sourceDetails[0].supports[0]",
+          reason: expect.stringContaining("must be one of"),
+        }),
+        expect.objectContaining({
+          field: "sourceStatus",
+          reason: 'must not be "unsourced" when source or sourceDetails are present',
+        }),
+        expect.objectContaining({
+          field: "sourceStatus",
+          reason: "confirmed requires source or sourceDetails",
+        }),
+        expect.objectContaining({
+          field: "conflicts",
+          reason: 'must be present when sourceStatus is "conflicting"',
+        }),
+        expect.objectContaining({
+          field: "sourceDetails[1].id",
+          reason: 'duplicate source detail id "duplicate-source"',
         }),
       ]),
     );

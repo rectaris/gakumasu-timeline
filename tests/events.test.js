@@ -23,10 +23,16 @@ describe("event uncertainty helpers", () => {
   });
 
   it("keeps continuous events confirmed unless explicit metadata says otherwise", () => {
+    const summary = eventUncertaintySummary({ occurrenceType: "continuous" });
+
     expect(eventUncertaintyState({ occurrenceType: "continuous" })).toBe(
       "confirmed",
     );
     expect(isUncertainEvent({ occurrenceType: "continuous" })).toBe(false);
+    expect(summary).toMatchObject({
+      sourceStatus: "unsourced",
+      sourceStatusLabel: "出典なし",
+    });
 
     expect(
       eventUncertaintySummary({

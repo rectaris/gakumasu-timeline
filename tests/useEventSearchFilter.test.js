@@ -126,6 +126,13 @@ describe("event search and filters", () => {
         canonicalId: "inferred",
         dateConfidence: "inferred",
         sourceBasis: "inferred",
+        sourceDetails: [
+          {
+            id: "source-inferred",
+            label: "推定根拠",
+            supports: ["date"],
+          },
+        ],
       }),
       event({
         id: "range",
@@ -143,7 +150,7 @@ describe("event search and filters", () => {
       filterEvents(
         events,
         {
-          query: "",
+          query: "source-inferred 時期",
           occurrenceType: "all",
           uncertainty: "inferred",
           participant: "all",

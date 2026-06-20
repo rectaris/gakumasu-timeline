@@ -18,3 +18,4 @@ id	path
 011	docs/plan/checked/011-timeline-interaction-scale.md
 012	docs/plan/checked/012-data-authoring-workflow.md
 013	docs/plan/checked/013-domain-uncertainty-semantics.md
+008	docs/plan/checked/008-data-source-model-hardening.md

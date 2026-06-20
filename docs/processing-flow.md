@@ -41,7 +41,9 @@
 - 共通イベントは各レーンへ複製されます
 - URL 同期は `canonicalId`、描画キーは `instanceId` を使います
 - `dateConfidence`、`sourceBasis`、`sourceStatus`、`rangeReason`、`sourceDetails`、`conflicts` はイベント上に保持され、詳細パネルや検索で `src/utils/events.js` の派生ヘルパーから日本語ラベルへ変換されます
+- `sourceDetails[].id` と `sourceDetails[].supports` は出典追跡、詳細表示、検索テキストに使われます
 - メタデータ未指定の `singleWithinRange` は `rangeOnly` として派生し、未確定の単日候補であることを保ちます
+- source model 強化では `canonicalId` を変更しません。共有 URL と初回復元は既存 ID を使い続けます
 
 ## 時間の内部表現
 

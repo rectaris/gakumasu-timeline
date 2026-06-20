@@ -15,7 +15,17 @@ export const SOURCE_STATUS_LABELS = {
   confirmed: "出典確認",
   inferred: "推定根拠",
   conflicting: "出典矛盾",
-  unknown: "未確認",
+  unreviewed: "未確認",
+  unsourced: "出典なし",
+  unknown: "分類不能",
+};
+
+export const SOURCE_CLAIM_TARGET_LABELS = {
+  event: "イベント",
+  date: "時期",
+  detail: "内容",
+  worldline: "世界線",
+  participants: "参加者",
 };
 
 export const RANGE_REASON_LABELS = {
@@ -29,6 +39,9 @@ export const RANGE_REASON_LABELS = {
 export const VALID_DATE_CONFIDENCE = new Set(Object.keys(DATE_CONFIDENCE_LABELS));
 export const VALID_SOURCE_BASIS = new Set(Object.keys(SOURCE_BASIS_LABELS));
 export const VALID_SOURCE_STATUS = new Set(Object.keys(SOURCE_STATUS_LABELS));
+export const VALID_SOURCE_CLAIM_TARGET = new Set(
+  Object.keys(SOURCE_CLAIM_TARGET_LABELS),
+);
 export const VALID_RANGE_REASON = new Set(Object.keys(RANGE_REASON_LABELS));
 
 export function isSingleWithinRange(event) {
@@ -82,7 +95,7 @@ export function eventSourceStatus(event) {
 
   return hasEntries(event?.source) || hasEntries(event?.sourceDetails)
     ? "confirmed"
-    : "unknown";
+    : "unsourced";
 }
 
 export function eventRangeReason(event) {

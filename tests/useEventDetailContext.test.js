@@ -78,9 +78,11 @@ describe("event detail context", () => {
       sourceStatus: "conflicting",
       sourceDetails: [
         {
+          id: "reiris_1_1",
           label: "Story of Re;IRIS 1章 第1話",
           status: "confirmed",
           claim: "時期Aを示す",
+          supports: ["event", "date"],
         },
       ],
       conflicts: [
