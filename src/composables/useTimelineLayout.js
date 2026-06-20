@@ -34,7 +34,7 @@ export function useTimelineLayout({
 }) {
   const layoutMetrics = computed(() => {
     const scale = verticalScale.value;
-    const eventBarHeight = Math.max(8, EVENT_BAR_HEIGHT * scale);
+    const eventBarHeight = EVENT_BAR_HEIGHT;
     const rowGap = Math.max(4, EVENT_ROW_GAP * scale);
     const rowHeight = eventBarHeight + rowGap;
     const lanePadding = Math.max(6, LANE_PADDING * scale);

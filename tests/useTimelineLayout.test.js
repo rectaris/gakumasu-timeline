@@ -27,7 +27,7 @@ function event({
   };
 }
 
-function layoutFor({ events, viewRange }) {
+function layoutFor({ events, viewRange, verticalScale = ref(1) }) {
   return useTimelineLayout({
     characters: ref([
       { id: "lane-a", name: "Lane A" },
@@ -35,7 +35,7 @@ function layoutFor({ events, viewRange }) {
     ]),
     allEvents: ref(events),
     viewRange,
-    verticalScale: ref(1),
+    verticalScale,
     width: 1100,
     leftLabelWidth: 170,
     rightPadding: 20,
@@ -204,6 +204,27 @@ describe("useTimelineLayout", () => {
       "dense-2",
       "dense-3",
     ]);
+  });
+
+  it("keeps event visual height fixed while density changes lane spacing", () => {
+    const verticalScale = ref(1);
+    const layout = layoutFor({
+      viewRange: ref({ min: 0, max: 100 }),
+      verticalScale,
+      events: [
+        event({ id: "overlap-a", displayStartDay: 10, displayEndDay: 30 }),
+        event({ id: "overlap-b", displayStartDay: 20, displayEndDay: 40 }),
+      ],
+    });
+    const initialEventHeight = layout.eventBarHeight.value;
+    const initialSubLaneGap = layout.yPos(0, 1) - layout.yPos(0, 0);
+    const initialViewportHeight = layout.timelineViewport.value.height;
+
+    verticalScale.value = 2;
+
+    expect(layout.eventBarHeight.value).toBe(initialEventHeight);
+    expect(layout.yPos(0, 1) - layout.yPos(0, 0)).toBeGreaterThan(initialSubLaneGap);
+    expect(layout.timelineViewport.value.height).toBeGreaterThan(initialViewportHeight);
   });
 
   it("separates source-visible events from rendered summary items in metrics", () => {
