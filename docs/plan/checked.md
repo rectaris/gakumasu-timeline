@@ -16,3 +16,4 @@ id	path
 018	docs/plan/checked/018-detail-related-context-panel.md
 019	docs/plan/checked/019-deploy-to-portal.md
 011	docs/plan/checked/011-timeline-interaction-scale.md
+012	docs/plan/checked/012-data-authoring-workflow.md

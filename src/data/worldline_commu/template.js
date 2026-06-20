@@ -1,26 +1,33 @@
-// イベントとして登録するためのJSONテンプレート
-
-// timeユーティリティのインポート例
+// イベントとして登録するためのJSモジュールテンプレート
+// コピー先が idol_commu/ などのサブディレクトリの場合は import を
+// "../../utils/time" に変更する。
+//
 // yearsAgo: 現在から指定年数前の年を取得する関数
-// yearOf: 指定された年数後の年を取得する関数
+// yearOf: 学園の1年目を基準にした年を取得する関数
 import { yearsAgo, yearOf } from "../utils/time";
 
 export default {
-  id: "commu_id", // そのイベントやコミュに関するID。それぞれのJSONファイルごとにIDが作成される。タイムラインの1レーン。
-  name: "イベント名", // そのイベントやコミュの名前
+  id: "replace_me_lane_id", // レーンID。例: saki_hanami, story_of_reiris
+  name: "レーン名", // 画面に表示されるキャラクター名やコミュ名
   color: "#000000", // キャラクター、イベントのイメージカラー
   events: [
     {
-      id: "event_id", // イベントのID。各イベントごとに一意である必要がある。
-      start: { year: yearOf(1), month: 1, day: 1 }, // 開始年月日
-      end: { year: yearsAgo(1), month: 1, day: 1 }, // 終了年月日
+      id: "replace_me_event_id", // 全イベントで一意の安定ID。URL復元に使われる。
+      start: { year: yearOf(1), month: 4, day: 1 }, // 開始年月日
+      end: { year: yearOf(1), month: 4, day: 10 }, // 終了年月日
       title: "イベントタイトル", // イベントのタイトル
       detail: "イベント詳細説明", // イベントの詳細説明
-      occurrenceType: "singleWithinRange", // 発生タイプ（singleWithinRange, continuousなど）特定の期間のうちの1日か、期間全体でそのイベントが発生しているかどうかを入力する
-      worldlineId: [""], // 関連するワールドラインIDの配列 src/data/index.jsのそれぞれの`export const`
-      participants: [""], // 関連するキャラクターの配列 src/data/characterCatalog.jsで取り出すことのできるキャラクターの名前が入力となる
-      source: [""], // 情報源の配列 どのコミュの何話であるかを入力する
-      note: [""], // 備考、情報の補足がある時に入力する
+      // continuous: startからendまで継続する期間
+      // singleWithinRange: startからendまでの範囲内のどこか1日
+      occurrenceType: "singleWithinRange",
+      // 既知の場合のみ src/data/worldlines.js のIDを入れる。
+      worldlineId: ["idol_story"],
+      // src/data/characterCatalog.js のIDだけを入れる。未登録人物はnoteに自然文で残す。
+      participants: ["saki_hanami"],
+      // 新規データでは原則として出典を入れる。
+      source: ["出典コミュ名 第1話"],
+      // 任意。空配列や空文字ではなく、補足がある時だけ項目を残す。
+      note: ["日付幅の根拠や未登録人物などの補足"],
     },
   ],
 };

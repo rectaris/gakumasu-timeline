@@ -31,6 +31,20 @@ function createError(entry, event, eventIndex, field, reason) {
   };
 }
 
+function createDuplicateIdError(occurrence, firstOccurrence) {
+  const otherOccurrence =
+    occurrence === firstOccurrence ? occurrence.duplicates[0] : firstOccurrence;
+  const relation = occurrence === firstOccurrence ? "also seen at" : "first seen at";
+
+  return createError(
+    occurrence.entry,
+    occurrence.event,
+    occurrence.eventIndex,
+    "id",
+    `duplicate event id "${occurrence.event.id}"; ${relation} ${otherOccurrence.entry.sourceFile} / ${otherOccurrence.entry.lane?.id ?? "(missing lane id)"} / ${eventLabel(otherOccurrence.event)}`,
+  );
+}
+
 function validateDate(entry, event, eventIndex, field, errors) {
   const date = event?.[field];
 
@@ -146,21 +160,29 @@ function validateReferences(entry, event, eventIndex, field, allowedIds, errors)
   });
 }
 
-export function validateTimelineData(entries, { characterIds, worldlineIds }) {
+export function validateTimelineData(
+  entries,
+  { characterIds, worldlineIds, focusSourceFiles = null },
+) {
   const errors = [];
-  const seenEventIds = new Map();
+  const eventIdOccurrences = new Map();
+  const shouldReportEntry = (entry) =>
+    !focusSourceFiles || focusSourceFiles.has(entry.sourceFile);
 
   entries.forEach((entry) => {
+    const entryErrors = shouldReportEntry(entry) ? errors : [];
     const events = entry.lane?.events;
 
     if (!Array.isArray(events)) {
-      errors.push(createError(entry, entry.lane, -1, "events", "must be an array"));
+      entryErrors.push(
+        createError(entry, entry.lane, -1, "events", "must be an array"),
+      );
       return;
     }
 
     events.forEach((event, eventIndex) => {
       if (!event || typeof event !== "object" || Array.isArray(event)) {
-        errors.push(
+        entryErrors.push(
           createError(entry, event, eventIndex, "event", "must be an object"),
         );
         return;
@@ -168,7 +190,7 @@ export function validateTimelineData(entries, { characterIds, worldlineIds }) {
 
       if (event.id !== undefined) {
         if (typeof event.id !== "string" || event.id.trim() === "") {
-          errors.push(
+          entryErrors.push(
             createError(
               entry,
               event,
@@ -177,35 +199,32 @@ export function validateTimelineData(entries, { characterIds, worldlineIds }) {
               "must be a non-empty string when present",
             ),
           );
-        } else if (seenEventIds.has(event.id)) {
-          const first = seenEventIds.get(event.id);
-          errors.push(
-            createError(
-              entry,
-              event,
-              eventIndex,
-              "id",
-              `duplicate event id "${event.id}"; first seen at ${first.sourceFile} / ${first.laneId} / ${eventLabel(first.event)}`,
-            ),
-          );
         } else {
-          seenEventIds.set(event.id, {
-            sourceFile: entry.sourceFile,
-            laneId: entry.lane?.id ?? "(missing lane id)",
+          const occurrences = eventIdOccurrences.get(event.id) ?? [];
+          occurrences.push({
+            entry,
             event,
+            eventIndex,
           });
+          eventIdOccurrences.set(event.id, occurrences);
         }
       }
 
-      const startValid = validateDate(entry, event, eventIndex, "start", errors);
-      const endValid = validateDate(entry, event, eventIndex, "end", errors);
+      const startValid = validateDate(
+        entry,
+        event,
+        eventIndex,
+        "start",
+        entryErrors,
+      );
+      const endValid = validateDate(entry, event, eventIndex, "end", entryErrors);
 
       if (
         startValid &&
         endValid &&
         dayValue(event.start, 1) > dayValue(event.end, 31)
       ) {
-        errors.push(
+        entryErrors.push(
           createError(
             entry,
             event,
@@ -217,7 +236,7 @@ export function validateTimelineData(entries, { characterIds, worldlineIds }) {
       }
 
       if (event.occurrenceType === undefined) {
-        errors.push(
+        entryErrors.push(
           createError(
             entry,
             event,
@@ -227,7 +246,7 @@ export function validateTimelineData(entries, { characterIds, worldlineIds }) {
           ),
         );
       } else if (!VALID_OCCURRENCE_TYPES.has(event.occurrenceType)) {
-        errors.push(
+        entryErrors.push(
           createError(
             entry,
             event,
@@ -239,7 +258,7 @@ export function validateTimelineData(entries, { characterIds, worldlineIds }) {
       }
 
       ARRAY_FIELDS.forEach((field) => {
-        validateStringArrayField(entry, event, eventIndex, field, errors);
+        validateStringArrayField(entry, event, eventIndex, field, entryErrors);
       });
 
       validateReferences(
@@ -248,7 +267,7 @@ export function validateTimelineData(entries, { characterIds, worldlineIds }) {
         eventIndex,
         "participants",
         characterIds,
-        errors,
+        entryErrors,
       );
       validateReferences(
         entry,
@@ -256,8 +275,30 @@ export function validateTimelineData(entries, { characterIds, worldlineIds }) {
         eventIndex,
         "worldlineId",
         worldlineIds,
-        errors,
+        entryErrors,
       );
+    });
+  });
+
+  eventIdOccurrences.forEach((occurrences) => {
+    if (occurrences.length < 2) {
+      return;
+    }
+
+    const [firstOccurrence, ...duplicateOccurrences] = occurrences;
+    firstOccurrence.duplicates = duplicateOccurrences;
+
+    if (focusSourceFiles) {
+      occurrences
+        .filter((occurrence) => shouldReportEntry(occurrence.entry))
+        .forEach((occurrence) => {
+          errors.push(createDuplicateIdError(occurrence, firstOccurrence));
+        });
+      return;
+    }
+
+    duplicateOccurrences.forEach((occurrence) => {
+      errors.push(createDuplicateIdError(occurrence, firstOccurrence));
     });
   });
 

@@ -93,17 +93,70 @@
   - 画面描画に使う表示用レンジ
   - `day` 未指定時は月初 / 月末相当へ補完されます
 
-## データ追加の手順（現状）
+## データ追加・編集チェックリスト
 
-1. `src/data/worldline_commu/` 配下の適切な世界線ディレクトリにキャラファイルを追加
-2. アイドルコミュは `src/data/worldline_commu/idol_commu/` に番号付きファイル名で置くと `src/data/index.js` が自動集約する
-3. `events` の `id` は他キャラと衝突しない命名にする
-4. `occurrenceType` を `continuous` / `singleWithinRange` のどちらかで明示する
-5. 追加後に `npm run validate:data` を実行する
+1. 追加先を決める
+   - アイドルコミュ: `src/data/worldline_commu/idol_commu/`
+   - 初星コミュ: `src/data/worldline_commu/hatsuboshi_commu/`
+   - イベントコミュ: `src/data/worldline_commu/event_commu/`
+   - サポートカードコミュ: `src/data/worldline_commu/support_story/`
+   - 共通イベント: `src/data/worldline_commu/common_timeline.js`
+2. 読み込み方法を確認する
+   - アイドルコミュは `src/data/worldline_commu/idol_commu/*.js` がファイル名順に自動集約されます
+   - 初星コミュ、イベントコミュ、サポートカードコミュは現状 `src/data/index.js` への登録が必要です
+3. `src/data/worldline_commu/template.js` を参考にファイルを作る
+   - コピー先がカテゴリサブディレクトリの場合、time utility の import は `../../utils/time` にします
+   - 空文字入り配列を残さず、不要な任意フィールドは削除します
+4. レーン情報を確認する
+   - `id` はレーンの安定 ID として扱います
+   - `name` は表示名です
+   - `color` はレーンとイベントの識別色に使われます
+5. イベントごとに `id` を付ける
+   - `id` は `canonicalId` として URL 復元に使われます
+   - 公開後の ID 変更は共有 URL を壊すため、原則として行いません
+   - 新規 ID はタイトル変更に耐える安定した名前にします
+6. 日付を入力する
+   - `start` / `end` は `{ year, month, day? }` の形にします
+   - 実カレンダーではなく、各月31日換算の抽象時系列です
+   - 具体日が不明な場合、架空の確定日を入れず範囲で表現します
+7. `occurrenceType` を必ず明示する
+   - `continuous`: `start` から `end` まで継続する期間
+   - `singleWithinRange`: `start` から `end` までの範囲内のどこか1日
+8. `participants` を確認する
+   - `src/data/characterCatalog.js` に存在する ID だけを入れます
+   - 未登録人物、集団名、仮 ID は入れず、必要なら `note` に自然文で残します
+9. `worldlineId` を確認する
+   - 既知の場合のみ `src/data/worldlines.js` の ID を入れます
+   - 未確定の世界線を表すための仮 ID は作りません
+10. `source` を入れる
+    - 新規データでは原則として出典を入れます
+    - 例: コミュ名、章、話数、公式資料 URL、ページ番号など
+    - 現行検証では未設定を hard fail にしませんが、出典なしの断定は避けます
+11. `note` に補足を残す
+    - 日付幅の根拠、推測理由、未登録人物、矛盾候補などを自然文で書きます
+    - `note` は機械判定用フィールドではありません
+12. focused validation を実行する
+    - 単一ファイル: `npm run validate:data -- src/data/worldline_commu/idol_commu/001hanamiSaki.js`
+    - ディレクトリ: `npm run validate:data -- src/data/worldline_commu/idol_commu`
+13. 全体検証を実行する
+    - `npm run validate:data`
+    - 実装変更を含む場合は `npm run test` と `npm run build` も実行します
+14. ローカル表示を確認する
+    - 編集中は `npm run dev`
+    - build 後の確認が必要な場合は `npm run build` の後に `npm run preview`
 
 ## データ検証
 
 `npm run validate:data` は `src/data/worldline_commu/` 配下の耐久データを検証します。`template.js` は雛形なので対象外です。
+
+単一ファイルやディレクトリだけを確認したい場合は、パスを渡します。
+
+```bash
+npm run validate:data -- src/data/worldline_commu/hatsuboshi_commu/001storyOfReiris.js
+npm run validate:data -- src/data/worldline_commu/idol_commu
+```
+
+focused validation は指定ファイルを主対象にしますが、イベント ID の重複と参照 ID は全データ文脈で確認します。
 
 検証対象:
 
@@ -117,4 +170,25 @@
 
 失敗時は、元ファイル、カテゴリ、レーン、イベント ID / title、フィールド、理由が表示されます。
 
-未登録人物は `participants` に空文字や仮 ID を入れず、必要なら `note` に自然文で残してください。機械参照できる参加者 ID のモデル拡張は後続のデータモデル強化で扱います。
+よくある失敗:
+
+- `participants[0] unknown id`: `characterCatalog` に存在しない ID を入れています。仮 ID は使わず、未登録人物は `note` に残してください。
+- `worldlineId[0] unknown id`: `worldlines` に存在しない ID を入れています。未確定ならフィールドを省略し、理由を `note` に書いてください。
+- `source[0] must not be empty`: 空文字や空白だけの値を配列に残しています。出典がない場合は空配列や空文字ではなく、フィールド自体を省略してください。
+- `occurrenceType must be explicit`: `continuous` または `singleWithinRange` を明示してください。
+- `start must be less than or equal to end`: `start` が `end` より後になっています。
+- `duplicate event id`: URL 復元に使うイベント ID が他イベントと衝突しています。新規イベント側の ID を安定した別名にしてください。
+
+## 承認境界
+
+通常の新規追加、誤字修正、出典追記、検証エラー修正はデータ author が進められます。
+
+以下は実装前に確認が必要です。
+
+- 既存イベントの意味、時系列解釈、出典主張を変える
+- 公開済みイベント ID を変更する
+- キャラクター名、世界線 ID、世界線の意味を変える
+- 未確定の単日イベントを具体日に断定する
+- `sourceStatus`、`confidence`、不確実性メタデータ、raw/generated などの新フィールドを追加する
+
+機械参照できる参加者 ID、出典状態、不確実性フィールドのモデル拡張は後続のデータモデル強化で扱います。

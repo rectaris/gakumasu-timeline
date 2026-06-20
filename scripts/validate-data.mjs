@@ -1,3 +1,4 @@
+import path from "node:path";
 import { runnerImport } from "vite";
 
 const { module } = await runnerImport("/src/data/integrityRunner.js", {
@@ -5,7 +6,14 @@ const { module } = await runnerImport("/src/data/integrityRunner.js", {
 });
 
 const { runTimelineDataIntegrityValidation } = module;
-const result = runTimelineDataIntegrityValidation();
+const targetPaths = process.argv.slice(2).map((targetPath) => {
+  const relativePath = path.isAbsolute(targetPath)
+    ? path.relative(process.cwd(), targetPath)
+    : targetPath;
+
+  return relativePath.split(path.sep).join("/");
+});
+const result = runTimelineDataIntegrityValidation({ targetPaths });
 
 console.log(result.message);
 

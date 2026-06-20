@@ -16,6 +16,8 @@
 ## データ検証
 
 - `npm run validate:data` が `src/data/worldline_commu/` 配下の耐久データを検証する
+- `npm run validate:data -- <path>` は指定ファイルまたは指定ディレクトリを主対象にした focused validation を実行する
+- focused validation でも、イベント ID の重複と参加者/世界線参照は全データ文脈を使って確認する
 - 検証は表示用正規化の前に、イベント ID、日付範囲、`occurrenceType`、参加者参照、世界線参照、空文字値を確認する
 - 失敗時は元ファイル、カテゴリ、レーン、イベント ID / title、フィールド、理由を表示する
 - `npm run verify` はデータ検証、ユニットテスト、ビルドを実行する

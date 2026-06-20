@@ -39,7 +39,7 @@ npm run test
 npm run verify
 ```
 
-`verify` は `test` と `build` を順に実行します。
+`verify` は `validate:data`、`test`、`build` を順に実行します。
 
 ## UI変更時の確認
 

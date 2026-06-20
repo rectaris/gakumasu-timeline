@@ -24,6 +24,18 @@ function entry(events) {
   ];
 }
 
+function entryForSource(sourceFile, events, laneId = "lane-a") {
+  return {
+    category: "test",
+    sourceFile,
+    lane: {
+      id: laneId,
+      name: laneId,
+      events,
+    },
+  };
+}
+
 function validEvent(overrides = {}) {
   return {
     id: "event-a",
@@ -59,6 +71,49 @@ describe("timeline data integrity", () => {
         reason: expect.stringContaining('duplicate event id "event-a"'),
       }),
     ]);
+  });
+
+  it("reports focused duplicate event ids using the full dataset context", () => {
+    const errors = validateTimelineData(
+      [
+        entryForSource("src/data/a.js", [validEvent()]),
+        entryForSource("src/data/b.js", [
+          validEvent({ title: "Duplicate Event" }),
+        ]),
+      ],
+      {
+        ...ids,
+        focusSourceFiles: new Set(["src/data/a.js"]),
+      },
+    );
+
+    expect(errors).toEqual([
+      expect.objectContaining({
+        sourceFile: "src/data/a.js",
+        field: "id",
+        reason: expect.stringContaining('duplicate event id "event-a"'),
+      }),
+    ]);
+  });
+
+  it("suppresses non-focused field errors during focused validation", () => {
+    const errors = validateTimelineData(
+      [
+        entryForSource("src/data/a.js", [validEvent()]),
+        entryForSource("src/data/b.js", [
+          validEvent({
+            id: "event-b",
+            start: { year: 1, month: 13, day: 1 },
+          }),
+        ]),
+      ],
+      {
+        ...ids,
+        focusSourceFiles: new Set(["src/data/a.js"]),
+      },
+    );
+
+    expect(errors).toEqual([]);
   });
 
   it("detects invalid date parts and ranges", () => {
