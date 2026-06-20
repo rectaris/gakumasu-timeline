@@ -182,10 +182,13 @@ if (initialViewState.hasViewState) {
 const {
   viewRange,
   timeBounds,
+  viewportRatio,
+  selectedEventRangeRatio,
   horizontalSpan,
   verticalScale,
   horizontalZoomLabel,
   verticalZoomLabel,
+  horizontalPresetOptions,
   showMonthScale: spanShowMonthScale,
   showDayScale: spanShowDayScale,
   canZoomInHorizontal,
@@ -195,6 +198,9 @@ const {
   panHorizontally,
   panByViewportRatio,
   setHorizontalRange,
+  setViewportCenterByRatio,
+  revealSelectedEvent,
+  zoomToPreset,
   zoomHorizontallyBy,
   zoomVerticallyBy,
   zoomInHorizontal,
@@ -409,6 +415,18 @@ function selectEventAndReveal(event) {
   });
 }
 
+const canReturnToSelectedEvent = computed(() => Boolean(selectedEvent.value));
+
+function returnToSelectedEvent() {
+  if (!selectedEvent.value) return;
+
+  revealSelectedEvent();
+  nextTick(() => {
+    if (!selectedEvent.value) return;
+    scrollLaneIntoView(selectedEvent.value.laneIndex);
+  });
+}
+
 function navigationIndexForSelection() {
   if (!selectedEvent.value) return -1;
   const selectedCanonicalId = selectedEvent.value.canonicalId ?? selectedEvent.value.id;
@@ -461,6 +479,7 @@ useKeyboard({
   panByViewportRatio,
   zoomInHorizontal,
   zoomOutHorizontal,
+  returnToSelectedEvent,
   closePanel
 });
 
@@ -1188,13 +1207,20 @@ onUnmounted(() => {
   <ZoomControls
     :horizontal-zoom-label="horizontalZoomLabel"
     :vertical-zoom-label="verticalZoomLabel"
+    :viewport-ratio="viewportRatio"
+    :selected-event-ratio="selectedEventRangeRatio"
+    :horizontal-preset-options="horizontalPresetOptions"
     :can-zoom-in-horizontal="canZoomInHorizontal"
     :can-zoom-out-horizontal="canZoomOutHorizontal"
     :can-zoom-in-vertical="canZoomInVertical"
     :can-zoom-out-vertical="canZoomOutVertical"
+    :can-return-to-selected-event="canReturnToSelectedEvent"
     :zoom-in-horizontal="zoomInHorizontal"
     :zoom-out-horizontal="zoomOutHorizontal"
     :reset-horizontal-zoom="resetHorizontalZoom"
+    :set-viewport-center-by-ratio="setViewportCenterByRatio"
+    :zoom-to-preset="zoomToPreset"
+    :return-to-selected-event="returnToSelectedEvent"
     :zoom-in-vertical="zoomInVertical"
     :zoom-out-vertical="zoomOutVertical"
     :reset-vertical-zoom="resetVerticalZoom"

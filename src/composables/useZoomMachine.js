@@ -9,6 +9,12 @@ const MAX_VERTICAL_SCALE = 2.5;
 const VERTICAL_ZOOM_STEP = 1.15;
 const FOCUS_PADDING_DAYS = 4;
 const DAY_SCALE_THRESHOLD_MONTHS = 2.8;
+const HORIZONTAL_PRESETS = Object.freeze([
+  { id: "overview", label: "全体", span: null },
+  { id: "year", label: "年", span: DAYS_IN_MONTH * 12 },
+  { id: "month", label: "月", span: DAYS_IN_MONTH },
+  { id: "detail", label: "詳細", span: 7 },
+]);
 const DEFAULT_TIME_BOUNDS = {
   min: -2,
   max: 2,
@@ -104,6 +110,15 @@ export function useZoomMachine(timesDay, selectedEvent) {
     setViewport((min + max) / 2, max - min);
   }
 
+  function setViewportCenterByRatio(ratio) {
+    if (!Number.isFinite(ratio)) return;
+
+    const center =
+      timeBounds.value.min + maxHorizontalSpan.value * clamp(ratio, 0, 1);
+
+    setViewport(center, horizontalSpan.value);
+  }
+
   function panHorizontally(delta) {
     setViewport(horizontalCenter.value + delta, horizontalSpan.value);
   }
@@ -161,10 +176,106 @@ export function useZoomMachine(timesDay, selectedEvent) {
     verticalScale.value = clamp(value, MIN_VERTICAL_SCALE, MAX_VERTICAL_SCALE);
   }
 
+  function revealHorizontalRange(min, max, padding = FOCUS_PADDING_DAYS) {
+    if (!Number.isFinite(min) || !Number.isFinite(max)) return false;
+
+    const targetMin = Math.min(min, max) - padding;
+    const targetMax = Math.max(min, max) + padding;
+    const requiredSpan = Math.max(
+      minHorizontalSpan.value,
+      targetMax - targetMin,
+    );
+    const nextSpan = Math.max(horizontalSpan.value, requiredSpan);
+    const currentMin = horizontalCenter.value - horizontalSpan.value / 2;
+    const currentMax = horizontalCenter.value + horizontalSpan.value / 2;
+
+    if (targetMin >= currentMin && targetMax <= currentMax) {
+      return false;
+    }
+
+    if (nextSpan > horizontalSpan.value) {
+      setViewport((targetMin + targetMax) / 2, nextSpan);
+      return true;
+    }
+
+    if (targetMin < currentMin) {
+      setViewport(targetMin + nextSpan / 2, nextSpan);
+      return true;
+    }
+
+    setViewport(targetMax - nextSpan / 2, nextSpan);
+    return true;
+  }
+
+  function selectedEventCenterDay() {
+    const event = selectedEvent.value;
+    if (!event) return null;
+
+    return (event.displayStartDay + event.displayEndDay) / 2;
+  }
+
+  function revealSelectedEvent() {
+    const event = selectedEvent.value;
+    if (!event) return false;
+
+    return revealHorizontalRange(event.displayStartDay, event.displayEndDay);
+  }
+
+  function zoomToPreset(presetId) {
+    const preset = HORIZONTAL_PRESETS.find((item) => item.id === presetId);
+    if (!preset) return;
+
+    if (preset.id === "overview") {
+      resetHorizontalZoom();
+      return;
+    }
+
+    setViewport(selectedEventCenterDay() ?? horizontalCenter.value, preset.span);
+  }
+
   const viewRange = computed(() => ({
     min: horizontalCenter.value - horizontalSpan.value / 2,
     max: horizontalCenter.value + horizontalSpan.value / 2,
   }));
+
+  const viewportRatio = computed(() => {
+    const fullSpan = maxHorizontalSpan.value;
+    if (!fullSpan) {
+      return { start: 0, end: 1, center: 0.5 };
+    }
+
+    const start = clamp((viewRange.value.min - timeBounds.value.min) / fullSpan, 0, 1);
+    const end = clamp((viewRange.value.max - timeBounds.value.min) / fullSpan, 0, 1);
+
+    return {
+      start,
+      end,
+      center: clamp((start + end) / 2, 0, 1),
+    };
+  });
+
+  const selectedEventRangeRatio = computed(() => {
+    const event = selectedEvent.value;
+    const fullSpan = maxHorizontalSpan.value;
+    if (!event || !fullSpan) return null;
+
+    const start = clamp(
+      (event.displayStartDay - timeBounds.value.min) / fullSpan,
+      0,
+      1,
+    );
+    const end = clamp(
+      (event.displayEndDay - timeBounds.value.min) / fullSpan,
+      0,
+      1,
+    );
+
+    return {
+      start: Math.min(start, end),
+      end: Math.max(start, end),
+      center: clamp((start + end) / 2, 0, 1),
+    };
+  });
 
   const showMonthScale = computed(
     () => horizontalSpan.value <= DAYS_IN_MONTH * 48,
@@ -217,27 +328,22 @@ export function useZoomMachine(timesDay, selectedEvent) {
   watch(selectedEvent, (event) => {
     if (!event) return;
 
-    const eventMin = event.displayStartDay;
-    const eventMax = event.displayEndDay;
-    const requiredSpan = Math.max(
-      horizontalSpan.value,
-      eventMax - eventMin + FOCUS_PADDING_DAYS * 2,
-    );
-
-    if (eventMin >= viewRange.value.min && eventMax <= viewRange.value.max) {
-      return;
-    }
-
-    setViewport((eventMin + eventMax) / 2, requiredSpan);
+    revealHorizontalRange(event.displayStartDay, event.displayEndDay);
   });
 
   return {
     viewRange,
     timeBounds,
+    viewportRatio,
+    selectedEventRangeRatio,
     horizontalSpan,
     verticalScale,
     horizontalZoomLabel,
     verticalZoomLabel,
+    horizontalPresetOptions: HORIZONTAL_PRESETS.map(({ id, label }) => ({
+      id,
+      label,
+    })),
     showMonthScale,
     showDayScale,
     canZoomInHorizontal,
@@ -247,6 +353,9 @@ export function useZoomMachine(timesDay, selectedEvent) {
     panHorizontally,
     panByViewportRatio,
     setHorizontalRange,
+    setViewportCenterByRatio,
+    revealSelectedEvent,
+    zoomToPreset,
     zoomHorizontallyBy,
     zoomVerticallyBy,
     zoomInHorizontal,

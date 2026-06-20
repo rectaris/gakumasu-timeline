@@ -60,14 +60,26 @@ Add lightweight orientation tools for large or dense timelines while preserving 
 - The selected-event return action should scroll vertically and adjust horizontal range only enough to reveal the event.
 - Presets should be deterministic and documented in terms of abstract timeline days/months.
 
+## Decisions
+
+- Use a compact range overview in `ZoomControls`, not a full event-density minimap.
+- Make the overview click-target jump the viewport center to the clicked full-range position; do not add draggable handles in this plan.
+- Keep mobile compact by hiding the range overview on narrow viewports while leaving presets and selected-event return available.
+- Keep selected-event return explicit: preserve the current selection, adjust the horizontal range only enough to reveal the event, and scroll to the lane when the lane is currently renderable.
+- Define presets by abstract timeline spans: overview = full range, year = 12 * 31 days, month = 31 days, detail = 7 days.
+- Center presets on the selected event when one is selected; otherwise preserve the current viewport center.
+- Reuse existing URL range synchronization. Do not add preset-name or range-control URL parameters here.
+- Keep selection auto-follow in `useZoomMachine`, but expose an explicit selected-event reveal action for returning after manual panning.
+- Represent `singleWithinRange` and common-event markers by their full display range / canonical selection position, never by an invented concrete day.
+
 ## Suggested Task Breakdown
 
-- [ ] Expose full time bounds and viewport ratio from `useZoomMachine`.
-- [ ] Prototype a compact range overview with current-range and selected-event markers.
-- [ ] Add selected-event return action with disabled state when no event is selected.
-- [ ] Add zoom preset actions using the existing zoom machine.
-- [ ] Verify wheel, drag, touch, and keyboard interactions still feel unchanged.
-- [ ] Update manual and behavior docs.
+- [x] Expose full time bounds and viewport ratio from `useZoomMachine`.
+- [x] Prototype a compact range overview with current-range and selected-event markers.
+- [x] Add selected-event return action with disabled state when no event is selected.
+- [x] Add zoom preset actions using the existing zoom machine.
+- [x] Verify wheel, drag, touch, and keyboard interactions still feel unchanged.
+- [x] Update manual and behavior docs.
 
 ## Out Of Scope
 

@@ -1,7 +1,6 @@
 # Active Plan
 
 id	path	status
-021	docs/plan/active/021-orientation-range-navigation.md	in_progress
 022	docs/plan/active/022-keyboard-command-navigation.md	in_progress
 023	docs/plan/active/023-lane-comparison-and-dense-event-summary.md	in_progress
 024	docs/plan/active/024-evidence-quality-audit-navigation.md	in_progress

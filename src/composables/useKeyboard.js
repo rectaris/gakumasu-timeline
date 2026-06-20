@@ -5,6 +5,7 @@ export function useKeyboard({
   panByViewportRatio,
   zoomInHorizontal,
   zoomOutHorizontal,
+  returnToSelectedEvent,
   closePanel,
 }) {
   function handleKey(e) {
@@ -36,6 +37,12 @@ export function useKeyboard({
       case "_":
         e.preventDefault();
         zoomOutHorizontal();
+        break;
+      case "r":
+      case "R":
+        if (!returnToSelectedEvent) break;
+        e.preventDefault();
+        returnToSelectedEvent();
         break;
       default:
         break;

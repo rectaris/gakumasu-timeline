@@ -21,3 +21,4 @@ id	path
 008	docs/plan/checked/008-data-source-model-hardening.md
 009	docs/plan/checked/009-generated-data-pipeline.md
 020	docs/plan/checked/020-view-state-persistence-and-sharing.md
+021	docs/plan/checked/021-orientation-range-navigation.md
