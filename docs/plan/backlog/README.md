@@ -9,11 +9,9 @@
 - 着手するときは `scripts/promote-plan.sh` で active に移します。
 - 番号は active、backlog、checked で共通の連番として扱います。
 
-## 現在の改善計画
+## 現在の backlog
 
-- backlog: `008-data-source-model-hardening.md`: 参加者・世界線・出典・不確実性のデータモデル強化
-- backlog: `009-generated-data-pipeline.md`: raw/generated 分離による長期運用向け読み込み
-- backlog: `013-domain-uncertainty-semantics.md`: 学マス固有の不確実性・根拠・世界線意味論
+現在、backlog にある計画ファイルはありません。
 
 汎用タイムラインアプリ化は、現時点では対象外です。
 
