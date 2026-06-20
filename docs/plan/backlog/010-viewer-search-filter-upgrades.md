@@ -40,19 +40,25 @@ acceptance_focus:
 expected_output: full-implementation
 checked_summary_ja: 学マス時系列ビューアの検索・フィルタ・詳細表示を強化する。
 
+superseded_by:
+  - docs/plan/checked/017-navigation-search-filter-experience.md
+remaining_scope:
+  - SidePanel source, participants, notes, uncertainty, and related context presentation should continue under docs/plan/active/018-detail-related-context-panel.md.
+  - Source-specific filtering remains deferred unless a later data-model or detail-panel plan needs it.
+
 ## Goal
 
 Increase the value of the app as a Gakumasu timeline viewer by making event evidence and cross-character lookup easier.
 
 ## Tasks
 
-- [ ] Define search scope and matching behavior for event title, detail, source, note, and participant IDs/names.
-- [ ] Add event-level filtering without breaking category/lane selection.
-- [ ] Add UI for worldline and uncertainty filters when the data model supports them.
+- [x] Define search scope and matching behavior for event title, detail, source, note, and participant IDs/names.
+- [x] Add event-level filtering without breaking category/lane selection.
+- [x] Add UI for worldline and uncertainty filters when the data model supports them.
 - [ ] Improve `SidePanel.vue` source, participants, notes, and uncertainty sections.
-- [ ] Preserve common-event canonical selection and URL restore behavior.
-- [ ] Update `docs/manual.md` and `docs/ui-behavior.md`.
-- [ ] Browser-check desktop and narrow mobile paths.
+- [x] Preserve common-event canonical selection and URL restore behavior.
+- [x] Update `docs/manual.md` and `docs/ui-behavior.md`.
+- [x] Browser-check desktop and narrow mobile paths.
 
 ## Out Of Scope
 

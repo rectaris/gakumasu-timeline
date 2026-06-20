@@ -256,6 +256,32 @@ select:focus-visible {
   line-height: 1.6;
 }
 
+.panel-status {
+  margin: 10px 0;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface-soft);
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.panel-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  margin: 0 0 10px;
+  padding: 5px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .zoom-panel {
     position: fixed;
     bottom: 12px;
@@ -269,10 +295,10 @@ select:focus-visible {
 
 .zoom-controls {
     display: inline-flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: stretch;
-    gap: 6px;
-    padding: 8px 10px;
+    gap: 8px;
+    padding: 6px 8px;
     background: var(--surface-elevated);
     border: 1px solid var(--border);
     border-radius: 8px;
@@ -283,11 +309,11 @@ select:focus-visible {
 .zoom-group {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
 }
 
 .zoom-group-label {
-    min-width: 42px;
+    min-width: auto;
     font-size: 11px;
     font-weight: 700;
     color: var(--text-secondary);
@@ -295,8 +321,8 @@ select:focus-visible {
 }
 
 .zoom-button {
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
     border: 1px solid var(--border);
     background: var(--button-bg);
     border-radius: 4px;
@@ -318,8 +344,8 @@ select:focus-visible {
 
 .zoom-button--reset {
     width: auto;
-    min-width: 44px;
-    padding: 0 8px;
+    min-width: 38px;
+    padding: 0 6px;
     font-size: 11px;
     color: var(--text-primary);
 }
@@ -333,7 +359,7 @@ select:focus-visible {
     font-size: 11px;
     font-weight: 700;
     color: var(--text-primary);
-    min-width: 48px;
+    min-width: 42px;
     text-align: center;
 }
 
@@ -360,6 +386,10 @@ select:focus-visible {
     .zoom-panel {
         flex-direction: column;
         align-items: center;
+    }
+
+    .zoom-controls {
+        flex-direction: column;
     }
 
     .zoom-group-label {
@@ -749,6 +779,19 @@ select:focus-visible {
     vector-effect: non-scaling-stroke;
 }
 
+.lane-label {
+    cursor: pointer;
+}
+
+.lane-label:focus {
+    outline: none;
+}
+
+.lane-label:focus-visible .lane-label__surface {
+    stroke: var(--timeline-focus-stroke);
+    stroke-width: 2;
+}
+
 .lane-label__accent {
     vector-effect: non-scaling-stroke;
 }
@@ -971,6 +1014,23 @@ select:focus-visible {
     margin-bottom: 8px;
 }
 
+.menu-inline-button {
+    min-height: 28px;
+    padding: 4px 9px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--button-bg);
+    color: var(--button-text);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.menu-inline-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .menu-section-header {
     display: flex;
     align-items: center;
@@ -1012,7 +1072,8 @@ select:focus-visible {
 }
 
 .lane-search,
-.lane-sort {
+.lane-sort,
+.event-filter {
     display: grid;
     gap: 4px;
 }
@@ -1039,6 +1100,39 @@ select:focus-visible {
     margin: 0;
     font-size: 12px;
     color: var(--text-muted);
+}
+
+.event-filter-grid {
+    display: grid;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.event-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.event-navigation__buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.focus-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 8px;
+    border: 1px solid var(--border-soft);
+    border-radius: 6px;
+    background: var(--surface-soft);
+    color: var(--text-secondary);
+    font-size: 12px;
 }
 
 .settings-note {

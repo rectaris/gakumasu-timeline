@@ -7,6 +7,7 @@ const props = defineProps({
   leftLabelWidth: { type: Number, required: true },
   invertHexColor: { type: Function, required: true }
 });
+const emit = defineEmits(["focus-lane"]);
 
 const FONT_SIZE = 14;
 const FONT_WEIGHT = 700;
@@ -65,12 +66,32 @@ function displayName(text) {
   return text;
 }
 
+function focusLane(event, char) {
+  event.stopPropagation();
+  emit("focus-lane", char.id);
+}
+
+function handleKeydown(event, char) {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  event.preventDefault();
+  focusLane(event, char);
+}
+
 </script>
 
 <template>
-  <g v-for="(char, index) in characters" :key="char.id">
+  <g
+    v-for="(char, index) in characters"
+    :key="char.id"
+    class="lane-label"
+    tabindex="0"
+    role="button"
+    :aria-label="`${char.name}に集中表示`"
+    @click="focusLane($event, char)"
+    @keydown="handleKeydown($event, char)"
+  >
     <rect
-      class="lane-label lane-label__surface"
+      class="lane-label__surface"
       :x="rectX(char.name)"
       :y="laneCenterY(index) - rectHeight() / 2"
       :width="rectWidth(char.name)"
@@ -78,7 +99,7 @@ function displayName(text) {
       rx="4"
     />
     <rect
-      class="lane-label lane-label__accent"
+      class="lane-label__accent"
       :x="rectX(char.name)"
       :y="laneCenterY(index) - rectHeight() / 2 + 4"
       :width="ACCENT_WIDTH"

@@ -42,6 +42,12 @@ acceptance_focus:
 expected_output: full-implementation
 checked_summary_ja: イベント数・レーン数増加に耐える表示と操作を強化する。
 
+partially_addressed_by:
+  - docs/plan/checked/017-navigation-search-filter-experience.md
+remaining_scope:
+  - Broader render-cost measurement and offscreen work reduction remain open.
+  - Lane-level virtualization remains deferred until simpler filtering and clipping are insufficient.
+
 ## Goal
 
 Improve UI/interaction quality as data grows while preserving the current timeline feel.
@@ -52,8 +58,8 @@ Improve UI/interaction quality as data grows while preserving the current timeli
 - [ ] Reduce unnecessary work for offscreen events and lanes.
 - [ ] Consider lane-level virtualization only if simpler clipping/filtering is insufficient.
 - [ ] Add focused tests for selection, lane hide/show, URL restore, and `singleWithinRange` rendering when touched.
-- [ ] Add or document browser smoke checks for wheel zoom, drag movement, touch/pinch behavior, and mobile viewport.
-- [ ] Update human-facing docs if interaction behavior changes.
+- [x] Add or document browser smoke checks for wheel zoom, drag movement, touch/pinch behavior, and mobile viewport.
+- [x] Update human-facing docs if interaction behavior changes.
 
 ## Out Of Scope
 

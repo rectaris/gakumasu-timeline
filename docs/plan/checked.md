@@ -11,3 +11,4 @@ id	path
 014	docs/plan/checked/014-official-color-system.md
 015	docs/plan/checked/015-timeline-visual-refinement.md
 016	docs/plan/checked/016-event-information-hierarchy.md
+017	docs/plan/checked/017-navigation-search-filter-experience.md

@@ -12,7 +12,7 @@ const props = defineProps({
   isDragging: { type: Boolean, required: true }
 });
 
-const emit = defineEmits(["select"]);
+const emit = defineEmits(["select", "focus-lane"]);
 const CLIP_PADDING = 6;
 const clipId = `timeline-clip-${getCurrentInstance()?.uid ?? "default"}`;
 </script>
@@ -79,6 +79,7 @@ const clipId = `timeline-clip-${getCurrentInstance()?.uid ?? "default"}`;
       :lane-center-y="renderContext.laneCenterY"
       :left-label-width="renderContext.leftLabelWidth"
       :invert-hex-color="renderContext.invertHexColor"
+      @focus-lane="laneId => emit('focus-lane', laneId)"
     />
   </svg>
 </template>

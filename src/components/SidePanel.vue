@@ -1,8 +1,10 @@
 <script setup>
 const props = defineProps({
   selectedEvent: { type: Object, default: null },
+  selectedEventHidden: { type: Boolean, default: false },
   yearLabel: { type: Function, required: true },
-  closePanel: { type: Function, required: true }
+  closePanel: { type: Function, required: true },
+  focusEventLane: { type: Function, required: true }
 });
 
 function hasExplicitDay(date) {
@@ -94,6 +96,18 @@ function panelAccentStyle(event) {
         {{ selectedEvent.character }}<br />
         {{ formatEventOccurrence(selectedEvent) }}
       </p>
+
+      <p v-if="selectedEventHidden" class="panel-status">
+        現在の検索・絞り込み条件では非表示です。
+      </p>
+
+      <button
+        class="panel-action"
+        type="button"
+        @click="focusEventLane(selectedEvent)"
+      >
+        このレーンに集中
+      </button>
 
       <p id="side-panel-detail" class="detail">
         {{ selectedEvent.detail }}

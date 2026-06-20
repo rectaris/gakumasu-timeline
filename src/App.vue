@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from "vue";
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import {
   idolCommu,
   hatsuboshiCommus,
@@ -7,10 +7,13 @@ import {
   supportCardCommus,
   commonTimeline
 } from "./data";
+import { characterCatalog } from "./data/characterCatalog";
+import { worldlines } from "./data/worldlines";
 import { useKeyboard } from "./composables/useKeyboard";
 import { useMenuState } from "./composables/useMenuState";
 import { usePointer } from "./composables/usePointer";
 import { useCategoryFilter } from "./composables/useCategoryFilter";
+import { useEventSearchFilter } from "./composables/useEventSearchFilter";
 import { useSelection } from "./composables/useSelection";
 import { useTimelineData } from "./composables/useTimelineData";
 import { useTimelineLayout } from "./composables/useTimelineLayout";
@@ -59,6 +62,16 @@ const {
   supportCardCommus: supportRef
 });
 
+const focusedLaneId = ref(null);
+const timelineLanes = computed(() => {
+  if (!focusedLaneId.value) return activeLanes.value;
+  return activeLanes.value.filter((lane) => lane.id === focusedLaneId.value);
+});
+const focusedLaneLabel = computed(() => {
+  if (!focusedLaneId.value) return "";
+  return activeLanes.value.find((lane) => lane.id === focusedLaneId.value)?.name ?? "";
+});
+
 const { isOpen: menuOpen, openMenu, closeMenu, toggleMenu } =
   useMenuState();
 
@@ -84,11 +97,33 @@ const {
 } = usePersistedSettings();
 
 const { allEvents, timesDay } = useTimelineData(
-  activeLanes,
+  timelineLanes,
   commonTimeline,
   showCommonEvents
 );
 const { selectedEvent, selectEvent, closePanel } = useSelection(allEvents);
+const {
+  eventSearchQuery,
+  occurrenceTypeFilter,
+  uncertaintyFilter,
+  participantFilter,
+  commuFilter,
+  worldlineFilter,
+  filteredEvents,
+  navigationEvents,
+  hasActiveEventFilters,
+  participantOptions,
+  commuOptions,
+  worldlineOptions,
+  resultSummary,
+  isEventInFilteredSet,
+  resetEventFilters
+} = useEventSearchFilter({
+  allEvents,
+  lanes: timelineLanes,
+  characterCatalog,
+  worldlines,
+});
 
 const {
   viewRange,
@@ -124,8 +159,8 @@ const {
   xPos,
   eventBarHeight
 } = useTimelineLayout({
-  characters: activeLanes,
-  allEvents,
+  characters: timelineLanes,
+  allEvents: filteredEvents,
   viewRange,
   verticalScale,
   width: WIDTH,
@@ -155,7 +190,7 @@ const timelineRenderContext = computed(() => ({
   laneCenterY,
   yPos,
   eventBarHeight: eventBarHeight.value,
-  characters: activeLanes.value,
+  characters: timelineLanes.value,
   visibleEvents: visibleEvents.value,
   selectedEvent: selectedEvent.value,
   isSingleWithinRange,
@@ -186,6 +221,7 @@ function shouldKeepPanelOpenFromClick(target) {
       target.closest(".zoom-panel") ||
       target.closest(".zoom-controls") ||
       target.closest(".intro-guide") ||
+      target.closest(".lane-label") ||
       target.closest(".event-group"),
   );
 }
@@ -288,6 +324,73 @@ const timelineInteractionHandlers = {
   onTouchEnd
 };
 
+function scrollLaneIntoView(laneIndex) {
+  const stageElement = timelineStageRef.value;
+  const lane = laneLayouts.value[laneIndex];
+  if (!stageElement || !lane) return;
+
+  const targetTop = Math.max(0, lane.laneTop - 72);
+  stageElement.scrollTo({
+    top: targetTop,
+    behavior: "smooth",
+  });
+}
+
+function selectEventAndReveal(event) {
+  selectEvent(event);
+  nextTick(() => {
+    scrollLaneIntoView(event.laneIndex);
+  });
+}
+
+function navigationIndexForSelection() {
+  if (!selectedEvent.value) return -1;
+  const selectedCanonicalId = selectedEvent.value.canonicalId ?? selectedEvent.value.id;
+  return navigationEvents.value.findIndex(
+    (event) => (event.canonicalId ?? event.id) === selectedCanonicalId,
+  );
+}
+
+function goToNavigationEvent(direction) {
+  const events = navigationEvents.value;
+  if (!events.length) return;
+
+  const currentIndex = navigationIndexForSelection();
+  const nextIndex =
+    currentIndex === -1
+      ? direction > 0 ? 0 : events.length - 1
+      : (currentIndex + direction + events.length) % events.length;
+
+  selectEventAndReveal(events[nextIndex]);
+  closeMenu();
+}
+
+function goToPreviousEvent() {
+  goToNavigationEvent(-1);
+}
+
+function goToNextEvent() {
+  goToNavigationEvent(1);
+}
+
+function focusLane(laneId) {
+  focusedLaneId.value = laneId;
+  closeMenu();
+  nextTick(() => {
+    scrollLaneIntoView(0);
+  });
+}
+
+function focusLaneFromEvent(event) {
+  const lane = timelineLanes.value[event?.laneIndex];
+  if (!lane) return;
+  focusLane(lane.id);
+}
+
+function clearLaneFocus() {
+  focusedLaneId.value = null;
+}
+
 useKeyboard({
   panByViewportRatio,
   zoomInHorizontal,
@@ -297,6 +400,19 @@ useKeyboard({
 
 const isCurrentCategoryEmpty = computed(() => laneOptions.value.length === 0);
 const hasAnyLaneInCurrentCategory = computed(() => totalLaneCount.value > 0);
+const selectedEventHiddenByFilters = computed(
+  () =>
+    Boolean(selectedEvent.value) &&
+    hasActiveEventFilters.value &&
+    !isEventInFilteredSet(selectedEvent.value),
+);
+
+watch(activeLanes, (lanes) => {
+  if (!focusedLaneId.value) return;
+  if (!lanes.some((lane) => lane.id === focusedLaneId.value)) {
+    clearLaneFocus();
+  }
+});
 
 function handleGlobalEscape(event) {
   if (event.key !== "Escape") return;
@@ -490,6 +606,146 @@ onUnmounted(() => {
         {{ hasAnyLaneInCurrentCategory ? "該当するレーンがありません" : "今後追加予定" }}
       </div>
     </section>
+
+    <section class="side-menu__section" aria-labelledby="menu-event-search-title">
+      <div class="menu-section-header">
+        <p id="menu-event-search-title" class="menu-section-title">イベント検索</p>
+        <button
+          class="menu-inline-button"
+          type="button"
+          :disabled="!hasActiveEventFilters"
+          @click="resetEventFilters"
+        >
+          解除
+        </button>
+      </div>
+
+      <label class="lane-search">
+        <span class="lane-search__label">検索</span>
+        <input
+          v-model="eventSearchQuery"
+          class="lane-search__input"
+          type="search"
+          aria-label="イベントを検索"
+          aria-describedby="event-result-summary"
+          title="イベントを検索"
+          placeholder="タイトル・本文・参加者など"
+        />
+      </label>
+
+      <div class="event-filter-grid">
+        <label class="event-filter">
+          <span class="lane-search__label">発生形式</span>
+          <select
+            v-model="occurrenceTypeFilter"
+            class="lane-sort__select"
+            aria-label="発生形式で絞り込む"
+          >
+            <option value="all">すべて</option>
+            <option value="continuous">期間</option>
+            <option value="singleWithinRange">期間内の1日</option>
+          </select>
+        </label>
+
+        <label class="event-filter">
+          <span class="lane-search__label">確度</span>
+          <select
+            v-model="uncertaintyFilter"
+            class="lane-sort__select"
+            aria-label="日付の確度で絞り込む"
+          >
+            <option value="all">すべて</option>
+            <option value="certain">確定</option>
+            <option value="uncertain">不確定</option>
+          </select>
+        </label>
+
+        <label v-if="participantOptions.length" class="event-filter">
+          <span class="lane-search__label">参加者</span>
+          <select
+            v-model="participantFilter"
+            class="lane-sort__select"
+            aria-label="参加者で絞り込む"
+          >
+            <option value="all">すべて</option>
+            <option
+              v-for="option in participantOptions"
+              :key="option.id"
+              :value="option.id"
+            >
+              {{ option.label }}（{{ option.count }}）
+            </option>
+          </select>
+        </label>
+
+        <label v-if="commuOptions.length" class="event-filter">
+          <span class="lane-search__label">コミュ</span>
+          <select
+            v-model="commuFilter"
+            class="lane-sort__select"
+            aria-label="コミュで絞り込む"
+          >
+            <option value="all">すべて</option>
+            <option
+              v-for="option in commuOptions"
+              :key="option.id"
+              :value="option.id"
+            >
+              {{ option.label }}（{{ option.count }}）
+            </option>
+          </select>
+        </label>
+
+        <label v-if="worldlineOptions.length" class="event-filter">
+          <span class="lane-search__label">世界線</span>
+          <select
+            v-model="worldlineFilter"
+            class="lane-sort__select"
+            aria-label="世界線で絞り込む"
+          >
+            <option value="all">すべて</option>
+            <option
+              v-for="option in worldlineOptions"
+              :key="option.id"
+              :value="option.id"
+            >
+              {{ option.label }}（{{ option.count }}）
+            </option>
+          </select>
+        </label>
+      </div>
+
+      <div class="event-navigation">
+        <p id="event-result-summary" class="lane-summary">
+          {{ resultSummary.canonical }} / {{ resultSummary.total }} 件
+        </p>
+        <div class="event-navigation__buttons" role="group" aria-label="検索結果の移動">
+          <button
+            class="menu-inline-button"
+            type="button"
+            :disabled="navigationEvents.length === 0"
+            @click="goToPreviousEvent"
+          >
+            前へ
+          </button>
+          <button
+            class="menu-inline-button"
+            type="button"
+            :disabled="navigationEvents.length === 0"
+            @click="goToNextEvent"
+          >
+            次へ
+          </button>
+        </div>
+      </div>
+
+      <div v-if="focusedLaneId" class="focus-status">
+        <span>{{ focusedLaneLabel }} に集中表示中</span>
+        <button class="menu-inline-button" type="button" @click="clearLaneFocus">
+          全レーン
+        </button>
+      </div>
+    </section>
   </aside>
 
   <aside
@@ -635,7 +891,8 @@ onUnmounted(() => {
               :render-context="timelineRenderContext"
               :interaction-handlers="timelineInteractionHandlers"
               :is-dragging="isDragging"
-              @select="selectEvent"
+              @select="selectEventAndReveal"
+              @focus-lane="focusLane"
             />
           </div>
           <div v-if="TIMELINE_FOOTER_AD_SLOT" class="timeline-footer-ad">
@@ -648,7 +905,9 @@ onUnmounted(() => {
 
   <SidePanel
     :selected-event="selectedEvent"
+    :selected-event-hidden="selectedEventHiddenByFilters"
     :year-label="yearLabel"
     :close-panel="closePanel"
+    :focus-event-lane="focusLaneFromEvent"
   />
 </template>
