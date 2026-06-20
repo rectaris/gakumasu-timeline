@@ -99,6 +99,11 @@ export function useZoomMachine(timesDay, selectedEvent) {
     );
   }
 
+  function setHorizontalRange(min, max) {
+    if (!Number.isFinite(min) || !Number.isFinite(max) || min >= max) return;
+    setViewport((min + max) / 2, max - min);
+  }
+
   function panHorizontally(delta) {
     setViewport(horizontalCenter.value + delta, horizontalSpan.value);
   }
@@ -149,6 +154,11 @@ export function useZoomMachine(timesDay, selectedEvent) {
 
   function resetVerticalZoom() {
     verticalScale.value = 1;
+  }
+
+  function setVerticalScale(value) {
+    if (!Number.isFinite(value)) return;
+    verticalScale.value = clamp(value, MIN_VERTICAL_SCALE, MAX_VERTICAL_SCALE);
   }
 
   const viewRange = computed(() => ({
@@ -223,6 +233,7 @@ export function useZoomMachine(timesDay, selectedEvent) {
 
   return {
     viewRange,
+    timeBounds,
     horizontalSpan,
     verticalScale,
     horizontalZoomLabel,
@@ -235,6 +246,7 @@ export function useZoomMachine(timesDay, selectedEvent) {
     canZoomOutVertical,
     panHorizontally,
     panByViewportRatio,
+    setHorizontalRange,
     zoomHorizontallyBy,
     zoomVerticallyBy,
     zoomInHorizontal,
@@ -242,6 +254,7 @@ export function useZoomMachine(timesDay, selectedEvent) {
     resetHorizontalZoom,
     zoomInVertical,
     zoomOutVertical,
+    setVerticalScale,
     resetVerticalZoom,
   };
 }

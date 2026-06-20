@@ -796,6 +796,94 @@ select:focus-visible {
     color: var(--text-muted);
 }
 
+.active-state-bar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 35;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    align-items: center;
+    width: min(720px, calc(100% - 20px));
+    box-sizing: border-box;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface-elevated);
+    box-shadow: 0 8px 20px var(--shadow);
+    backdrop-filter: blur(10px);
+}
+
+.active-state-bar--panel-open {
+    right: 330px;
+    width: min(720px, calc(100% - 340px));
+}
+
+.active-state-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-width: 0;
+}
+
+.active-state-chip,
+.active-state-action {
+    min-height: 30px;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    background: var(--button-bg);
+    color: var(--button-text);
+    font: inherit;
+    font-size: 12px;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+.active-state-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    max-width: min(260px, 100%);
+    padding: 5px 8px;
+}
+
+.active-state-chip span:first-child {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.active-state-chip__close {
+    flex: 0 0 auto;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.active-state-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.active-state-action {
+    padding: 5px 9px;
+    white-space: nowrap;
+}
+
+.active-state-chip:hover,
+.active-state-action:hover {
+    background: var(--surface-soft);
+}
+
+.active-state-status {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
 .timeline-shell {
     width: 100%;
     height: calc(100vh - 56px);
@@ -1372,6 +1460,40 @@ select:focus-visible {
 
     .intro-guide__note {
         display: none;
+    }
+
+    .active-state-bar {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        width: auto;
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding: 7px;
+    }
+
+    .active-state-bar--panel-open {
+        right: 8px;
+        width: auto;
+    }
+
+    .active-state-list {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .active-state-list::-webkit-scrollbar {
+        display: none;
+    }
+
+    .active-state-chip {
+        flex: 0 0 auto;
+        max-width: 220px;
+    }
+
+    .active-state-actions {
+        justify-content: flex-end;
     }
 
     .timeline-footer-ad {

@@ -32,8 +32,32 @@ import { invertHexColor } from "./utils/colors";
 import { isFormElementTarget } from "./utils/dom";
 import { isSingleWithinRange } from "./utils/events";
 import { yearLabel } from "./utils/labels";
+import {
+  parseTimelineViewState,
+  replaceTimelineViewStateInUrl,
+} from "./utils/viewStateUrl";
 import { LEFT_LABEL_WIDTH, RIGHT_PADDING, WIDTH } from "./utils/constants";
 import manualContent from "../docs/manual.md?raw";
+
+const DEFAULT_CATEGORY_ID = "idol";
+const DEFAULT_FILTER_VALUE = "all";
+const DEFAULT_LANE_SORT_MODE = "default";
+const DEFAULT_VERTICAL_SCALE = 1;
+const URL_SYNC_DELAY_MS = 150;
+const initialViewState = parseTimelineViewState(window.location.search);
+
+const occurrenceTypeLabels = {
+  continuous: "期間",
+  singleWithinRange: "期間内の1日",
+};
+const uncertaintyLabels = {
+  confirmed: "確定",
+  inferred: "推定",
+  rangeOnly: "期間内の1日",
+  conflicting: "出典矛盾",
+  certain: "確定",
+  uncertain: "不確定",
+};
 
 const idolCommuRef = ref(idolCommu);
 const hatsuboshiRef = ref(hatsuboshiCommus);
@@ -54,6 +78,13 @@ const {
   allSelected,
   isIndeterminate,
   isLaneSelected,
+  isValidCategory,
+  isValidLaneSortMode,
+  allLaneIdsForCategory,
+  selectedLaneIdsForCategory,
+  setLaneSortMode,
+  selectAllLanes,
+  applyLaneVisibilityState,
   toggleLane,
   toggleAll
 } = useCategoryFilter({
@@ -62,6 +93,21 @@ const {
   eventCommus: eventRef,
   supportCardCommus: supportRef
 });
+
+if (initialViewState.hasViewState) {
+  if (isValidCategory(initialViewState.category)) {
+    selectedCategory.value = initialViewState.category;
+  }
+
+  if (isValidLaneSortMode(initialViewState.laneSortMode)) {
+    setLaneSortMode(selectedCategory.value, initialViewState.laneSortMode);
+  }
+
+  applyLaneVisibilityState(
+    selectedCategory.value,
+    initialViewState.laneSelection,
+  );
+}
 
 const focusedLaneId = ref(null);
 const timelineLanes = computed(() => {
@@ -95,7 +141,9 @@ const {
   showCommonEvents,
   showIntroGuide,
   dismissIntroGuide
-} = usePersistedSettings();
+} = usePersistedSettings({
+  initialShowCommonEvents: initialViewState.showCommonEvents,
+});
 
 const { allEvents, timesDay } = useTimelineData(
   timelineLanes,
@@ -118,7 +166,8 @@ const {
   worldlineOptions,
   resultSummary,
   isEventInFilteredSet,
-  resetEventFilters
+  resetEventFilters,
+  setEventFilters
 } = useEventSearchFilter({
   allEvents,
   lanes: timelineLanes,
@@ -126,8 +175,13 @@ const {
   worldlines,
 });
 
+if (initialViewState.hasViewState) {
+  setEventFilters(initialViewState.filters);
+}
+
 const {
   viewRange,
+  timeBounds,
   horizontalSpan,
   verticalScale,
   horizontalZoomLabel,
@@ -140,6 +194,7 @@ const {
   canZoomOutVertical,
   panHorizontally,
   panByViewportRatio,
+  setHorizontalRange,
   zoomHorizontallyBy,
   zoomVerticallyBy,
   zoomInHorizontal,
@@ -147,6 +202,7 @@ const {
   resetHorizontalZoom,
   zoomInVertical,
   zoomOutVertical,
+  setVerticalScale,
   resetVerticalZoom
 } = useZoomMachine(timesDay, selectedEvent);
 
@@ -227,6 +283,7 @@ function shouldKeepPanelOpenFromClick(target) {
       target.closest(".settings-menu") ||
       target.closest(".manual-modal") ||
       target.closest(".side-panel") ||
+      target.closest(".active-state-bar") ||
       target.closest(".zoom-panel") ||
       target.closest(".zoom-controls") ||
       target.closest(".intro-guide") ||
@@ -416,12 +473,257 @@ const selectedEventHiddenByFilters = computed(
     !isEventInFilteredSet(selectedEvent.value),
 );
 
+const currentLaneIds = computed(() =>
+  allLaneIdsForCategory(selectedCategory.value),
+);
+const currentSelectedLaneIds = computed(() =>
+  selectedLaneIdsForCategory(selectedCategory.value),
+);
+const hasNonDefaultLaneSelection = computed(
+  () => currentSelectedLaneIds.value.length !== currentLaneIds.value.length,
+);
+const hasNonDefaultHorizontalRange = computed(
+  () =>
+    Math.abs(viewRange.value.min - timeBounds.value.min) > 0.01 ||
+    Math.abs(viewRange.value.max - timeBounds.value.max) > 0.01,
+);
+
+const timelineViewStateSnapshot = computed(() => ({
+  category: selectedCategory.value,
+  laneSortMode: laneSortMode.value,
+  selectedLaneIds: currentSelectedLaneIds.value,
+  allLaneIds: currentLaneIds.value,
+  filters: {
+    query: eventSearchQuery.value,
+    occurrenceType: occurrenceTypeFilter.value,
+    uncertainty: uncertaintyFilter.value,
+    participant: participantFilter.value,
+    commu: commuFilter.value,
+    worldline: worldlineFilter.value,
+  },
+  range: viewRange.value,
+  fullRange: timeBounds.value,
+  verticalScale: verticalScale.value,
+  focusedLaneId: focusedLaneId.value,
+  showCommonEvents: showCommonEvents.value,
+}));
+
+function optionLabel(options, id) {
+  return options.find((option) => option.id === id)?.label ?? id;
+}
+
+function currentCategoryLabel() {
+  return optionLabel(categoryOptions, selectedCategory.value);
+}
+
+function activeChip(id, label, onClear) {
+  return { id, label, onClear };
+}
+
+const activeStateChips = computed(() => {
+  const chips = [];
+
+  if (selectedCategory.value !== DEFAULT_CATEGORY_ID) {
+    chips.push(
+      activeChip("category", `カテゴリ: ${currentCategoryLabel()}`, () => {
+        selectedCategory.value = DEFAULT_CATEGORY_ID;
+      }),
+    );
+  }
+
+  if (laneSortMode.value !== DEFAULT_LANE_SORT_MODE) {
+    chips.push(
+      activeChip(
+        "lane-sort",
+        `並び順: ${optionLabel(laneSortOptions, laneSortMode.value)}`,
+        () => setLaneSortMode(selectedCategory.value, DEFAULT_LANE_SORT_MODE),
+      ),
+    );
+  }
+
+  if (hasNonDefaultLaneSelection.value) {
+    chips.push(
+      activeChip(
+        "lanes",
+        `表示レーン: ${currentSelectedLaneIds.value.length}/${currentLaneIds.value.length}`,
+        () => selectAllLanes(selectedCategory.value),
+      ),
+    );
+  }
+
+  if (eventSearchQuery.value.trim()) {
+    chips.push(
+      activeChip("event-query", `検索: ${eventSearchQuery.value.trim()}`, () => {
+        eventSearchQuery.value = "";
+      }),
+    );
+  }
+
+  if (occurrenceTypeFilter.value !== DEFAULT_FILTER_VALUE) {
+    chips.push(
+      activeChip(
+        "occurrence",
+        `発生形式: ${occurrenceTypeLabels[occurrenceTypeFilter.value] ?? occurrenceTypeFilter.value}`,
+        () => {
+          occurrenceTypeFilter.value = DEFAULT_FILTER_VALUE;
+        },
+      ),
+    );
+  }
+
+  if (uncertaintyFilter.value !== DEFAULT_FILTER_VALUE) {
+    chips.push(
+      activeChip(
+        "uncertainty",
+        `確度: ${uncertaintyLabels[uncertaintyFilter.value] ?? uncertaintyFilter.value}`,
+        () => {
+          uncertaintyFilter.value = DEFAULT_FILTER_VALUE;
+        },
+      ),
+    );
+  }
+
+  if (participantFilter.value !== DEFAULT_FILTER_VALUE) {
+    chips.push(
+      activeChip(
+        "participant",
+        `参加者: ${optionLabel(participantOptions.value, participantFilter.value)}`,
+        () => {
+          participantFilter.value = DEFAULT_FILTER_VALUE;
+        },
+      ),
+    );
+  }
+
+  if (commuFilter.value !== DEFAULT_FILTER_VALUE) {
+    chips.push(
+      activeChip(
+        "commu",
+        `コミュ: ${optionLabel(commuOptions.value, commuFilter.value)}`,
+        () => {
+          commuFilter.value = DEFAULT_FILTER_VALUE;
+        },
+      ),
+    );
+  }
+
+  if (worldlineFilter.value !== DEFAULT_FILTER_VALUE) {
+    chips.push(
+      activeChip(
+        "worldline",
+        `世界線: ${optionLabel(worldlineOptions.value, worldlineFilter.value)}`,
+        () => {
+          worldlineFilter.value = DEFAULT_FILTER_VALUE;
+        },
+      ),
+    );
+  }
+
+  if (focusedLaneId.value) {
+    chips.push(
+      activeChip(
+        "focus",
+        `集中: ${focusedLaneLabel.value || focusedLaneId.value}`,
+        clearLaneFocus,
+      ),
+    );
+  }
+
+  if (hasNonDefaultHorizontalRange.value) {
+    chips.push(activeChip("range", "表示範囲", resetHorizontalZoom));
+  }
+
+  if (Math.abs(verticalScale.value - DEFAULT_VERTICAL_SCALE) > 0.01) {
+    chips.push(activeChip("vertical-scale", "レーン密度", resetVerticalZoom));
+  }
+
+  if (!showCommonEvents.value) {
+    chips.push(
+      activeChip("common-events", "共通イベント非表示", () => {
+        showCommonEvents.value = true;
+      }),
+    );
+  }
+
+  return chips;
+});
+
+const viewShareStatus = ref("");
+let viewShareStatusTimer = null;
+let viewStateUrlSyncTimer = null;
+const shouldSyncViewStateUrl = ref(false);
+
+function setViewShareStatus(message) {
+  viewShareStatus.value = message;
+  if (viewShareStatusTimer) {
+    window.clearTimeout(viewShareStatusTimer);
+  }
+  viewShareStatusTimer = window.setTimeout(() => {
+    viewShareStatus.value = "";
+  }, 2400);
+}
+
+function viewStatePath({ includeCommonEvents = false } = {}) {
+  return replaceTimelineViewStateInUrl(
+    window.location,
+    timelineViewStateSnapshot.value,
+    { includeCommonEvents },
+  );
+}
+
+function syncTimelineViewStateUrl() {
+  if (!shouldSyncViewStateUrl.value) return;
+  history.replaceState(null, "", viewStatePath());
+}
+
+async function copyViewStateUrl() {
+  const url = new URL(
+    viewStatePath({ includeCommonEvents: true }),
+    window.location.origin,
+  ).toString();
+
+  try {
+    await navigator.clipboard.writeText(url);
+    setViewShareStatus("表示状態URLをコピーしました");
+  } catch {
+    setViewShareStatus("コピーできませんでした");
+  }
+}
+
+function clearDisplayState() {
+  categoryOptions.forEach((option) => {
+    setLaneSortMode(option.id, DEFAULT_LANE_SORT_MODE);
+    selectAllLanes(option.id);
+  });
+  selectedCategory.value = DEFAULT_CATEGORY_ID;
+  resetEventFilters();
+  clearLaneFocus();
+  resetHorizontalZoom();
+  resetVerticalZoom();
+  showCommonEvents.value = true;
+}
+
 watch(activeLanes, (lanes) => {
   if (!focusedLaneId.value) return;
   if (!lanes.some((lane) => lane.id === focusedLaneId.value)) {
     clearLaneFocus();
   }
 });
+
+watch(
+  timelineViewStateSnapshot,
+  () => {
+    if (!shouldSyncViewStateUrl.value) return;
+    if (viewStateUrlSyncTimer) {
+      window.clearTimeout(viewStateUrlSyncTimer);
+    }
+    viewStateUrlSyncTimer = window.setTimeout(
+      syncTimelineViewStateUrl,
+      URL_SYNC_DELAY_MS,
+    );
+  },
+  { deep: true },
+);
 
 function handleGlobalEscape(event) {
   if (event.key !== "Escape") return;
@@ -439,14 +741,50 @@ function handleGlobalClick(event) {
   closePanel();
 }
 
-onMounted(() => {
+function selectedEventLaneId() {
+  if (!selectedEvent.value) return null;
+  return activeLanes.value[selectedEvent.value.laneIndex]?.id ?? null;
+}
+
+function restoreInitialLaneFocus() {
+  const focusedLane = initialViewState.focusedLaneId;
+  if (!focusedLane) return;
+  if (!activeLanes.value.some((lane) => lane.id === focusedLane)) return;
+  if (selectedEvent.value && selectedEventLaneId() !== focusedLane) return;
+
+  focusedLaneId.value = focusedLane;
+}
+
+onMounted(async () => {
   window.addEventListener("keydown", handleGlobalEscape);
   window.addEventListener("click", handleGlobalClick);
+
+  if (initialViewState.hasViewState) {
+    restoreInitialLaneFocus();
+    await nextTick();
+
+    if (initialViewState.verticalScale) {
+      setVerticalScale(initialViewState.verticalScale);
+    }
+
+    if (initialViewState.range) {
+      setHorizontalRange(initialViewState.range.min, initialViewState.range.max);
+    }
+  }
+
+  shouldSyncViewStateUrl.value = true;
+  syncTimelineViewStateUrl();
 });
 
 onUnmounted(() => {
   window.removeEventListener("keydown", handleGlobalEscape);
   window.removeEventListener("click", handleGlobalClick);
+  if (viewShareStatusTimer) {
+    window.clearTimeout(viewShareStatusTimer);
+  }
+  if (viewStateUrlSyncTimer) {
+    window.clearTimeout(viewStateUrlSyncTimer);
+  }
 });
 
 </script>
@@ -870,13 +1208,55 @@ onUnmounted(() => {
       aria-label="キャラクタータイムライン表示エリア"
     >
       <IntroGuide
-        v-if="showIntroGuide"
+        v-if="showIntroGuide && !activeStateChips.length"
         :menu-open="menuOpen"
         :manual-open="manualOpen"
         :on-dismiss="dismissIntroGuide"
         :on-open-lane-guide="openLaneGuide"
         :on-open-manual="openManualDialog"
       />
+
+      <div
+        v-if="activeStateChips.length"
+        class="active-state-bar"
+        :class="{ 'active-state-bar--panel-open': selectedEvent }"
+        aria-label="有効な表示条件"
+      >
+        <div class="active-state-list">
+          <button
+            v-for="chip in activeStateChips"
+            :key="chip.id"
+            class="active-state-chip"
+            type="button"
+            :title="`${chip.label}を解除`"
+            @click="chip.onClear"
+          >
+            <span>{{ chip.label }}</span>
+            <span class="active-state-chip__close" aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="active-state-actions">
+          <button
+            class="active-state-action"
+            type="button"
+            title="現在の表示状態を共有URLとしてコピー"
+            @click="copyViewStateUrl"
+          >
+            表示URL
+          </button>
+          <button
+            class="active-state-action"
+            type="button"
+            title="選択中イベントを残して表示条件を解除"
+            @click="clearDisplayState"
+          >
+            解除
+          </button>
+        </div>
+        <p v-if="viewShareStatus" class="active-state-status" role="status">
+          {{ viewShareStatus }}
+        </p>
+      </div>
 
       <TimelineScaleOverlay
         :width="WIDTH"

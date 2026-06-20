@@ -20,3 +20,4 @@ id	path
 013	docs/plan/checked/013-domain-uncertainty-semantics.md
 008	docs/plan/checked/008-data-source-model-hardening.md
 009	docs/plan/checked/009-generated-data-pipeline.md
+020	docs/plan/checked/020-view-state-persistence-and-sharing.md

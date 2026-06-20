@@ -8,6 +8,16 @@ import {
 } from "../utils/events.js";
 
 const ALL_OPTION = "all";
+const OCCURRENCE_FILTER_OPTIONS = ["all", "continuous", "singleWithinRange"];
+const UNCERTAINTY_FILTER_OPTIONS = [
+  "all",
+  "confirmed",
+  "inferred",
+  "rangeOnly",
+  "conflicting",
+  "certain",
+  "uncertain",
+];
 
 function normalizeValue(value) {
   return String(value ?? "").trim().toLocaleLowerCase("ja-JP");
@@ -292,6 +302,43 @@ export function useEventSearchFilter({
     worldlineFilter.value = ALL_OPTION;
   }
 
+  function setEventFilters(nextFilters) {
+    if (!nextFilters) return;
+
+    if (typeof nextFilters.query === "string") {
+      eventSearchQuery.value = nextFilters.query;
+    }
+
+    if (OCCURRENCE_FILTER_OPTIONS.includes(nextFilters.occurrenceType)) {
+      occurrenceTypeFilter.value = nextFilters.occurrenceType;
+    }
+
+    if (UNCERTAINTY_FILTER_OPTIONS.includes(nextFilters.uncertainty)) {
+      uncertaintyFilter.value = nextFilters.uncertainty;
+    }
+
+    if (
+      nextFilters.participant === ALL_OPTION ||
+      participantOptions.value.some((option) => option.id === nextFilters.participant)
+    ) {
+      participantFilter.value = nextFilters.participant;
+    }
+
+    if (
+      nextFilters.commu === ALL_OPTION ||
+      commuOptions.value.some((option) => option.id === nextFilters.commu)
+    ) {
+      commuFilter.value = nextFilters.commu;
+    }
+
+    if (
+      nextFilters.worldline === ALL_OPTION ||
+      worldlineOptions.value.some((option) => option.id === nextFilters.worldline)
+    ) {
+      worldlineFilter.value = nextFilters.worldline;
+    }
+  }
+
   return {
     eventSearchQuery,
     occurrenceTypeFilter,
@@ -308,5 +355,6 @@ export function useEventSearchFilter({
     resultSummary,
     isEventInFilteredSet,
     resetEventFilters,
+    setEventFilters,
   };
 }

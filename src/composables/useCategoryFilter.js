@@ -50,6 +50,10 @@ function sortLanes(lanes, sortMode) {
   }
 }
 
+function optionIds(options) {
+  return new Set(options.map((option) => option.id));
+}
+
 function hasValidEventRange(event, laneId, laneLabel, category) {
   if (!event?.start?.year || !event?.start?.month) {
     console.warn("Invalid event start date", {
@@ -209,7 +213,7 @@ export function useCategoryFilter({
   const laneSortMode = computed({
     get: () => laneSortModes[selectedCategory.value],
     set: (value) => {
-      laneSortModes[selectedCategory.value] = value;
+      setLaneSortMode(selectedCategory.value, value);
     },
   });
 
@@ -239,6 +243,78 @@ export function useCategoryFilter({
 
   function isLaneSelected(category, laneKey) {
     return selectedLaneKeys[category].includes(laneKey);
+  }
+
+  function isValidCategory(category) {
+    return optionIds(CATEGORY_OPTIONS).has(category);
+  }
+
+  function isValidLaneSortMode(sortMode) {
+    return optionIds(SORT_OPTIONS).has(sortMode);
+  }
+
+  function allLaneIdsForCategory(category) {
+    return (sortedLanesByCategory.value[category] || []).map((lane) => lane.id);
+  }
+
+  function selectedLaneIdsForCategory(category) {
+    return selectedLaneKeys[category] || [];
+  }
+
+  function setLaneSortMode(category, sortMode) {
+    if (!isValidCategory(category) || !isValidLaneSortMode(sortMode)) return false;
+    laneSortModes[category] = sortMode;
+    return true;
+  }
+
+  function selectAllLanes(category) {
+    if (!isValidCategory(category)) return false;
+    selectedLaneKeys[category] = allLaneIdsForCategory(category);
+    return true;
+  }
+
+  function setLaneSelection(category, laneIds, { allowEmpty = true } = {}) {
+    if (!isValidCategory(category)) return false;
+
+    const validLaneIds = new Set(allLaneIdsForCategory(category));
+    const nextSelection = laneIds.filter((id) => validLaneIds.has(id));
+
+    if (!allowEmpty && nextSelection.length === 0) return false;
+
+    selectedLaneKeys[category] = nextSelection;
+    return true;
+  }
+
+  function applyLaneVisibilityState(category, laneSelection) {
+    if (!laneSelection) return false;
+
+    const allLaneIds = allLaneIdsForCategory(category);
+    if (!allLaneIds.length) return false;
+
+    const requestedIds = laneSelection.ids || [];
+    const validRequestedIds = requestedIds.filter((id) => allLaneIds.includes(id));
+
+    if (
+      requestedIds.length > 0 &&
+      validRequestedIds.length === 0 &&
+      !laneSelection.hasExplicitEmptyList
+    ) {
+      return false;
+    }
+
+    if (laneSelection.mode === "include") {
+      return setLaneSelection(category, validRequestedIds);
+    }
+
+    if (laneSelection.mode === "exclude") {
+      const hiddenIds = new Set(validRequestedIds);
+      return setLaneSelection(
+        category,
+        allLaneIds.filter((id) => !hiddenIds.has(id)),
+      );
+    }
+
+    return false;
   }
 
   function toggleLane(category, laneKey) {
@@ -289,6 +365,14 @@ export function useCategoryFilter({
     allSelected,
     isIndeterminate,
     isLaneSelected,
+    isValidCategory,
+    isValidLaneSortMode,
+    allLaneIdsForCategory,
+    selectedLaneIdsForCategory,
+    setLaneSortMode,
+    selectAllLanes,
+    setLaneSelection,
+    applyLaneVisibilityState,
     toggleLane,
     toggleAll,
   };

@@ -21,10 +21,10 @@ function applyThemeMode(mode) {
   root.setAttribute("data-theme", mode);
 }
 
-export function usePersistedSettings() {
+export function usePersistedSettings({ initialShowCommonEvents } = {}) {
   const themeMode = ref("system");
   const showZoomHints = ref(true);
-  const showCommonEvents = ref(true);
+  const showCommonEvents = ref(initialShowCommonEvents ?? true);
   const showIntroGuide = ref(true);
   const settingsReady = ref(false);
 
@@ -46,10 +46,12 @@ export function usePersistedSettings() {
       SHOW_ZOOM_HINTS_STORAGE_KEY,
       true,
     );
-    showCommonEvents.value = readBooleanSetting(
-      SHOW_COMMON_EVENTS_STORAGE_KEY,
-      true,
-    );
+    if (initialShowCommonEvents === undefined) {
+      showCommonEvents.value = readBooleanSetting(
+        SHOW_COMMON_EVENTS_STORAGE_KEY,
+        true,
+      );
+    }
     showIntroGuide.value = !readBooleanSetting(
       INTRO_GUIDE_DISMISSED_KEY,
       false,
