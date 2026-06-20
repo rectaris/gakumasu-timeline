@@ -1602,6 +1602,7 @@ onUnmounted(() => {
   </aside>
 
   <ZoomControls
+    :class="{ 'zoom-panel--detail-open': selectedEvent }"
     :horizontal-zoom-label="horizontalZoomLabel"
     :vertical-zoom-label="verticalZoomLabel"
     :viewport-ratio="viewportRatio"

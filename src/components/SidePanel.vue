@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { nextTick, ref, watch } from "vue";
 import {
   SOURCE_CLAIM_TARGET_LABELS,
   SOURCE_STATUS_LABELS,
@@ -23,6 +23,7 @@ const props = defineProps({
 const shareStatus = ref("");
 const showShareFallback = ref(false);
 const showAllSourceDetails = ref(false);
+const panelBodyRef = ref(null);
 const SOURCE_DETAIL_PREVIEW_LIMIT = 3;
 
 function hasExplicitDay(date) {
@@ -185,6 +186,11 @@ watch(
     shareStatus.value = "";
     showShareFallback.value = false;
     showAllSourceDetails.value = false;
+    nextTick(() => {
+      if (panelBodyRef.value) {
+        panelBodyRef.value.scrollTop = 0;
+      }
+    });
   },
 );
 </script>
@@ -204,17 +210,59 @@ watch(
       class="panel-content"
       :style="panelAccentStyle(selectedEvent)"
     >
-      <button
-        class="close-btn"
-        type="button"
-        aria-label="詳細パネルを閉じる"
-        title="詳細パネルを閉じる"
-        @click="closePanel"
-      >×</button>
+      <div class="panel-header">
+        <button
+          class="close-btn"
+          type="button"
+          aria-label="詳細パネルを閉じる"
+          title="詳細パネルを閉じる"
+          @click="closePanel"
+        >×</button>
 
-      <h2 id="side-panel-title">{{ selectedEvent.title }}</h2>
+        <h2 id="side-panel-title">{{ selectedEvent.title }}</h2>
 
-      <dl id="side-panel-meta" class="detail-fields">
+        <div class="panel-actions" aria-label="選択中イベントの操作">
+          <button
+            class="panel-action"
+            type="button"
+            @click.stop="focusEventLane(selectedEvent)"
+          >
+            このレーンに集中
+          </button>
+          <button
+            class="panel-action"
+            type="button"
+            @click.stop="compareEventLane(selectedEvent)"
+          >
+            比較に追加
+          </button>
+          <button
+            class="panel-action"
+            type="button"
+            :disabled="!detailContext.shareUrl"
+            @click.stop="copyShareUrl"
+          >
+            URLをコピー
+          </button>
+        </div>
+
+        <p v-if="shareStatus" class="share-status">
+          {{ shareStatus }}
+        </p>
+
+        <input
+          v-if="showShareFallback"
+          class="share-url-fallback"
+          type="text"
+          readonly
+          :value="detailContext.shareUrl"
+          aria-label="共有URL"
+          @focus="selectFallbackUrl"
+        />
+      </div>
+
+      <div ref="panelBodyRef" class="panel-body">
+        <dl id="side-panel-meta" class="detail-fields">
         <div class="detail-field">
           <dt>レーン</dt>
           <dd>
@@ -309,7 +357,7 @@ watch(
             <span v-else class="detail-empty">未設定</span>
           </dd>
         </div>
-      </dl>
+        </dl>
 
       <section
         v-if="hasListItems(detailContext.sourceDetails)"
@@ -372,45 +420,6 @@ watch(
         現在の表示条件では非表示です。
       </p>
 
-      <div class="panel-actions">
-        <button
-          class="panel-action"
-          type="button"
-          @click.stop="focusEventLane(selectedEvent)"
-        >
-          このレーンに集中
-        </button>
-        <button
-          class="panel-action"
-          type="button"
-          @click.stop="compareEventLane(selectedEvent)"
-        >
-          比較に追加
-        </button>
-        <button
-          class="panel-action"
-          type="button"
-          :disabled="!detailContext.shareUrl"
-          @click.stop="copyShareUrl"
-        >
-          URLをコピー
-        </button>
-      </div>
-
-      <p v-if="shareStatus" class="share-status">
-        {{ shareStatus }}
-      </p>
-
-      <input
-        v-if="showShareFallback"
-        class="share-url-fallback"
-        type="text"
-        readonly
-        :value="detailContext.shareUrl"
-        aria-label="共有URL"
-        @focus="selectFallbackUrl"
-      />
-
       <p id="side-panel-detail" class="detail">
         {{ selectedEvent.detail }}
       </p>
@@ -459,6 +468,7 @@ watch(
           </p>
         </div>
       </section>
+      </div>
     </div>
 
     <div v-else class="panel-placeholder">

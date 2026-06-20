@@ -206,11 +206,35 @@ select:focus-visible {
 }
 
 .panel-content {
-    padding: 20px;
-    padding-bottom: 120px;
-    overflow-y: auto;
     flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
     border-top: 4px solid var(--panel-accent, transparent);
+}
+
+.panel-header {
+    position: relative;
+    flex: 0 0 auto;
+    padding: 16px 44px 12px 20px;
+    border-bottom: 1px solid var(--border-soft);
+    background: var(--surface);
+}
+
+.panel-header h2 {
+    margin: 0 0 12px;
+    color: var(--text-primary);
+    font-size: 18px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.panel-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 14px 20px 120px;
 }
 
 .panel-placeholder {
@@ -358,11 +382,11 @@ select:focus-visible {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 0 0 10px;
+  margin: 0;
 }
 
 .share-status {
-  margin: 0 0 8px;
+  margin: 8px 0 0;
   color: var(--text-secondary);
   font-size: 12px;
   line-height: 1.5;
@@ -371,7 +395,7 @@ select:focus-visible {
 .share-url-fallback {
   width: 100%;
   box-sizing: border-box;
-  margin: 0 0 10px;
+  margin: 8px 0 0;
   padding: 7px 8px;
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -502,6 +526,10 @@ select:focus-visible {
     align-items: flex-end;
     gap: 8px;
     z-index: 1100;
+}
+
+.zoom-panel--detail-open {
+    left: calc((100% - 320px) / 2);
 }
 
 .zoom-controls {
@@ -1651,11 +1679,21 @@ select:focus-visible {
 }
 
 @media (max-width: 720px) {
+    :root {
+        --mobile-detail-panel-height: min(74vh, calc(100vh - 56px));
+    }
+
+    @supports (height: 100dvh) {
+        :root {
+            --mobile-detail-panel-height: min(74dvh, calc(100dvh - 56px));
+        }
+    }
+
     .side-panel {
         top: auto;
         bottom: 0;
         width: 100%;
-        height: min(72vh, calc(100vh - 56px));
+        height: var(--mobile-detail-panel-height);
         border-top: 1px solid var(--border);
         border-left: 0;
         box-shadow: 0 -4px 14px var(--shadow);
@@ -1666,9 +1704,35 @@ select:focus-visible {
         transform: translateY(0);
     }
 
-    .panel-content {
-        padding: 16px;
-        padding-bottom: 110px;
+    .panel-header {
+        padding: 12px 48px 10px 14px;
+    }
+
+    .panel-header h2 {
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+
+    .panel-body {
+        padding: 12px 14px 120px;
+    }
+
+    .close-btn {
+        top: 10px;
+        right: 12px;
+        width: 32px;
+        height: 32px;
+    }
+
+    .panel-actions {
+        gap: 6px;
+    }
+
+    .panel-action {
+        flex: 1 1 calc(33.333% - 6px);
+        min-width: 88px;
+        min-height: 34px;
+        padding: 6px 8px;
     }
 
     .detail-field {
@@ -1742,14 +1806,29 @@ select:focus-visible {
 
     .zoom-panel {
         bottom: 8px;
+        left: 50%;
         width: calc(100% - 16px);
         align-items: center;
+    }
+
+    .zoom-panel--detail-open {
+        bottom: calc(var(--mobile-detail-panel-height) + 8px);
     }
 
     .zoom-controls {
         width: min(100%, 340px);
         box-sizing: border-box;
         padding: 7px 8px;
+    }
+
+    .zoom-panel--detail-open .zoom-controls {
+        width: min(100%, 360px);
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .zoom-panel--detail-open .zoom-controls::-webkit-scrollbar {
+        display: none;
     }
 
     .zoom-range-group {

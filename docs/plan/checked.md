@@ -25,3 +25,4 @@ id	path
 022	docs/plan/checked/022-keyboard-command-navigation.md
 023	docs/plan/checked/023-lane-comparison-and-dense-event-summary.md
 024	docs/plan/checked/024-evidence-quality-audit-navigation.md
+025	docs/plan/checked/025-mobile-inspection-experience.md
