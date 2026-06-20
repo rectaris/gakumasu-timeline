@@ -15,7 +15,6 @@ Keep secrets out of repository files. Use environment variables or the platform 
   - `npm run build`
   - `npm run verify`
   - `npm run preview`
-  - `npm run deploy`
 
 ## Public Path And Hosting
 
@@ -35,7 +34,9 @@ Keep secrets out of repository files. Use environment variables or the platform 
 
 ## Deployment Boundary
 
-- `npm run deploy` publishes `dist/` through `gh-pages`.
+- Deployment is handled by GitHub Actions publishing `dist/` into the
+  `rectaris/rectaris.github.io` repository under `timeline/` or `timeline/dev/`.
+- `npm run deploy` is a guard command and must not publish from this repository.
 - Do not deploy unless the user explicitly asks for deployment or an approved repository policy says to deploy.
 - A normal implementation task may build and preview locally without publishing.
 - If deployment is requested, run the relevant validation first, confirm the published URL or asset path when practical, and report the published target or any deployment blocker.

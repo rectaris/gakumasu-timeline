@@ -7,7 +7,7 @@ on:
       - develop
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   deploy:
@@ -31,8 +31,9 @@ jobs:
       - name: Deploy to GitHub Pages (dev)
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
+          personal_token: ${{ secrets.RECTARIS_GITHUB_IO_TOKEN }}
+          external_repository: rectaris/rectaris.github.io
+          publish_branch: main
           publish_dir: ./dist
-          destination_dir: dev
+          destination_dir: timeline/dev
           keep_files: true

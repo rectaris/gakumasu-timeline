@@ -93,7 +93,7 @@
 
 - Vue 3（SFC / `<script setup>`）
 - Vite
-- デプロイ: GitHub Pages（`gh-pages`）
+- デプロイ: GitHub Actions から `rectaris.github.io/timeline/` へ publish
 
 ## データの置き場所
 

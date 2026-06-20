@@ -13,3 +13,4 @@ id	path
 016	docs/plan/checked/016-event-information-hierarchy.md
 017	docs/plan/checked/017-navigation-search-filter-experience.md
 018	docs/plan/checked/018-detail-related-context-panel.md
+019	docs/plan/checked/019-deploy-to-portal.md
