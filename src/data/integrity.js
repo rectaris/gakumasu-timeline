@@ -1,3 +1,10 @@
+import {
+  VALID_DATE_CONFIDENCE,
+  VALID_RANGE_REASON,
+  VALID_SOURCE_BASIS,
+  VALID_SOURCE_STATUS,
+} from "../utils/events.js";
+
 const VALID_OCCURRENCE_TYPES = new Set(["continuous", "singleWithinRange"]);
 const ARRAY_FIELDS = ["source", "note", "participants", "worldlineId"];
 
@@ -96,8 +103,22 @@ function validateDate(entry, event, eventIndex, field, errors) {
 
 function validateStringArrayField(entry, event, eventIndex, field, errors) {
   const value = event?.[field];
+  validateStringArrayValue(entry, event, eventIndex, field, value, errors, false);
+}
 
+function validateStringArrayValue(
+  entry,
+  event,
+  eventIndex,
+  field,
+  value,
+  errors,
+  required = false,
+) {
   if (value === undefined) {
+    if (required) {
+      errors.push(createError(entry, event, eventIndex, field, "must be present"));
+    }
     return;
   }
 
@@ -158,6 +179,281 @@ function validateReferences(entry, event, eventIndex, field, allowedIds, errors)
       );
     }
   });
+}
+
+function validateEnumField(entry, event, eventIndex, field, allowedValues, errors) {
+  const value = event?.[field];
+  validateEnumValue(entry, event, eventIndex, field, value, allowedValues, errors);
+}
+
+function validateEnumValue(
+  entry,
+  event,
+  eventIndex,
+  field,
+  value,
+  allowedValues,
+  errors,
+) {
+  if (value === undefined) {
+    return;
+  }
+
+  if (typeof value !== "string" || !allowedValues.has(value)) {
+    errors.push(
+      createError(
+        entry,
+        event,
+        eventIndex,
+        field,
+        `must be one of: ${Array.from(allowedValues).join(", ")}`,
+      ),
+    );
+  }
+}
+
+function validateOptionalString(entry, event, eventIndex, field, value, errors) {
+  if (value === undefined) {
+    return;
+  }
+
+  if (typeof value !== "string") {
+    errors.push(createError(entry, event, eventIndex, field, "must be a string"));
+    return;
+  }
+
+  if (value.trim() === "") {
+    errors.push(createError(entry, event, eventIndex, field, "must not be empty"));
+  }
+}
+
+function validateSourceDetails(entry, event, eventIndex, errors) {
+  const value = event?.sourceDetails;
+
+  if (value === undefined) {
+    return;
+  }
+
+  if (!Array.isArray(value)) {
+    errors.push(
+      createError(entry, event, eventIndex, "sourceDetails", "must be an array"),
+    );
+    return;
+  }
+
+  value.forEach((sourceDetail, sourceIndex) => {
+    if (
+      !sourceDetail ||
+      typeof sourceDetail !== "object" ||
+      Array.isArray(sourceDetail)
+    ) {
+      errors.push(
+        createError(
+          entry,
+          event,
+          eventIndex,
+          `sourceDetails[${sourceIndex}]`,
+          "must be an object",
+        ),
+      );
+      return;
+    }
+
+    validateOptionalString(
+      entry,
+      event,
+      eventIndex,
+      `sourceDetails[${sourceIndex}].label`,
+      sourceDetail.label,
+      errors,
+    );
+    if (sourceDetail.label === undefined) {
+      errors.push(
+        createError(
+          entry,
+          event,
+          eventIndex,
+          `sourceDetails[${sourceIndex}].label`,
+          "must be present",
+        ),
+      );
+    }
+    validateOptionalString(
+      entry,
+      event,
+      eventIndex,
+      `sourceDetails[${sourceIndex}].url`,
+      sourceDetail.url,
+      errors,
+    );
+    validateOptionalString(
+      entry,
+      event,
+      eventIndex,
+      `sourceDetails[${sourceIndex}].claim`,
+      sourceDetail.claim,
+      errors,
+    );
+    validateEnumValue(
+      entry,
+      event,
+      eventIndex,
+      `sourceDetails[${sourceIndex}].status`,
+      sourceDetail.status,
+      VALID_SOURCE_STATUS,
+      errors,
+    );
+  });
+}
+
+function validateConflicts(entry, event, eventIndex, errors) {
+  const value = event?.conflicts;
+
+  if (value === undefined) {
+    return;
+  }
+
+  if (!Array.isArray(value)) {
+    errors.push(
+      createError(entry, event, eventIndex, "conflicts", "must be an array"),
+    );
+    return;
+  }
+
+  value.forEach((conflict, conflictIndex) => {
+    if (!conflict || typeof conflict !== "object" || Array.isArray(conflict)) {
+      errors.push(
+        createError(
+          entry,
+          event,
+          eventIndex,
+          `conflicts[${conflictIndex}]`,
+          "must be an object",
+        ),
+      );
+      return;
+    }
+
+    validateOptionalString(
+      entry,
+      event,
+      eventIndex,
+      `conflicts[${conflictIndex}].summary`,
+      conflict.summary,
+      errors,
+    );
+    if (conflict.summary === undefined) {
+      errors.push(
+        createError(
+          entry,
+          event,
+          eventIndex,
+          `conflicts[${conflictIndex}].summary`,
+          "must be present",
+        ),
+      );
+    }
+    validateOptionalString(
+      entry,
+      event,
+      eventIndex,
+      `conflicts[${conflictIndex}].resolution`,
+      conflict.resolution,
+      errors,
+    );
+    validateStringArrayValue(
+      entry,
+      event,
+      eventIndex,
+      `conflicts[${conflictIndex}].sources`,
+      conflict.sources,
+      errors,
+    );
+  });
+}
+
+function validateUncertaintyMetadata(entry, event, eventIndex, errors) {
+  validateEnumField(
+    entry,
+    event,
+    eventIndex,
+    "dateConfidence",
+    VALID_DATE_CONFIDENCE,
+    errors,
+  );
+  validateEnumField(
+    entry,
+    event,
+    eventIndex,
+    "sourceBasis",
+    VALID_SOURCE_BASIS,
+    errors,
+  );
+  validateEnumField(
+    entry,
+    event,
+    eventIndex,
+    "sourceStatus",
+    VALID_SOURCE_STATUS,
+    errors,
+  );
+  validateEnumField(
+    entry,
+    event,
+    eventIndex,
+    "rangeReason",
+    VALID_RANGE_REASON,
+    errors,
+  );
+  validateSourceDetails(entry, event, eventIndex, errors);
+  validateConflicts(entry, event, eventIndex, errors);
+
+  if (
+    event.dateConfidence === "rangeOnly" &&
+    event.occurrenceType !== "singleWithinRange"
+  ) {
+    errors.push(
+      createError(
+        entry,
+        event,
+        eventIndex,
+        "dateConfidence",
+        'rangeOnly requires occurrenceType "singleWithinRange"',
+      ),
+    );
+  }
+
+  if (
+    event.rangeReason !== undefined &&
+    event.occurrenceType !== "singleWithinRange"
+  ) {
+    errors.push(
+      createError(
+        entry,
+        event,
+        eventIndex,
+        "rangeReason",
+        'requires occurrenceType "singleWithinRange"',
+      ),
+    );
+  }
+
+  if (
+    Array.isArray(event.conflicts) &&
+    event.conflicts.length > 0 &&
+    event.sourceStatus !== undefined &&
+    event.sourceStatus !== "conflicting"
+  ) {
+    errors.push(
+      createError(
+        entry,
+        event,
+        eventIndex,
+        "sourceStatus",
+        'must be "conflicting" when conflicts are present',
+      ),
+    );
+  }
 }
 
 export function validateTimelineData(
@@ -260,6 +556,7 @@ export function validateTimelineData(
       ARRAY_FIELDS.forEach((field) => {
         validateStringArrayField(entry, event, eventIndex, field, entryErrors);
       });
+      validateUncertaintyMetadata(entry, event, eventIndex, entryErrors);
 
       validateReferences(
         entry,

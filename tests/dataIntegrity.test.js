@@ -186,6 +186,77 @@ describe("timeline data integrity", () => {
     );
   });
 
+  it("accepts structured uncertainty metadata", () => {
+    const errors = validateTimelineData(
+      entry([
+        validEvent({
+          dateConfidence: "rangeOnly",
+          sourceBasis: "mixed",
+          sourceStatus: "conflicting",
+          rangeReason: "chapterOrder",
+          sourceDetails: [
+            {
+              label: "Story of Re;IRIS 1章 第1話",
+              status: "confirmed",
+              claim: "候補期間の開始を示す",
+            },
+          ],
+          conflicts: [
+            {
+              summary: "出典ごとに候補時期が異なる",
+              sources: ["source-a", "source-b"],
+              resolution: "未解決",
+            },
+          ],
+        }),
+      ]),
+      ids,
+    );
+
+    expect(errors).toEqual([]);
+  });
+
+  it("detects unsupported uncertainty metadata combinations", () => {
+    const errors = validateTimelineData(
+      entry([
+        validEvent({
+          occurrenceType: "continuous",
+          dateConfidence: "rangeOnly",
+          rangeReason: "sourceRange",
+          sourceStatus: "confirmed",
+          conflicts: [{ summary: "出典矛盾あり" }],
+          sourceDetails: [{ label: "", status: "invalid" }],
+        }),
+      ]),
+      ids,
+    );
+
+    expect(errors).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          field: "dateConfidence",
+          reason: 'rangeOnly requires occurrenceType "singleWithinRange"',
+        }),
+        expect.objectContaining({
+          field: "rangeReason",
+          reason: 'requires occurrenceType "singleWithinRange"',
+        }),
+        expect.objectContaining({
+          field: "sourceStatus",
+          reason: 'must be "conflicting" when conflicts are present',
+        }),
+        expect.objectContaining({
+          field: "sourceDetails[0].label",
+          reason: "must not be empty",
+        }),
+        expect.objectContaining({
+          field: "sourceDetails[0].status",
+          reason: expect.stringContaining("must be one of"),
+        }),
+      ]),
+    );
+  });
+
   it("formats errors with source, lane, event, field, and reason", () => {
     const message = formatTimelineDataIntegrityErrors([
       {

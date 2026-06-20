@@ -115,6 +115,60 @@ describe("event search and filters", () => {
     ).toEqual([events[0]]);
   });
 
+  it("filters by explicit uncertainty states and indexes uncertainty labels", () => {
+    const events = [
+      event({
+        id: "confirmed",
+        canonicalId: "confirmed",
+      }),
+      event({
+        id: "inferred",
+        canonicalId: "inferred",
+        dateConfidence: "inferred",
+        sourceBasis: "inferred",
+      }),
+      event({
+        id: "range",
+        canonicalId: "range",
+        occurrenceType: "singleWithinRange",
+      }),
+      event({
+        id: "conflict",
+        canonicalId: "conflict",
+        conflicts: [{ summary: "出典Aと出典Bで時期が異なる" }],
+      }),
+    ];
+
+    expect(
+      filterEvents(
+        events,
+        {
+          query: "",
+          occurrenceType: "all",
+          uncertainty: "inferred",
+          participant: "all",
+          commu: "all",
+          worldline: "all",
+        },
+        context,
+      ).map((item) => item.id),
+    ).toEqual(["inferred"]);
+    expect(
+      filterEvents(
+        events,
+        {
+          query: "出典矛盾",
+          occurrenceType: "all",
+          uncertainty: "conflicting",
+          participant: "all",
+          commu: "all",
+          worldline: "all",
+        },
+        context,
+      ).map((item) => item.id),
+    ).toEqual(["conflict"]);
+  });
+
   it("collapses duplicated common events by canonical id for navigation", () => {
     const events = [
       event({

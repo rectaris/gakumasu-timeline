@@ -298,6 +298,11 @@ select:focus-visible {
   background: var(--surface-soft);
 }
 
+.detail-chip--warning {
+  border-color: var(--timeline-uncertain-marker);
+  background: var(--timeline-uncertain-band-fill);
+}
+
 .detail-empty {
   color: var(--text-faint);
 }
@@ -382,6 +387,10 @@ select:focus-visible {
   font-size: 12px;
 }
 
+.detail-section--warning {
+  border-top-color: var(--timeline-uncertain-marker);
+}
+
 .detail-list,
 .related-list {
   display: grid;
@@ -395,6 +404,12 @@ select:focus-visible {
   color: var(--text-secondary);
   font-size: 13px;
   line-height: 1.6;
+}
+
+.detail-list__meta {
+  display: block;
+  color: var(--text-muted);
+  font-size: 12px;
 }
 
 .related-section {

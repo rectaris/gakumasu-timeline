@@ -1,4 +1,8 @@
 import { computed } from "vue";
+import {
+  eventUncertaintySummary,
+  isUncertainEvent,
+} from "../utils/events.js";
 
 const RELATED_LIMIT = 3;
 
@@ -94,6 +98,14 @@ function relatedSection({ id, title, description, events, selectedEvent }) {
   };
 }
 
+function periodRelationDescription(baseDescription, selectedEvent) {
+  if (!isUncertainEvent(selectedEvent)) {
+    return baseDescription;
+  }
+
+  return `${baseDescription} 選択中イベントが不確実な場合は、確定同時発生ではなく候補期間の重なりです。`;
+}
+
 export function createEventShareUrl(event, locationLike = globalThis.location) {
   const eventId = canonicalIdFor(event);
   if (!eventId || !locationLike) return "";
@@ -120,8 +132,11 @@ export function resolveEventDetailContext({
       participantLabels: [],
       worldlineLabels: [],
       sources: [],
+      sourceDetails: [],
+      conflicts: [],
       notes: [],
       isUncertain: false,
+      uncertainty: eventUncertaintySummary(null),
       relatedSections: [],
     };
   }
@@ -153,13 +168,19 @@ export function resolveEventDetailContext({
     participantLabels,
     worldlineLabels,
     sources: asArray(selectedEvent.source),
+    sourceDetails: asArray(selectedEvent.sourceDetails),
+    conflicts: asArray(selectedEvent.conflicts),
     notes: asArray(selectedEvent.note),
-    isUncertain: selectedEvent.occurrenceType === "singleWithinRange",
+    uncertainty: eventUncertaintySummary(selectedEvent),
+    isUncertain: isUncertainEvent(selectedEvent),
     relatedSections: [
       relatedSection({
         id: "nearby-visible",
         title: "表示中の同時期",
-        description: "現在の表示範囲で時期が重なるイベントです。",
+        description: periodRelationDescription(
+          "現在の表示範囲で時期が重なるイベントです。",
+          selectedEvent,
+        ),
         events: sameVisiblePeriod,
         selectedEvent,
       }),
@@ -173,7 +194,10 @@ export function resolveEventDetailContext({
       relatedSection({
         id: "common",
         title: "同時期の共通イベント",
-        description: "共通イベントとして登録され、時期が重なるイベントです。",
+        description: periodRelationDescription(
+          "共通イベントとして登録され、時期が重なるイベントです。",
+          selectedEvent,
+        ),
         events: commonEvents,
         selectedEvent,
       }),

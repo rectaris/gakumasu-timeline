@@ -664,8 +664,10 @@ onUnmounted(() => {
             aria-label="日付の確度で絞り込む"
           >
             <option value="all">すべて</option>
-            <option value="certain">確定</option>
-            <option value="uncertain">不確定</option>
+            <option value="confirmed">確定</option>
+            <option value="inferred">推定</option>
+            <option value="rangeOnly">期間内の1日</option>
+            <option value="conflicting">出典矛盾</option>
           </select>
         </label>
 

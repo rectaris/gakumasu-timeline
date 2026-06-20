@@ -1,5 +1,9 @@
 <script setup>
 import { ref, watch } from "vue";
+import {
+  SOURCE_STATUS_LABELS,
+  eventUncertaintySummary,
+} from "../utils/events.js";
 
 const props = defineProps({
   selectedEvent: { type: Object, default: null },
@@ -69,7 +73,7 @@ function formatEventOccurrence(event) {
 
 function formatOccurrenceType(event) {
   return event?.occurrenceType === "singleWithinRange"
-    ? "不確定（期間内のいずれか1日）"
+    ? "期間内の1日"
     : "継続期間";
 }
 
@@ -82,8 +86,29 @@ function hasListItems(items) {
   return Array.isArray(items) && items.length > 0;
 }
 
+function sourceDetailMeta(sourceDetail) {
+  const statusLabel = SOURCE_STATUS_LABELS[sourceDetail.status] ?? "";
+
+  return [statusLabel, sourceDetail.claim]
+    .map((value) => String(value ?? "").trim())
+    .filter(Boolean)
+    .join(" / ");
+}
+
+function conflictMeta(conflict) {
+  return [
+    hasListItems(conflict.sources) ? `出典: ${conflict.sources.join(" / ")}` : "",
+    conflict.resolution ? `扱い: ${conflict.resolution}` : "",
+  ]
+    .filter(Boolean)
+    .join(" / ");
+}
+
 function relatedMeta(event) {
-  return [event.character, formatEventOccurrence(event)]
+  const uncertainty = eventUncertaintySummary(event);
+  const uncertaintyLabel = uncertainty.isUncertain ? uncertainty.stateLabel : "";
+
+  return [event.character, formatEventOccurrence(event), uncertaintyLabel]
     .map((value) => String(value ?? "").trim())
     .filter(Boolean)
     .join(" / ");
@@ -161,6 +186,43 @@ watch(
           <dd>{{ formatOccurrenceType(selectedEvent) }}</dd>
         </div>
         <div class="detail-field">
+          <dt>日付確度</dt>
+          <dd>
+            <span
+              class="detail-chip"
+              :class="{ 'detail-chip--warning': detailContext.uncertainty?.isUncertain }"
+            >{{ detailContext.uncertainty?.stateLabel }}</span>
+          </dd>
+        </div>
+        <div class="detail-field">
+          <dt>根拠</dt>
+          <dd>
+            <span class="detail-chip">
+              {{ detailContext.uncertainty?.sourceBasisLabel }}
+            </span>
+          </dd>
+        </div>
+        <div class="detail-field">
+          <dt>出典状態</dt>
+          <dd>
+            <span
+              class="detail-chip"
+              :class="{ 'detail-chip--warning': detailContext.uncertainty?.sourceStatus === 'conflicting' }"
+            >{{ detailContext.uncertainty?.sourceStatusLabel }}</span>
+          </dd>
+        </div>
+        <div
+          v-if="detailContext.uncertainty?.rangeReasonLabel"
+          class="detail-field"
+        >
+          <dt>範囲理由</dt>
+          <dd>
+            <span class="detail-chip">
+              {{ detailContext.uncertainty.rangeReasonLabel }}
+            </span>
+          </dd>
+        </div>
+        <div class="detail-field">
           <dt>世界線</dt>
           <dd>
             <template v-if="hasListItems(detailContext.worldlineLabels)">
@@ -200,6 +262,46 @@ watch(
           </dd>
         </div>
       </dl>
+
+      <section
+        v-if="hasListItems(detailContext.sourceDetails)"
+        class="detail-section"
+        aria-labelledby="side-panel-source-details-title"
+      >
+        <h3 id="side-panel-source-details-title">出典詳細</h3>
+        <ul class="detail-list">
+          <li
+            v-for="sourceDetail in detailContext.sourceDetails"
+            :key="sourceDetail.label"
+          >
+            <span>{{ sourceDetail.label }}</span>
+            <span
+              v-if="sourceDetailMeta(sourceDetail)"
+              class="detail-list__meta"
+            >{{ sourceDetailMeta(sourceDetail) }}</span>
+          </li>
+        </ul>
+      </section>
+
+      <section
+        v-if="hasListItems(detailContext.conflicts)"
+        class="detail-section detail-section--warning"
+        aria-labelledby="side-panel-conflicts-title"
+      >
+        <h3 id="side-panel-conflicts-title">出典矛盾</h3>
+        <ul class="detail-list">
+          <li
+            v-for="conflict in detailContext.conflicts"
+            :key="conflict.summary"
+          >
+            <span>{{ conflict.summary }}</span>
+            <span
+              v-if="conflictMeta(conflict)"
+              class="detail-list__meta"
+            >{{ conflictMeta(conflict) }}</span>
+          </li>
+        </ul>
+      </section>
 
       <p v-if="selectedEventHidden" class="panel-status">
         現在の検索・絞り込み条件では非表示です。

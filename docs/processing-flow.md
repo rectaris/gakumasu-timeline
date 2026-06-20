@@ -18,7 +18,7 @@
 - `npm run validate:data` が `src/data/worldline_commu/` 配下の耐久データを検証する
 - `npm run validate:data -- <path>` は指定ファイルまたは指定ディレクトリを主対象にした focused validation を実行する
 - focused validation でも、イベント ID の重複と参加者/世界線参照は全データ文脈を使って確認する
-- 検証は表示用正規化の前に、イベント ID、日付範囲、`occurrenceType`、参加者参照、世界線参照、空文字値を確認する
+- 検証は表示用正規化の前に、イベント ID、日付範囲、`occurrenceType`、参加者参照、世界線参照、空文字値、不確実性メタデータを確認する
 - 失敗時は元ファイル、カテゴリ、レーン、イベント ID / title、フィールド、理由を表示する
 - `npm run verify` はデータ検証、ユニットテスト、ビルドを実行する
 
@@ -40,6 +40,8 @@
 - 出力: `[{ ...event, character, color, laneIndex, canonicalId, instanceId, displayStartDay, displayEndDay }, ...]`
 - 共通イベントは各レーンへ複製されます
 - URL 同期は `canonicalId`、描画キーは `instanceId` を使います
+- `dateConfidence`、`sourceBasis`、`sourceStatus`、`rangeReason`、`sourceDetails`、`conflicts` はイベント上に保持され、詳細パネルや検索で `src/utils/events.js` の派生ヘルパーから日本語ラベルへ変換されます
+- メタデータ未指定の `singleWithinRange` は `rangeOnly` として派生し、未確定の単日候補であることを保ちます
 
 ## 時間の内部表現
 
@@ -92,6 +94,7 @@
    - 期間バー: `rect (x=start, width=end-start)`
    - 開始点・終了点: `circle`
    - `occurrenceType === "singleWithinRange"` の場合、バーに破線＋両端の不確定マーカーを追加
+   - 推定や出典矛盾はタイムライン本体の幾何ではなく、検索と詳細パネルで明示する
 
 ## インタラクション
 
@@ -131,4 +134,5 @@
 
 - 各月31日換算の抽象時系列であり、実カレンダー計算はしていません
 - `singleWithinRange` は候補期間だけを持ち、具体的な発生日は未確定です
+- `dateConfidence` や `sourceStatus` が未指定でも、`singleWithinRange` は `rangeOnly` として扱われます
 - 共通イベントは表示上レーンごとに複製されます

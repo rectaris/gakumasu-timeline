@@ -17,3 +17,4 @@ id	path
 019	docs/plan/checked/019-deploy-to-portal.md
 011	docs/plan/checked/011-timeline-interaction-scale.md
 012	docs/plan/checked/012-data-authoring-workflow.md
+013	docs/plan/checked/013-domain-uncertainty-semantics.md

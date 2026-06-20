@@ -36,9 +36,25 @@
   - `src/data/worldline_commu/` 配下の耐久データでは必ず明示します
   - `continuous` は `start` から `end` まで継続している期間を示します
   - `singleWithinRange` は `start` から `end` までの範囲内のどこか1日を示します
+- `dateConfidence?: "confirmed" | "inferred" | "rangeOnly"`
+  - 日付・時期の確度を示します
+  - 未指定の `continuous` は `confirmed`、未指定の `singleWithinRange` は `rangeOnly` として表示できます
+  - `rangeOnly` は `occurrenceType: "singleWithinRange"` のときだけ使います
+- `sourceBasis?: "explicit" | "inferred" | "mixed" | "unknown"`
+  - 時期判断の根拠が出典明記か、推論か、混在か、未分類かを示します
+- `sourceStatus?: "confirmed" | "inferred" | "conflicting" | "unknown"`
+  - 出典状態を示します
+  - `conflicts` がある場合、明示するなら `conflicting` にします
+- `rangeReason?: "monthOnly" | "sourceRange" | "chapterOrder" | "relativeOrder" | "unknown"`
+  - `singleWithinRange` の候補範囲理由を示します
 - `worldlineId?: string[]`
 - `participants?: string[]`
 - `source?: string[]`
+  - 既存互換の出典ラベル配列です
+- `sourceDetails?: { label: string; url?: string; status?: SourceStatus; claim?: string }[]`
+  - 出典ごとの状態や主張が必要な場合だけ使います
+- `conflicts?: { summary: string; sources?: string[]; resolution?: string }[]`
+  - 出典同士の時期主張が矛盾する場合だけ使います
 - `note?: string[]`
 
 詳細パネルでは、`participants` は `src/data/characterCatalog.js`、`worldlineId` は `src/data/worldlines.js` を使って表示名へ解決します。未解決 ID は ID のまま表示し、`source` または `worldlineId` が空の場合は未設定として表示します。
@@ -122,26 +138,35 @@
 7. `occurrenceType` を必ず明示する
    - `continuous`: `start` から `end` まで継続する期間
    - `singleWithinRange`: `start` から `end` までの範囲内のどこか1日
-8. `participants` を確認する
+8. 必要に応じて不確実性メタデータを入れる
+   - 確定した継続期間は省略できます
+   - `singleWithinRange` は未指定でも `rangeOnly` として表示されます
+   - 推論なら `dateConfidence: "inferred"` と `sourceBasis: "inferred"` または `"mixed"` を検討します
+   - 出典矛盾がある場合は `sourceStatus: "conflicting"` と `conflicts` を入れます
+   - 不明な単日タイミングを架空の具体日にしないでください
+9. `participants` を確認する
    - `src/data/characterCatalog.js` に存在する ID だけを入れます
    - 未登録人物、集団名、仮 ID は入れず、必要なら `note` に自然文で残します
-9. `worldlineId` を確認する
+10. `worldlineId` を確認する
    - 既知の場合のみ `src/data/worldlines.js` の ID を入れます
    - 未確定の世界線を表すための仮 ID は作りません
-10. `source` を入れる
+11. `source` を入れる
     - 新規データでは原則として出典を入れます
     - 例: コミュ名、章、話数、公式資料 URL、ページ番号など
     - 現行検証では未設定を hard fail にしませんが、出典なしの断定は避けます
-11. `note` に補足を残す
+12. `sourceDetails` / `conflicts` を必要な場合だけ入れる
+    - 複数出典の主張を分けたい場合は `sourceDetails[].claim` を使います
+    - 出典同士の時期主張が矛盾する場合は `conflicts[].summary` に未解決内容を残します
+13. `note` に補足を残す
     - 日付幅の根拠、推測理由、未登録人物、矛盾候補などを自然文で書きます
     - `note` は機械判定用フィールドではありません
-12. focused validation を実行する
+14. focused validation を実行する
     - 単一ファイル: `npm run validate:data -- src/data/worldline_commu/idol_commu/001hanamiSaki.js`
     - ディレクトリ: `npm run validate:data -- src/data/worldline_commu/idol_commu`
-13. 全体検証を実行する
+15. 全体検証を実行する
     - `npm run validate:data`
     - 実装変更を含む場合は `npm run test` と `npm run build` も実行します
-14. ローカル表示を確認する
+16. ローカル表示を確認する
     - 編集中は `npm run dev`
     - build 後の確認が必要な場合は `npm run build` の後に `npm run preview`
 
@@ -167,6 +192,11 @@ focused validation は指定ファイルを主対象にしますが、イベン�
 - `participants` が `src/data/characterCatalog.js` の ID を参照していること
 - `worldlineId` が `src/data/worldlines.js` の ID を参照していること
 - `source` / `note` / `participants` / `worldlineId` の配列に空文字や空白だけの値がないこと
+- `dateConfidence` / `sourceBasis` / `sourceStatus` / `rangeReason` が許可値であること
+- `dateConfidence: "rangeOnly"` と `rangeReason` は `occurrenceType: "singleWithinRange"` のときだけ使うこと
+- `sourceDetails` は配列で、各要素の `label` が空でないこと
+- `conflicts` は配列で、各要素の `summary` が空でないこと
+- `conflicts` があり `sourceStatus` を明示する場合は `conflicting` であること
 
 失敗時は、元ファイル、カテゴリ、レーン、イベント ID / title、フィールド、理由が表示されます。
 
@@ -178,6 +208,9 @@ focused validation は指定ファイルを主対象にしますが、イベン�
 - `occurrenceType must be explicit`: `continuous` または `singleWithinRange` を明示してください。
 - `start must be less than or equal to end`: `start` が `end` より後になっています。
 - `duplicate event id`: URL 復元に使うイベント ID が他イベントと衝突しています。新規イベント側の ID を安定した別名にしてください。
+- `dateConfidence rangeOnly requires occurrenceType "singleWithinRange"`: 範囲内の単日として扱う確度を、継続期間イベントに付けています。
+- `sourceDetails[n].label must not be empty`: 構造化出典の表示名が空です。不要なら要素ごと削除してください。
+- `sourceStatus must be "conflicting" when conflicts are present`: 出典矛盾を持つイベントに矛盾以外の出典状態を明示しています。
 
 ## 承認境界
 
@@ -189,6 +222,6 @@ focused validation は指定ファイルを主対象にしますが、イベン�
 - 公開済みイベント ID を変更する
 - キャラクター名、世界線 ID、世界線の意味を変える
 - 未確定の単日イベントを具体日に断定する
-- `sourceStatus`、`confidence`、不確実性メタデータ、raw/generated などの新フィールドを追加する
+- `sourceStatus`、`dateConfidence`、`sourceBasis`、`rangeReason`、`sourceDetails`、`conflicts`、raw/generated などのフィールド契約を変更する
 
-機械参照できる参加者 ID、出典状態、不確実性フィールドのモデル拡張は後続のデータモデル強化で扱います。
+参加者 ID は既存の `participants`、出典状態と不確実性は上記の任意メタデータで扱います。raw/generated 分離は別計画で扱います。

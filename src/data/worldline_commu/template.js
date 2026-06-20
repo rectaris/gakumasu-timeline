@@ -20,12 +20,38 @@ export default {
       // continuous: startからendまで継続する期間
       // singleWithinRange: startからendまでの範囲内のどこか1日
       occurrenceType: "singleWithinRange",
+      // 任意。未指定のsingleWithinRangeはrangeOnlyとして表示される。
+      // dateConfidence: confirmed / inferred / rangeOnly
+      dateConfidence: "rangeOnly",
+      // 任意。sourceBasis: explicit / inferred / mixed / unknown
+      sourceBasis: "explicit",
+      // 任意。sourceStatus: confirmed / inferred / conflicting / unknown
+      sourceStatus: "confirmed",
+      // 任意。singleWithinRangeの候補範囲理由。
+      // monthOnly / sourceRange / chapterOrder / relativeOrder / unknown
+      rangeReason: "sourceRange",
       // 既知の場合のみ src/data/worldlines.js のIDを入れる。
       worldlineId: ["idol_story"],
       // src/data/characterCatalog.js のIDだけを入れる。未登録人物はnoteに自然文で残す。
       participants: ["saki_hanami"],
       // 新規データでは原則として出典を入れる。
       source: ["出典コミュ名 第1話"],
+      // 任意。出典ごとの主張や状態が必要な場合だけ使う。
+      sourceDetails: [
+        {
+          label: "出典コミュ名 第1話",
+          status: "confirmed",
+          claim: "候補期間の根拠",
+        },
+      ],
+      // 任意。出典同士の時期主張が矛盾する場合だけ使う。
+      conflicts: [
+        {
+          summary: "出典ごとに候補時期が異なる",
+          sources: ["出典コミュ名 第1話", "別出典"],
+          resolution: "未解決",
+        },
+      ],
       // 任意。空配列や空文字ではなく、補足がある時だけ項目を残す。
       note: ["日付幅の根拠や未登録人物などの補足"],
     },

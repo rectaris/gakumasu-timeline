@@ -1,4 +1,10 @@
 import { computed, ref } from "vue";
+import {
+  eventOccurrenceType,
+  eventUncertaintyState,
+  eventUncertaintySummary,
+  isUncertainEvent,
+} from "../utils/events.js";
 
 const ALL_OPTION = "all";
 
@@ -23,14 +29,6 @@ function lookupMap(items) {
   return new Map(items.map((item) => [item.id, item]));
 }
 
-function eventOccurrenceType(event) {
-  return event.occurrenceType || "continuous";
-}
-
-function isUncertainEvent(event) {
-  return eventOccurrenceType(event) === "singleWithinRange";
-}
-
 function eventLane(event, lanes) {
   return lanes[event.laneIndex] ?? null;
 }
@@ -47,16 +45,39 @@ export function buildEventSearchText(event, { lanes = [], characters = [], world
     id,
     worldlineById.get(id)?.name,
   ]);
+  const uncertainty = eventUncertaintySummary(event);
+  const sourceDetails = asArray(event.sourceDetails).flatMap((sourceDetail) => [
+    sourceDetail.label,
+    sourceDetail.claim,
+    sourceDetail.status,
+  ]);
+  const conflicts = asArray(event.conflicts).flatMap((conflict) => [
+    conflict.summary,
+    conflict.resolution,
+    ...asArray(conflict.sources),
+  ]);
 
   return [
     event.title,
     event.detail,
     event.character,
     eventOccurrenceType(event),
+    uncertainty.state,
+    uncertainty.stateLabel,
+    uncertainty.dateConfidence,
+    uncertainty.dateConfidenceLabel,
+    uncertainty.sourceBasis,
+    uncertainty.sourceBasisLabel,
+    uncertainty.sourceStatus,
+    uncertainty.sourceStatusLabel,
+    uncertainty.rangeReason,
+    uncertainty.rangeReasonLabel,
     event.isCommon ? "common 共通" : "lane 個別",
     lane?.id,
     lane?.name,
     ...asArray(event.source),
+    ...sourceDetails,
+    ...conflicts,
     ...asArray(event.note),
     ...participants,
     ...eventWorldlines,
@@ -132,6 +153,13 @@ export function filterEvents(events, filters, context) {
     }
 
     if (filters.uncertainty === "certain" && isUncertainEvent(event)) {
+      return false;
+    }
+
+    if (
+      !["all", "certain", "uncertain"].includes(filters.uncertainty) &&
+      eventUncertaintyState(event) !== filters.uncertainty
+    ) {
       return false;
     }
 

@@ -1,4 +1,26 @@
 export type OccurrenceType = "continuous" | "singleWithinRange";
+export type DateConfidence = "confirmed" | "inferred" | "rangeOnly";
+export type SourceBasis = "explicit" | "inferred" | "mixed" | "unknown";
+export type SourceStatus = "confirmed" | "inferred" | "conflicting" | "unknown";
+export type RangeReason =
+  | "monthOnly"
+  | "sourceRange"
+  | "chapterOrder"
+  | "relativeOrder"
+  | "unknown";
+
+export interface SourceDetail {
+  label: string;
+  url?: string;
+  status?: SourceStatus;
+  claim?: string;
+}
+
+export interface SourceConflict {
+  summary: string;
+  sources?: string[];
+  resolution?: string;
+}
 
 export interface DateLike {
   year: number;
@@ -13,9 +35,15 @@ export interface TimelineEvent {
   title?: string;
   detail?: string;
   occurrenceType?: OccurrenceType;
+  dateConfidence?: DateConfidence;
+  sourceBasis?: SourceBasis;
+  sourceStatus?: SourceStatus;
+  rangeReason?: RangeReason;
   worldlineId?: string[];
   participants?: string[];
   source?: string[];
+  sourceDetails?: SourceDetail[];
+  conflicts?: SourceConflict[];
   note?: string[];
 }
 

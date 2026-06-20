@@ -61,7 +61,59 @@ describe("event detail context", () => {
     expect(context.sources).toEqual(["花海咲季 親愛度 第1話"]);
     expect(context.notes).toEqual(["補足メモ"]);
     expect(context.isUncertain).toBe(true);
+    expect(context.uncertainty).toMatchObject({
+      state: "rangeOnly",
+      stateLabel: "期間内の1日",
+      dateConfidenceLabel: "期間内の1日",
+      sourceStatusLabel: "出典確認",
+      rangeReasonLabel: "出典上の候補期間",
+    });
     expect(context.shareUrl).toBe("https://example.test/timeline/?foo=bar&event=event-a");
+  });
+
+  it("resolves structured source details and conflict metadata", () => {
+    const selectedEvent = event({
+      dateConfidence: "inferred",
+      sourceBasis: "mixed",
+      sourceStatus: "conflicting",
+      sourceDetails: [
+        {
+          label: "Story of Re;IRIS 1章 第1話",
+          status: "confirmed",
+          claim: "時期Aを示す",
+        },
+      ],
+      conflicts: [
+        {
+          summary: "出典ごとに候補時期が異なる",
+          sources: ["source-a", "source-b"],
+          resolution: "未解決",
+        },
+      ],
+    });
+
+    const context = resolveEventDetailContext({
+      selectedEvent,
+      allEvents: [selectedEvent],
+      visibleEvents: [selectedEvent],
+      characterCatalog,
+      worldlines,
+      locationLike: {
+        href: "https://example.test/",
+        pathname: "/",
+        search: "",
+      },
+    });
+
+    expect(context.sourceDetails).toEqual(selectedEvent.sourceDetails);
+    expect(context.conflicts).toEqual(selectedEvent.conflicts);
+    expect(context.uncertainty).toMatchObject({
+      state: "conflicting",
+      stateLabel: "出典矛盾",
+      dateConfidenceLabel: "推定",
+      sourceBasisLabel: "混在",
+      sourceStatusLabel: "出典矛盾",
+    });
   });
 
   it("deduplicates related events by canonical id and prefers the selected lane instance", () => {
