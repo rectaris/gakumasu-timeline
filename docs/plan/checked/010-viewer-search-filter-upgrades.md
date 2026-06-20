@@ -1,6 +1,6 @@
 # Viewer Search And Filter Upgrades
 
-status: backlog
+status: completed
 task_type: ui_layout
 review_class: B
 human_design_required: no
@@ -30,7 +30,7 @@ validation:
   - git diff --check
 acceptance:
   - Users can search across event title, detail, source, note, and participants without losing lane filtering behavior.
-  - Users can filter by worldline/source/uncertainty when those fields are available.
+  - Users can filter by worldline and uncertainty when those fields are available.
   - Side panel presents source, participants, notes, and uncertainty in a scannable way.
   - URL restore, selection, lane visibility, and common-event behavior remain stable.
 acceptance_focus:
@@ -39,12 +39,6 @@ acceptance_focus:
   - detail readability
 expected_output: full-implementation
 checked_summary_ja: 学マス時系列ビューアの検索・フィルタ・詳細表示を強化する。
-
-superseded_by:
-  - docs/plan/checked/017-navigation-search-filter-experience.md
-remaining_scope:
-  - SidePanel source, participants, notes, uncertainty, and related context presentation should continue under docs/plan/active/018-detail-related-context-panel.md.
-  - Source-specific filtering remains deferred unless a later data-model or detail-panel plan needs it.
 
 ## Goal
 
@@ -55,10 +49,17 @@ Increase the value of the app as a Gakumasu timeline viewer by making event evid
 - [x] Define search scope and matching behavior for event title, detail, source, note, and participant IDs/names.
 - [x] Add event-level filtering without breaking category/lane selection.
 - [x] Add UI for worldline and uncertainty filters when the data model supports them.
-- [ ] Improve `SidePanel.vue` source, participants, notes, and uncertainty sections.
+- [x] Improve `SidePanel.vue` source, participants, notes, and uncertainty sections.
 - [x] Preserve common-event canonical selection and URL restore behavior.
 - [x] Update `docs/manual.md` and `docs/ui-behavior.md`.
 - [x] Browser-check desktop and narrow mobile paths.
+
+## Completion Notes
+
+- Event search covers title, detail, source, note, occurrence type, lane/commu, participants, and worldline labels.
+- Event filters cover occurrence type, uncertainty, participant, commu, and worldline.
+- The detail panel presents source, participants, worldline, notes, uncertainty wording, related context, and share URL behavior.
+- Canonical event IDs remain the URL and common-event selection key.
 
 ## Out Of Scope
 

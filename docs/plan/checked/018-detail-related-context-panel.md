@@ -1,6 +1,6 @@
 # Detail Related Context Panel
 
-status: active
+status: completed
 task_type: ui_layout
 review_class: B
 human_design_required: no
@@ -74,7 +74,7 @@ Turn the side panel into the high-confidence inspection surface for Gakumasu tim
 
 ## Relationship To Existing Backlog
 
-This overlaps with `docs/plan/backlog/010-viewer-search-filter-upgrades.md` for source, participant, note, and uncertainty presentation.
+This overlaps with `docs/plan/checked/010-viewer-search-filter-upgrades.md` for source, participant, note, and uncertainty presentation.
 
 If implemented together, keep search/filter state outside the side panel unless the UI design explicitly approves a combined inspector/search surface.
 

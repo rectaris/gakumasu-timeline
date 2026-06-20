@@ -48,7 +48,7 @@ This plan is a backlog planning record. Treat implementation as Class C if it ch
 
 ## Recommended Path
 
-Use a phased path: keep current JS data first, add validation, then introduce `data/raw/` and `src/data/generated/` when validation is stable.
+Introduce `data/raw/` and `src/data/generated/` only after the raw format, generated module contract, artifact policy, and ID compatibility rules are decided.
 
 ## Tasks
 

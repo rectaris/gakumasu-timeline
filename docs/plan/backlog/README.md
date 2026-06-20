@@ -11,12 +11,8 @@
 
 ## 現在の改善計画
 
-- active: `../active/007-data-validation-foundation.md`: データ品質保証の基礎検証
 - backlog: `008-data-source-model-hardening.md`: 参加者・世界線・出典・不確実性のデータモデル強化
 - backlog: `009-generated-data-pipeline.md`: raw/generated 分離による長期運用向け読み込み
-- backlog: `010-viewer-search-filter-upgrades.md`: 学マス時系列ビューアの検索・フィルタ・詳細表示強化
-- backlog: `011-timeline-interaction-scale.md`: イベント数・レーン数増加に耐える表示と操作
-- backlog: `012-data-authoring-workflow.md`: データ追加・編集・プレビュー運用
 - backlog: `013-domain-uncertainty-semantics.md`: 学マス固有の不確実性・根拠・世界線意味論
 
 汎用タイムラインアプリ化は、現時点では対象外です。

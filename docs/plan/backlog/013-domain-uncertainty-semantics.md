@@ -9,7 +9,6 @@ target_files:
   - src/types/timeline.d.ts
   - src/utils/events.js
   - src/composables/useTimelineData.js
-  - src/components/TimelineEvents.vue
   - src/components/SidePanel.vue
   - src/data/worldline_commu/
   - docs/data-structure.md
@@ -34,7 +33,7 @@ acceptance:
   - Gakumasu-specific uncertainty states are explicit and cannot be confused with confirmed concrete dates.
   - The UI distinguishes confirmed, inferred, range-only, and conflicting-source events when those states exist.
   - Documentation explains each uncertainty state and how it affects display.
-  - Existing `singleWithinRange` behavior remains compatible or its migration is approved and documented.
+  - Existing `singleWithinRange` behavior remains compatible with the expanded uncertainty model or its migration is approved and documented.
 acceptance_focus:
   - domain semantics
   - uncertainty display
@@ -52,7 +51,6 @@ This plan is a backlog planning record. Treat implementation as Class C unless t
 
 - [ ] Define the allowed uncertainty states and how they map to current `singleWithinRange` and `continuous` behavior.
 - [ ] Decide how to represent inferred events and conflicting sources without inventing fake concrete dates.
-- [ ] Define UI marks for uncertainty states that remain readable in light and dark modes.
 - [ ] Update side-panel wording so users can distinguish source basis, inference, and unresolved conflict.
 - [ ] Add validation rules that prevent unsupported combinations.
 - [ ] Add focused tests for uncertainty helpers and rendering decisions.

@@ -1,6 +1,6 @@
 # Data Authoring Workflow
 
-status: backlog
+status: active
 task_type: environment_data_flow
 review_class: B
 human_design_required: no
@@ -9,7 +9,6 @@ target_files:
   - src/data/worldline_commu/template.js
   - docs/data-structure.md
   - docs/processing-flow.md
-  - docs/plan/backlog/README.md
   - scripts/
   - package.json
   - tests/
@@ -46,11 +45,10 @@ Raise data editing ease without making the runtime app heavier or requiring a da
 ## Tasks
 
 - [ ] Update `src/data/worldline_commu/template.js` to match the validated schema.
-- [ ] Add a data author checklist to `docs/data-structure.md`.
-- [ ] Document source, participant, worldline, uncertainty, and ID rules.
+- [ ] Expand the data author checklist in `docs/data-structure.md`.
+- [ ] Document source, participant, worldline, uncertainty, ID, and approval-boundary rules for data authors.
 - [ ] Add focused validation support for a single file/path if practical.
 - [ ] Document preview steps using the local Vite stack.
-- [ ] Add guidance for when a data change needs approval because it changes chronology, source claims, or public IDs.
 
 ## Out Of Scope
 

@@ -90,7 +90,7 @@ Improve discovery and navigation without making the first screen feel like an in
 
 ## Relationship To Existing Backlog
 
-This overlaps with `docs/plan/backlog/010-viewer-search-filter-upgrades.md` and `docs/plan/backlog/011-timeline-interaction-scale.md`.
+This overlaps with `docs/plan/checked/010-viewer-search-filter-upgrades.md` and `docs/plan/active/011-timeline-interaction-scale.md`.
 
 If this active plan is implemented, either promote and merge those backlog items or update them to avoid duplicate work.
 
