@@ -1,5 +1,4 @@
 import { computed } from "vue";
-import { filterVisibleEvents } from "./useTimelineData";
 import {
   EVENT_BAR_HEIGHT,
   EVENT_ROW_GAP,
@@ -7,6 +6,13 @@ import {
   MIN_LANE_HEIGHT,
   TOP_OFFSET,
 } from "../utils/constants";
+import {
+  buildLaneLayout,
+  groupEventsByLane,
+  visibleEventLayouts,
+} from "../utils/timelineLayout.js";
+
+export { buildLaneLayout, groupEventsByLane, visibleEventLayouts };
 
 export function useTimelineLayout({
   characters,
@@ -33,44 +39,20 @@ export function useTimelineLayout({
     };
   });
 
-  function buildLaneLayout(events) {
-    const subLaneEndTimes = [];
-    const eventsWithLane = events
-      .slice()
-      .sort((a, b) => a.displayStartDay - b.displayStartDay)
-      .map((event) => {
-        let subLaneIndex = subLaneEndTimes.findIndex(
-          (laneEndTime) => laneEndTime < event.displayStartDay,
-        );
-
-        if (subLaneIndex === -1) {
-          subLaneIndex = subLaneEndTimes.length;
-          subLaneEndTimes.push(event.displayEndDay);
-        } else {
-          subLaneEndTimes[subLaneIndex] = event.displayEndDay;
-        }
-
-        return { ...event, subLaneIndex };
-      });
-
-    return {
-      events: eventsWithLane,
-      subLaneCount: Math.max(1, subLaneEndTimes.length),
-    };
-  }
+  const eventsByLane = computed(() =>
+    groupEventsByLane(allEvents.value, characters.value.length),
+  );
 
   const laneEventLayouts = computed(() =>
-    characters.value.map((char, laneIndex) => {
-      const laneEvents = allEvents.value.filter(
-        (event) => event.laneIndex === laneIndex,
-      );
+    characters.value.map((char, laneIndex) => ({
+      laneIndex,
+      characterId: char.id,
+      ...buildLaneLayout(eventsByLane.value[laneIndex] ?? []),
+    })),
+  );
 
-      return {
-        laneIndex,
-        characterId: char.id,
-        ...buildLaneLayout(laneEvents),
-      };
-    }),
+  const visibleEvents = computed(() =>
+    visibleEventLayouts(laneEventLayouts.value, viewRange.value),
   );
 
   const laneLayouts = computed(() => {
@@ -138,19 +120,6 @@ export function useTimelineLayout({
       layoutMetrics.value.eventBarHeight / 2
     );
   }
-
-  const visibleEvents = computed(() =>
-    filterVisibleEvents({
-      events: laneEventLayouts.value.flatMap((lane) => lane.events),
-      viewRange,
-      eventDisplayStart: (event) => event.displayStartDay,
-      eventDisplayEnd: (event) => event.displayEndDay,
-    }).map((event) => ({
-      ...event,
-      renderStartDay: Math.max(event.displayStartDay, viewRange.value.min),
-      renderEndDay: Math.min(event.displayEndDay, viewRange.value.max),
-    })),
-  );
 
   function xPos(time) {
     const { min, max } = viewRange.value;
