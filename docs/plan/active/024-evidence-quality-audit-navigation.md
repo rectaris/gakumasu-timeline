@@ -1,6 +1,6 @@
 # Evidence Quality Audit Navigation
 
-status: backlog
+status: active
 task_type: product_logic
 review_class: B
 human_design_required: no
