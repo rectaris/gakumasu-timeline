@@ -446,6 +446,47 @@ select:focus-visible {
     stroke-width: 2.4;
 }
 
+.event-common-indicator {
+    fill: var(--timeline-overlay-top);
+    stroke: var(--event-stroke);
+    stroke-width: 1.2;
+    pointer-events: none;
+    vector-effect: non-scaling-stroke;
+}
+
+.event-inline-label {
+    fill: #ffffff;
+    stroke: rgba(0, 0, 0, 0.62);
+    stroke-width: 2.2;
+    paint-order: stroke;
+    stroke-linejoin: round;
+    font-family: inherit;
+    font-size: 9.5px;
+    font-weight: 750;
+    letter-spacing: 0;
+    pointer-events: none;
+}
+
+.event-context-label {
+    pointer-events: none;
+}
+
+.event-context-label__surface {
+    fill: var(--surface-elevated);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+    filter: drop-shadow(0 2px 5px var(--shadow));
+    vector-effect: non-scaling-stroke;
+}
+
+.event-context-label__text {
+    fill: var(--text-primary);
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
 .intro-guide {
     position: absolute;
     top: 10px;

@@ -1,4 +1,6 @@
 <script setup>
+import { estimateTextWidth } from "../utils/labels";
+
 const props = defineProps({
   characters: { type: Array, required: true },
   laneCenterY: { type: Function, required: true },
@@ -13,23 +15,6 @@ const GAP_TO_TIMELINE = 8;
 const MIN_X = 6;
 const ACCENT_WIDTH = 4;
 const LABEL_HEIGHT = 28;
-
-function estimateTextWidth(text) {
-  if (!text) return 0;
-  const asciiWidth = FONT_SIZE * 0.58;
-  const spaceWidth = FONT_SIZE * 0.28;
-  const halfKanaWidth = FONT_SIZE * 0.72;
-  const wideWidth = FONT_SIZE * 0.98;
-  return Array.from(text).reduce((total, char) => {
-    if (char === " ") return total + spaceWidth;
-    if (/^[\uFF61-\uFF9F]$/.test(char)) return total + halfKanaWidth;
-    if (/^[\u3040-\u30FF\u3400-\u9FFF\uF900-\uFAFF]$/.test(char)) {
-      return total + wideWidth;
-    }
-    if (char.charCodeAt(0) <= 0x007f) return total + asciiWidth;
-    return total + wideWidth;
-  }, 0);
-}
 
 function rectRight() {
   return props.leftLabelWidth - GAP_TO_TIMELINE;
@@ -60,13 +45,18 @@ function maxTextWidth(text) {
 }
 
 function displayName(text) {
-  if (estimateTextWidth(text) <= maxTextWidth(text)) return text;
+  if (estimateTextWidth(text, { fontSize: FONT_SIZE }) <= maxTextWidth(text)) {
+    return text;
+  }
 
   const ellipsis = "…";
   let result = "";
   for (const char of Array.from(text)) {
     const candidate = `${result}${char}`;
-    if (estimateTextWidth(`${candidate}${ellipsis}`) > maxTextWidth(text)) {
+    if (
+      estimateTextWidth(`${candidate}${ellipsis}`, { fontSize: FONT_SIZE }) >
+      maxTextWidth(text)
+    ) {
       return `${result}${ellipsis}`;
     }
     result = candidate;

@@ -1,6 +1,18 @@
 <script setup>
+import { ref } from "vue";
+import {
+  EVENT_CONTEXT_LABEL_MAX_WIDTH,
+  eventContextLabel,
+  eventInlineLabel,
+} from "../utils/labels";
+
 const UNCERTAINTY_MARKER_OFFSET = 8;
 const UNCERTAINTY_MARKER_HALF_HEIGHT = 4;
+const COMMON_INDICATOR_SIZE = 4;
+const CONTEXT_LABEL_PADDING_X = 8;
+const CONTEXT_LABEL_HEIGHT = 20;
+const CONTEXT_LABEL_GAP = 7;
+const CONTEXT_LABEL_VIEWPORT_PADDING = 4;
 
 const props = defineProps({
   visibleEvents: { type: Array, required: true },
@@ -8,10 +20,13 @@ const props = defineProps({
   yPos: { type: Function, required: true },
   eventBarHeight: { type: Number, required: true },
   isSingleWithinRange: { type: Function, required: true },
-  selectedEvent: { type: Object, default: null }
+  selectedEvent: { type: Object, default: null },
+  timelineViewport: { type: Object, required: true }
 });
 
 const emit = defineEmits(["select"]);
+const hoveredEventKey = ref(null);
+const focusedEventKey = ref(null);
 
 function handleSelect(event) {
   emit("select", event);
@@ -28,6 +43,30 @@ function eventTitleText(event) {
     .map(value => String(value ?? "").trim())
     .filter(Boolean)
     .join(" / ");
+}
+
+function eventKey(event) {
+  return event.instanceId ?? event.id ?? event.canonicalId;
+}
+
+function setHoveredEvent(event) {
+  hoveredEventKey.value = eventKey(event);
+}
+
+function clearHoveredEvent(event) {
+  if (hoveredEventKey.value === eventKey(event)) {
+    hoveredEventKey.value = null;
+  }
+}
+
+function setFocusedEvent(event) {
+  focusedEventKey.value = eventKey(event);
+}
+
+function clearFocusedEvent(event) {
+  if (focusedEventKey.value === eventKey(event)) {
+    focusedEventKey.value = null;
+  }
 }
 
 function eventFill(event) {
@@ -69,6 +108,87 @@ function isSelectedEvent(event) {
   return selected.canonicalId === event.canonicalId;
 }
 
+function isInteractiveEvent(event) {
+  const key = eventKey(event);
+  return (
+    isSelectedEvent(event) ||
+    hoveredEventKey.value === key ||
+    focusedEventKey.value === key
+  );
+}
+
+function eventVisibleWidth(event) {
+  return Math.max(
+    0,
+    props.xPos(event.renderEndDay) - props.xPos(event.renderStartDay),
+  );
+}
+
+function eventCenterX(event) {
+  return props.xPos(event.renderStartDay) + eventVisibleWidth(event) / 2;
+}
+
+function eventCenterY(event) {
+  return props.yPos(event.laneIndex, event.subLaneIndex);
+}
+
+function inlineLabel(event) {
+  return eventInlineLabel({
+    title: event.title,
+    visibleWidth: eventVisibleWidth(event),
+    eventBarHeight: props.eventBarHeight,
+    isCommon: event.isCommon,
+    isSingleWithinRange: props.isSingleWithinRange(event),
+    isSelected: isSelectedEvent(event),
+    isInteractive: isInteractiveEvent(event),
+  });
+}
+
+function contextLabel(event) {
+  if (!isInteractiveEvent(event)) return null;
+  if (inlineLabel(event)) return null;
+
+  const label = eventContextLabel(event.title, EVENT_CONTEXT_LABEL_MAX_WIDTH);
+  if (!label) return null;
+
+  const rectWidth = label.width + CONTEXT_LABEL_PADDING_X * 2;
+  const minCenter =
+    props.timelineViewport.x + CONTEXT_LABEL_VIEWPORT_PADDING + rectWidth / 2;
+  const maxCenter =
+    props.timelineViewport.x +
+    props.timelineViewport.width -
+    CONTEXT_LABEL_VIEWPORT_PADDING -
+    rectWidth / 2;
+  if (minCenter > maxCenter) return null;
+
+  const centerX = Math.min(maxCenter, Math.max(minCenter, eventCenterX(event)));
+  const barTop = eventCenterY(event) - props.eventBarHeight / 2;
+  const barBottom = eventCenterY(event) + props.eventBarHeight / 2;
+  const aboveY = barTop - CONTEXT_LABEL_GAP - CONTEXT_LABEL_HEIGHT;
+  const belowY = barBottom + CONTEXT_LABEL_GAP;
+  const rectY =
+    aboveY >= props.timelineViewport.y + CONTEXT_LABEL_VIEWPORT_PADDING
+      ? aboveY
+      : belowY;
+
+  return {
+    text: label.text,
+    rectX: centerX - rectWidth / 2,
+    rectY,
+    rectWidth,
+    textX: centerX,
+    textY: rectY + CONTEXT_LABEL_HEIGHT / 2,
+  };
+}
+
+function commonIndicatorPoints(event) {
+  const x = eventCenterX(event);
+  const y = eventCenterY(event);
+  const size = COMMON_INDICATOR_SIZE;
+
+  return `${x},${y - size} ${x + size},${y} ${x},${y + size} ${x - size},${y}`;
+}
+
 function uncertaintyMarker(event, edge) {
   const edgeX =
     edge === "start"
@@ -93,11 +213,16 @@ function uncertaintyMarker(event, edge) {
         'event-group--selected': isSelectedEvent(event),
         'event-group--single': isSingleWithinRange(event),
         'event-group--common': event.isCommon,
+        'event-group--interactive': isInteractiveEvent(event),
       }"
       :style="eventStyle(event)"
       tabindex="0"
       role="button"
       :aria-label="eventTitleText(event)"
+      @mouseenter="setHoveredEvent(event)"
+      @mouseleave="clearHoveredEvent(event)"
+      @focus="setFocusedEvent(event)"
+      @blur="clearFocusedEvent(event)"
     >
       <title>{{ eventTitleText(event) }}</title>
 
@@ -167,6 +292,43 @@ function uncertaintyMarker(event, edge) {
         :cy="yPos(event.laneIndex, event.subLaneIndex)"
         r="4.8"
       />
+
+      <polygon
+        v-if="event.isCommon"
+        class="event-common-indicator"
+        :points="commonIndicatorPoints(event)"
+      />
+
+      <text
+        v-if="inlineLabel(event)"
+        class="event-inline-label"
+        :x="eventCenterX(event)"
+        :y="eventCenterY(event)"
+        text-anchor="middle"
+        dominant-baseline="middle"
+      >
+        {{ inlineLabel(event).text }}
+      </text>
+
+      <g v-if="contextLabel(event)" class="event-context-label">
+        <rect
+          class="event-context-label__surface"
+          :x="contextLabel(event).rectX"
+          :y="contextLabel(event).rectY"
+          :width="contextLabel(event).rectWidth"
+          :height="CONTEXT_LABEL_HEIGHT"
+          rx="4"
+        />
+        <text
+          class="event-context-label__text"
+          :x="contextLabel(event).textX"
+          :y="contextLabel(event).textY"
+          text-anchor="middle"
+          dominant-baseline="middle"
+        >
+          {{ contextLabel(event).text }}
+        </text>
+      </g>
     </g>
   </g>
 </template>

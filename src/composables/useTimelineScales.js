@@ -1,5 +1,6 @@
 import { computed } from "vue";
 import { DAYS_IN_MONTH } from "../utils/constants";
+import { timelineScaleVisibility } from "../utils/labels";
 import { timeToYearMonth } from "../utils/time";
 
 const COARSE_YEAR_STEP = 5;
@@ -9,7 +10,35 @@ function monthStartTime(monthTime) {
   return monthTime * DAYS_IN_MONTH;
 }
 
-export function useTimelineScales({ viewRange, showMonthScale, showDayScale }) {
+export function useTimelineScales({
+  viewRange,
+  showMonthScale,
+  showDayScale,
+  timelineViewport = null,
+}) {
+  const effectiveScaleVisibility = computed(() => {
+    const viewportWidth = timelineViewport?.value?.width;
+    if (viewportWidth) {
+      return timelineScaleVisibility({
+        viewMin: viewRange.value.min,
+        viewMax: viewRange.value.max,
+        viewportWidth,
+      });
+    }
+
+    return {
+      showMonthScale: showMonthScale.value,
+      showDayScale: showDayScale.value,
+    };
+  });
+
+  const effectiveShowMonthScale = computed(
+    () => effectiveScaleVisibility.value.showMonthScale,
+  );
+  const effectiveShowDayScale = computed(
+    () => effectiveScaleVisibility.value.showDayScale,
+  );
+
   const years = computed(() => {
     const startMonth = Math.floor(viewRange.value.min / DAYS_IN_MONTH);
     const endMonth = Math.floor(viewRange.value.max / DAYS_IN_MONTH);
@@ -32,7 +61,7 @@ export function useTimelineScales({ viewRange, showMonthScale, showDayScale }) {
   });
 
   const monthTicks = computed(() => {
-    if (!showMonthScale.value) return [];
+    if (!effectiveShowMonthScale.value) return [];
 
     const startMonth = Math.floor(viewRange.value.min / DAYS_IN_MONTH);
     const endMonth = Math.floor(viewRange.value.max / DAYS_IN_MONTH);
@@ -50,7 +79,7 @@ export function useTimelineScales({ viewRange, showMonthScale, showDayScale }) {
   });
 
   const dayTicks = computed(() => {
-    if (!showDayScale.value) return [];
+    if (!effectiveShowDayScale.value) return [];
 
     const startDay = Math.floor(viewRange.value.min);
     const endDay = Math.floor(viewRange.value.max);
@@ -69,5 +98,7 @@ export function useTimelineScales({ viewRange, showMonthScale, showDayScale }) {
     years,
     monthTicks,
     dayTicks,
+    showMonthScale: effectiveShowMonthScale,
+    showDayScale: effectiveShowDayScale,
   };
 }

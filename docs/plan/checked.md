@@ -10,3 +10,4 @@ id	path
 007	docs/plan/checked/007-data-validation-foundation.md
 014	docs/plan/checked/014-official-color-system.md
 015	docs/plan/checked/015-timeline-visual-refinement.md
+016	docs/plan/checked/016-event-information-hierarchy.md

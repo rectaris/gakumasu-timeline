@@ -69,6 +69,7 @@ const clipId = `timeline-clip-${getCurrentInstance()?.uid ?? "default"}`;
         :event-bar-height="renderContext.eventBarHeight"
         :is-single-within-range="renderContext.isSingleWithinRange"
         :selected-event="renderContext.selectedEvent"
+        :timeline-viewport="renderContext.timelineViewport"
         @select="event => emit('select', event)"
       />
     </g>

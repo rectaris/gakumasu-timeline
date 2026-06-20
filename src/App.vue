@@ -96,8 +96,8 @@ const {
   verticalScale,
   horizontalZoomLabel,
   verticalZoomLabel,
-  showMonthScale,
-  showDayScale,
+  showMonthScale: spanShowMonthScale,
+  showDayScale: spanShowDayScale,
   canZoomInHorizontal,
   canZoomOutHorizontal,
   canZoomInVertical,
@@ -113,12 +113,6 @@ const {
   zoomOutVertical,
   resetVerticalZoom
 } = useZoomMachine(timesDay, selectedEvent);
-
-const { years, monthTicks, dayTicks } = useTimelineScales({
-  viewRange,
-  showMonthScale,
-  showDayScale
-});
 
 const {
   laneLayouts,
@@ -138,6 +132,14 @@ const {
   leftLabelWidth: LEFT_LABEL_WIDTH,
   rightPadding: RIGHT_PADDING
 });
+
+const { years, monthTicks, dayTicks, showMonthScale, showDayScale } =
+  useTimelineScales({
+    viewRange,
+    showMonthScale: spanShowMonthScale,
+    showDayScale: spanShowDayScale,
+    timelineViewport,
+  });
 
 const timelineRenderContext = computed(() => ({
   width: WIDTH,
