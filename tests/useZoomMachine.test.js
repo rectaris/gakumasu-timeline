@@ -79,6 +79,8 @@ describe("useZoomMachine", () => {
   it("clamps vertical scale to event-slot and Full HD derived bounds", () => {
     const zoom = zoomMachine();
 
+    expect(MIN_VERTICAL_SCALE).toBe(0.25);
+
     zoom.setVerticalScale(0.1);
 
     expect(zoom.verticalScale.value).toBeCloseTo(MIN_VERTICAL_SCALE);

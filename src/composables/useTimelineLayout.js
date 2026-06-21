@@ -3,8 +3,10 @@ import {
   EVENT_BAR_HEIGHT,
   EVENT_SUB_LANE_SPACING,
   LANE_PADDING,
+  LOW_DENSITY_SUMMARY_SCALE,
   MAX_FULL_HD_SINGLE_LANE_HEIGHT,
   MAX_VERTICAL_SCALE,
+  MIN_LANE_HEIGHT,
   MIN_VERTICAL_SCALE,
   TOP_OFFSET,
 } from "../utils/constants";
@@ -39,19 +41,21 @@ export function useTimelineLayout({
     const eventBarHeight = EVENT_BAR_HEIGHT;
     const rowHeight = EVENT_SUB_LANE_SPACING;
     const lanePadding = LANE_PADDING;
-    const densityProgress = Math.min(
+    const compactDensityProgress = Math.min(
       1,
-      Math.max(
-        0,
-        (scale - MIN_VERTICAL_SCALE) / (MAX_VERTICAL_SCALE - MIN_VERTICAL_SCALE),
-      ),
+      Math.max(0, (scale - MIN_VERTICAL_SCALE) / (1 - MIN_VERTICAL_SCALE)),
+    );
+    const expandedDensityProgress = Math.min(
+      1,
+      Math.max(0, (scale - 1) / (MAX_VERTICAL_SCALE - 1)),
     );
 
     return {
       eventBarHeight,
       rowHeight,
       lanePadding,
-      densityProgress,
+      compactDensityProgress,
+      expandedDensityProgress,
       maxLaneHeight: MAX_FULL_HD_SINGLE_LANE_HEIGHT,
     };
   });
@@ -75,7 +79,12 @@ export function useTimelineLayout({
       enabled: true,
       viewportWidth: viewportWidth.value,
       selectedEvent: selectedEvent?.value ?? null,
-      crowdedSubLaneCount: verticalScale.value < 0.95 ? 3 : 4,
+      crowdedSubLaneCount:
+        verticalScale.value <= LOW_DENSITY_SUMMARY_SCALE
+          ? 2
+          : verticalScale.value < 0.95
+            ? 3
+            : 4,
     }),
   );
 
@@ -108,10 +117,15 @@ export function useTimelineLayout({
         Math.max(0, renderedSubLaneCount - 1) *
           layoutMetrics.value.rowHeight +
         layoutMetrics.value.lanePadding * 2;
-      const laneHeight =
+      const standardHeight = Math.max(MIN_LANE_HEIGHT, contentHeight);
+      const compactHeight =
         contentHeight +
-        Math.max(0, layoutMetrics.value.maxLaneHeight - contentHeight) *
-          layoutMetrics.value.densityProgress;
+        (standardHeight - contentHeight) *
+          layoutMetrics.value.compactDensityProgress;
+      const laneHeight =
+        compactHeight +
+        Math.max(0, layoutMetrics.value.maxLaneHeight - standardHeight) *
+          layoutMetrics.value.expandedDensityProgress;
       const laneTop = currentTop;
       const centerY = laneTop + laneHeight / 2;
 

@@ -33,3 +33,4 @@ id	path
 030	docs/plan/checked/030-density-summary-lane-height.md
 031	docs/plan/checked/031-seamless-density-lane-scaling.md
 032	docs/plan/checked/032-timeline-density-min-event-height.md
+033	docs/plan/checked/033-timeline-density-low-end-compaction.md

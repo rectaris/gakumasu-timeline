@@ -12,6 +12,7 @@ import {
   EVENT_BAR_HEIGHT,
   EVENT_SUB_LANE_SPACING,
   LANE_PADDING,
+  LOW_DENSITY_SUMMARY_SCALE,
   MIN_LANE_HEIGHT,
   MIN_SINGLE_EVENT_LANE_HEIGHT,
   MIN_VERTICAL_SCALE,
@@ -329,7 +330,7 @@ describe("useTimelineLayout", () => {
     });
   });
 
-  it("adds only extra sub-lane spacing above the single-event minimum", () => {
+  it("summarizes two-sub-lane clusters at low density so minimum lanes can use one event slot", () => {
     const verticalScale = ref(MIN_VERTICAL_SCALE);
     const layout = layoutFor({
       viewRange: ref({ min: 0, max: 100 }),
@@ -340,10 +341,37 @@ describe("useTimelineLayout", () => {
       ],
     });
 
-    expect(layout.laneLayouts.value[0]).toMatchObject({
-      laneHeight: EVENT_BAR_HEIGHT + EVENT_SUB_LANE_SPACING + LANE_PADDING * 2,
-      renderedSubLaneCount: 2,
+    expect(layout.visibleEvents.value).toHaveLength(1);
+    expect(layout.visibleEvents.value[0]).toMatchObject({
+      isSummary: true,
+      eventCount: 2,
+      subLaneIndex: 0,
     });
+    expect(layout.laneLayouts.value[0]).toMatchObject({
+      laneHeight: MIN_SINGLE_EVENT_LANE_HEIGHT,
+      renderedSubLaneCount: 1,
+    });
+  });
+
+  it("keeps two-sub-lane clusters separated above the low-density summary threshold", () => {
+    const verticalScale = ref(LOW_DENSITY_SUMMARY_SCALE + 0.01);
+    const layout = layoutFor({
+      viewRange: ref({ min: 0, max: 100 }),
+      verticalScale,
+      events: [
+        event({ id: "overlap-a", displayStartDay: 10, displayEndDay: 30 }),
+        event({ id: "overlap-b", displayStartDay: 20, displayEndDay: 40 }),
+      ],
+    });
+
+    expect(layout.visibleEvents.value.map((item) => item.id)).toEqual([
+      "overlap-a",
+      "overlap-b",
+    ]);
+    expect(layout.laneLayouts.value[0].renderedSubLaneCount).toBe(2);
+    expect(layout.laneLayouts.value[0].laneHeight).toBeGreaterThan(
+      EVENT_BAR_HEIGHT + LANE_PADDING * 2,
+    );
     expect(layout.yPos(0, 1) - layout.yPos(0, 0)).toBe(
       EVENT_SUB_LANE_SPACING,
     );
