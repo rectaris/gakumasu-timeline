@@ -2,8 +2,8 @@
 
 This policy is optional. Generated settings:
 
-- MCP policy: `false`
-- Linear sync policy: `false`
+- MCP policy: `true`
+- Linear sync policy: `true`
 - Graph memory policy: `false`
 
 ## Baseline
@@ -28,11 +28,61 @@ When enabling an external-service option in this repository:
 
 ## MCP Policy
 
-MCP-specific workflow is disabled by this template answer. Keep the repository workflow local. To add MCP later, enable `use_mcp_policy`, document server names and side-effect boundaries, and keep all credentials outside the repository.
+- Before using an MCP server, read the local MCP policy or skill if the repository provides one.
+- Separate read-only operations from write-capable operations.
+- Record fallback only when MCP unavailability changes scope, confidence, or validation.
+- Do not send secrets, private config, or unrelated local context to external tools.
+
+### MCP Setup
+
+- Document available MCP servers in the project-local agent docs or the user's agent runtime config, not in generated secrets.
+- For each server, record:
+  - purpose and owner
+  - allowed read operations
+  - allowed write operations, if any
+  - required credentials or secret names
+  - fallback when the server is unavailable
+- Prefer read-only MCP calls for orientation, issue lookup, documentation lookup, and memory retrieval.
+- Use write-capable MCP calls only after the task or lifecycle command clearly authorizes that side effect.
+
+### MCP Operation Pattern
+
+1. Read local specs and repo files first.
+2. Use MCP only for context that is external, current, or not stored in the repository.
+3. Summarize external findings before applying them to code or plan files.
+4. Do not let MCP output override failing local tests, validation, or source files.
 
 ## Linear Sync Policy
 
-Linear sync is disabled by this template answer. Keep plan lifecycle local unless the project adds an explicit Linear module. To add Linear later, define credentials, team/status/label mapping, dry-run behavior, duplicate-prevention markers, and write-capable lifecycle commands before creating or updating issues.
+- Treat Linear as a human-facing planning surface, not the source of truth for code.
+- Local plan files remain the repository fallback.
+- Classify commands as dry-run, read-capable, or write-capable before execution.
+- Write-capable issue creation, description updates, status updates, comments, labels, and assignees require explicit user intent or documented lifecycle opt-in.
+- Managed issue regions must preserve human-authored text outside generated markers.
+- Duplicate prevention should use deterministic source markers and fail closed on ambiguity.
+
+### Linear Setup
+
+- Store credentials in `LINEAR_ACCESS_TOKEN` or `LINEAR_API_KEY`; never commit tokens or exported `.env` files.
+- Record the target Linear workspace, team, default labels, and status names in a project-local spec before enabling write-capable sync.
+- Keep `docs/plan/active/*.md`, `docs/plan/backlog/*.md`, and `docs/plan/checked/*.md` as the local execution records.
+- Use a local manifest field such as `linear_issue_key` only as linkage metadata.
+- Use a local exemption field such as `linear_sync_exempt_reason` for offline, recovery, or explicitly local-only planning.
+
+### Linear Workflow Shape
+
+- Dry-run: render the issue title, body, labels, and planned status without reading or writing Linear.
+- Read-capable preview: read an existing linked issue and show the intended diff without writing.
+- Write-capable create/link: create or link an issue from a reviewed local plan and record the issue key locally.
+- Write-capable update: update only deterministic managed regions or lifecycle status transitions.
+- Completion sync: update external status only after local validation passes and the checked archive is created.
+
+### Linear Guardrails
+
+- Do not create, update, comment on, assign, label, or close issues unless the current task, user instruction, or lifecycle command authorizes that exact side effect.
+- Generated descriptions should use a managed region so human-authored text outside that region is preserved.
+- If multiple existing issues could match a local plan, fail without linking.
+- If Linear credentials are unavailable, keep local planning active and record whether completion or sync is deferred.
 
 ## Graph Memory Policy
 

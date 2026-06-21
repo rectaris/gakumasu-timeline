@@ -9,15 +9,16 @@ Maintain the Gakumasu timeline application, data, and UI interactions.
 ## Generated Profile
 
 - Project name: `gakumasu-timeline`
-- Primary language: `typescript`
+- Primary language: `mixed`
 - Planning style: `active_backlog_checked`
 - Codex helper agents: `true`
 - Codex hooks: `true`
 - Plan lifecycle scripts: `true`
 - Change-aware validation: `true`
 - Static security checks: `true`
+- SkillSpector scan: `true`
 - Structure scanner: `true`
-- External service policies: MCP=`false`, Linear=`false`, graph memory=`false`
+- External service policies: MCP=`true`, Linear=`true`, graph memory=`false`
 
 ## Priority
 
@@ -35,10 +36,16 @@ Maintain the Gakumasu timeline application, data, and UI interactions.
 - Use Git for every coherent work unit.
 - Preserve user changes you did not make.
 - Prefer deterministic checks over prose-only rules.
+<<<<<<< before updating
 - Ask before high-impact or ambiguous changes to timeline data structures or core interactions.
 - Use `agents-rules/decision-boundaries.md` for approval, validation, data, dependency, helper, and release decisions.
+=======
+- Use tmux for long-running, shared, or interactive commands when available; use normal command execution for short deterministic commands.
+- Ask before high-impact or ambiguous changes.
+>>>>>>> after updating
 - Treat `docs/plan/checked.md` and checked archives as lookup-only history; search metadata first when possible.
 - Keep human-facing README files separate from agent-facing operational policy.
+- When writing or editing Japanese prose, follow `docs/agent/SPEC_JAPANESE_TECH_WRITING.md`.
 
 ## Timeline Rules
 

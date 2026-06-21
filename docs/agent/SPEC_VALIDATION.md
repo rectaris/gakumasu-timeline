@@ -1,6 +1,8 @@
 # Validation
 
-Generated for primary language: `typescript`.
+Generated for primary language: `mixed`.
+
+Optional SkillSpector scan: `true`.
 
 ## Baseline
 
@@ -19,7 +21,7 @@ Generated for primary language: `typescript`.
 - Codex hook Python: Python compile validation.
 - Codex config or custom agent TOML: TOML parse validation.
 - GitHub Actions or maintained scripts: static security checks when enabled.
-- TypeScript default: run the package's build and unit-test commands when present, commonly `npm run build` and `npm run test`.
+- Mixed default: run the smallest complete validation set for every language surface touched.
 
 ## Project-Specific Minimums
 
@@ -69,6 +71,16 @@ Before final report:
 ## Optional Checks
 
 - Static security: `python3 scripts/security-static-check.py`
+- SkillSpector agent-skill scan: `scripts/skillspector-scan.sh <skill-path>`
 - Structure scanner: `python3 scripts/structure-map.py --check`
 - Plan lint: `python3 scripts/lint-plan-docs.py`
 - Plan format check: `python3 scripts/format-plan-docs.py --check`
+
+## SkillSpector
+
+Use NVIDIA SkillSpector before installing, updating, or vendoring AI agent skills from external sources.
+
+- Run `scripts/skillspector-scan.sh <skill-path>` for static-only analysis.
+- Set `SKILLSPECTOR_USE_LLM=1` only when semantic LLM analysis is intentionally required.
+- Keep provider credentials in environment variables or a secret store; do not commit them.
+- Treat HIGH or CRITICAL results as blocking until reviewed and remediated.
