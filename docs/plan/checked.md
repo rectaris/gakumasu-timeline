@@ -31,3 +31,4 @@ id	path
 028	docs/plan/checked/028-fixed-overlap-event-spacing.md
 029	docs/plan/checked/029-timeline-density-lane-padding.md
 030	docs/plan/checked/030-density-summary-lane-height.md
+031	docs/plan/checked/031-seamless-density-lane-scaling.md

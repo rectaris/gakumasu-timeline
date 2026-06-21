@@ -3,8 +3,9 @@ import {
   EVENT_BAR_HEIGHT,
   EVENT_SUB_LANE_SPACING,
   LANE_PADDING,
-  MIN_SINGLE_EVENT_LANE_HEIGHT,
-  MIN_LANE_HEIGHT,
+  MAX_FULL_HD_SINGLE_LANE_HEIGHT,
+  MAX_VERTICAL_SCALE,
+  MIN_VERTICAL_SCALE,
   TOP_OFFSET,
 } from "../utils/constants";
 import {
@@ -38,16 +39,20 @@ export function useTimelineLayout({
     const eventBarHeight = EVENT_BAR_HEIGHT;
     const rowHeight = EVENT_SUB_LANE_SPACING;
     const lanePadding = LANE_PADDING;
-    const minLaneHeight = Math.max(
-      MIN_SINGLE_EVENT_LANE_HEIGHT,
-      MIN_LANE_HEIGHT * scale,
+    const densityProgress = Math.min(
+      1,
+      Math.max(
+        0,
+        (scale - MIN_VERTICAL_SCALE) / (MAX_VERTICAL_SCALE - MIN_VERTICAL_SCALE),
+      ),
     );
 
     return {
       eventBarHeight,
       rowHeight,
       lanePadding,
-      minLaneHeight,
+      densityProgress,
+      maxLaneHeight: MAX_FULL_HD_SINGLE_LANE_HEIGHT,
     };
   });
 
@@ -98,11 +103,13 @@ export function useTimelineLayout({
       const laneData = laneEventLayouts.value[laneIndex];
       const subLaneCount = laneData?.subLaneCount ?? 1;
       const renderedSubLaneCount = renderedSubLaneCounts.value[laneIndex] ?? 1;
-      const laneHeight = Math.max(
-        layoutMetrics.value.minLaneHeight,
+      const contentHeight =
         renderedSubLaneCount * layoutMetrics.value.rowHeight +
-          layoutMetrics.value.lanePadding * 2,
-      );
+        layoutMetrics.value.lanePadding * 2;
+      const laneHeight =
+        contentHeight +
+        Math.max(0, layoutMetrics.value.maxLaneHeight - contentHeight) *
+          layoutMetrics.value.densityProgress;
       const laneTop = currentTop;
       const centerY = laneTop + laneHeight / 2;
 

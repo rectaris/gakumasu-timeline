@@ -12,6 +12,7 @@ import {
   EVENT_BAR_HEIGHT,
   EVENT_SUB_LANE_SPACING,
   LANE_PADDING,
+  MIN_LANE_HEIGHT,
   MIN_SINGLE_EVENT_LANE_HEIGHT,
   MIN_VERTICAL_SCALE,
 } from "../src/utils/constants";
@@ -274,6 +275,29 @@ describe("useTimelineLayout", () => {
         layout.eventBarHeight.value / 2 -
         layout.laneLayouts.value[0].laneTop,
     ).toBe(LANE_PADDING);
+  });
+
+  it("scales lane height continuously from minimum through standard density", () => {
+    const verticalScale = ref(MIN_VERTICAL_SCALE);
+    const layout = layoutFor({
+      viewRange: ref({ min: 0, max: 100 }),
+      verticalScale,
+      events: [event({ id: "single", displayStartDay: 10, displayEndDay: 30 })],
+    });
+
+    const minimumHeight = layout.laneLayouts.value[0].laneHeight;
+    verticalScale.value = 0.9;
+    const lowHeight = layout.laneLayouts.value[0].laneHeight;
+    verticalScale.value = 1;
+    const standardHeight = layout.laneLayouts.value[0].laneHeight;
+    verticalScale.value = 1.5;
+    const expandedHeight = layout.laneLayouts.value[0].laneHeight;
+
+    expect(minimumHeight).toBe(MIN_SINGLE_EVENT_LANE_HEIGHT);
+    expect(lowHeight).toBeGreaterThan(minimumHeight);
+    expect(standardHeight).toBeGreaterThan(lowHeight);
+    expect(standardHeight).toBeCloseTo(MIN_LANE_HEIGHT);
+    expect(expandedHeight).toBeGreaterThan(standardHeight);
   });
 
   it("shrinks lane height to rendered summaries at minimum density", () => {
