@@ -72,7 +72,7 @@
   - 一時的に表示イベントが 0 件になった場合は、直前の有効な境界を維持
 - 選択イベントが表示範囲外に出る場合は、必要な幅まで span を広げて再センタリングします
 
-縦方向は `verticalScale` でレーン高さ・行間・バー高さを伸縮します。
+縦方向は `verticalScale` でレーン余白・最小レーン高さ・全体の縦方向表示量を調整します。イベントバー高さと、重なりイベントを上下に分けるサブレーン間隔は固定です。
 
 ## 描画
 
@@ -82,7 +82,8 @@
   - `viewRange.min/max` に対する比率で x 座標を計算
   - 描画幅は `timelineViewport` の幅に合わせる
 - イベントの縦位置はサブレーン計算で決定
-  - `yPos(laneIndex, subLaneIndex)` が `laneTop + padding + subLaneIndex * rowHeight` を返す
+  - `yPos(laneIndex, subLaneIndex)` が `laneTop + padding + subLaneIndex * fixedSubLaneSpacing` をもとに返す
+  - レーン密度を変えても、隣接サブレーン上のイベント同士の中心間隔は変わらない
 
 描画内容:
 

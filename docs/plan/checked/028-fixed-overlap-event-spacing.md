@@ -94,8 +94,54 @@ The user reports that changing timeline density still changes the vertical dista
 3. Hit testing
    - Keep hit areas tied to existing event visuals unless browser verification shows touch/click usability regressed.
 
+## Implementation Decisions
+
+1. Fixed spacing contract
+   - Use a named fixed center-to-center sub-lane spacing constant instead of a density-scaled row gap.
+   - Set the default spacing to 22px so fixed 12px event bars, 20px focus-ring bounds, uncertainty bands, endpoint markers, and normal inline labels retain visible separation.
+   - Treat hover/focus context labels as verification scope, not as a fixed row-height sizing input, because those labels intentionally float outside the event row.
+
+2. Density scope
+   - Keep `verticalScale` on lane-level spacing only: lane padding, minimum lane height, total viewport height, and existing dense-summary threshold behavior.
+   - Preserve existing `scale` URL parameter compatibility; saved scale values now restore lane-level density without changing overlapping-event spacing.
+
+3. Constants
+   - Replace the ambiguous fixed row-height/gap contract with a sub-lane spacing constant.
+   - Keep event visual height as a separate fixed contract from plan 027.
+
+4. Regression coverage
+   - Test that `yPos(0, 1) - yPos(0, 0)` remains constant at low, standard, and high density values.
+   - Test that the fixed sub-lane spacing is larger than the fixed event height plus visual clearance.
+   - Keep density behavior covered with a lane-height/viewport-height assertion that does not depend on event-row spacing.
+
+5. Documentation scope
+   - Update human-facing behavior docs whose density wording becomes incomplete.
+   - Also update `docs/processing-flow.md` because it currently states that `verticalScale` changes row gaps and bar height.
+
 ## Out Of Scope
 
 - Changing event data, chronology, source attribution, labels, colors, or IDs.
 - Redesigning event bars or dense summary visuals beyond spacing required to satisfy the request.
 - Removing the lane density feature or changing URL parameter names.
+
+## Implementation Summary
+
+- Added a fixed `EVENT_SUB_LANE_SPACING` contract so overlapping events keep a 22px center-to-center distance across density changes.
+- Kept `verticalScale` scoped to lane padding, minimum lane height, total viewport height, and existing dense-summary threshold behavior.
+- Updated layout regression coverage so event height and adjacent sub-lane spacing remain fixed at low, standard, and high density values.
+- Updated behavior docs to clarify that lane density changes lane-level spacing, not event body height or overlapping-event spacing.
+
+## Validation Results
+
+- `npm run test -- tests/useTimelineLayout.test.js`: passed.
+- `npm run build`: passed.
+- `git diff --check`: passed.
+- `python3 scripts/validate-changes.py --print-only`: selected `git diff --check`, `python3 scripts/lint-plan-docs.py`, and `python3 scripts/format-plan-docs.py --check`.
+- `python3 scripts/lint-plan-docs.py`: passed.
+- `python3 scripts/format-plan-docs.py --check`: passed.
+- Browser verification on preview `http://127.0.0.1:4174/timeline/`: desktop `1280x900` and mobile `375x812` both kept event bars at `12`, summary bars at `16`, and the dominant adjacent sub-lane spacing at `22` before and after two density-increase clicks; timeline viewport height increased from `1338` to `1421.8500000000004`; event click opened the detail panel in both viewports.
+
+## Residual Notes
+
+- Browser verification observed the existing app warning `Invalid event start date` for `saki_hanami`; no data files were changed in this task.
+- Desktop browser verification also observed an aborted external Google Ads request on localhost; no app asset or data request failed.

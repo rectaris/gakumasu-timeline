@@ -28,3 +28,4 @@ id	path
 025	docs/plan/checked/025-mobile-inspection-experience.md
 026	docs/plan/checked/026-performance-observability-and-scaling.md
 027	docs/plan/checked/027-disable-event-vertical-scaling.md
+028	docs/plan/checked/028-fixed-overlap-event-spacing.md

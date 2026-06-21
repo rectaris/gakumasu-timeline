@@ -8,6 +8,10 @@ import {
   useTimelineLayout,
   visibleEventLayouts,
 } from "../src/composables/useTimelineLayout";
+import {
+  EVENT_BAR_HEIGHT,
+  EVENT_SUB_LANE_SPACING,
+} from "../src/utils/constants";
 
 function event({
   id,
@@ -206,7 +210,7 @@ describe("useTimelineLayout", () => {
     ]);
   });
 
-  it("keeps event visual height fixed while density changes lane spacing", () => {
+  it("keeps event visual height and overlapping sub-lane spacing fixed while density changes lane spacing", () => {
     const verticalScale = ref(1);
     const layout = layoutFor({
       viewRange: ref({ min: 0, max: 100 }),
@@ -220,10 +224,19 @@ describe("useTimelineLayout", () => {
     const initialSubLaneGap = layout.yPos(0, 1) - layout.yPos(0, 0);
     const initialViewportHeight = layout.timelineViewport.value.height;
 
+    expect(initialEventHeight).toBe(EVENT_BAR_HEIGHT);
+    expect(initialSubLaneGap).toBe(EVENT_SUB_LANE_SPACING);
+    expect(initialSubLaneGap - initialEventHeight).toBeGreaterThanOrEqual(10);
+
+    verticalScale.value = 0.75;
+
+    expect(layout.eventBarHeight.value).toBe(initialEventHeight);
+    expect(layout.yPos(0, 1) - layout.yPos(0, 0)).toBe(initialSubLaneGap);
+
     verticalScale.value = 2;
 
     expect(layout.eventBarHeight.value).toBe(initialEventHeight);
-    expect(layout.yPos(0, 1) - layout.yPos(0, 0)).toBeGreaterThan(initialSubLaneGap);
+    expect(layout.yPos(0, 1) - layout.yPos(0, 0)).toBe(initialSubLaneGap);
     expect(layout.timelineViewport.value.height).toBeGreaterThan(initialViewportHeight);
   });
 

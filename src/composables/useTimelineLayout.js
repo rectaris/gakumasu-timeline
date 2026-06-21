@@ -1,7 +1,7 @@
 import { computed } from "vue";
 import {
   EVENT_BAR_HEIGHT,
-  EVENT_ROW_GAP,
+  EVENT_SUB_LANE_SPACING,
   LANE_PADDING,
   MIN_LANE_HEIGHT,
   TOP_OFFSET,
@@ -35,8 +35,7 @@ export function useTimelineLayout({
   const layoutMetrics = computed(() => {
     const scale = verticalScale.value;
     const eventBarHeight = EVENT_BAR_HEIGHT;
-    const rowGap = Math.max(4, EVENT_ROW_GAP * scale);
-    const rowHeight = eventBarHeight + rowGap;
+    const rowHeight = EVENT_SUB_LANE_SPACING;
     const lanePadding = Math.max(6, LANE_PADDING * scale);
     const minLaneHeight = Math.max(40, MIN_LANE_HEIGHT * scale);
 
