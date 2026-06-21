@@ -2,6 +2,8 @@ import { ref } from "vue";
 import { describe, expect, it } from "vitest";
 import {
   buildLaneLayout,
+  denseSummaryCapacityForScale,
+  denseSummaryOptionsForScale,
   groupEventsByLane,
   buildTimelineRenderMetrics,
   summarizeDenseEventsForLane,
@@ -13,9 +15,11 @@ import {
   EVENT_SUB_LANE_SPACING,
   LANE_PADDING,
   LOW_DENSITY_SUMMARY_SCALE,
+  MIN_DENSE_SUMMARY_EVENT_COUNT,
   MIN_LANE_HEIGHT,
   MIN_SINGLE_EVENT_LANE_HEIGHT,
   MIN_VERTICAL_SCALE,
+  STANDARD_DENSE_SUMMARY_SUB_LANE_CAPACITY,
 } from "../src/utils/constants";
 
 function event({
@@ -374,6 +378,55 @@ describe("useTimelineLayout", () => {
     );
     expect(layout.yPos(0, 1) - layout.yPos(0, 0)).toBe(
       EVENT_SUB_LANE_SPACING,
+    );
+  });
+
+  it("increases dense summary capacity as lane density expands", () => {
+    const highScale = 5.45;
+
+    expect(denseSummaryCapacityForScale(MIN_VERTICAL_SCALE)).toBe(1);
+    expect(denseSummaryCapacityForScale(LOW_DENSITY_SUMMARY_SCALE + 0.01)).toBe(
+      2,
+    );
+    expect(denseSummaryCapacityForScale(1)).toBe(
+      STANDARD_DENSE_SUMMARY_SUB_LANE_CAPACITY,
+    );
+    expect(denseSummaryCapacityForScale(highScale)).toBeGreaterThanOrEqual(6);
+    expect(denseSummaryOptionsForScale(highScale).minEvents).toBeGreaterThan(6);
+    expect(denseSummaryOptionsForScale(1).minEvents).toBe(
+      MIN_DENSE_SUMMARY_EVENT_COUNT,
+    );
+  });
+
+  it("renders six dense events individually when expanded lane density has room", () => {
+    const verticalScale = ref(5.45);
+    const denseEvents = [0, 1, 2, 3, 4, 5].map((index) =>
+      event({
+        id: `dense-${index}`,
+        displayStartDay: 10,
+        displayEndDay: 30,
+      }),
+    );
+    const layout = layoutFor({
+      viewRange: ref({ min: 0, max: 100 }),
+      verticalScale,
+      events: denseEvents,
+    });
+
+    expect(layout.visibleEvents.value.map((item) => item.id)).toEqual([
+      "dense-0",
+      "dense-1",
+      "dense-2",
+      "dense-3",
+      "dense-4",
+      "dense-5",
+    ]);
+    expect(layout.visibleEvents.value.some((item) => item.isSummary)).toBe(
+      false,
+    );
+    expect(layout.laneLayouts.value[0].renderedSubLaneCount).toBe(6);
+    expect(layout.laneLayouts.value[0].laneHeight).toBeGreaterThan(
+      EVENT_BAR_HEIGHT + EVENT_SUB_LANE_SPACING * 5 + LANE_PADDING * 2,
     );
   });
 

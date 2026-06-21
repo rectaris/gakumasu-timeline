@@ -105,6 +105,7 @@
    - レーン線
 3. イベント
    - `visibleEvents`（表示範囲に重なるイベント）だけを描画
+   - 近接イベントは表示範囲とレーン密度から算出した個別表示容量を超える場合だけ、件数マーカーへ置換
    - 期間バー: `rect (x=start, width=end-start)`
    - 開始点・終了点: `circle`
    - `occurrenceType === "singleWithinRange"` の場合、バーに破線＋両端の不確定マーカーを追加

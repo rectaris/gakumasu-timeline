@@ -4,12 +4,16 @@ import {
   EVENT_SUB_LANE_SPACING,
   LANE_PADDING,
   LOW_DENSITY_SUMMARY_SCALE,
+  MAX_DENSE_SUMMARY_SUB_LANE_CAPACITY,
   MAX_FULL_HD_SINGLE_LANE_HEIGHT,
   MAX_VERTICAL_SCALE,
+  MIN_DENSE_SUMMARY_EVENT_COUNT,
   MIN_LANE_HEIGHT,
   MIN_VERTICAL_SCALE,
+  STANDARD_DENSE_SUMMARY_SUB_LANE_CAPACITY,
   TOP_OFFSET,
 } from "../utils/constants";
+import { clamp } from "../utils/clamp";
 import {
   buildLaneLayout,
   buildTimelineRenderMetrics,
@@ -25,6 +29,41 @@ export {
   summarizeDenseEventsForLane,
   visibleEventLayouts,
 };
+
+export function denseSummaryCapacityForScale(scale) {
+  if (scale <= LOW_DENSITY_SUMMARY_SCALE) {
+    return 1;
+  }
+
+  if (scale < 1) {
+    return 2;
+  }
+
+  const expandedProgress = clamp(
+    (scale - 1) / (MAX_VERTICAL_SCALE - 1),
+    0,
+    1,
+  );
+
+  return Math.floor(
+    STANDARD_DENSE_SUMMARY_SUB_LANE_CAPACITY +
+      (MAX_DENSE_SUMMARY_SUB_LANE_CAPACITY -
+        STANDARD_DENSE_SUMMARY_SUB_LANE_CAPACITY) *
+        expandedProgress,
+  );
+}
+
+export function denseSummaryOptionsForScale(scale) {
+  const visibleSubLaneCapacity = denseSummaryCapacityForScale(scale);
+
+  return {
+    crowdedSubLaneCount: visibleSubLaneCapacity + 1,
+    minEvents: Math.max(
+      MIN_DENSE_SUMMARY_EVENT_COUNT,
+      visibleSubLaneCapacity + 1,
+    ),
+  };
+}
 
 export function useTimelineLayout({
   characters,
@@ -79,12 +118,7 @@ export function useTimelineLayout({
       enabled: true,
       viewportWidth: viewportWidth.value,
       selectedEvent: selectedEvent?.value ?? null,
-      crowdedSubLaneCount:
-        verticalScale.value <= LOW_DENSITY_SUMMARY_SCALE
-          ? 2
-          : verticalScale.value < 0.95
-            ? 3
-            : 4,
+      ...denseSummaryOptionsForScale(verticalScale.value),
     }),
   );
 
