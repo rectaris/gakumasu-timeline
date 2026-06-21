@@ -74,15 +74,33 @@ export function useTimelineLayout({
     }),
   );
 
+  const renderedSubLaneCounts = computed(() => {
+    const counts = Array.from({ length: characters.value.length }, () => 1);
+
+    visibleEvents.value.forEach((event) => {
+      const laneIndex = event.laneIndex;
+      if (!Number.isInteger(laneIndex)) return;
+      if (laneIndex < 0 || laneIndex >= counts.length) return;
+
+      counts[laneIndex] = Math.max(
+        counts[laneIndex],
+        (event.subLaneIndex ?? 0) + 1,
+      );
+    });
+
+    return counts;
+  });
+
   const laneLayouts = computed(() => {
     let currentTop = TOP_OFFSET;
 
     return characters.value.map((char, laneIndex) => {
       const laneData = laneEventLayouts.value[laneIndex];
       const subLaneCount = laneData?.subLaneCount ?? 1;
+      const renderedSubLaneCount = renderedSubLaneCounts.value[laneIndex] ?? 1;
       const laneHeight = Math.max(
         layoutMetrics.value.minLaneHeight,
-        subLaneCount * layoutMetrics.value.rowHeight +
+        renderedSubLaneCount * layoutMetrics.value.rowHeight +
           layoutMetrics.value.lanePadding * 2,
       );
       const laneTop = currentTop;
@@ -96,6 +114,7 @@ export function useTimelineLayout({
         laneHeight,
         centerY,
         subLaneCount,
+        renderedSubLaneCount,
       };
     });
   });

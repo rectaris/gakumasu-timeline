@@ -276,6 +276,32 @@ describe("useTimelineLayout", () => {
     ).toBe(LANE_PADDING);
   });
 
+  it("shrinks lane height to rendered summaries at minimum density", () => {
+    const verticalScale = ref(MIN_VERTICAL_SCALE);
+    const layout = layoutFor({
+      viewRange: ref({ min: 0, max: 100 }),
+      verticalScale,
+      events: [
+        event({ id: "dense-a", displayStartDay: 10, displayEndDay: 40 }),
+        event({ id: "dense-b", displayStartDay: 15, displayEndDay: 45 }),
+        event({ id: "dense-c", displayStartDay: 20, displayEndDay: 50 }),
+        event({ id: "dense-d", displayStartDay: 25, displayEndDay: 55 }),
+      ],
+    });
+
+    expect(layout.laneEventLayouts.value[0].subLaneCount).toBe(4);
+    expect(layout.visibleEvents.value).toHaveLength(1);
+    expect(layout.visibleEvents.value[0]).toMatchObject({
+      isSummary: true,
+      subLaneIndex: 0,
+    });
+    expect(layout.laneLayouts.value[0]).toMatchObject({
+      laneHeight: MIN_SINGLE_EVENT_LANE_HEIGHT,
+      subLaneCount: 4,
+      renderedSubLaneCount: 1,
+    });
+  });
+
   it("separates source-visible events from rendered summary items in metrics", () => {
     const denseEvents = [0, 1, 2, 3].map((offset) =>
       event({
