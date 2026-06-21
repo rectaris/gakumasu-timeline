@@ -104,7 +104,9 @@ export function useTimelineLayout({
       const subLaneCount = laneData?.subLaneCount ?? 1;
       const renderedSubLaneCount = renderedSubLaneCounts.value[laneIndex] ?? 1;
       const contentHeight =
-        renderedSubLaneCount * layoutMetrics.value.rowHeight +
+        layoutMetrics.value.eventBarHeight +
+        Math.max(0, renderedSubLaneCount - 1) *
+          layoutMetrics.value.rowHeight +
         layoutMetrics.value.lanePadding * 2;
       const laneHeight =
         contentHeight +

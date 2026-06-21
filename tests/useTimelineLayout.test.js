@@ -270,6 +270,9 @@ describe("useTimelineLayout", () => {
     expect(layout.laneLayouts.value[0].laneHeight).toBe(
       MIN_SINGLE_EVENT_LANE_HEIGHT,
     );
+    expect(layout.laneLayouts.value[0].laneHeight).toBe(
+      EVENT_BAR_HEIGHT + LANE_PADDING * 2,
+    );
     expect(
       layout.yPos(0, 0) -
         layout.eventBarHeight.value / 2 -
@@ -324,6 +327,26 @@ describe("useTimelineLayout", () => {
       subLaneCount: 4,
       renderedSubLaneCount: 1,
     });
+  });
+
+  it("adds only extra sub-lane spacing above the single-event minimum", () => {
+    const verticalScale = ref(MIN_VERTICAL_SCALE);
+    const layout = layoutFor({
+      viewRange: ref({ min: 0, max: 100 }),
+      verticalScale,
+      events: [
+        event({ id: "overlap-a", displayStartDay: 10, displayEndDay: 30 }),
+        event({ id: "overlap-b", displayStartDay: 20, displayEndDay: 40 }),
+      ],
+    });
+
+    expect(layout.laneLayouts.value[0]).toMatchObject({
+      laneHeight: EVENT_BAR_HEIGHT + EVENT_SUB_LANE_SPACING + LANE_PADDING * 2,
+      renderedSubLaneCount: 2,
+    });
+    expect(layout.yPos(0, 1) - layout.yPos(0, 0)).toBe(
+      EVENT_SUB_LANE_SPACING,
+    );
   });
 
   it("separates source-visible events from rendered summary items in metrics", () => {
