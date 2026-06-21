@@ -1,11 +1,13 @@
 import { computed, ref, watch } from "vue";
 import { clamp } from "../utils/clamp";
-import { DAYS_IN_MONTH } from "../utils/constants";
+import {
+  DAYS_IN_MONTH,
+  MAX_VERTICAL_SCALE,
+  MIN_VERTICAL_SCALE,
+} from "../utils/constants";
 
 const MIN_HORIZONTAL_SPAN = 3;
 const HORIZONTAL_ZOOM_STEP = 0.85;
-const MIN_VERTICAL_SCALE = 0.75;
-const MAX_VERTICAL_SCALE = 2.5;
 const VERTICAL_ZOOM_STEP = 1.15;
 const FOCUS_PADDING_DAYS = 4;
 const DAY_SCALE_THRESHOLD_MONTHS = 2.8;

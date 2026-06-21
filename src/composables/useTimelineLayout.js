@@ -3,6 +3,7 @@ import {
   EVENT_BAR_HEIGHT,
   EVENT_SUB_LANE_SPACING,
   LANE_PADDING,
+  MIN_SINGLE_EVENT_LANE_HEIGHT,
   MIN_LANE_HEIGHT,
   TOP_OFFSET,
 } from "../utils/constants";
@@ -36,8 +37,11 @@ export function useTimelineLayout({
     const scale = verticalScale.value;
     const eventBarHeight = EVENT_BAR_HEIGHT;
     const rowHeight = EVENT_SUB_LANE_SPACING;
-    const lanePadding = Math.max(6, LANE_PADDING * scale);
-    const minLaneHeight = Math.max(40, MIN_LANE_HEIGHT * scale);
+    const lanePadding = LANE_PADDING;
+    const minLaneHeight = Math.max(
+      MIN_SINGLE_EVENT_LANE_HEIGHT,
+      MIN_LANE_HEIGHT * scale,
+    );
 
     return {
       eventBarHeight,

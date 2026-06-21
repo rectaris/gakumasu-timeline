@@ -1,6 +1,10 @@
 import { nextTick, ref } from "vue";
 import { describe, expect, it } from "vitest";
 import { useZoomMachine } from "../src/composables/useZoomMachine";
+import {
+  MAX_VERTICAL_SCALE,
+  MIN_VERTICAL_SCALE,
+} from "../src/utils/constants";
 
 function selectedEvent(start, end) {
   return {
@@ -70,5 +74,25 @@ describe("useZoomMachine", () => {
       min: expect.closeTo(489.5),
       max: expect.closeTo(520.5),
     });
+  });
+
+  it("clamps vertical scale to event-slot and Full HD derived bounds", () => {
+    const zoom = zoomMachine();
+
+    zoom.setVerticalScale(0.1);
+
+    expect(zoom.verticalScale.value).toBeCloseTo(MIN_VERTICAL_SCALE);
+    expect(zoom.canZoomOutVertical.value).toBe(false);
+
+    zoom.setVerticalScale(50);
+
+    expect(zoom.verticalScale.value).toBeCloseTo(MAX_VERTICAL_SCALE);
+    expect(zoom.canZoomInVertical.value).toBe(false);
+
+    zoom.resetVerticalZoom();
+
+    expect(zoom.verticalScale.value).toBe(1);
+    expect(zoom.canZoomInVertical.value).toBe(true);
+    expect(zoom.canZoomOutVertical.value).toBe(true);
   });
 });

@@ -122,6 +122,34 @@ checked_summary_ja: 密度変更時のレーン上端余白と密度範囲を調
 
 **URL 互換性**：過去 URL の `scale=2.5` のような値は無効化せず、新しい上限に丸めて復元する。
 
+## Implementation Decisions
+
+1. Density value semantics
+   - Keep the current meaning where a larger density value makes lane height larger.
+   - Keep `100%` as the standard reset point so existing operation feel and URL state remain understandable.
+
+2. Fixed lane top spacing
+   - Fix the distance from the lane top edge to the event bar top edge.
+   - Keep both event bar height and adjacent overlapping-event center spacing fixed.
+   - Keep bottom lane padding fixed as well, so the minimum one-event lane size is explicit.
+
+3. Lower bound
+   - Derive the lower bound from one fixed event slot: fixed lane top padding, one fixed sub-lane slot, and fixed lane bottom padding.
+   - Do not use the previous fixed `75%` lower bound.
+
+4. Upper bound
+   - Derive the upper bound from a Full HD `1080px` viewport minus the fixed app header, timeline top offset, bottom SVG padding, and zoom-control reserve.
+   - Keep this bound stable instead of recalculating it per current browser viewport.
+   - Use a one-lane basis and allow multi-sub-lane lanes to scroll when their content exceeds the visible area.
+
+5. URL and scroll behavior
+   - Keep the existing `scale` URL parameter and clamp restored values to the new bounds.
+   - Do not add broad scroll anchoring in this task; existing selected-event return behavior remains responsible for explicit recentering.
+
+6. Empty lanes and tests
+   - Apply the same density calculation to empty lanes and event lanes.
+   - Test both concrete spacing contracts and invariance across density changes.
+
 ## Out Of Scope
 
 - イベントデータ、時系列解釈、出典、キャラクター名、canonical ID の変更。
@@ -129,8 +157,38 @@ checked_summary_ja: 密度変更時のレーン上端余白と密度範囲を調
 - 横方向ズーム、期間プリセット、検索、絞り込み、レーン選択仕様の変更。
 - FHD 以外の画面ごとに密度上限を動的に変える仕様。
 
+## Implementation Summary
+
+- Added derived density bounds in `src/utils/constants.js`.
+- Replaced the fixed `75%` / `250%` vertical-scale clamp with event-slot and Full-HD-derived bounds.
+- Kept `lanePadding` fixed so the lane top edge to topmost event bar distance no longer changes with density.
+- Kept event bar height and overlapping-event sub-lane spacing fixed.
+- Updated focused layout and zoom-machine tests for the new spacing and clamp contracts.
+- Updated behavior documentation and the operation manual to describe fixed top spacing and dynamic bounds.
+
 ## Validation Notes
 
 実装完了時は、少なくとも `npm run test -- tests/useTimelineLayout.test.js tests/useZoomMachine.test.js`、`npm run build`、`git diff --check` を実行する。
 
 UI 挙動に触れるため、ブラウザ検証が使える場合は desktop と mobile viewport の目視または自動確認を実施する。
+
+## Validation Results
+
+- `npm run test -- tests/useTimelineLayout.test.js tests/useZoomMachine.test.js`: passed.
+- `npm run test`: passed, 14 files and 71 tests.
+- `npm run build`: passed.
+- `python3 scripts/lint-plan-docs.py`: passed.
+- `python3 scripts/format-plan-docs.py --check`: passed.
+- `git diff --check`: passed.
+- `python3 scripts/validate-changes.py --print-only`: selected `git diff --check`, `python3 scripts/lint-plan-docs.py`, and `python3 scripts/format-plan-docs.py --check`.
+
+## Browser Verification
+
+- Preview URL: `http://127.0.0.1:4174/timeline/`.
+- Desktop `1280x900`: first-lane top distance stayed `10px` when density changed from `100%` to `132%`; keyboard selection opened the detail panel.
+- Mobile `375x812`: first-lane top distance stayed `10px` when density changed from `100%` to `132%`; keyboard selection opened the detail panel.
+- Desktop extended density check: first-lane height changed from `86px` to `183.54137175234365px` at `306%`, while top distance stayed `10px`.
+
+## Residual Notes
+
+- Browser verification observed aborted external `https://www.google.com/recaptcha/api2/aframe` requests on localhost. No app asset or data request failed.

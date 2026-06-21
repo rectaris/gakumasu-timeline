@@ -11,6 +11,9 @@ import {
 import {
   EVENT_BAR_HEIGHT,
   EVENT_SUB_LANE_SPACING,
+  LANE_PADDING,
+  MIN_SINGLE_EVENT_LANE_HEIGHT,
+  MIN_VERTICAL_SCALE,
 } from "../src/utils/constants";
 
 function event({
@@ -222,22 +225,55 @@ describe("useTimelineLayout", () => {
     });
     const initialEventHeight = layout.eventBarHeight.value;
     const initialSubLaneGap = layout.yPos(0, 1) - layout.yPos(0, 0);
+    const initialEventTopDistance =
+      layout.yPos(0, 0) -
+      layout.eventBarHeight.value / 2 -
+      layout.laneLayouts.value[0].laneTop;
     const initialViewportHeight = layout.timelineViewport.value.height;
 
     expect(initialEventHeight).toBe(EVENT_BAR_HEIGHT);
     expect(initialSubLaneGap).toBe(EVENT_SUB_LANE_SPACING);
+    expect(initialEventTopDistance).toBe(LANE_PADDING);
     expect(initialSubLaneGap - initialEventHeight).toBeGreaterThanOrEqual(10);
 
-    verticalScale.value = 0.75;
+    verticalScale.value = MIN_VERTICAL_SCALE;
 
     expect(layout.eventBarHeight.value).toBe(initialEventHeight);
     expect(layout.yPos(0, 1) - layout.yPos(0, 0)).toBe(initialSubLaneGap);
+    expect(
+      layout.yPos(0, 0) -
+        layout.eventBarHeight.value / 2 -
+        layout.laneLayouts.value[0].laneTop,
+    ).toBe(initialEventTopDistance);
 
     verticalScale.value = 2;
 
     expect(layout.eventBarHeight.value).toBe(initialEventHeight);
     expect(layout.yPos(0, 1) - layout.yPos(0, 0)).toBe(initialSubLaneGap);
+    expect(
+      layout.yPos(0, 0) -
+        layout.eventBarHeight.value / 2 -
+        layout.laneLayouts.value[0].laneTop,
+    ).toBe(initialEventTopDistance);
     expect(layout.timelineViewport.value.height).toBeGreaterThan(initialViewportHeight);
+  });
+
+  it("uses one fixed event slot as the minimum single-event lane height", () => {
+    const verticalScale = ref(MIN_VERTICAL_SCALE);
+    const layout = layoutFor({
+      viewRange: ref({ min: 0, max: 100 }),
+      verticalScale,
+      events: [event({ id: "single", displayStartDay: 10, displayEndDay: 30 })],
+    });
+
+    expect(layout.laneLayouts.value[0].laneHeight).toBe(
+      MIN_SINGLE_EVENT_LANE_HEIGHT,
+    );
+    expect(
+      layout.yPos(0, 0) -
+        layout.eventBarHeight.value / 2 -
+        layout.laneLayouts.value[0].laneTop,
+    ).toBe(LANE_PADDING);
   });
 
   it("separates source-visible events from rendered summary items in metrics", () => {
