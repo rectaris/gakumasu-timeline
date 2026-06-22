@@ -4,7 +4,7 @@
 
 - 移行済みデータの source of truth: `data/raw/`
 - 移行済みデータのアプリ用生成物: `src/data/generated/`
-- 未移行データ: `src/data/worldline_commu/`
+- 未移行カテゴリと雛形: `src/data/worldline_commu/`
 
 `src/data/generated/` は `npm run generate:data` で生成されるため、手編集しません。`npm run validate:data` は生成物が raw から再生成した内容と一致するか確認します。
 
@@ -13,7 +13,7 @@
   - `hatsuboshiCommus`（初星コミュ）
   - `eventCommus`（イベントコミュ）
   - `supportCardCommus`（サポートカードコミュ）
-- 個別キャラ: 移行済みカテゴリは `data/raw/worldline_commu/**/`、未移行カテゴリは `src/data/worldline_commu/**/` 配下の各モジュール
+- 個別キャラ: 移行済みカテゴリは `data/raw/worldline_commu/**/` 配下の各モジュール
 - 時間ユーティリティ: `src/utils/time.js`
   - `src/data/utils/time.js` は既存データ import 向けの互換 shim
 - 型定義: `src/types/timeline.d.ts`
@@ -39,7 +39,7 @@
 - `detail: string`
 - `occurrenceType?: "continuous" | "singleWithinRange"`
   - 表示正規化では省略時に `continuous` 扱いできます
-  - `src/data/worldline_commu/` 配下の耐久データでは必ず明示します
+  - 耐久データでは必ず明示します
   - `continuous` は `start` から `end` まで継続している期間を示します
   - `singleWithinRange` は `start` から `end` までの範囲内のどこか1日を示します
 - `dateConfidence?: "confirmed" | "inferred" | "rangeOnly"`
@@ -149,7 +149,7 @@ UI の監査フィルタとレーン品質サマリーは、イベント本体�
    - 共通イベントは raw から生成された `src/data/generated/worldline_commu/common_timeline.js` を `src/data/index.js` が読みます
    - イベントコミュ、サポートカードコミュは現状 `src/data/index.js` への登録が必要です
 3. `src/data/worldline_commu/template.js` を参考にファイルを作る
-   - コピー先がカテゴリサブディレクトリの場合、time utility の import は `../../utils/time` にします
+   - 移行済みカテゴリのコピー先は `data/raw/worldline_commu/` 配下です
    - 空文字入り配列を残さず、不要な任意フィールドは削除します
 4. レーン情報を確認する
    - `id` はレーンの安定 ID として扱います

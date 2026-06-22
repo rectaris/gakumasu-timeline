@@ -38,3 +38,4 @@ id	path
 035	docs/plan/checked/035-site-icon.md
 037	docs/plan/checked/037-idol-commu-generated-migration.md
 038	docs/plan/checked/038-common-timeline-generated-migration.md
+039	docs/plan/checked/039-retire-legacy-worldline-data.md

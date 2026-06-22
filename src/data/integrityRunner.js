@@ -18,18 +18,6 @@ const generatedTimelineModules = import.meta.glob(
   },
 );
 
-const migratedLegacyModulePaths = new Set([
-  "./worldline_commu/common_timeline.js",
-  "./worldline_commu/hatsuboshi_commu/001storyOfReiris.js",
-]);
-
-function isMigratedLegacyModulePath(modulePath) {
-  return (
-    migratedLegacyModulePaths.has(modulePath) ||
-    modulePath.startsWith("./worldline_commu/idol_commu/")
-  );
-}
-
 function sourceFileForModulePath(modulePath) {
   if (modulePath.startsWith("./generated/worldline_commu/")) {
     return `data/raw/${modulePath.replace(/^\.\/generated\//, "")}`;
@@ -64,9 +52,7 @@ function categoryForModulePath(modulePath) {
 
 export function getTimelineDataEntries() {
   return [
-    ...Object.entries(durableTimelineModules).filter(
-      ([modulePath]) => !isMigratedLegacyModulePath(modulePath),
-    ),
+    ...Object.entries(durableTimelineModules),
     ...Object.entries(generatedTimelineModules),
   ]
     .filter(([modulePath]) => !modulePath.endsWith("/template.js"))

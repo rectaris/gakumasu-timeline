@@ -1,10 +1,10 @@
 // イベントとして登録するためのJSモジュールテンプレート
-// コピー先が idol_commu/ などのサブディレクトリの場合は import を
-// "../../utils/time" に変更する。
+// data/raw/worldline_commu/ 配下へコピーして使う。
 //
 // yearsAgo: 現在から指定年数前の年を取得する関数
 // yearOf: 学園の1年目を基準にした年を取得する関数
-import { yearsAgo, yearOf } from "../utils/time";
+const yearsAgo = (years) => 1 - years;
+const yearOf = (year) => year;
 
 export default {
   id: "replace_me_lane_id", // レーンID。例: saki_hanami, story_of_reiris
