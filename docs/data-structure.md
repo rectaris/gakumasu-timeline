@@ -6,7 +6,9 @@
 - 移行済みデータのアプリ用生成物: `src/data/generated/`
 - 未移行カテゴリと雛形: `src/data/worldline_commu/`
 
-`src/data/generated/` は `npm run generate:data` で生成されるため、手編集しません。`npm run validate:data` は生成物が raw から再生成した内容と一致するか確認します。
+`data/raw/` は JSON で管理します。
+`src/data/generated/` は `npm run generate:data` で生成されるため、手編集しません。
+`npm run validate:data` は生成物が raw から再生成した内容と一致するか確認します。
 
 - 集約: `src/data/index.js`
   - `idolCommu`（アイドルコミュ）
@@ -98,6 +100,7 @@ UI の監査フィルタとレーン品質サマリーは、イベント本体�
 ## 年の表現（`src/utils/time.js`）
 
 `year` は「学園の 1 年目」を基準にした相対表現として扱っています。
+raw JSON では `year` に変換後の数値を直接書きます。
 
 - `yearOf(year)`
   - 指定した年をそのまま返す
@@ -138,17 +141,17 @@ UI の監査フィルタとレーン品質サマリーは、イベント本体�
 1. 追加先を決める
    - 移行済みカテゴリ: `data/raw/worldline_commu/` 配下を編集し、`npm run generate:data` を実行します
    - 未移行カテゴリ: `src/data/worldline_commu/` 配下を編集します
-   - アイドルコミュ: `data/raw/worldline_commu/idol_commu/`
-   - 初星コミュ: `data/raw/worldline_commu/hatsuboshi_commu/`
+   - アイドルコミュ: `data/raw/worldline_commu/idol_commu/*.json`
+   - 初星コミュ: `data/raw/worldline_commu/hatsuboshi_commu/*.json`
    - イベントコミュ: `src/data/worldline_commu/event_commu/`
    - サポートカードコミュ: `src/data/worldline_commu/support_story/`
-   - 共通イベント: `data/raw/worldline_commu/common_timeline.js`
+   - 共通イベント: `data/raw/worldline_commu/common_timeline.json`
 2. 読み込み方法を確認する
    - アイドルコミュは raw から生成された `src/data/generated/worldline_commu/idol_commu/*.js` をファイル名順に自動集約します
    - 初星コミュは raw から生成された `src/data/generated/worldline_commu/hatsuboshi_commu/*.js` を `src/data/index.js` が読みます
    - 共通イベントは raw から生成された `src/data/generated/worldline_commu/common_timeline.js` を `src/data/index.js` が読みます
    - イベントコミュ、サポートカードコミュは現状 `src/data/index.js` への登録が必要です
-3. `src/data/worldline_commu/template.js` を参考にファイルを作る
+3. `src/data/worldline_commu/template.json` を参考にファイルを作る
    - 移行済みカテゴリのコピー先は `data/raw/worldline_commu/` 配下です
    - 空文字入り配列を残さず、不要な任意フィールドは削除します
 4. レーン情報を確認する
@@ -161,6 +164,7 @@ UI の監査フィルタとレーン品質サマリーは、イベント本体�
    - 新規 ID はタイトル変更に耐える安定した名前にします
 6. 日付を入力する
    - `start` / `end` は `{ year, month, day? }` の形にします
+   - `yearOf(1)` や `yearsAgo(16)` のような関数呼び出しは使わず、`1` や `-15` のような数値を書きます
    - 実カレンダーではなく、各月31日換算の抽象時系列です
    - 具体日が不明な場合、架空の確定日を入れず範囲で表現します
 7. `occurrenceType` を必ず明示する
@@ -195,7 +199,7 @@ UI の監査フィルタとレーン品質サマリーは、イベント本体�
     - `npm run generate:data`
     - 生成された `src/data/generated/` は raw と同じ変更単位でコミットします
 15. focused validation を実行する
-    - 単一ファイル: `npm run validate:data -- data/raw/worldline_commu/idol_commu/001hanamiSaki.js`
+    - 単一ファイル: `npm run validate:data -- data/raw/worldline_commu/idol_commu/001hanamiSaki.json`
     - ディレクトリ: `npm run validate:data -- data/raw/worldline_commu/idol_commu`
 16. 全体検証を実行する
     - `npm run validate:data`
@@ -206,14 +210,15 @@ UI の監査フィルタとレーン品質サマリーは、イベント本体�
 
 ## データ検証
 
-`npm run validate:data` は生成済みデータの鮮度を確認したうえで、耐久データを検証します。`template.js` は雛形なので対象外です。
+`npm run validate:data` は生成済みデータの鮮度を確認したうえで、耐久データを検証します。
+`template.json` は雛形なので対象外です。
 
 移行済みデータでは `data/raw/` を source of truth とし、`src/data/generated/` をアプリが読む生成物として扱います。生成物が古い場合は `npm run validate:data` が失敗するため、`npm run generate:data` を実行して差分を確認してください。
 
 単一ファイルやディレクトリだけを確認したい場合は、パスを渡します。
 
 ```bash
-npm run validate:data -- data/raw/worldline_commu/hatsuboshi_commu/001storyOfReiris.js
+npm run validate:data -- data/raw/worldline_commu/hatsuboshi_commu/001storyOfReiris.json
 npm run validate:data -- data/raw/worldline_commu/idol_commu
 ```
 

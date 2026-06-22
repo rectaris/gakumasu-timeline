@@ -1,7 +1,7 @@
 import { readdirSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { fileURLToPath } from "node:url";
 
 const GENERATED_DATA_ROOT = "src/data/generated";
 const RAW_DATA_ROOT = "data/raw";
@@ -9,24 +9,26 @@ const RAW_DATA_ROOT = "data/raw";
 const STATIC_GENERATED_DATA_FILES = [
   {
     category: "commonTimeline",
-    raw: "data/raw/worldline_commu/common_timeline.js",
+    raw: "data/raw/worldline_commu/common_timeline.json",
     generated: "src/data/generated/worldline_commu/common_timeline.js",
   },
   {
     category: "hatsuboshiCommus",
-    raw: "data/raw/worldline_commu/hatsuboshi_commu/001storyOfReiris.js",
+    raw: "data/raw/worldline_commu/hatsuboshi_commu/001storyOfReiris.json",
     generated:
       "src/data/generated/worldline_commu/hatsuboshi_commu/001storyOfReiris.js",
   },
 ];
 
 function generatedPathForRaw(rawPath) {
-  return rawPath.replace(RAW_DATA_ROOT, GENERATED_DATA_ROOT);
+  return rawPath
+    .replace(RAW_DATA_ROOT, GENERATED_DATA_ROOT)
+    .replace(/\.json$/, ".js");
 }
 
 function collectGeneratedDataFiles(category, rawDirectory) {
   return readdirSync(rawDirectory, { withFileTypes: true })
-    .filter((entry) => entry.isFile() && entry.name.endsWith(".js"))
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".json"))
     .map((entry) => path.posix.join(rawDirectory, entry.name))
     .sort((pathA, pathB) => pathA.localeCompare(pathB, "en"))
     .map((raw) => ({
@@ -234,16 +236,17 @@ function validateRawLane(lane, sourceFile) {
   });
 }
 
-async function importRawLane(sourceFile) {
-  const rawUrl = pathToFileURL(path.resolve(sourceFile));
-  const module = await import(`${rawUrl.href}?v=${Date.now()}`);
-  validateRawLane(module.default, sourceFile);
+async function loadRawLane(sourceFile) {
+  const rawContent = await fs.readFile(sourceFile, "utf8");
+  const lane = JSON.parse(rawContent);
 
-  return module.default;
+  validateRawLane(lane, sourceFile);
+
+  return lane;
 }
 
 export async function renderGeneratedFile(file) {
-  const lane = await importRawLane(file.raw);
+  const lane = await loadRawLane(file.raw);
 
   return `${HEADER}const lane = ${renderValue(lane, 0)};\n\nexport default lane;\n`;
 }

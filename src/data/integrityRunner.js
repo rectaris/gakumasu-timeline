@@ -20,7 +20,9 @@ const generatedTimelineModules = import.meta.glob(
 
 function sourceFileForModulePath(modulePath) {
   if (modulePath.startsWith("./generated/worldline_commu/")) {
-    return `data/raw/${modulePath.replace(/^\.\/generated\//, "")}`;
+    return `data/raw/${modulePath
+      .replace(/^\.\/generated\//, "")
+      .replace(/\.js$/, ".json")}`;
   }
 
   return `src/data/${modulePath.replace(/^\.\//, "")}`;

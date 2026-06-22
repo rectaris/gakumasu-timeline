@@ -39,3 +39,4 @@ id	path
 037	docs/plan/checked/037-idol-commu-generated-migration.md
 038	docs/plan/checked/038-common-timeline-generated-migration.md
 039	docs/plan/checked/039-retire-legacy-worldline-data.md
+036	docs/plan/checked/036-raw-data-format-after-migration.md

@@ -1,6 +1,6 @@
 # Raw Data Format After Migration
 
-status: backlog
+status: active
 task_type: environment_data_flow
 review_class: C
 human_design_required: yes
@@ -42,9 +42,8 @@ acceptance_focus:
   - non-executable raw source
   - generated JS compatibility
   - post-migration execution gate
-expected_output: backlog-plan
+expected_output: full-implementation
 checked_summary_ja: 全データ移行後に raw データ形式を非実行形式へ変更する。
-completion_deferred_reason: Wait until commu data migration to data/raw and src/data/generated is complete.
 
 ## Goal
 
@@ -55,7 +54,7 @@ The preferred target is JSON unless the implementation proves that comments or a
 ## Start Conditions
 
 - All commu categories that are intended to use the generated-data pipeline have already been migrated into `data/raw/` and `src/data/generated/`.
-- Runtime imports no longer depend on legacy commu source files under `src/data/worldline_commu/`, except for intentionally unmigrated app contracts such as `common_timeline.js`.
+- Runtime imports no longer depend on legacy commu source files under `src/data/worldline_commu/`.
 - Existing raw/generated freshness checks pass before this plan starts.
 - The implementation owner has rechecked the completed migration inventory and confirmed that the approved raw format still fits the actual migrated data.
 
@@ -72,16 +71,25 @@ The preferred target is JSON unless the implementation proves that comments or a
 
 ## Tasks
 
-- [ ] Confirm the completed migration inventory and identify every raw file to convert.
-- [ ] Decide the final raw extension and parser.
-- [ ] Convert `data/raw/` source files from JavaScript modules to the approved non-executable format.
-- [ ] Update `scripts/generate-data.mjs` to parse raw data without dynamic `import()`.
-- [ ] Keep generated JavaScript output deterministic and app-compatible.
-- [ ] Update freshness validation so stale generated files still fail without rewriting files.
-- [ ] Update data integrity validation so focused errors still report raw source paths.
-- [ ] Add or update compatibility tests for lane IDs, event IDs, event order, and canonical ID behavior.
-- [ ] Update authoring documentation and processing-flow documentation.
-- [ ] Run the full validation set and record any intentionally deferred migration exceptions.
+- [x] Confirm the completed migration inventory and identify every raw file to convert.
+- [x] Decide the final raw extension and parser.
+- [x] Convert `data/raw/` source files from JavaScript modules to the approved non-executable format.
+- [x] Update `scripts/generate-data.mjs` to parse raw data without dynamic `import()`.
+- [x] Keep generated JavaScript output deterministic and app-compatible.
+- [x] Update freshness validation so stale generated files still fail without rewriting files.
+- [x] Update data integrity validation so focused errors still report raw source paths.
+- [x] Add or update compatibility tests for lane IDs, event IDs, event order, and canonical ID behavior.
+- [x] Update authoring documentation and processing-flow documentation.
+- [x] Run the full validation set and record any intentionally deferred migration exceptions.
+
+## Validation Results
+
+- `npm run generate:data`: passed.
+- `npm run validate:data -- data/raw/worldline_commu/idol_commu/001hanamiSaki.json data/raw/worldline_commu/common_timeline.json`: passed.
+- `npm run test -- tests/dataIndex.test.js tests/generatedData.test.js tests/dataIntegrity.test.js`: passed.
+- `npm run validate:data`: passed.
+- `npm run test`: passed.
+- `npm run build`: passed.
 
 ## Implementation Notes
 

@@ -1,0 +1,21 @@
+{
+  "id": "hiro_shinosawa",
+  "name": "篠澤 広",
+  "color": "#02B0CD",
+  "events": [
+    {
+      "id": "hiro_debut",
+      "start": {
+        "year": 1,
+        "month": 1
+      },
+      "end": {
+        "year": 1,
+        "month": 1
+      },
+      "occurrenceType": "singleWithinRange",
+      "title": "初星学園入学",
+      "detail": "ギフテッドなミステリアス少女として登場"
+    }
+  ]
+}

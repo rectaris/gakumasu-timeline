@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { ref } from "vue";
 import { commonTimeline, hatsuboshiCommus, idolCommu } from "../src/data";
-import rawStoryOfReiris from "../data/raw/worldline_commu/hatsuboshi_commu/001storyOfReiris";
-import rawCommonTimeline from "../data/raw/worldline_commu/common_timeline";
+import rawStoryOfReiris from "../data/raw/worldline_commu/hatsuboshi_commu/001storyOfReiris.json";
+import rawCommonTimeline from "../data/raw/worldline_commu/common_timeline.json";
 import { useTimelineData } from "../src/composables/useTimelineData";
 
 function sortedDefaultExports(modules) {
@@ -12,7 +12,7 @@ function sortedDefaultExports(modules) {
 }
 
 const rawIdolCommu = sortedDefaultExports(
-  import.meta.glob("../data/raw/worldline_commu/idol_commu/*.js", {
+  import.meta.glob("../data/raw/worldline_commu/idol_commu/*.json", {
     eager: true,
     import: "default",
   }),
