@@ -1,0 +1,18 @@
+const yearsAgo = (years) => 1 - years;
+const yearOf = (year) => year;
+
+export default {
+  id: "china_kuramoto",
+  name: "倉本 千奈",
+  color: "#F68C21",
+  events: [
+    {
+      id: "china_debut",
+      start: { year: yearOf(1), month: 1 },
+      end: { year: yearOf(1), month: 1 },
+      occurrenceType: "singleWithinRange",
+      title: "初星学園入学",
+      detail: "学園長の友人の孫として登場",
+    },
+  ],
+};

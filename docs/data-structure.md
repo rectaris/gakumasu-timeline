@@ -13,7 +13,7 @@
   - `hatsuboshiCommus`（初星コミュ）
   - `eventCommus`（イベントコミュ）
   - `supportCardCommus`（サポートカードコミュ）
-- 個別キャラ: `src/data/worldline_commu/**/` または `data/raw/worldline_commu/**/` 配下の各モジュール
+- 個別キャラ: 移行済みカテゴリは `data/raw/worldline_commu/**/`、未移行カテゴリは `src/data/worldline_commu/**/` 配下の各モジュール
 - 時間ユーティリティ: `src/utils/time.js`
   - `src/data/utils/time.js` は既存データ import 向けの互換 shim
 - 型定義: `src/types/timeline.d.ts`
@@ -138,13 +138,13 @@ UI の監査フィルタとレーン品質サマリーは、イベント本体�
 1. 追加先を決める
    - 移行済みカテゴリ: `data/raw/worldline_commu/` 配下を編集し、`npm run generate:data` を実行します
    - 未移行カテゴリ: `src/data/worldline_commu/` 配下を編集します
-   - アイドルコミュ: `src/data/worldline_commu/idol_commu/`
+   - アイドルコミュ: `data/raw/worldline_commu/idol_commu/`
    - 初星コミュ: `data/raw/worldline_commu/hatsuboshi_commu/`
    - イベントコミュ: `src/data/worldline_commu/event_commu/`
    - サポートカードコミュ: `src/data/worldline_commu/support_story/`
    - 共通イベント: `src/data/worldline_commu/common_timeline.js`
 2. 読み込み方法を確認する
-   - アイドルコミュは `src/data/worldline_commu/idol_commu/*.js` がファイル名順に自動集約されます
+   - アイドルコミュは raw から生成された `src/data/generated/worldline_commu/idol_commu/*.js` をファイル名順に自動集約します
    - 初星コミュは raw から生成された `src/data/generated/worldline_commu/hatsuboshi_commu/*.js` を `src/data/index.js` が読みます
    - イベントコミュ、サポートカードコミュは現状 `src/data/index.js` への登録が必要です
 3. `src/data/worldline_commu/template.js` を参考にファイルを作る
@@ -194,8 +194,8 @@ UI の監査フィルタとレーン品質サマリーは、イベント本体�
     - `npm run generate:data`
     - 生成された `src/data/generated/` は raw と同じ変更単位でコミットします
 15. focused validation を実行する
-    - 単一ファイル: `npm run validate:data -- src/data/worldline_commu/idol_commu/001hanamiSaki.js`
-    - ディレクトリ: `npm run validate:data -- src/data/worldline_commu/idol_commu`
+    - 単一ファイル: `npm run validate:data -- data/raw/worldline_commu/idol_commu/001hanamiSaki.js`
+    - ディレクトリ: `npm run validate:data -- data/raw/worldline_commu/idol_commu`
 16. 全体検証を実行する
     - `npm run validate:data`
     - 実装変更を含む場合は `npm run test` と `npm run build` も実行します
@@ -213,7 +213,7 @@ UI の監査フィルタとレーン品質サマリーは、イベント本体�
 
 ```bash
 npm run validate:data -- data/raw/worldline_commu/hatsuboshi_commu/001storyOfReiris.js
-npm run validate:data -- src/data/worldline_commu/idol_commu
+npm run validate:data -- data/raw/worldline_commu/idol_commu
 ```
 
 focused validation は指定ファイルを主対象にしますが、イベント ID の重複と参照 ID は全データ文脈で確認します。
@@ -268,4 +268,5 @@ focused validation は指定ファイルを主対象にしますが、イベン�
 - 未確定の単日イベントを具体日に断定する
 - `sourceStatus`、`dateConfidence`、`sourceBasis`、`rangeReason`、`sourceDetails`、`conflicts`、raw/generated などのフィールド契約を変更する
 
-参加者 ID は既存の `participants`、出典状態と不確実性は上記の任意メタデータで扱います。raw/generated 分離は別計画で扱います。
+参加者 ID は既存の `participants`、出典状態と不確実性は上記の任意メタデータで扱います。
+raw/generated の契約変更は、通常のデータ追加とは別の実装計画で扱います。

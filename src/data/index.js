@@ -8,9 +8,9 @@ function sortedDefaultExports(modules) {
 }
 
 // アイドルコミュ
-// src/data/worldline_commu/idol_commu/
+// src/data/generated/worldline_commu/idol_commu/
 const idolCommuModules = import.meta.glob(
-  "./worldline_commu/idol_commu/*.js",
+  "./generated/worldline_commu/idol_commu/*.js",
   {
     eager: true,
     import: "default",

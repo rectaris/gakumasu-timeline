@@ -10,8 +10,8 @@
 ## データの取り込み
 
 - `src/App.vue` が `src/data/index.js` から `idolCommu` / `hatsuboshiCommus` / `eventCommus` / `supportCardCommus` を import
-- アイドルコミュは `import.meta.glob` により番号付きファイル名順で自動集約される
-- 初星コミュは pilot として `data/raw/worldline_commu/hatsuboshi_commu/` から `src/data/generated/worldline_commu/hatsuboshi_commu/` へ生成され、`src/data/index.js` は生成済みモジュールを import する
+- アイドルコミュは `data/raw/worldline_commu/idol_commu/` から `src/data/generated/worldline_commu/idol_commu/` へ生成され、`import.meta.glob` により番号付きファイル名順で自動集約される
+- 初星コミュは `data/raw/worldline_commu/hatsuboshi_commu/` から `src/data/generated/worldline_commu/hatsuboshi_commu/` へ生成され、`src/data/index.js` は生成済みモジュールを import する
 - 生成済みデータは `npm run generate:data` で更新し、`npm run validate:data` で raw との鮮度一致を確認する
 - カテゴリ別のレーン情報は正規化され、選択されたレーンのみ表示対象になる
 
