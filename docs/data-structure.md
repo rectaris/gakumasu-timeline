@@ -142,10 +142,11 @@ UI の監査フィルタとレーン品質サマリーは、イベント本体�
    - 初星コミュ: `data/raw/worldline_commu/hatsuboshi_commu/`
    - イベントコミュ: `src/data/worldline_commu/event_commu/`
    - サポートカードコミュ: `src/data/worldline_commu/support_story/`
-   - 共通イベント: `src/data/worldline_commu/common_timeline.js`
+   - 共通イベント: `data/raw/worldline_commu/common_timeline.js`
 2. 読み込み方法を確認する
    - アイドルコミュは raw から生成された `src/data/generated/worldline_commu/idol_commu/*.js` をファイル名順に自動集約します
    - 初星コミュは raw から生成された `src/data/generated/worldline_commu/hatsuboshi_commu/*.js` を `src/data/index.js` が読みます
+   - 共通イベントは raw から生成された `src/data/generated/worldline_commu/common_timeline.js` を `src/data/index.js` が読みます
    - イベントコミュ、サポートカードコミュは現状 `src/data/index.js` への登録が必要です
 3. `src/data/worldline_commu/template.js` を参考にファイルを作る
    - コピー先がカテゴリサブディレクトリの場合、time utility の import は `../../utils/time` にします

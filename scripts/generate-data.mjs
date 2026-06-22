@@ -8,6 +8,11 @@ const RAW_DATA_ROOT = "data/raw";
 
 const STATIC_GENERATED_DATA_FILES = [
   {
+    category: "commonTimeline",
+    raw: "data/raw/worldline_commu/common_timeline.js",
+    generated: "src/data/generated/worldline_commu/common_timeline.js",
+  },
+  {
     category: "hatsuboshiCommus",
     raw: "data/raw/worldline_commu/hatsuboshi_commu/001storyOfReiris.js",
     generated:

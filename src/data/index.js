@@ -1,5 +1,5 @@
 // 共通イベント
-import commonTimeline from "./worldline_commu/common_timeline";
+import commonTimeline from "./generated/worldline_commu/common_timeline";
 
 function sortedDefaultExports(modules) {
   return Object.entries(modules)

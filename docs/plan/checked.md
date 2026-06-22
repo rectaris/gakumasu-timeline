@@ -37,3 +37,4 @@ id	path
 034	docs/plan/checked/034-timeline-density-summary-capacity.md
 035	docs/plan/checked/035-site-icon.md
 037	docs/plan/checked/037-idol-commu-generated-migration.md
+038	docs/plan/checked/038-common-timeline-generated-migration.md

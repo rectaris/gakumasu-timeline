@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { ref } from "vue";
-import { hatsuboshiCommus, idolCommu } from "../src/data";
+import { commonTimeline, hatsuboshiCommus, idolCommu } from "../src/data";
 import legacyStoryOfReiris from "../src/data/worldline_commu/hatsuboshi_commu/001storyOfReiris";
+import legacyCommonTimeline from "../src/data/worldline_commu/common_timeline";
 import { useTimelineData } from "../src/composables/useTimelineData";
 
 function sortedDefaultExports(modules) {
@@ -69,6 +70,30 @@ describe("data index", () => {
 
     expect(allEvents.value.map((event) => event.canonicalId)).toEqual(
       legacyStoryOfReiris.events.map((event) => event.id),
+    );
+  });
+
+  it("loads generated common timeline without changing legacy ids or order", () => {
+    expect(commonTimeline.id).toBe(legacyCommonTimeline.id);
+    expect(commonTimeline.events.map((event) => event.id)).toEqual(
+      legacyCommonTimeline.events.map((event) => event.id),
+    );
+  });
+
+  it("keeps generated common event ids as URL-facing canonical ids", () => {
+    const visibleLanes = idolCommu.slice(0, 2);
+    const { allEvents } = useTimelineData(
+      ref(visibleLanes),
+      commonTimeline,
+      ref(true),
+    );
+    const commonEvents = allEvents.value.filter((event) => event.isCommon);
+    const expectedCanonicalIds = visibleLanes.flatMap(() =>
+      legacyCommonTimeline.events.map((event) => event.id),
+    );
+
+    expect(commonEvents.map((event) => event.canonicalId)).toEqual(
+      expectedCanonicalIds,
     );
   });
 });

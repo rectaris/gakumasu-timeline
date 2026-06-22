@@ -19,6 +19,7 @@ const generatedTimelineModules = import.meta.glob(
 );
 
 const migratedLegacyModulePaths = new Set([
+  "./worldline_commu/common_timeline.js",
   "./worldline_commu/hatsuboshi_commu/001storyOfReiris.js",
 ]);
 
