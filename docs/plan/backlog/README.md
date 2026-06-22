@@ -11,7 +11,7 @@
 
 ## 現在の backlog
 
-- [036 Raw Data Format After Migration](036-raw-data-format-after-migration.md)
+現在、backlog にある計画ファイルはありません。
 
 汎用タイムラインアプリ化は、現時点では対象外です。
 

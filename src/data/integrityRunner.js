@@ -57,7 +57,6 @@ export function getTimelineDataEntries() {
     ...Object.entries(durableTimelineModules),
     ...Object.entries(generatedTimelineModules),
   ]
-    .filter(([modulePath]) => !modulePath.endsWith("/template.js"))
     .sort(([pathA], [pathB]) => pathA.localeCompare(pathB, "en"))
     .map(([modulePath, lane]) => ({
       category: categoryForModulePath(modulePath),
