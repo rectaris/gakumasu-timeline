@@ -26,18 +26,28 @@ import storyOfReiris from "./generated/worldline_commu/hatsuboshi_commu/001story
 export const hatsuboshiCommus = [storyOfReiris];
 
 // イベントコミュ
-// src/data/worldline_commu/event_commu/
+// src/data/generated/worldline_commu/event_commu/
+const eventCommuModules = import.meta.glob(
+  "./generated/worldline_commu/event_commu/*.js",
+  {
+    eager: true,
+    import: "default",
+  },
+);
 
-export const eventCommus = [
-  // 今後追加予定
-];
+export const eventCommus = sortedDefaultExports(eventCommuModules);
 
 // サポートカードコミュ
-// src/data/worldline_commu/support_story/
+// src/data/generated/worldline_commu/support_story/
+const supportCardCommuModules = import.meta.glob(
+  "./generated/worldline_commu/support_story/*.js",
+  {
+    eager: true,
+    import: "default",
+  },
+);
 
-export const supportCardCommus = [
-  // 今後追加予定
-];
+export const supportCardCommus = sortedDefaultExports(supportCardCommuModules);
 
 // 共通イベント（全レーンで表示）
 export { commonTimeline };

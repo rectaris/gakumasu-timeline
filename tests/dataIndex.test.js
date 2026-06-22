@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { ref } from "vue";
-import { commonTimeline, hatsuboshiCommus, idolCommu } from "../src/data";
+import {
+  commonTimeline,
+  eventCommus,
+  hatsuboshiCommus,
+  idolCommu,
+  supportCardCommus,
+} from "../src/data";
 import rawStoryOfReiris from "../data/raw/worldline_commu/hatsuboshi_commu/001storyOfReiris.json";
 import rawCommonTimeline from "../data/raw/worldline_commu/common_timeline.json";
 import { useTimelineData } from "../src/composables/useTimelineData";
@@ -39,6 +45,11 @@ describe("data index", () => {
       "misuzu_hataya",
       "tsubame_amaya",
     ]);
+  });
+
+  it("keeps empty generated commu categories loadable", () => {
+    expect(eventCommus).toEqual([]);
+    expect(supportCardCommus).toEqual([]);
   });
 
   it("loads generated idol commus without changing raw ids or order", () => {

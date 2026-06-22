@@ -4,7 +4,7 @@
 
 - 移行済みデータの source of truth: `data/raw/`
 - 移行済みデータのアプリ用生成物: `src/data/generated/`
-- 未移行カテゴリと雛形: `src/data/worldline_commu/`
+- 雛形: `data/raw/worldline_commu/template.json`
 
 `data/raw/` は JSON で管理します。
 `src/data/generated/` は `npm run generate:data` で生成されるため、手編集しません。
@@ -140,18 +140,17 @@ raw JSON では `year` に変換後の数値を直接書きます。
 
 1. 追加先を決める
    - 移行済みカテゴリ: `data/raw/worldline_commu/` 配下を編集し、`npm run generate:data` を実行します
-   - 未移行カテゴリ: `src/data/worldline_commu/` 配下を編集します
    - アイドルコミュ: `data/raw/worldline_commu/idol_commu/*.json`
    - 初星コミュ: `data/raw/worldline_commu/hatsuboshi_commu/*.json`
-   - イベントコミュ: `src/data/worldline_commu/event_commu/`
-   - サポートカードコミュ: `src/data/worldline_commu/support_story/`
+   - イベントコミュ: `data/raw/worldline_commu/event_commu/*.json`
+   - サポートカードコミュ: `data/raw/worldline_commu/support_story/*.json`
    - 共通イベント: `data/raw/worldline_commu/common_timeline.json`
 2. 読み込み方法を確認する
    - アイドルコミュは raw から生成された `src/data/generated/worldline_commu/idol_commu/*.js` をファイル名順に自動集約します
    - 初星コミュは raw から生成された `src/data/generated/worldline_commu/hatsuboshi_commu/*.js` を `src/data/index.js` が読みます
    - 共通イベントは raw から生成された `src/data/generated/worldline_commu/common_timeline.js` を `src/data/index.js` が読みます
-   - イベントコミュ、サポートカードコミュは現状 `src/data/index.js` への登録が必要です
-3. `src/data/worldline_commu/template.json` を参考にファイルを作る
+   - イベントコミュ、サポートカードコミュは raw から生成された `src/data/generated/worldline_commu/*/*.js` をファイル名順に自動集約します
+3. `data/raw/worldline_commu/template.json` を参考にファイルを作る
    - 移行済みカテゴリのコピー先は `data/raw/worldline_commu/` 配下です
    - 空文字入り配列を残さず、不要な任意フィールドは削除します
 4. レーン情報を確認する
