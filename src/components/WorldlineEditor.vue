@@ -408,7 +408,7 @@ const previewVisibleLaneEvents = computed(() => {
   });
 });
 
-function previewEventStyle(event) {
+function previewEventStyle(event, index = 0) {
   const bounds = previewVisibleRange.value;
   const start = eventDayValue(event.start, 1);
   const end = eventDayValue(event.end, 31);
@@ -416,9 +416,11 @@ function previewEventStyle(event) {
   const left = Math.max(0, Math.min(98, rawLeft));
   const width = Math.max(2, ((end - start + 1) / bounds.span) * 100);
   const availableWidth = Math.max(2, 100 - left);
+  const row = index % 3;
 
   return {
     left: `${left}%`,
+    top: `${6 + row * 30}%`,
     width: `${Math.min(availableWidth, width)}%`,
   };
 }
@@ -517,11 +519,6 @@ function handlePreviewWheel(event) {
 function resetLanePreviewRange() {
   previewRangeState.value = { center: null, span: null };
 }
-
-const previewRangeLabel = computed(() => {
-  const range = previewVisibleRange.value;
-  return `${Math.round(range.min)} - ${Math.round(range.max)}`;
-});
 
 const changedFields = computed(() => {
   if (editorMode.value === "add" || !selectedEvent.value) {
@@ -1054,7 +1051,6 @@ onMounted(loadState);
                 <span>レーンプレビュー</span>
                 <strong>{{ destinationLane?.lane.name || "未選択" }}</strong>
               </div>
-              <small v-if="destinationLane">{{ previewRangeLabel }}</small>
             </div>
             <div v-if="destinationLane" class="editor-lane-preview__controls">
               <button class="editor-button editor-button--compact" type="button" @click="panLanePreview(-1)">
@@ -1086,11 +1082,11 @@ onMounted(loadState);
               @wheel="handlePreviewWheel"
             >
               <div
-                v-for="event in previewVisibleLaneEvents"
+                v-for="(event, index) in previewVisibleLaneEvents"
                 :key="`${event.id}:${event.title}`"
                 class="editor-lane-preview__event"
                 :class="{ focus: isPreviewFocusEvent(event) }"
-                :style="previewEventStyle(event)"
+                :style="previewEventStyle(event, index)"
                 :title="`${event.title} / ${event.id}`"
               >
                 <span>{{ event.title }}</span>
@@ -1509,7 +1505,6 @@ onMounted(loadState);
 .editor-lane-preview__header {
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
   gap: 8px;
   margin-bottom: 10px;
 }
@@ -1521,8 +1516,7 @@ onMounted(loadState);
   gap: 2px;
 }
 
-.editor-lane-preview__header span,
-.editor-lane-preview__header small {
+.editor-lane-preview__header span {
   color: var(--text-muted);
   font-size: 12px;
   font-weight: 600;
@@ -1541,8 +1535,7 @@ onMounted(loadState);
 
 .editor-lane-preview__track {
   position: relative;
-  max-height: 260px;
-  min-height: 180px;
+  height: 180px;
   border: 1px solid var(--timeline-viewport-stroke);
   border-radius: 6px;
   background:
@@ -1553,8 +1546,7 @@ onMounted(loadState);
     )
     0 0 / 12.5% 100%,
     var(--timeline-viewport-fill);
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   cursor: grab;
   touch-action: none;
   user-select: none;
@@ -1565,9 +1557,8 @@ onMounted(loadState);
 }
 
 .editor-lane-preview__event {
-  position: relative;
-  min-height: 22px;
-  margin-top: 6px;
+  position: absolute;
+  height: 25%;
   padding: 2px 6px;
   border: 1px solid var(--timeline-event-stroke);
   border-radius: 4px;
@@ -1577,6 +1568,8 @@ onMounted(loadState);
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
 }
 
 .editor-lane-preview__event.focus {
@@ -1657,8 +1650,15 @@ pre {
   }
 
   .editor-lane-preview__track {
-    max-height: 56px;
-    min-height: 48px;
+    height: 56px;
+  }
+
+  .editor-lane-preview__event {
+    padding: 1px 4px;
+  }
+
+  .editor-lane-preview__event span {
+    font-size: 10px;
   }
 }
 
