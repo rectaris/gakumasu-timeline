@@ -21,12 +21,15 @@ const saveResult = ref(null);
 const busy = ref(false);
 const editorMode = ref("edit");
 const selectedCommuType = ref("commonTimeline");
+const previewTrackRef = ref(null);
 const previewRangeState = ref({ center: null, span: null });
+const previewVerticalOffset = ref(0);
 const previewDragState = ref({
   active: false,
   dragging: false,
   pointerId: null,
   lastClientX: 0,
+  lastClientY: 0,
 });
 
 const COMMU_TYPES = [
@@ -436,17 +439,15 @@ const previewRenderedSubLaneCount = computed(() =>
   ),
 );
 
-const previewTrackHeight = computed(() =>
-  Math.max(
-    180,
-    PREVIEW_LANE_PADDING * 2 +
-      PREVIEW_EVENT_HEIGHT +
-      (previewRenderedSubLaneCount.value - 1) * PREVIEW_SUB_LANE_SPACING,
-  ),
+const previewContentHeight = computed(() =>
+  PREVIEW_LANE_PADDING * 2 +
+  PREVIEW_EVENT_HEIGHT +
+  (previewRenderedSubLaneCount.value - 1) * PREVIEW_SUB_LANE_SPACING,
 );
 
-const previewTrackStyle = computed(() => ({
-  "--preview-track-height": `${previewTrackHeight.value}px`,
+const previewContentStyle = computed(() => ({
+  height: `${previewContentHeight.value}px`,
+  transform: `translateY(${-previewVerticalOffset.value}px)`,
 }));
 
 function previewEventLayout(event) {
@@ -498,6 +499,7 @@ function setPreviewRange(center, span) {
     center: clampNumber(center, bounds.min + halfSpan, bounds.max - halfSpan),
     span: nextSpan,
   };
+  setPreviewVerticalOffset(previewVerticalOffset.value);
 }
 
 function zoomLanePreview(scale, anchorRatio = 0.5) {
@@ -523,6 +525,19 @@ function panLanePreviewByPixels(deltaPixels, width) {
   );
 }
 
+function previewViewportHeight() {
+  return previewTrackRef.value?.clientHeight ?? 180;
+}
+
+function setPreviewVerticalOffset(offset, viewportHeight = previewViewportHeight()) {
+  const maxOffset = Math.max(0, previewContentHeight.value - viewportHeight);
+  previewVerticalOffset.value = clampNumber(offset, 0, maxOffset);
+}
+
+function panLanePreviewVerticallyByPixels(deltaPixels, viewportHeight) {
+  setPreviewVerticalOffset(previewVerticalOffset.value + deltaPixels, viewportHeight);
+}
+
 function handlePreviewPointerDown(event) {
   if (event.button !== 0 || !destinationLane.value) return;
 
@@ -532,6 +547,7 @@ function handlePreviewPointerDown(event) {
     dragging: false,
     pointerId: event.pointerId,
     lastClientX: event.clientX,
+    lastClientY: event.clientY,
   };
   event.currentTarget.setPointerCapture?.(event.pointerId);
 }
@@ -542,14 +558,21 @@ function handlePreviewPointerMove(event) {
 
   const rect = event.currentTarget.getBoundingClientRect();
   const diffX = event.clientX - drag.lastClientX;
-  if (Math.abs(diffX) < 1) return;
+  const diffY = event.clientY - drag.lastClientY;
+  if (Math.abs(diffX) < 1 && Math.abs(diffY) < 1) return;
 
   event.preventDefault();
-  panLanePreviewByPixels(-diffX, rect.width);
+  if (Math.abs(diffX) >= 1) {
+    panLanePreviewByPixels(-diffX, rect.width);
+  }
+  if (Math.abs(diffY) >= 1) {
+    panLanePreviewVerticallyByPixels(-diffY, rect.height);
+  }
   previewDragState.value = {
     ...drag,
     dragging: true,
     lastClientX: event.clientX,
+    lastClientY: event.clientY,
   };
 }
 
@@ -563,6 +586,7 @@ function handlePreviewPointerEnd(event) {
     dragging: false,
     pointerId: null,
     lastClientX: 0,
+    lastClientY: 0,
   };
 }
 
@@ -579,6 +603,7 @@ function handlePreviewWheel(event) {
 
 function resetLanePreviewRange() {
   previewRangeState.value = { center: null, span: null };
+  previewVerticalOffset.value = 0;
 }
 
 const changedFields = computed(() => {
@@ -1132,9 +1157,9 @@ onMounted(loadState);
             </div>
             <div
               v-if="destinationLane"
+              ref="previewTrackRef"
               class="editor-lane-preview__track"
               :class="{ 'editor-lane-preview__track--dragging': previewDragState.dragging }"
-              :style="previewTrackStyle"
               role="application"
               aria-label="レーンプレビュー。ドラッグで移動、ホイールで拡大縮小できます。"
               @pointerdown="handlePreviewPointerDown"
@@ -1143,15 +1168,17 @@ onMounted(loadState);
               @pointercancel="handlePreviewPointerEnd"
               @wheel="handlePreviewWheel"
             >
-              <div
-                v-for="item in previewLaneItems"
-                :key="`${item.event.id}:${item.event.title}`"
-                class="editor-lane-preview__event"
-                :class="{ focus: isPreviewFocusEvent(item.event), compact: !item.labelVisible }"
-                :style="item.style"
-                :title="`${item.event.title} / ${item.event.id}`"
-              >
-                <span v-if="item.labelVisible">{{ item.event.title }}</span>
+              <div class="editor-lane-preview__content" :style="previewContentStyle">
+                <div
+                  v-for="item in previewLaneItems"
+                  :key="`${item.event.id}:${item.event.title}`"
+                  class="editor-lane-preview__event"
+                  :class="{ focus: isPreviewFocusEvent(item.event), compact: !item.labelVisible }"
+                  :style="item.style"
+                  :title="`${item.event.title} / ${item.event.id}`"
+                >
+                  <span v-if="item.labelVisible">{{ item.event.title }}</span>
+                </div>
               </div>
             </div>
             <p v-else class="editor-empty">保存先を選択してください。</p>
@@ -1597,7 +1624,7 @@ onMounted(loadState);
 
 .editor-lane-preview__track {
   position: relative;
-  height: var(--preview-track-height, 180px);
+  height: 180px;
   border: 1px solid var(--timeline-viewport-stroke);
   border-radius: 6px;
   background:
@@ -1612,6 +1639,13 @@ onMounted(loadState);
   cursor: grab;
   touch-action: none;
   user-select: none;
+}
+
+.editor-lane-preview__content {
+  position: relative;
+  min-height: 100%;
+  pointer-events: none;
+  will-change: transform;
 }
 
 .editor-lane-preview__track--dragging {
@@ -1715,7 +1749,7 @@ pre {
   }
 
   .editor-lane-preview__track {
-    height: min(var(--preview-track-height, 180px), 124px);
+    height: 124px;
   }
 
   .editor-lane-preview__event {
