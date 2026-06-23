@@ -41,3 +41,4 @@ id	path
 039	docs/plan/checked/039-retire-legacy-worldline-data.md
 036	docs/plan/checked/036-raw-data-format-after-migration.md
 040	docs/plan/checked/040-prepare-empty-commu-directories.md
+041	docs/plan/checked/041-portal-header-link.md

@@ -1262,6 +1262,20 @@ onUnmounted(() => {
       >⚙</button>
     </div>
     <div class="app-title">キャラクタータイムライン</div>
+    <div class="header-right">
+      <a
+        class="portal-link"
+        href="https://rectaris.github.io/"
+        aria-label="rectaris.github.ioへ移動"
+        title="rectaris.github.ioへ移動"
+      >
+        <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+          <path d="M3 11.5 12 4l9 7.5" />
+          <path d="M5.5 10.5V20h13v-9.5" />
+          <path d="M9.5 20v-5h5v5" />
+        </svg>
+      </a>
+    </div>
   </header>
 
   <ManualModal

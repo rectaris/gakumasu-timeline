@@ -1377,7 +1377,8 @@ select:focus-visible {
 
 .menu-button,
 .manual-button,
-.settings-button {
+.settings-button,
+.portal-link {
     width: 36px;
     height: 36px;
     border: 1px solid var(--border-strong);
@@ -1392,11 +1393,13 @@ select:focus-visible {
     padding: 0;
     color: var(--button-text);
     cursor: pointer;
+    text-decoration: none;
 }
 
 .menu-button:hover,
 .manual-button:hover,
 .settings-button:hover,
+.portal-link:hover,
 .zoom-button:hover:not(:disabled),
 .range-overview:hover,
 .intro-guide__button:hover {
@@ -1410,6 +1413,24 @@ select:focus-visible {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+}
+
+.header-right {
+    justify-self: end;
+    margin-right: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.portal-link svg {
+    width: 19px;
+    height: 19px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
 }
 
 .manual-overlay {
