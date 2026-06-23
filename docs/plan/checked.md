@@ -46,3 +46,4 @@ id	path
 043	docs/plan/checked/043-human-first-worldline-editor.md
 044	docs/plan/checked/044-worldline-editor-navigation-preview.md
 045	docs/plan/checked/045-worldline-editor-sidebar-scroll.md
+046	docs/plan/checked/046-worldline-editor-layout-tuning.md

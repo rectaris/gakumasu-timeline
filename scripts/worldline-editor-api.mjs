@@ -73,8 +73,7 @@ export async function readWorldlineEditorState({
       id: entry.lane.id,
       label: entry.lane.name,
       color: entry.lane.color,
-    }))
-    .sort((a, b) => a.label.localeCompare(b.label, "ja"));
+    }));
 
   return {
     lanes,

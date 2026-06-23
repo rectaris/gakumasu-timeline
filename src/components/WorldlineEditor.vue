@@ -704,15 +704,19 @@ onMounted(loadState);
             </div>
             <div class="editor-date-group">
               <span>開始</span>
-              <input v-model.number="form.start.year" type="number" aria-label="開始年" />
-              <input v-model.number="form.start.month" type="number" min="1" max="12" aria-label="開始月" />
-              <input v-model.number="form.start.day" type="number" min="1" max="31" aria-label="開始日" />
+              <div class="editor-date-inputs">
+                <input v-model.number="form.start.year" type="number" aria-label="開始年" />
+                <input v-model.number="form.start.month" type="number" min="1" max="12" aria-label="開始月" />
+                <input v-model.number="form.start.day" type="number" min="1" max="31" aria-label="開始日" />
+              </div>
             </div>
             <div class="editor-date-group">
               <span>終了</span>
-              <input v-model.number="form.end.year" type="number" aria-label="終了年" />
-              <input v-model.number="form.end.month" type="number" min="1" max="12" aria-label="終了月" />
-              <input v-model.number="form.end.day" type="number" min="1" max="31" aria-label="終了日" />
+              <div class="editor-date-inputs">
+                <input v-model.number="form.end.year" type="number" aria-label="終了年" />
+                <input v-model.number="form.end.month" type="number" min="1" max="12" aria-label="終了月" />
+                <input v-model.number="form.end.day" type="number" min="1" max="31" aria-label="終了日" />
+              </div>
             </div>
             <div class="editor-field">
               <label for="date-confidence">日付確度</label>
@@ -949,7 +953,8 @@ onMounted(loadState);
 <style scoped>
 .worldline-editor {
   min-height: 100vh;
-  padding: 24px;
+  margin-top: -56px;
+  padding: 12px 24px 24px;
   color: var(--text-primary);
   background: var(--app-bg);
   box-sizing: border-box;
@@ -1138,10 +1143,15 @@ onMounted(loadState);
 }
 
 .editor-date-group {
-  display: grid;
-  grid-template-columns: 48px repeat(3, minmax(0, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 6px;
-  align-items: end;
+}
+
+.editor-date-inputs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
 }
 
 .editor-checks {
@@ -1391,7 +1401,7 @@ pre {
 
 @media (max-width: 640px) {
   .worldline-editor {
-    padding: 12px;
+    padding: 10px 12px 12px;
   }
 
   .worldline-editor__header,
@@ -1405,8 +1415,8 @@ pre {
     grid-template-columns: 1fr;
   }
 
-  .editor-date-group {
-    grid-template-columns: 1fr repeat(3, minmax(0, 1fr));
+  .editor-date-inputs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 </style>

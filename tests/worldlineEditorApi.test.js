@@ -1,7 +1,11 @@
 import { describe, expect, it } from "vitest";
+import fs from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
 import {
   applyWorldlineEditorMutation,
   previewWorldlineEditorMutation,
+  readWorldlineEditorState,
 } from "../scripts/worldline-editor-api.mjs";
 
 function baseEvent(id, title = id) {
@@ -44,6 +48,51 @@ function baseState() {
 }
 
 describe("worldline editor api", () => {
+  it("keeps participant options in raw idol commu file order", async () => {
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "worldline-editor-"));
+    const rawDirectory = path.join(root, "data/raw/worldline_commu/idol_commu");
+    await fs.mkdir(rawDirectory, { recursive: true });
+    await fs.writeFile(
+      path.join(rawDirectory, "001zeta.json"),
+      JSON.stringify({
+        id: "zeta_idol",
+        name: "ゼータ",
+        color: "#111111",
+        events: [],
+      }),
+    );
+    await fs.writeFile(
+      path.join(rawDirectory, "002alpha.json"),
+      JSON.stringify({
+        id: "alpha_idol",
+        name: "アルファ",
+        color: "#222222",
+        events: [],
+      }),
+    );
+
+    const state = await readWorldlineEditorState({
+      root,
+      files: [
+        {
+          category: "idolCommu",
+          raw: "data/raw/worldline_commu/idol_commu/002alpha.json",
+          generated: "unused/002alpha.js",
+        },
+        {
+          category: "idolCommu",
+          raw: "data/raw/worldline_commu/idol_commu/001zeta.json",
+          generated: "unused/001zeta.js",
+        },
+      ],
+    });
+
+    expect(state.options.participants.map((option) => option.id)).toEqual([
+      "zeta_idol",
+      "alpha_idol",
+    ]);
+  });
+
   it("updates an existing event by source file and event id", () => {
     const result = applyWorldlineEditorMutation(baseState(), {
       action: "update",
