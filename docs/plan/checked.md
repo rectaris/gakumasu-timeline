@@ -49,3 +49,4 @@ id	path
 046	docs/plan/checked/046-worldline-editor-layout-tuning.md
 047	docs/plan/checked/047-worldline-editor-fixed-shell.md
 048	docs/plan/checked/048-worldline-editor-preview-navigation.md
+049	docs/plan/checked/049-worldline-editor-preview-gestures.md

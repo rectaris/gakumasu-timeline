@@ -15,6 +15,12 @@ const busy = ref(false);
 const editorMode = ref("edit");
 const selectedCommuType = ref("commonTimeline");
 const previewRangeState = ref({ center: null, span: null });
+const previewDragState = ref({
+  active: false,
+  dragging: false,
+  pointerId: null,
+  lastClientX: 0,
+});
 
 const COMMU_TYPES = [
   { id: "commonTimeline", label: "共通コミュ", fileBacked: false },
@@ -431,14 +437,81 @@ function setPreviewRange(center, span) {
   };
 }
 
-function zoomLanePreview(scale) {
+function zoomLanePreview(scale, anchorRatio = 0.5) {
   const range = previewVisibleRange.value;
-  setPreviewRange(range.center, range.span * scale);
+  const clampedAnchorRatio = clampNumber(anchorRatio, 0, 1);
+  const nextSpan = range.span * scale;
+  const anchorDay = range.min + range.span * clampedAnchorRatio;
+  const nextMin = anchorDay - nextSpan * clampedAnchorRatio;
+  setPreviewRange(nextMin + nextSpan / 2, nextSpan);
 }
 
 function panLanePreview(direction) {
   const range = previewVisibleRange.value;
   setPreviewRange(range.center + range.span * 0.35 * direction, range.span);
+}
+
+function panLanePreviewByPixels(deltaPixels, width) {
+  if (!width) return;
+  const range = previewVisibleRange.value;
+  setPreviewRange(
+    range.center + (deltaPixels / width) * range.span,
+    range.span,
+  );
+}
+
+function handlePreviewPointerDown(event) {
+  if (event.button !== 0 || !destinationLane.value) return;
+
+  event.preventDefault();
+  previewDragState.value = {
+    active: true,
+    dragging: false,
+    pointerId: event.pointerId,
+    lastClientX: event.clientX,
+  };
+  event.currentTarget.setPointerCapture?.(event.pointerId);
+}
+
+function handlePreviewPointerMove(event) {
+  const drag = previewDragState.value;
+  if (!drag.active || drag.pointerId !== event.pointerId) return;
+
+  const rect = event.currentTarget.getBoundingClientRect();
+  const diffX = event.clientX - drag.lastClientX;
+  if (Math.abs(diffX) < 1) return;
+
+  event.preventDefault();
+  panLanePreviewByPixels(-diffX, rect.width);
+  previewDragState.value = {
+    ...drag,
+    dragging: true,
+    lastClientX: event.clientX,
+  };
+}
+
+function handlePreviewPointerEnd(event) {
+  const drag = previewDragState.value;
+  if (!drag.active || drag.pointerId !== event.pointerId) return;
+
+  event.currentTarget.releasePointerCapture?.(event.pointerId);
+  previewDragState.value = {
+    active: false,
+    dragging: false,
+    pointerId: null,
+    lastClientX: 0,
+  };
+}
+
+function handlePreviewWheel(event) {
+  if (!destinationLane.value) return;
+
+  event.preventDefault();
+  const rect = event.currentTarget.getBoundingClientRect();
+  if (!rect.width) return;
+
+  const anchorRatio = (event.clientX - rect.left) / rect.width;
+  zoomLanePreview(Math.exp(event.deltaY * 0.0015), anchorRatio);
 }
 
 function resetLanePreviewRange() {
@@ -1000,7 +1073,18 @@ onMounted(loadState);
                 全体
               </button>
             </div>
-            <div v-if="destinationLane" class="editor-lane-preview__track">
+            <div
+              v-if="destinationLane"
+              class="editor-lane-preview__track"
+              :class="{ 'editor-lane-preview__track--dragging': previewDragState.dragging }"
+              role="application"
+              aria-label="レーンプレビュー。ドラッグで移動、ホイールで拡大縮小できます。"
+              @pointerdown="handlePreviewPointerDown"
+              @pointermove="handlePreviewPointerMove"
+              @pointerup="handlePreviewPointerEnd"
+              @pointercancel="handlePreviewPointerEnd"
+              @wheel="handlePreviewWheel"
+            >
               <div
                 v-for="event in previewVisibleLaneEvents"
                 :key="`${event.id}:${event.title}`"
@@ -1471,6 +1555,13 @@ onMounted(loadState);
     var(--timeline-viewport-fill);
   overflow-x: hidden;
   overflow-y: auto;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.editor-lane-preview__track--dragging {
+  cursor: grabbing;
 }
 
 .editor-lane-preview__event {
@@ -1548,6 +1639,10 @@ pre {
     padding: 10px;
   }
 
+  .worldline-editor__review .editor-section > h2 {
+    display: none;
+  }
+
   .editor-lane-preview {
     margin: 8px 0;
     padding: 8px;
@@ -1562,8 +1657,8 @@ pre {
   }
 
   .editor-lane-preview__track {
-    max-height: 88px;
-    min-height: 72px;
+    max-height: 56px;
+    min-height: 48px;
   }
 }
 
