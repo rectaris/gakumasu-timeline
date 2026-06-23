@@ -952,20 +952,25 @@ onMounted(loadState);
 
 <style scoped>
 .worldline-editor {
-  min-height: 100vh;
+  height: 100vh;
   margin-top: -56px;
   padding: 12px 24px 24px;
   color: var(--text-primary);
   background: var(--app-bg);
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .worldline-editor__header {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
+  z-index: 2;
 }
 
 .worldline-editor__header h1,
@@ -1017,10 +1022,15 @@ onMounted(loadState);
 }
 
 .worldline-editor__layout {
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
   display: grid;
   grid-template-columns: minmax(240px, 300px) minmax(460px, 1fr) minmax(280px, 360px);
+  grid-template-rows: minmax(0, 1fr);
   gap: 16px;
-  align-items: start;
+  align-items: stretch;
+  overflow: hidden;
 }
 
 .worldline-editor__sidebar,
@@ -1038,14 +1048,14 @@ onMounted(loadState);
 }
 
 .worldline-editor__sidebar {
-  position: sticky;
-  top: 16px;
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-height: calc(100vh - 48px);
   padding: 12px;
-  overflow: hidden;
+  overflow: clip;
 }
 
 .editor-sidebar-controls {
@@ -1058,9 +1068,20 @@ onMounted(loadState);
 
 .worldline-editor__form,
 .worldline-editor__review {
+  height: 100%;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.worldline-editor__form {
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.worldline-editor__review {
+  overflow: clip;
 }
 
 .editor-toolbar,
@@ -1194,7 +1215,7 @@ onMounted(loadState);
 .editor-event-pane .event-list {
   flex: 1 1 auto;
   min-height: 0;
-  overflow-y: auto;
+  overflow: clip;
   padding-right: 2px;
 }
 
@@ -1390,12 +1411,18 @@ pre {
 
 @media (max-width: 1040px) {
   .worldline-editor__layout {
+    grid-template-rows: minmax(0, 24vh) minmax(0, 1fr) minmax(0, 22vh);
     grid-template-columns: 1fr;
   }
 
   .worldline-editor__sidebar {
-    position: static;
-    max-height: calc(100vh - 24px);
+    height: 100%;
+    max-height: none;
+  }
+
+  .worldline-editor__review {
+    height: 100%;
+    max-height: none;
   }
 }
 
