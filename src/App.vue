@@ -1,5 +1,13 @@
 <script setup>
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
+import {
+  computed,
+  defineAsyncComponent,
+  nextTick,
+  onMounted,
+  onUnmounted,
+  ref,
+  watch,
+} from "vue";
 import {
   idolCommu,
   hatsuboshiCommus,
@@ -50,6 +58,12 @@ const URL_SYNC_DELAY_MS = 150;
 const MAX_COMPARE_LANES = 4;
 const TIMELINE_DEBUG_METRICS_STORAGE_KEY = "gakumasu:debug-metrics";
 const initialViewState = parseTimelineViewState(window.location.search);
+const WorldlineEditor = import.meta.env.DEV
+  ? defineAsyncComponent(() => import("./components/WorldlineEditor.vue"))
+  : null;
+const isWorldlineEditorMode =
+  import.meta.env.DEV &&
+  new URLSearchParams(window.location.search).get("editor") === "worldline";
 
 const occurrenceTypeLabels = {
   continuous: "期間",
@@ -1227,6 +1241,9 @@ onUnmounted(() => {
 </script>
 
 <template>
+  <WorldlineEditor v-if="isWorldlineEditorMode" />
+
+  <template v-else>
   <header class="app-header">
     <div class="header-left">
       <button
@@ -1893,4 +1910,5 @@ onUnmounted(() => {
     :select-source-filter="applySourceFilter"
     :select-related-event="selectEventAndReveal"
   />
+  </template>
 </template>

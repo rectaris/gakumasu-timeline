@@ -138,6 +138,11 @@ raw JSON では `year` に変換後の数値を直接書きます。
 
 ## データ追加・編集チェックリスト
 
+ローカル開発環境では、`npm run dev` の起動後に `/timeline/?editor=worldline` を開くと worldline データ編集画面を使えます。
+編集画面は `data/raw/worldline_commu/` の既存 raw JSON を読み込み、保存前に既存のデータ検証を実行します。
+現時点の永続 source of truth は raw JSON です。
+1イベント1ファイル YAML への移行は、編集画面の運用を確認した後の別作業として扱います。
+
 1. 追加先を決める
    - 移行済みカテゴリ: `data/raw/worldline_commu/` 配下を編集し、`npm run generate:data` を実行します
    - アイドルコミュ: `data/raw/worldline_commu/idol_commu/*.json`
@@ -205,6 +210,7 @@ raw JSON では `year` に変換後の数値を直接書きます。
     - 実装変更を含む場合は `npm run test` と `npm run build` も実行します
 17. ローカル表示を確認する
     - 編集中は `npm run dev`
+    - worldline データ編集画面は `/timeline/?editor=worldline`
     - build 後の確認が必要な場合は `npm run build` の後に `npm run preview`
 
 ## データ検証

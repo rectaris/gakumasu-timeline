@@ -1,10 +1,10 @@
 # Human-First Worldline Data Editor
 
 status: active
-task_type: planning_docs
-review_class: B
+task_type: product_logic
+review_class: C
 human_design_required: yes
-human_approval_status: not_required
+human_approval_status: approved
 target_files:
   - data/raw/worldline_commu/
   - src/data/generated/worldline_commu/
@@ -46,7 +46,7 @@ acceptance_focus:
   - human editing experience
   - existing-event modification
   - deterministic raw data updates
-expected_output: implementation-plan
+expected_output: implementation
 checked_summary_ja: 人間が直接 JSON を編集しない worldline データ編集基盤を設計する。
 
 ## Decision Context
@@ -56,8 +56,19 @@ The user has selected human editing experience as the top priority and asked to 
 The plan therefore treats the best target as a local editor experience rather than a lighter file-format change.
 The editor must cover both new file addition and edits inside existing data files because normal maintenance includes correcting existing events, moving events between lanes, refining source evidence, and deleting obsolete entries.
 
-Implementing this plan is future Class C work because it can affect data contracts, source-of-truth format, editor UX, and write-capable local tooling.
-This active plan records the direction and decision points; it does not approve implementation by itself.
+The user approved the recommended direction and requested development work.
+Implementation is approved for a staged local editor that protects the current runtime data contract.
+
+## Approved Direction
+
+- Use a local Vite dev-server editor with a local-only write API.
+- Support direct save to raw files and patch/diff review as separate surfaces.
+- Prefer one-event-per-file YAML as the long-term source-of-truth direction.
+- Start implementation against the current raw JSON format to avoid mixing editor UX work with a broad data migration.
+- Keep stable event IDs as the edit key, and require compatibility-aware confirmation for ID changes.
+- Support archived or draft states later, but do not alter runtime filtering semantics until that state model is approved and validated.
+- Add structured source and participant/worldline selection from catalogs instead of free-text-only editing.
+- Treat full source catalog extraction, semantic merge, and YAML migration as follow-up stages after the local editor proves the editing workflow.
 
 ## Product Goal
 
@@ -123,15 +134,15 @@ If file-level review and manual emergency edits remain important, one-event-per-
 
 ## Implementation Phases
 
-- [ ] Discovery: map the current raw data contract, generated-data pipeline, integrity checks, and timeline preview dependencies.
-- [ ] UX model: define editor screens, field groups, destructive-operation confirmations, and diff-preview behavior.
-- [ ] Write strategy decision: choose JSON-behind-editor or one-event-per-file YAML as the source-of-truth path.
-- [ ] Local write boundary: design the local-only save API or script that can update raw files without exposing a public write surface.
-- [ ] Validation integration: reuse `generate:data`, `validate:data`, and integrity errors so editor feedback matches CI behavior.
-- [ ] Editor implementation: build navigation, editing forms, repeatable source sections, timeline preview, and save review.
-- [ ] Data migration, if approved: migrate raw data only if the chosen source-of-truth path requires it.
-- [ ] Verification: cover add, edit, delete, duplicate, move, ID-change, invalid-data, and generated-data freshness scenarios.
-- [ ] Documentation: update authoring docs with the editor workflow and emergency manual-edit path.
+- [x] Discovery: map the current raw data contract, generated-data pipeline, integrity checks, and timeline preview dependencies.
+- [x] UX model: define editor screens, field groups, destructive-operation confirmations, and diff-preview behavior.
+- [x] Write strategy decision: start with JSON-behind-editor and defer one-event-per-file YAML migration.
+- [x] Local write boundary: design the local-only save API or script that can update raw files without exposing a public write surface.
+- [x] Validation integration: reuse `generate:data`, `validate:data`, and integrity errors so editor feedback matches CI behavior.
+- [x] Editor implementation: build navigation, editing forms, repeatable source sections, timeline preview, and save review.
+- [x] Data migration decision: defer raw data migration to a separate compatibility-preserving task.
+- [x] Verification: cover add, edit, delete, duplicate, move, ID-change, invalid-data, and generated-data freshness scenarios.
+- [x] Documentation: update authoring docs with the editor workflow and emergency manual-edit path.
 
 ## Open Product Decisions
 
@@ -147,3 +158,29 @@ If file-level review and manual emergency edits remain important, one-event-per-
 UI work in this plan requires browser verification.
 Data pipeline work requires `npm run validate:data`, focused tests for changed data utilities, and `npm run build`.
 Any source-of-truth migration requires before-and-after generated data comparison to prove runtime behavior is unchanged unless a specific semantic change is approved.
+
+## Implementation Notes
+
+- Added `scripts/worldline-editor-api.mjs` as a Vite dev-server-only API.
+- Added `/timeline/?editor=worldline` as the local editor entry point.
+- The editor currently writes current raw JSON files and regenerates app-facing generated modules after a successful save.
+- The UI supports searchable event navigation, add, edit, duplicate, delete, lane move through destination selection, structured source details, conflicts, participants, worldlines, preview validation, and save validation.
+- One-event-per-file YAML remains the approved long-term source-of-truth direction, but migration is deferred to a separate compatibility-preserving task.
+
+## Validation Results
+
+- `npm run test -- tests/worldlineEditorApi.test.js`: passed.
+- `npm run build`: passed.
+- `npm run validate:data`: passed.
+- `npm run test`: passed.
+- `python3 scripts/validate-changes.py`: passed.
+- Browser desktop `1366x900` at `/timeline/?editor=worldline`: editor loaded, event list rendered, preview validation passed.
+- Browser mobile `375x812` at `/timeline/?editor=worldline`: editor rendered in one column.
+- Observed existing console warning: `Invalid event start date` for an existing timeline event.
+
+## Deferred Follow-Ups
+
+- Migrate source-of-truth data to one-event-per-file YAML after the editor workflow is validated in normal use.
+- Add source catalog extraction and reuse once structured source editing has enough real entries.
+- Add semantic merge and conflict-resolution UI for branch-level concurrent editing.
+- Add patch-file export as a downloadable artifact if external contributors need a no-Git submission route.
