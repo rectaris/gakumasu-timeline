@@ -557,78 +557,83 @@ onMounted(loadState);
 
     <section v-else class="worldline-editor__layout">
       <aside class="worldline-editor__sidebar" aria-label="イベント一覧">
-        <div class="editor-field editor-field--sidebar">
-          <label for="editor-search">検索</label>
-          <input id="editor-search" v-model="searchQuery" type="search" />
-        </div>
+        <div class="editor-sidebar-controls">
+          <div class="editor-field editor-field--sidebar">
+            <label for="editor-search">検索</label>
+            <input id="editor-search" v-model="searchQuery" type="search" />
+          </div>
 
-        <div class="editor-field editor-field--sidebar">
-          <label for="editor-commu-type">コミュ種別</label>
-          <select id="editor-commu-type" v-model="selectedCommuType">
-            <option
-              v-for="type in commuTypeOptions"
-              :key="type.id"
-              :value="type.id"
-            >
-              {{ type.label }}{{ type.fileBacked ? ` (${type.count})` : "" }}
-            </option>
-          </select>
-        </div>
+          <div class="editor-field editor-field--sidebar">
+            <label for="editor-commu-type">コミュ種別</label>
+            <select id="editor-commu-type" v-model="selectedCommuType">
+              <option
+                v-for="type in commuTypeOptions"
+                :key="type.id"
+                :value="type.id"
+              >
+                {{ type.label }}{{ type.fileBacked ? ` (${type.count})` : "" }}
+              </option>
+            </select>
+          </div>
 
-        <div
-          v-if="selectedCommuConfig.fileBacked"
-          class="editor-field editor-field--sidebar"
-        >
-          <label for="editor-file">ファイル</label>
-          <select
-            id="editor-file"
-            v-model="selectedSourceFile"
-            :disabled="selectedCommuEntries.length === 0"
+          <div
+            v-if="selectedCommuConfig.fileBacked"
+            class="editor-field editor-field--sidebar"
           >
-            <option
-              v-for="entry in selectedCommuEntries"
-              :key="entry.sourceFile"
-              :value="entry.sourceFile"
+            <label for="editor-file">ファイル</label>
+            <select
+              id="editor-file"
+              v-model="selectedSourceFile"
+              :disabled="selectedCommuEntries.length === 0"
             >
-              {{ entry.lane.name }}
-            </option>
-          </select>
-        </div>
+              <option
+                v-for="entry in selectedCommuEntries"
+                :key="entry.sourceFile"
+                :value="entry.sourceFile"
+              >
+                {{ entry.lane.name }}
+              </option>
+            </select>
+          </div>
 
-        <div v-else class="editor-current-file">
-          <span>共通コミュ</span>
-          <strong>{{ selectedLane?.lane.name }}</strong>
-        </div>
+          <div v-else class="editor-current-file">
+            <span>共通コミュ</span>
+            <strong>{{ selectedLane?.lane.name }}</strong>
+          </div>
 
-        <p v-if="selectedCommuEntries.length === 0" class="editor-empty">
-          このコミュ種別には編集できるファイルがありません。
-        </p>
+          <p v-if="selectedCommuEntries.length === 0" class="editor-empty">
+            このコミュ種別には編集できるファイルがありません。
+          </p>
 
-        <button
-          class="editor-button editor-button--primary editor-button--sidebar"
-          type="button"
-          :disabled="!selectedLane"
-          @click="startAdd"
-        >
-          新規イベント
-        </button>
-
-        <div class="event-list" role="list">
           <button
-            v-for="row in filteredEvents"
-            :key="`${row.entry.sourceFile}:${row.event.id}`"
-            class="event-list__item"
-            :class="{
-              selected:
-                row.entry.sourceFile === form.originalSourceFile &&
-                row.event.id === form.originalEventId,
-            }"
+            class="editor-button editor-button--primary editor-button--sidebar"
             type="button"
-            @click="selectRow(row)"
+            :disabled="!selectedLane"
+            @click="startAdd"
           >
-            <span>{{ row.event.title }}</span>
-            <small>{{ row.entry.lane.name }} / {{ row.event.id }}</small>
+            新規イベント
           </button>
+        </div>
+
+        <div class="editor-event-pane">
+          <h2>イベント</h2>
+          <div class="event-list" role="list">
+            <button
+              v-for="row in filteredEvents"
+              :key="`${row.entry.sourceFile}:${row.event.id}`"
+              class="event-list__item"
+              :class="{
+                selected:
+                  row.entry.sourceFile === form.originalSourceFile &&
+                  row.event.id === form.originalEventId,
+              }"
+              type="button"
+              @click="selectRow(row)"
+            >
+              <span>{{ row.event.title }}</span>
+              <small>{{ row.entry.lane.name }} / {{ row.event.id }}</small>
+            </button>
+          </div>
         </div>
       </aside>
 
@@ -1030,12 +1035,19 @@ onMounted(loadState);
 .worldline-editor__sidebar {
   position: sticky;
   top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   max-height: calc(100vh - 48px);
   padding: 12px;
-  overflow: auto;
+  overflow: hidden;
 }
 
-.worldline-editor__sidebar > * + * {
+.editor-sidebar-controls {
+  flex: 0 0 auto;
+}
+
+.editor-sidebar-controls > * + * {
   margin-top: 16px;
 }
 
@@ -1150,7 +1162,30 @@ onMounted(loadState);
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin-top: 18px;
+}
+
+.editor-event-pane {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-soft);
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-event-pane h2 {
+  flex: 0 0 auto;
+  margin: 0 0 10px;
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.editor-event-pane .event-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 2px;
 }
 
 .event-list__item {
@@ -1350,7 +1385,7 @@ pre {
 
   .worldline-editor__sidebar {
     position: static;
-    max-height: none;
+    max-height: calc(100vh - 24px);
   }
 }
 
