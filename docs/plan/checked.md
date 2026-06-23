@@ -44,3 +44,4 @@ id	path
 041	docs/plan/checked/041-portal-header-link.md
 042	docs/plan/checked/042-align-portal-header-link.md
 043	docs/plan/checked/043-human-first-worldline-editor.md
+044	docs/plan/checked/044-worldline-editor-navigation-preview.md

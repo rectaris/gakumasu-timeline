@@ -13,6 +13,15 @@ const previewResult = ref(null);
 const saveResult = ref(null);
 const busy = ref(false);
 const editorMode = ref("edit");
+const selectedCommuType = ref("commonTimeline");
+
+const COMMU_TYPES = [
+  { id: "commonTimeline", label: "共通コミュ", fileBacked: false },
+  { id: "eventCommus", label: "イベントコミュ", fileBacked: true },
+  { id: "supportCardCommus", label: "サポカコミュ", fileBacked: true },
+  { id: "hatsuboshiCommus", label: "初星コミュ", fileBacked: true },
+  { id: "idolCommu", label: "アイドルコミュ", fileBacked: true },
+];
 
 const form = reactive(createEmptyForm());
 
@@ -230,7 +239,8 @@ async function loadState() {
 
   try {
     state.value = await fetchJson(`${API_ROOT}/state`);
-    selectedSourceFile.value = state.value.lanes[0]?.sourceFile ?? "";
+    selectedCommuType.value = "commonTimeline";
+    selectedSourceFile.value = firstSourceFileForCommu("commonTimeline");
     const firstEvent = selectedLane.value?.lane.events[0];
     selectedEventId.value = firstEvent?.id ?? "";
     if (selectedLane.value && firstEvent) {
@@ -248,8 +258,24 @@ async function loadState() {
 
 const laneEntries = computed(() => state.value?.lanes ?? []);
 const options = computed(() => state.value?.options ?? {});
+const commuTypeOptions = computed(() =>
+  COMMU_TYPES.map((type) => ({
+    ...type,
+    count: laneEntries.value.filter((entry) => entry.category === type.id).length,
+  })),
+);
+const selectedCommuConfig = computed(() =>
+  COMMU_TYPES.find((type) => type.id === selectedCommuType.value) ??
+  COMMU_TYPES[0],
+);
+const selectedCommuEntries = computed(() =>
+  laneEntries.value.filter((entry) => entry.category === selectedCommuType.value),
+);
 const selectedLane = computed(() =>
   laneEntries.value.find((entry) => entry.sourceFile === selectedSourceFile.value),
+);
+const destinationLane = computed(() =>
+  laneEntries.value.find((entry) => entry.sourceFile === form.sourceFile),
 );
 const eventOptions = computed(() => selectedLane.value?.lane.events ?? []);
 const selectedEvent = computed(() =>
@@ -257,7 +283,7 @@ const selectedEvent = computed(() =>
 );
 const filteredEvents = computed(() => {
   const query = searchQuery.value.trim().toLocaleLowerCase("ja-JP");
-  const rows = laneEntries.value.flatMap((entry) =>
+  const rows = selectedCommuEntries.value.flatMap((entry) =>
     entry.lane.events.map((event) => ({ entry, event })),
   );
 
@@ -278,6 +304,84 @@ const filteredEvents = computed(() => {
       .includes(query),
   );
 });
+
+function firstSourceFileForCommu(commuType) {
+  return (
+    laneEntries.value.find((entry) => entry.category === commuType)?.sourceFile ?? ""
+  );
+}
+
+function eventDayValue(date, fallbackDay) {
+  return (
+    (Number(date?.year ?? 0) * 12 + (Number(date?.month ?? 1) - 1)) * 31 +
+    (Number(date?.day ?? fallbackDay) - 1)
+  );
+}
+
+const previewLaneEvents = computed(() => {
+  const entry = destinationLane.value;
+  if (!entry) return [];
+
+  const events = entry.lane.events.map((event) => clone(event));
+  const nextEvent = formToEvent();
+  if (!nextEvent.id) return events;
+
+  const sameLaneEdit =
+    editorMode.value === "edit" &&
+    form.originalSourceFile === form.sourceFile &&
+    form.originalEventId;
+
+  if (sameLaneEdit) {
+    const index = events.findIndex((event) => event.id === form.originalEventId);
+    if (index !== -1) {
+      events.splice(index, 1, nextEvent);
+      return events;
+    }
+  }
+
+  if (
+    editorMode.value === "add" ||
+    form.originalSourceFile !== form.sourceFile ||
+    !events.some((event) => event.id === nextEvent.id)
+  ) {
+    events.push(nextEvent);
+  }
+
+  return events;
+});
+
+const previewLaneBounds = computed(() => {
+  const dayValues = previewLaneEvents.value.flatMap((event) => [
+    eventDayValue(event.start, 1),
+    eventDayValue(event.end, 31),
+  ]);
+  if (dayValues.length === 0) {
+    return { min: 0, max: 1, span: 1 };
+  }
+
+  const min = Math.min(...dayValues);
+  const max = Math.max(...dayValues);
+  return { min, max, span: Math.max(1, max - min) };
+});
+
+function previewEventStyle(event) {
+  const bounds = previewLaneBounds.value;
+  const start = eventDayValue(event.start, 1);
+  const end = eventDayValue(event.end, 31);
+  const rawLeft = ((start - bounds.min) / bounds.span) * 100;
+  const left = Math.max(0, Math.min(98, rawLeft));
+  const width = Math.max(2, ((end - start + 1) / bounds.span) * 100);
+  const availableWidth = Math.max(2, 100 - left);
+
+  return {
+    left: `${left}%`,
+    width: `${Math.min(availableWidth, width)}%`,
+  };
+}
+
+function isPreviewFocusEvent(event) {
+  return event.id === form.id;
+}
 
 const changedFields = computed(() => {
   if (editorMode.value === "add" || !selectedEvent.value) {
@@ -318,13 +422,28 @@ watch(selectedSourceFile, () => {
   selectedEventId.value = selectedLane.value?.lane.events[0]?.id ?? "";
 });
 
+watch(selectedCommuType, (commuType) => {
+  selectedSourceFile.value = firstSourceFileForCommu(commuType);
+  if (!selectedSourceFile.value) {
+    selectedEventId.value = "";
+    assignForm({ sourceFile: "", originalSourceFile: "", originalEventId: "" });
+    return;
+  }
+
+  if (editorMode.value === "add") {
+    createDraftForLane(selectedLane.value);
+  }
+});
+
 function selectRow(row) {
   editorMode.value = "edit";
+  selectedCommuType.value = row.entry.category;
   selectedSourceFile.value = row.entry.sourceFile;
   selectedEventId.value = row.event.id;
 }
 
 function startAdd() {
+  if (!selectedLane.value) return;
   editorMode.value = "add";
   previewResult.value = null;
   saveResult.value = null;
@@ -438,25 +557,59 @@ onMounted(loadState);
 
     <section v-else class="worldline-editor__layout">
       <aside class="worldline-editor__sidebar" aria-label="イベント一覧">
-        <div class="editor-field">
+        <div class="editor-field editor-field--sidebar">
           <label for="editor-search">検索</label>
           <input id="editor-search" v-model="searchQuery" type="search" />
         </div>
 
-        <div class="editor-field">
-          <label for="editor-lane">レーン</label>
-          <select id="editor-lane" v-model="selectedSourceFile">
+        <div class="editor-field editor-field--sidebar">
+          <label for="editor-commu-type">コミュ種別</label>
+          <select id="editor-commu-type" v-model="selectedCommuType">
             <option
-              v-for="entry in laneEntries"
-              :key="entry.sourceFile"
-              :value="entry.sourceFile"
+              v-for="type in commuTypeOptions"
+              :key="type.id"
+              :value="type.id"
             >
-              {{ entry.categoryLabel }} / {{ entry.lane.name }}
+              {{ type.label }}{{ type.fileBacked ? ` (${type.count})` : "" }}
             </option>
           </select>
         </div>
 
-        <button class="editor-button editor-button--primary" type="button" @click="startAdd">
+        <div
+          v-if="selectedCommuConfig.fileBacked"
+          class="editor-field editor-field--sidebar"
+        >
+          <label for="editor-file">ファイル</label>
+          <select
+            id="editor-file"
+            v-model="selectedSourceFile"
+            :disabled="selectedCommuEntries.length === 0"
+          >
+            <option
+              v-for="entry in selectedCommuEntries"
+              :key="entry.sourceFile"
+              :value="entry.sourceFile"
+            >
+              {{ entry.lane.name }}
+            </option>
+          </select>
+        </div>
+
+        <div v-else class="editor-current-file">
+          <span>共通コミュ</span>
+          <strong>{{ selectedLane?.lane.name }}</strong>
+        </div>
+
+        <p v-if="selectedCommuEntries.length === 0" class="editor-empty">
+          このコミュ種別には編集できるファイルがありません。
+        </p>
+
+        <button
+          class="editor-button editor-button--primary editor-button--sidebar"
+          type="button"
+          :disabled="!selectedLane"
+          @click="startAdd"
+        >
           新規イベント
         </button>
 
@@ -739,6 +892,25 @@ onMounted(loadState);
               {{ form.end.year }}/{{ form.end.month }}/{{ form.end.day }}
             </small>
           </div>
+          <div class="editor-lane-preview" aria-label="保存先レーンプレビュー">
+            <div class="editor-lane-preview__header">
+              <span>レーンプレビュー</span>
+              <strong>{{ destinationLane?.lane.name || "未選択" }}</strong>
+            </div>
+            <div v-if="destinationLane" class="editor-lane-preview__track">
+              <div
+                v-for="event in previewLaneEvents"
+                :key="`${event.id}:${event.title}`"
+                class="editor-lane-preview__event"
+                :class="{ focus: isPreviewFocusEvent(event) }"
+                :style="previewEventStyle(event)"
+                :title="`${event.title} / ${event.id}`"
+              >
+                <span>{{ event.title }}</span>
+              </div>
+            </div>
+            <p v-else class="editor-empty">保存先を選択してください。</p>
+          </div>
           <button class="editor-button" type="button" :disabled="!selectedEvent" @click="deleteSelected">
             削除
           </button>
@@ -863,6 +1035,10 @@ onMounted(loadState);
   overflow: auto;
 }
 
+.worldline-editor__sidebar > * + * {
+  margin-top: 16px;
+}
+
 .worldline-editor__form,
 .worldline-editor__review {
   display: flex;
@@ -918,6 +1094,10 @@ onMounted(loadState);
   grid-column: 1 / -1;
 }
 
+.editor-field--sidebar {
+  gap: 8px;
+}
+
 .editor-field label,
 .editor-checks legend,
 .editor-date-group span {
@@ -970,7 +1150,7 @@ onMounted(loadState);
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin-top: 12px;
+  margin-top: 18px;
 }
 
 .event-list__item {
@@ -1038,6 +1218,103 @@ onMounted(loadState);
 
 .editor-preview p {
   overflow-wrap: anywhere;
+}
+
+.editor-current-file {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px;
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  background: var(--surface-soft);
+}
+
+.editor-current-file span,
+.editor-empty {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.editor-current-file strong {
+  overflow-wrap: anywhere;
+}
+
+.editor-empty {
+  margin: 0;
+}
+
+.editor-button--sidebar {
+  width: 100%;
+}
+
+.editor-lane-preview {
+  margin: 12px 0;
+  padding: 10px;
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  background: var(--surface-soft);
+}
+
+.editor-lane-preview__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.editor-lane-preview__header span {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.editor-lane-preview__header strong {
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+.editor-lane-preview__track {
+  position: relative;
+  max-height: 260px;
+  min-height: 180px;
+  border: 1px solid var(--timeline-viewport-stroke);
+  border-radius: 6px;
+  background:
+    linear-gradient(
+      to right,
+      var(--timeline-day-line) 1px,
+      transparent 1px
+    )
+    0 0 / 12.5% 100%,
+    var(--timeline-viewport-fill);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.editor-lane-preview__event {
+  position: relative;
+  min-height: 22px;
+  margin-top: 6px;
+  padding: 2px 6px;
+  border: 1px solid var(--timeline-event-stroke);
+  border-radius: 4px;
+  color: var(--button-text-inverse);
+  background: var(--button-bg-strong);
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.editor-lane-preview__event.focus {
+  border: 2px solid var(--timeline-focus-stroke);
+  background: #047857;
+}
+
+.editor-lane-preview__event span {
+  font-size: 12px;
 }
 
 .worldline-editor__notice {
