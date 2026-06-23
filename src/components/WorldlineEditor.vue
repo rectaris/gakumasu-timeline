@@ -408,22 +408,43 @@ const previewVisibleLaneEvents = computed(() => {
   });
 });
 
-function previewEventStyle(event, index = 0) {
+function previewEventLayout(event, index = 0) {
   const bounds = previewVisibleRange.value;
   const start = eventDayValue(event.start, 1);
   const end = eventDayValue(event.end, 31);
-  const rawLeft = ((start - bounds.min) / bounds.span) * 100;
-  const left = Math.max(0, Math.min(98, rawLeft));
-  const width = Math.max(2, ((end - start + 1) / bounds.span) * 100);
-  const availableWidth = Math.max(2, 100 - left);
+  const visibleStart = clampNumber(start, bounds.min, bounds.max);
+  const visibleEnd = clampNumber(end, bounds.min, bounds.max);
+  const visibleSpan = Math.max(0, visibleEnd - visibleStart + 1);
+  const rawWidth = (visibleSpan / bounds.span) * 100;
+
+  if (rawWidth < 3 && !isPreviewFocusEvent(event)) {
+    return null;
+  }
+
+  const left = clampNumber(((visibleStart - bounds.min) / bounds.span) * 100, 0, 98.5);
+  const width = Math.min(
+    100 - left,
+    Math.max(3, rawWidth),
+  );
   const row = index % 3;
+  const labelVisible = width >= 12;
 
   return {
-    left: `${left}%`,
-    top: `${6 + row * 30}%`,
-    width: `${Math.min(availableWidth, width)}%`,
+    event,
+    labelVisible,
+    style: {
+      left: `${left}%`,
+      top: `${6 + row * 30}%`,
+      width: `${width}%`,
+    },
   };
 }
+
+const previewLaneItems = computed(() =>
+  previewVisibleLaneEvents.value.map((event, index) =>
+    previewEventLayout(event, index),
+  ).filter(Boolean),
+);
 
 function isPreviewFocusEvent(event) {
   return event.id === form.id;
@@ -1082,14 +1103,14 @@ onMounted(loadState);
               @wheel="handlePreviewWheel"
             >
               <div
-                v-for="(event, index) in previewVisibleLaneEvents"
-                :key="`${event.id}:${event.title}`"
+                v-for="item in previewLaneItems"
+                :key="`${item.event.id}:${item.event.title}`"
                 class="editor-lane-preview__event"
-                :class="{ focus: isPreviewFocusEvent(event) }"
-                :style="previewEventStyle(event, index)"
-                :title="`${event.title} / ${event.id}`"
+                :class="{ focus: isPreviewFocusEvent(item.event), compact: !item.labelVisible }"
+                :style="item.style"
+                :title="`${item.event.title} / ${item.event.id}`"
               >
-                <span>{{ event.title }}</span>
+                <span v-if="item.labelVisible">{{ item.event.title }}</span>
               </div>
             </div>
             <p v-else class="editor-empty">保存先を選択してください。</p>
@@ -1575,6 +1596,10 @@ onMounted(loadState);
 .editor-lane-preview__event.focus {
   border: 2px solid var(--timeline-focus-stroke);
   background: #047857;
+}
+
+.editor-lane-preview__event.compact {
+  padding: 0;
 }
 
 .editor-lane-preview__event span {
