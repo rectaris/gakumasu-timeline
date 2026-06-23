@@ -52,3 +52,4 @@ id	path
 049	docs/plan/checked/049-worldline-editor-preview-gestures.md
 050	docs/plan/checked/050-worldline-editor-preview-scrollbar.md
 051	docs/plan/checked/051-worldline-editor-preview-clipping.md
+052	docs/plan/checked/052-worldline-editor-preview-layout.md

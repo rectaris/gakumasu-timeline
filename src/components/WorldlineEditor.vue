@@ -1,7 +1,14 @@
 <script setup>
 import { computed, onMounted, reactive, ref, watch } from "vue";
+import {
+  buildLaneLayout,
+  visibleEventLayouts,
+} from "../utils/timelineLayout.js";
 
 const API_ROOT = "/__worldline-editor/api";
+const PREVIEW_EVENT_HEIGHT = 26;
+const PREVIEW_SUB_LANE_SPACING = 36;
+const PREVIEW_LANE_PADDING = 8;
 
 const state = ref(null);
 const loading = ref(true);
@@ -399,21 +406,53 @@ const previewVisibleRange = computed(() => {
   };
 });
 
-const previewVisibleLaneEvents = computed(() => {
-  const range = previewVisibleRange.value;
-  return previewLaneEvents.value.filter((event) => {
-    const start = eventDayValue(event.start, 1);
-    const end = eventDayValue(event.end, 31);
-    return end >= range.min && start <= range.max;
+const previewLaneLayout = computed(() => {
+  const layoutEvents = previewLaneEvents.value.map((event) => {
+    const displayStartDay = eventDayValue(event.start, 1);
+    const displayEndDay = eventDayValue(event.end, 31);
+
+    return {
+      ...event,
+      laneIndex: 0,
+      displayStartDay: Math.min(displayStartDay, displayEndDay),
+      displayEndDay: Math.max(displayStartDay, displayEndDay),
+    };
   });
+
+  return {
+    laneIndex: 0,
+    ...buildLaneLayout(layoutEvents),
+  };
 });
 
-function previewEventLayout(event, index = 0) {
+const previewVisibleLaneEvents = computed(() =>
+  visibleEventLayouts([previewLaneLayout.value], previewVisibleRange.value),
+);
+
+const previewRenderedSubLaneCount = computed(() =>
+  Math.max(
+    1,
+    ...previewVisibleLaneEvents.value.map((event) => (event.subLaneIndex ?? 0) + 1),
+  ),
+);
+
+const previewTrackHeight = computed(() =>
+  Math.max(
+    180,
+    PREVIEW_LANE_PADDING * 2 +
+      PREVIEW_EVENT_HEIGHT +
+      (previewRenderedSubLaneCount.value - 1) * PREVIEW_SUB_LANE_SPACING,
+  ),
+);
+
+const previewTrackStyle = computed(() => ({
+  "--preview-track-height": `${previewTrackHeight.value}px`,
+}));
+
+function previewEventLayout(event) {
   const bounds = previewVisibleRange.value;
-  const start = eventDayValue(event.start, 1);
-  const end = eventDayValue(event.end, 31);
-  const visibleStart = clampNumber(start, bounds.min, bounds.max);
-  const visibleEnd = clampNumber(end, bounds.min, bounds.max);
+  const visibleStart = clampNumber(event.renderStartDay, bounds.min, bounds.max);
+  const visibleEnd = clampNumber(event.renderEndDay, bounds.min, bounds.max);
   const visibleSpan = Math.max(0, visibleEnd - visibleStart + 1);
   const rawWidth = (visibleSpan / bounds.span) * 100;
 
@@ -426,7 +465,7 @@ function previewEventLayout(event, index = 0) {
     100 - left,
     Math.max(3, rawWidth),
   );
-  const row = index % 3;
+  const subLaneIndex = event.subLaneIndex ?? 0;
   const labelVisible = width >= 12;
 
   return {
@@ -434,15 +473,16 @@ function previewEventLayout(event, index = 0) {
     labelVisible,
     style: {
       left: `${left}%`,
-      top: `${6 + row * 30}%`,
+      top: `${PREVIEW_LANE_PADDING + subLaneIndex * PREVIEW_SUB_LANE_SPACING}px`,
+      height: `${PREVIEW_EVENT_HEIGHT}px`,
       width: `${width}%`,
     },
   };
 }
 
 const previewLaneItems = computed(() =>
-  previewVisibleLaneEvents.value.map((event, index) =>
-    previewEventLayout(event, index),
+  previewVisibleLaneEvents.value.map((event) =>
+    previewEventLayout(event),
   ).filter(Boolean),
 );
 
@@ -1094,6 +1134,7 @@ onMounted(loadState);
               v-if="destinationLane"
               class="editor-lane-preview__track"
               :class="{ 'editor-lane-preview__track--dragging': previewDragState.dragging }"
+              :style="previewTrackStyle"
               role="application"
               aria-label="レーンプレビュー。ドラッグで移動、ホイールで拡大縮小できます。"
               @pointerdown="handlePreviewPointerDown"
@@ -1556,7 +1597,7 @@ onMounted(loadState);
 
 .editor-lane-preview__track {
   position: relative;
-  height: 180px;
+  height: var(--preview-track-height, 180px);
   border: 1px solid var(--timeline-viewport-stroke);
   border-radius: 6px;
   background:
@@ -1579,7 +1620,6 @@ onMounted(loadState);
 
 .editor-lane-preview__event {
   position: absolute;
-  height: 25%;
   padding: 2px 6px;
   border: 1px solid var(--timeline-event-stroke);
   border-radius: 4px;
@@ -1634,7 +1674,7 @@ pre {
 
 @media (max-width: 1040px) {
   .worldline-editor__layout {
-    grid-template-rows: minmax(0, 24vh) minmax(0, 1fr) minmax(0, 22vh);
+    grid-template-rows: minmax(0, 22vh) minmax(0, 1fr) minmax(0, 30vh);
     grid-template-columns: 1fr;
   }
 
@@ -1675,7 +1715,7 @@ pre {
   }
 
   .editor-lane-preview__track {
-    height: 56px;
+    height: min(var(--preview-track-height, 180px), 124px);
   }
 
   .editor-lane-preview__event {
