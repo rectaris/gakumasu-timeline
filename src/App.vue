@@ -1270,9 +1270,9 @@ onUnmounted(() => {
         title="rectaris.github.ioへ移動"
       >
         <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
-          <path d="M3 11.5 12 4l9 7.5" />
-          <path d="M5.5 10.5V20h13v-9.5" />
-          <path d="M9.5 20v-5h5v5" />
+          <path d="M15 3h6v6" />
+          <path d="M10 14 21 3" />
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
         </svg>
       </a>
     </div>

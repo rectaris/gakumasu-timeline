@@ -42,3 +42,4 @@ id	path
 036	docs/plan/checked/036-raw-data-format-after-migration.md
 040	docs/plan/checked/040-prepare-empty-commu-directories.md
 041	docs/plan/checked/041-portal-header-link.md
+042	docs/plan/checked/042-align-portal-header-link.md
