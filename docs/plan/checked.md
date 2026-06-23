@@ -48,3 +48,4 @@ id	path
 045	docs/plan/checked/045-worldline-editor-sidebar-scroll.md
 046	docs/plan/checked/046-worldline-editor-layout-tuning.md
 047	docs/plan/checked/047-worldline-editor-fixed-shell.md
+048	docs/plan/checked/048-worldline-editor-preview-navigation.md

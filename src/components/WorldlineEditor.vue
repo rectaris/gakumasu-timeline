@@ -14,6 +14,7 @@ const saveResult = ref(null);
 const busy = ref(false);
 const editorMode = ref("edit");
 const selectedCommuType = ref("commonTimeline");
+const previewRangeState = ref({ center: null, span: null });
 
 const COMMU_TYPES = [
   { id: "commonTimeline", label: "共通コミュ", fileBacked: false },
@@ -364,8 +365,45 @@ const previewLaneBounds = computed(() => {
   return { min, max, span: Math.max(1, max - min) };
 });
 
-function previewEventStyle(event) {
+function clampNumber(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+const previewVisibleRange = computed(() => {
   const bounds = previewLaneBounds.value;
+  const minSpan = Math.max(1, bounds.span * 0.04);
+  const span = clampNumber(
+    Number(previewRangeState.value.span ?? bounds.span),
+    minSpan,
+    bounds.span,
+  );
+  const defaultCenter = bounds.min + bounds.span / 2;
+  const halfSpan = span / 2;
+  const center = clampNumber(
+    Number(previewRangeState.value.center ?? defaultCenter),
+    bounds.min + halfSpan,
+    bounds.max - halfSpan,
+  );
+
+  return {
+    min: center - halfSpan,
+    max: center + halfSpan,
+    center,
+    span,
+  };
+});
+
+const previewVisibleLaneEvents = computed(() => {
+  const range = previewVisibleRange.value;
+  return previewLaneEvents.value.filter((event) => {
+    const start = eventDayValue(event.start, 1);
+    const end = eventDayValue(event.end, 31);
+    return end >= range.min && start <= range.max;
+  });
+});
+
+function previewEventStyle(event) {
+  const bounds = previewVisibleRange.value;
   const start = eventDayValue(event.start, 1);
   const end = eventDayValue(event.end, 31);
   const rawLeft = ((start - bounds.min) / bounds.span) * 100;
@@ -382,6 +420,35 @@ function previewEventStyle(event) {
 function isPreviewFocusEvent(event) {
   return event.id === form.id;
 }
+
+function setPreviewRange(center, span) {
+  const bounds = previewLaneBounds.value;
+  const nextSpan = clampNumber(span, Math.max(1, bounds.span * 0.04), bounds.span);
+  const halfSpan = nextSpan / 2;
+  previewRangeState.value = {
+    center: clampNumber(center, bounds.min + halfSpan, bounds.max - halfSpan),
+    span: nextSpan,
+  };
+}
+
+function zoomLanePreview(scale) {
+  const range = previewVisibleRange.value;
+  setPreviewRange(range.center, range.span * scale);
+}
+
+function panLanePreview(direction) {
+  const range = previewVisibleRange.value;
+  setPreviewRange(range.center + range.span * 0.35 * direction, range.span);
+}
+
+function resetLanePreviewRange() {
+  previewRangeState.value = { center: null, span: null };
+}
+
+const previewRangeLabel = computed(() => {
+  const range = previewVisibleRange.value;
+  return `${Math.round(range.min)} - ${Math.round(range.max)}`;
+});
 
 const changedFields = computed(() => {
   if (editorMode.value === "add" || !selectedEvent.value) {
@@ -434,6 +501,13 @@ watch(selectedCommuType, (commuType) => {
     createDraftForLane(selectedLane.value);
   }
 });
+
+watch(
+  () => [form.sourceFile, form.id, form.start.year, form.start.month, form.start.day, form.end.year, form.end.month, form.end.day],
+  () => {
+    resetLanePreviewRange();
+  },
+);
 
 function selectRow(row) {
   editorMode.value = "edit";
@@ -903,12 +977,32 @@ onMounted(loadState);
           </div>
           <div class="editor-lane-preview" aria-label="保存先レーンプレビュー">
             <div class="editor-lane-preview__header">
-              <span>レーンプレビュー</span>
-              <strong>{{ destinationLane?.lane.name || "未選択" }}</strong>
+              <div>
+                <span>レーンプレビュー</span>
+                <strong>{{ destinationLane?.lane.name || "未選択" }}</strong>
+              </div>
+              <small v-if="destinationLane">{{ previewRangeLabel }}</small>
+            </div>
+            <div v-if="destinationLane" class="editor-lane-preview__controls">
+              <button class="editor-button editor-button--compact" type="button" @click="panLanePreview(-1)">
+                左へ
+              </button>
+              <button class="editor-button editor-button--compact" type="button" @click="zoomLanePreview(0.65)">
+                拡大
+              </button>
+              <button class="editor-button editor-button--compact" type="button" @click="zoomLanePreview(1.55)">
+                縮小
+              </button>
+              <button class="editor-button editor-button--compact" type="button" @click="panLanePreview(1)">
+                右へ
+              </button>
+              <button class="editor-button editor-button--compact" type="button" @click="resetLanePreviewRange">
+                全体
+              </button>
             </div>
             <div v-if="destinationLane" class="editor-lane-preview__track">
               <div
-                v-for="event in previewLaneEvents"
+                v-for="event in previewVisibleLaneEvents"
                 :key="`${event.id}:${event.title}`"
                 class="editor-lane-preview__event"
                 :class="{ focus: isPreviewFocusEvent(event) }"
@@ -1019,6 +1113,12 @@ onMounted(loadState);
 .editor-button--danger {
   border-color: #b91c1c;
   color: #b91c1c;
+}
+
+.editor-button--compact {
+  min-height: 28px;
+  padding: 0 8px;
+  font-size: 12px;
 }
 
 .worldline-editor__layout {
@@ -1215,7 +1315,7 @@ onMounted(loadState);
 .editor-event-pane .event-list {
   flex: 1 1 auto;
   min-height: 0;
-  overflow: clip;
+  overflow-y: auto;
   padding-right: 2px;
 }
 
@@ -1330,7 +1430,15 @@ onMounted(loadState);
   margin-bottom: 10px;
 }
 
-.editor-lane-preview__header span {
+.editor-lane-preview__header div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.editor-lane-preview__header span,
+.editor-lane-preview__header small {
   color: var(--text-muted);
   font-size: 12px;
   font-weight: 600;
@@ -1338,7 +1446,13 @@ onMounted(loadState);
 
 .editor-lane-preview__header strong {
   overflow-wrap: anywhere;
-  text-align: right;
+}
+
+.editor-lane-preview__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
 }
 
 .editor-lane-preview__track {
@@ -1423,6 +1537,33 @@ pre {
   .worldline-editor__review {
     height: 100%;
     max-height: none;
+  }
+
+  .worldline-editor__review .editor-summary,
+  .worldline-editor__review .editor-preview {
+    display: none;
+  }
+
+  .worldline-editor__review .editor-section {
+    padding: 10px;
+  }
+
+  .editor-lane-preview {
+    margin: 8px 0;
+    padding: 8px;
+  }
+
+  .editor-lane-preview__header {
+    margin-bottom: 6px;
+  }
+
+  .editor-lane-preview__controls {
+    margin-bottom: 6px;
+  }
+
+  .editor-lane-preview__track {
+    max-height: 88px;
+    min-height: 72px;
   }
 }
 
