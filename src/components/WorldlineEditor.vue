@@ -50,6 +50,41 @@ const COMMU_TYPES = [
   { id: "idolCommu", label: "アイドルコミュ", fileBacked: true },
 ];
 
+const FIELD_HELP = {
+  search: "左のイベント一覧をタイトル、詳細、出典、ファイル名で絞り込みます。",
+  commuType: "左のイベント一覧に表示するコミュ種別を選びます。",
+  fileFilter: "左のイベント一覧に表示するファイルを選びます。すべてを選ぶと同じコミュ種別の全イベントを表示します。",
+  eventId: "共有 URL や重複チェックに使う安定 ID です。公開後の変更は避けます。",
+  targetCommuType: "保存先の raw データカテゴリを選びます。",
+  targetFile: "保存先の raw JSON ファイルを選びます。新規ファイルを選ぶと下の項目で作成内容を指定します。",
+  targetNewFile: "作成する raw JSON ファイル名です。英数字、ハイフン、アンダースコアを使います。",
+  targetLaneId: "新規ファイルのレーン ID です。参加者や表示レーンの識別に使います。",
+  targetLaneName: "新規ファイルの表示名です。イベント一覧や保存先プレビューに表示されます。",
+  targetLaneColor: "新規レーンとイベントの識別色です。",
+  title: "タイムライン上と詳細パネルで表示するイベント名です。",
+  detail: "イベントの内容説明です。根拠から読み取れる範囲で具体的に書きます。",
+  occurrenceType: "期間イベントか、範囲内のどこか 1 日のイベントかを選びます。",
+  start: "イベントの開始時期です。日付が不明な場合は範囲として扱います。",
+  end: "イベントの終了時期です。単日イベントでも開始と終了を入力します。",
+  dateConfidence: "日付が確定か推定か、範囲だけかを示します。",
+  rangeReason: "日付が範囲になる理由を選びます。",
+  sourceBasis: "時期や内容の根拠が明示か推定かを分類します。",
+  sourceStatus: "出典の確認状態や矛盾の有無を分類します。",
+  participants: "イベントに直接関係する人物を選びます。",
+  worldline: "イベントが属する世界線を選びます。",
+  source: "簡易的な出典メモです。構造化出典がある場合も要約を残せます。",
+  note: "判断理由、保留事項、補足情報を記録します。",
+  sourceDetailId: "構造化出典を識別する任意 ID です。",
+  sourceDetailLabel: "詳細パネルに表示する出典名です。",
+  sourceDetailUrl: "公式ページや資料など、確認元の URL です。",
+  sourceDetailStatus: "この出典単体の確認状態です。",
+  sourceDetailClaim: "この出典から読み取れる主張や根拠を記録します。",
+  sourceSupports: "この出典が支えている対象を選びます。",
+  conflictSummary: "出典同士で食い違う内容の要約です。",
+  conflictSources: "矛盾に関係する出典を行ごとに記録します。",
+  conflictResolution: "現時点の採用判断や未解決理由を記録します。",
+};
+
 const form = reactive(createEmptyForm());
 const newTargetFile = reactive({
   fileName: "",
@@ -107,6 +142,18 @@ function normalizeDate(date) {
     month: Number(date?.month ?? 1),
     day: Number(date?.day ?? 1),
   };
+}
+
+function helpAttrs(key) {
+  const text = FIELD_HELP[key];
+  return text
+    ? {
+        class: "editor-help-label",
+        "data-tooltip": text,
+        title: text,
+        tabindex: "0",
+      }
+    : {};
 }
 
 function normalizeFileName(value) {
@@ -952,12 +999,12 @@ onMounted(loadState);
       <aside class="worldline-editor__sidebar" aria-label="イベント一覧">
         <div class="editor-sidebar-controls">
           <div class="editor-field editor-field--sidebar">
-            <label for="editor-search">検索</label>
+            <label for="editor-search" v-bind="helpAttrs('search')">検索</label>
             <input id="editor-search" v-model="searchQuery" type="search" />
           </div>
 
           <div class="editor-field editor-field--sidebar">
-            <label for="editor-commu-type">コミュ種別</label>
+            <label for="editor-commu-type" v-bind="helpAttrs('commuType')">コミュ種別</label>
             <select id="editor-commu-type" v-model="selectedCommuType">
               <option
                 v-for="type in commuTypeOptions"
@@ -973,7 +1020,7 @@ onMounted(loadState);
             v-if="selectedCommuConfig.fileBacked"
             class="editor-field editor-field--sidebar"
           >
-            <label for="editor-file">ファイル</label>
+            <label for="editor-file" v-bind="helpAttrs('fileFilter')">ファイル</label>
             <select
               id="editor-file"
               v-model="selectedSourceFile"
@@ -1071,11 +1118,11 @@ onMounted(loadState);
           <h3>基本情報</h3>
           <div class="editor-grid">
             <div class="editor-field">
-              <label for="event-id">ID</label>
+              <label for="event-id" v-bind="helpAttrs('eventId')">ID</label>
               <input id="event-id" v-model="form.id" type="text" />
             </div>
             <div class="editor-field">
-              <label for="event-target-commu-type">保存先コミュ種別</label>
+              <label for="event-target-commu-type" v-bind="helpAttrs('targetCommuType')">保存先コミュ種別</label>
               <select id="event-target-commu-type" v-model="targetCommuType">
                 <option
                   v-for="type in commuTypeOptions"
@@ -1087,7 +1134,7 @@ onMounted(loadState);
               </select>
             </div>
             <div class="editor-field">
-              <label for="event-target-file">保存先ファイル</label>
+              <label for="event-target-file" v-bind="helpAttrs('targetFile')">保存先ファイル</label>
               <select id="event-target-file" v-model="targetSourceFileChoice">
                 <option
                   v-for="entry in targetCommuEntries"
@@ -1106,7 +1153,7 @@ onMounted(loadState);
             </div>
             <template v-if="isNewTargetFile">
               <div class="editor-field">
-                <label for="event-target-new-file">新規ファイル名</label>
+                <label for="event-target-new-file" v-bind="helpAttrs('targetNewFile')">新規ファイル名</label>
                 <input
                   id="event-target-new-file"
                   v-model="newTargetFile.fileName"
@@ -1115,7 +1162,7 @@ onMounted(loadState);
                 />
               </div>
               <div class="editor-field">
-                <label for="event-target-lane-id">新規レーン ID</label>
+                <label for="event-target-lane-id" v-bind="helpAttrs('targetLaneId')">新規レーン ID</label>
                 <input
                   id="event-target-lane-id"
                   v-model="newTargetFile.laneId"
@@ -1124,7 +1171,7 @@ onMounted(loadState);
                 />
               </div>
               <div class="editor-field">
-                <label for="event-target-lane-name">新規レーン名</label>
+                <label for="event-target-lane-name" v-bind="helpAttrs('targetLaneName')">新規レーン名</label>
                 <input
                   id="event-target-lane-name"
                   v-model="newTargetFile.laneName"
@@ -1133,7 +1180,7 @@ onMounted(loadState);
                 />
               </div>
               <div class="editor-field">
-                <label for="event-target-lane-color">新規レーン色</label>
+                <label for="event-target-lane-color" v-bind="helpAttrs('targetLaneColor')">新規レーン色</label>
                 <input
                   id="event-target-lane-color"
                   v-model="newTargetFile.color"
@@ -1142,11 +1189,11 @@ onMounted(loadState);
               </div>
             </template>
             <div class="editor-field editor-field--wide">
-              <label for="event-title">タイトル</label>
+              <label for="event-title" v-bind="helpAttrs('title')">タイトル</label>
               <input id="event-title" v-model="form.title" type="text" />
             </div>
             <div class="editor-field editor-field--wide">
-              <label for="event-detail">詳細</label>
+              <label for="event-detail" v-bind="helpAttrs('detail')">詳細</label>
               <textarea id="event-detail" v-model="form.detail" rows="4"></textarea>
             </div>
           </div>
@@ -1156,7 +1203,7 @@ onMounted(loadState);
           <h3>時期</h3>
           <div class="editor-grid editor-grid--dates">
             <div class="editor-field">
-              <label for="event-occurrence">発生形式</label>
+              <label for="event-occurrence" v-bind="helpAttrs('occurrenceType')">発生形式</label>
               <select id="event-occurrence" v-model="form.occurrenceType">
                 <option v-for="option in options.occurrenceTypes" :key="option.id" :value="option.id">
                   {{ option.label }}
@@ -1164,7 +1211,7 @@ onMounted(loadState);
               </select>
             </div>
             <div class="editor-date-group">
-              <span>開始</span>
+              <span v-bind="helpAttrs('start')">開始</span>
               <div class="editor-date-inputs">
                 <input v-model.number="form.start.year" type="number" aria-label="開始年" />
                 <input v-model.number="form.start.month" type="number" min="1" max="12" aria-label="開始月" />
@@ -1172,7 +1219,7 @@ onMounted(loadState);
               </div>
             </div>
             <div class="editor-date-group">
-              <span>終了</span>
+              <span v-bind="helpAttrs('end')">終了</span>
               <div class="editor-date-inputs">
                 <input v-model.number="form.end.year" type="number" aria-label="終了年" />
                 <input v-model.number="form.end.month" type="number" min="1" max="12" aria-label="終了月" />
@@ -1180,7 +1227,7 @@ onMounted(loadState);
               </div>
             </div>
             <div class="editor-field">
-              <label for="date-confidence">日付確度</label>
+              <label for="date-confidence" v-bind="helpAttrs('dateConfidence')">日付確度</label>
               <select id="date-confidence" v-model="form.dateConfidence">
                 <option v-for="option in options.dateConfidence" :key="option.id" :value="option.id">
                   {{ option.label }}
@@ -1188,7 +1235,7 @@ onMounted(loadState);
               </select>
             </div>
             <div class="editor-field">
-              <label for="range-reason">範囲理由</label>
+              <label for="range-reason" v-bind="helpAttrs('rangeReason')">範囲理由</label>
               <select id="range-reason" v-model="form.rangeReason">
                 <option v-for="option in options.rangeReason" :key="option.id" :value="option.id">
                   {{ option.label }}
@@ -1202,7 +1249,7 @@ onMounted(loadState);
           <h3>分類</h3>
           <div class="editor-grid">
             <div class="editor-field">
-              <label for="source-basis">根拠分類</label>
+              <label for="source-basis" v-bind="helpAttrs('sourceBasis')">根拠分類</label>
               <select id="source-basis" v-model="form.sourceBasis">
                 <option v-for="option in options.sourceBasis" :key="option.id" :value="option.id">
                   {{ option.label }}
@@ -1210,7 +1257,7 @@ onMounted(loadState);
               </select>
             </div>
             <div class="editor-field">
-              <label for="source-status">出典状態</label>
+              <label for="source-status" v-bind="helpAttrs('sourceStatus')">出典状態</label>
               <select id="source-status" v-model="form.sourceStatus">
                 <option v-for="option in options.sourceStatus" :key="option.id" :value="option.id">
                   {{ option.label }}
@@ -1218,7 +1265,7 @@ onMounted(loadState);
               </select>
             </div>
             <fieldset class="editor-checks">
-              <legend>参加者</legend>
+              <legend v-bind="helpAttrs('participants')">参加者</legend>
               <label v-for="option in options.participants" :key="option.id">
                 <input
                   type="checkbox"
@@ -1229,7 +1276,7 @@ onMounted(loadState);
               </label>
             </fieldset>
             <fieldset class="editor-checks">
-              <legend>世界線</legend>
+              <legend v-bind="helpAttrs('worldline')">世界線</legend>
               <label v-for="option in options.worldlines" :key="option.id">
                 <input
                   type="checkbox"
@@ -1246,11 +1293,11 @@ onMounted(loadState);
           <h3>出典と補足</h3>
           <div class="editor-grid">
             <div class="editor-field">
-              <label for="event-source">簡易出典</label>
+              <label for="event-source" v-bind="helpAttrs('source')">簡易出典</label>
               <textarea id="event-source" v-model="form.sourceText" rows="5"></textarea>
             </div>
             <div class="editor-field">
-              <label for="event-note">補足</label>
+              <label for="event-note" v-bind="helpAttrs('note')">補足</label>
               <textarea id="event-note" v-model="form.noteText" rows="5"></textarea>
             </div>
           </div>
@@ -1270,19 +1317,19 @@ onMounted(loadState);
           >
             <div class="editor-grid">
               <div class="editor-field">
-                <label>ID</label>
+                <label v-bind="helpAttrs('sourceDetailId')">ID</label>
                 <input v-model="sourceDetail.id" type="text" />
               </div>
               <div class="editor-field">
-                <label>ラベル</label>
+                <label v-bind="helpAttrs('sourceDetailLabel')">ラベル</label>
                 <input v-model="sourceDetail.label" type="text" />
               </div>
               <div class="editor-field editor-field--wide">
-                <label>URL</label>
+                <label v-bind="helpAttrs('sourceDetailUrl')">URL</label>
                 <input v-model="sourceDetail.url" type="url" />
               </div>
               <div class="editor-field">
-                <label>状態</label>
+                <label v-bind="helpAttrs('sourceDetailStatus')">状態</label>
                 <select v-model="sourceDetail.status">
                   <option v-for="option in options.sourceStatus" :key="option.id" :value="option.id">
                     {{ option.label }}
@@ -1290,11 +1337,11 @@ onMounted(loadState);
                 </select>
               </div>
               <div class="editor-field editor-field--wide">
-                <label>主張</label>
+                <label v-bind="helpAttrs('sourceDetailClaim')">主張</label>
                 <textarea v-model="sourceDetail.claim" rows="3"></textarea>
               </div>
               <fieldset class="editor-checks editor-field--wide">
-                <legend>支える対象</legend>
+                <legend v-bind="helpAttrs('sourceSupports')">支える対象</legend>
                 <label v-for="option in options.sourceSupports" :key="option.id">
                   <input
                     type="checkbox"
@@ -1321,15 +1368,15 @@ onMounted(loadState);
           <div v-for="(conflict, index) in form.conflicts" :key="index" class="editor-repeat">
             <div class="editor-grid">
               <div class="editor-field editor-field--wide">
-                <label>概要</label>
+                <label v-bind="helpAttrs('conflictSummary')">概要</label>
                 <input v-model="conflict.summary" type="text" />
               </div>
               <div class="editor-field">
-                <label>出典</label>
+                <label v-bind="helpAttrs('conflictSources')">出典</label>
                 <textarea v-model="conflict.sourcesText" rows="4"></textarea>
               </div>
               <div class="editor-field">
-                <label>解決状態</label>
+                <label v-bind="helpAttrs('conflictResolution')">解決状態</label>
                 <textarea v-model="conflict.resolution" rows="4"></textarea>
               </div>
             </div>
@@ -1639,6 +1686,70 @@ onMounted(loadState);
   color: var(--text-secondary);
   font-size: 12px;
   font-weight: 600;
+}
+
+.editor-help-label {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: help;
+  outline: none;
+}
+
+.editor-help-label::after {
+  content: "?";
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  background: var(--surface-soft);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 14px;
+  text-align: center;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+}
+
+.editor-help-label::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px);
+  z-index: 20;
+  width: max-content;
+  max-width: min(320px, 72vw);
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  background: var(--surface);
+  box-shadow: 0 8px 24px var(--shadow);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.45;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition: opacity 0.12s ease, transform 0.12s ease, visibility 0.12s ease;
+}
+
+.editor-help-label:hover::before,
+.editor-help-label:focus-visible::before {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.editor-help-label:focus-visible::after {
+  border-color: var(--timeline-focus-stroke);
 }
 
 .editor-field input,
