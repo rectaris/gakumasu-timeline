@@ -1,10 +1,17 @@
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import {
   EVENT_CONTEXT_LABEL_MAX_WIDTH,
+  ellipsizeTextToWidth,
   eventContextLabel,
   eventInlineLabel,
+  estimateTextWidth,
+  yearLabel,
 } from "../utils/labels";
+import {
+  eventOccurrenceType,
+  eventUncertaintySummary,
+} from "../utils/events.js";
 
 const UNCERTAINTY_MARKER_OFFSET = 8;
 const UNCERTAINTY_MARKER_HALF_HEIGHT = 4;
@@ -13,6 +20,20 @@ const CONTEXT_LABEL_PADDING_X = 8;
 const CONTEXT_LABEL_HEIGHT = 20;
 const CONTEXT_LABEL_GAP = 7;
 const CONTEXT_LABEL_VIEWPORT_PADDING = 4;
+const TOOLTIP_MAX_WIDTH = 300;
+const TOOLTIP_MIN_WIDTH = 190;
+const TOOLTIP_PADDING_X = 10;
+const TOOLTIP_PADDING_Y = 8;
+const TOOLTIP_LINE_HEIGHT = 15;
+const TOOLTIP_TITLE_FONT_SIZE = 12;
+const TOOLTIP_BODY_FONT_SIZE = 11;
+const TOOLTIP_GAP = 9;
+const TOOLTIP_VIEWPORT_PADDING = 6;
+
+const occurrenceTypeLabels = {
+  continuous: "継続期間",
+  singleWithinRange: "期間内の1日",
+};
 
 const props = defineProps({
   visibleEvents: { type: Array, required: true },
@@ -55,6 +76,63 @@ function eventTitleText(event) {
     .map(value => String(value ?? "").trim())
     .filter(Boolean)
     .join(" / ");
+}
+
+function hasExplicitDay(date) {
+  return Number.isInteger(date?.day);
+}
+
+function formatDate(date) {
+  const prefix = `${yearLabel(date.year)}${date.month}月`;
+  return hasExplicitDay(date) ? `${prefix}${date.day}日` : prefix;
+}
+
+function isSamePoint(start, end) {
+  return (
+    start.year === end.year &&
+    start.month === end.month &&
+    start.day === end.day
+  );
+}
+
+function formatContinuousRange(event) {
+  if (isSamePoint(event.start, event.end)) {
+    return formatDate(event.start);
+  }
+
+  return `${formatDate(event.start)}〜${formatDate(event.end)}`;
+}
+
+function formatSingleWithinRange(event) {
+  const { start, end } = event;
+  const startHasDay = hasExplicitDay(start);
+  const endHasDay = hasExplicitDay(end);
+
+  if (startHasDay && endHasDay && isSamePoint(start, end)) {
+    return formatDate(start);
+  }
+
+  if (start.year === end.year && start.month === end.month) {
+    if (!startHasDay && !endHasDay) {
+      return `${yearLabel(start.year)}${start.month}月中のいずれか1日`;
+    }
+
+    return `${formatDate(start)}〜${formatDate(end)}のいずれか1日`;
+  }
+
+  return `${formatDate(start)}〜${formatDate(end)}の間のいずれか1日`;
+}
+
+function formatEventOccurrence(event) {
+  if (!event) return "";
+
+  return eventOccurrenceType(event) === "singleWithinRange"
+    ? formatSingleWithinRange(event)
+    : formatContinuousRange(event);
+}
+
+function formatOccurrenceType(event) {
+  return occurrenceTypeLabels[eventOccurrenceType(event)] ?? "継続期間";
 }
 
 function eventKey(event) {
@@ -130,6 +208,11 @@ function isInteractiveEvent(event) {
   );
 }
 
+function isHoveredOrFocused(item) {
+  const key = eventKey(item);
+  return hoveredEventKey.value === key || focusedEventKey.value === key;
+}
+
 function eventVisibleWidth(event) {
   return Math.max(
     0,
@@ -163,6 +246,129 @@ function summaryTitleText(summary) {
   return `${rangeKind}: ${summaryLabel(summary)}`;
 }
 
+function summaryTooltipText(summary) {
+  const rangeKind =
+    summary.summaryKind === "uncertain"
+      ? "この範囲内のいずれか1日に発生するイベントをまとめています。"
+      : "この表示倍率では近接しているイベントをまとめています。";
+  return `${rangeKind}クリックすると対象イベントを一覧で確認できます。`;
+}
+
+function tooltipTextLine(text, variant = "body") {
+  const normalized = String(text ?? "").trim();
+  if (!normalized) return null;
+
+  const fontSize =
+    variant === "title" ? TOOLTIP_TITLE_FONT_SIZE : TOOLTIP_BODY_FONT_SIZE;
+  const maxTextWidth = TOOLTIP_MAX_WIDTH - TOOLTIP_PADDING_X * 2;
+
+  return {
+    text: ellipsizeTextToWidth(normalized, maxTextWidth, { fontSize }),
+    variant,
+    fontSize,
+  };
+}
+
+function compactMetaLine(label, value) {
+  const normalized = String(value ?? "").trim();
+  return normalized ? `${label}: ${normalized}` : "";
+}
+
+function tooltipLinesForEvent(event) {
+  const uncertainty = eventUncertaintySummary(event);
+  const lines = [
+    tooltipTextLine(event.title, "title"),
+    tooltipTextLine(event.detail),
+    tooltipTextLine(compactMetaLine("コミュ", event.character)),
+    tooltipTextLine(compactMetaLine("時期", formatEventOccurrence(event))),
+    tooltipTextLine(compactMetaLine("形式", formatOccurrenceType(event))),
+    tooltipTextLine(compactMetaLine("日付確度", uncertainty.dateConfidenceLabel)),
+    tooltipTextLine(compactMetaLine("根拠分類", uncertainty.sourceBasisLabel)),
+    tooltipTextLine(compactMetaLine("出典状態", uncertainty.sourceStatusLabel)),
+    tooltipTextLine(compactMetaLine("範囲理由", uncertainty.rangeReasonLabel)),
+  ].filter(Boolean);
+
+  return lines.filter((line) => line.text);
+}
+
+function tooltipLinesForSummary(summary) {
+  return [
+    tooltipTextLine(summaryTitleText(summary), "title"),
+    tooltipTextLine(summaryTooltipText(summary)),
+  ].filter(Boolean);
+}
+
+function tooltipSize(lines) {
+  const textWidth = lines.reduce(
+    (maxWidth, line) =>
+      Math.max(maxWidth, estimateTextWidth(line.text, { fontSize: line.fontSize })),
+    0,
+  );
+
+  return {
+    width: Math.min(
+      TOOLTIP_MAX_WIDTH,
+      Math.max(TOOLTIP_MIN_WIDTH, textWidth + TOOLTIP_PADDING_X * 2),
+    ),
+    height: TOOLTIP_PADDING_Y * 2 + lines.length * TOOLTIP_LINE_HEIGHT,
+  };
+}
+
+function tooltipX(centerX, width) {
+  const minX = props.timelineViewport.x + TOOLTIP_VIEWPORT_PADDING;
+  const maxX =
+    props.timelineViewport.x +
+    props.timelineViewport.width -
+    TOOLTIP_VIEWPORT_PADDING -
+    width;
+
+  if (minX > maxX) return minX;
+  return Math.min(maxX, Math.max(minX, centerX - width / 2));
+}
+
+function tooltipY(centerY, height) {
+  const viewportTop = props.timelineViewport.y + TOOLTIP_VIEWPORT_PADDING;
+  const viewportBottom =
+    props.timelineViewport.y + props.timelineViewport.height - TOOLTIP_VIEWPORT_PADDING;
+  const aboveY = centerY - props.eventBarHeight / 2 - TOOLTIP_GAP - height;
+  const belowY = centerY + props.eventBarHeight / 2 + TOOLTIP_GAP;
+
+  if (aboveY >= viewportTop) return aboveY;
+  return Math.min(viewportBottom - height, Math.max(viewportTop, belowY));
+}
+
+function itemTooltip(item) {
+  if (!isHoveredOrFocused(item)) return null;
+
+  const lines = item.isSummary
+    ? tooltipLinesForSummary(item)
+    : tooltipLinesForEvent(item);
+  if (lines.length === 0) return null;
+
+  const size = tooltipSize(lines);
+  const centerX = eventCenterX(item);
+  const centerY = eventCenterY(item);
+
+  return {
+    ...size,
+    lines,
+    x: tooltipX(centerX, size.width),
+    y: tooltipY(centerY, size.height),
+  };
+}
+
+const activeTooltip = computed(() => {
+  const hoveredItem = props.visibleEvents.find(
+    (event) => eventKey(event) === hoveredEventKey.value,
+  );
+  const focusedItem = props.visibleEvents.find(
+    (event) => eventKey(event) === focusedEventKey.value,
+  );
+  const activeItem = hoveredItem ?? focusedItem;
+
+  return activeItem ? itemTooltip(activeItem) : null;
+});
+
 function eventCenterX(event) {
   return props.xPos(event.renderStartDay) + eventVisibleWidth(event) / 2;
 }
@@ -184,7 +390,8 @@ function inlineLabel(event) {
 }
 
 function contextLabel(event) {
-  if (!isInteractiveEvent(event)) return null;
+  if (!isSelectedEvent(event)) return null;
+  if (isHoveredOrFocused(event)) return null;
   if (inlineLabel(event)) return null;
 
   const label = eventContextLabel(event.title, EVENT_CONTEXT_LABEL_MAX_WIDTH);
@@ -252,10 +459,13 @@ function uncertaintyMarker(event, edge) {
       role="button"
       :data-event-key="event.summaryId"
       :aria-label="summaryTitleText(event)"
+      @mouseover="setHoveredEvent(event)"
+      @mouseleave="clearHoveredEvent(event)"
+      @focus="setFocusedEvent(event)"
+      @blur="clearFocusedEvent(event)"
       @click="handleSummarySelect(event)"
       @keydown="handleSummaryKeydown($event, event)"
     >
-      <title>{{ summaryTitleText(event) }}</title>
       <rect
         class="event-summary-bar"
         :x="summaryX(event)"
@@ -291,13 +501,11 @@ function uncertaintyMarker(event, edge) {
       :data-event-key="eventKey(event)"
       :data-canonical-id="event.canonicalId ?? event.id"
       :aria-label="eventTitleText(event)"
-      @mouseenter="setHoveredEvent(event)"
+      @mouseover="setHoveredEvent(event)"
       @mouseleave="clearHoveredEvent(event)"
       @focus="setFocusedEvent(event)"
       @blur="clearFocusedEvent(event)"
     >
-      <title>{{ eventTitleText(event) }}</title>
-
       <rect
         v-if="isSingleWithinRange(event)"
         class="event-uncertainty-band"
@@ -401,6 +609,27 @@ function uncertaintyMarker(event, edge) {
           {{ contextLabel(event).text }}
         </text>
       </g>
+
     </g>
+  </g>
+  <g v-if="activeTooltip" class="event-tooltip">
+    <rect
+      class="event-tooltip__surface"
+      :x="activeTooltip.x"
+      :y="activeTooltip.y"
+      :width="activeTooltip.width"
+      :height="activeTooltip.height"
+      rx="6"
+    />
+    <text
+      v-for="(line, index) in activeTooltip.lines"
+      :key="`active-tooltip-${index}`"
+      class="event-tooltip__text"
+      :class="{ 'event-tooltip__text--title': line.variant === 'title' }"
+      :x="activeTooltip.x + TOOLTIP_PADDING_X"
+      :y="activeTooltip.y + TOOLTIP_PADDING_Y + TOOLTIP_LINE_HEIGHT * index + 11"
+    >
+      {{ line.text }}
+    </text>
   </g>
 </template>
