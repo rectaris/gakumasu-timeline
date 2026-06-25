@@ -21,9 +21,15 @@ export const idolCommu = sortedDefaultExports(idolCommuModules);
 
 // 初星コミュ
 // src/data/generated/worldline_commu/hatsuboshi_commu/
-import storyOfReiris from "./generated/worldline_commu/hatsuboshi_commu/001storyOfReiris";
+const hatsuboshiCommuModules = import.meta.glob(
+  "./generated/worldline_commu/hatsuboshi_commu/*.js",
+  {
+    eager: true,
+    import: "default",
+  },
+);
 
-export const hatsuboshiCommus = [storyOfReiris];
+export const hatsuboshiCommus = sortedDefaultExports(hatsuboshiCommuModules);
 
 // イベントコミュ
 // src/data/generated/worldline_commu/event_commu/

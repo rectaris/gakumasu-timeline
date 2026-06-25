@@ -11,11 +11,12 @@
 
 - `src/App.vue` が `src/data/index.js` から `idolCommu` / `hatsuboshiCommus` / `eventCommus` / `supportCardCommus` / `commonTimeline` を import
 - アイドルコミュは `data/raw/worldline_commu/idol_commu/` から `src/data/generated/worldline_commu/idol_commu/` へ生成され、`import.meta.glob` により番号付きファイル名順で自動集約される
-- 初星コミュは `data/raw/worldline_commu/hatsuboshi_commu/` から `src/data/generated/worldline_commu/hatsuboshi_commu/` へ生成され、`src/data/index.js` は生成済みモジュールを import する
+- 初星コミュは `data/raw/worldline_commu/hatsuboshi_commu/` から `src/data/generated/worldline_commu/hatsuboshi_commu/` へ生成され、`import.meta.glob` により番号付きファイル名順で自動集約される
 - イベントコミュとサポートカードコミュは `data/raw/worldline_commu/event_commu/` と `data/raw/worldline_commu/support_story/` から対応する generated ディレクトリへ生成され、番号付きファイル名順で自動集約される
 - 共通イベントは `data/raw/worldline_commu/common_timeline.json` から `src/data/generated/worldline_commu/common_timeline.js` へ生成され、`src/data/index.js` は生成済みモジュールを import する
 - 生成済みデータは `npm run generate:data` で更新し、`npm run validate:data` で raw との鮮度一致を確認する
 - ローカル開発時の `/timeline/?editor=worldline` は dev server 専用 API から raw JSON を読み込み、保存時に raw JSON と generated データを更新する
+- 編集画面では保存先をコミュ種別とファイルで選び、ファイル付きカテゴリでは新規 raw JSON ファイルを作成してから generated データへ反映できる
 - カテゴリ別のレーン情報は正規化され、選択されたレーンのみ表示対象になる
 
 ## データ検証

@@ -140,6 +140,7 @@ raw JSON では `year` に変換後の数値を直接書きます。
 
 ローカル開発環境では、`npm run dev` の起動後に `/timeline/?editor=worldline` を開くと worldline データ編集画面を使えます。
 編集画面は `data/raw/worldline_commu/` の既存 raw JSON を読み込み、保存前に既存のデータ検証を実行します。
+保存先はコミュ種別とファイルで選び、ファイル付きカテゴリでは新規 raw JSON ファイルも作成できます。
 現時点の永続 source of truth は raw JSON です。
 1イベント1ファイル YAML への移行は、編集画面の運用を確認した後の別作業として扱います。
 
@@ -152,7 +153,7 @@ raw JSON では `year` に変換後の数値を直接書きます。
    - 共通イベント: `data/raw/worldline_commu/common_timeline.json`
 2. 読み込み方法を確認する
    - アイドルコミュは raw から生成された `src/data/generated/worldline_commu/idol_commu/*.js` をファイル名順に自動集約します
-   - 初星コミュは raw から生成された `src/data/generated/worldline_commu/hatsuboshi_commu/*.js` を `src/data/index.js` が読みます
+   - 初星コミュは raw から生成された `src/data/generated/worldline_commu/hatsuboshi_commu/*.js` をファイル名順に自動集約します
    - 共通イベントは raw から生成された `src/data/generated/worldline_commu/common_timeline.js` を `src/data/index.js` が読みます
    - イベントコミュ、サポートカードコミュは raw から生成された `src/data/generated/worldline_commu/*/*.js` をファイル名順に自動集約します
 3. `data/raw/worldline_commu/template.json` を参考にファイルを作る

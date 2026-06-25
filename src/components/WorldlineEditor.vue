@@ -7,9 +7,16 @@ import {
 
 const API_ROOT = "/__worldline-editor/api";
 const ALL_SOURCE_FILES = "__all__";
+const NEW_SOURCE_FILE = "__new__";
 const PREVIEW_EVENT_HEIGHT = 26;
 const PREVIEW_SUB_LANE_SPACING = 36;
 const PREVIEW_LANE_PADDING = 8;
+const NEW_FILE_DIRECTORIES = {
+  eventCommus: "data/raw/worldline_commu/event_commu",
+  hatsuboshiCommus: "data/raw/worldline_commu/hatsuboshi_commu",
+  idolCommu: "data/raw/worldline_commu/idol_commu",
+  supportCardCommus: "data/raw/worldline_commu/support_story",
+};
 
 const state = ref(null);
 const loading = ref(true);
@@ -22,6 +29,8 @@ const saveResult = ref(null);
 const busy = ref(false);
 const editorMode = ref("edit");
 const selectedCommuType = ref("commonTimeline");
+const targetCommuType = ref("commonTimeline");
+const targetSourceFileChoice = ref("");
 const previewTrackRef = ref(null);
 const previewRangeState = ref({ center: null, span: null });
 const previewVerticalOffset = ref(0);
@@ -42,6 +51,12 @@ const COMMU_TYPES = [
 ];
 
 const form = reactive(createEmptyForm());
+const newTargetFile = reactive({
+  fileName: "",
+  laneId: "",
+  laneName: "",
+  color: "#888888",
+});
 
 function createEmptyDate() {
   return { year: 1, month: 4, day: 1 };
@@ -94,6 +109,18 @@ function normalizeDate(date) {
   };
 }
 
+function normalizeFileName(value) {
+  const fileName = String(value ?? "").trim().replace(/\.json$/i, "");
+  if (!/^[a-zA-Z0-9_-]+$/.test(fileName)) return "";
+  return `${fileName}.json`;
+}
+
+function sourceFileForNewTarget() {
+  const directory = NEW_FILE_DIRECTORIES[targetCommuType.value];
+  const fileName = normalizeFileName(newTargetFile.fileName);
+  return directory && fileName ? `${directory}/${fileName}` : "";
+}
+
 function sourceDetailToForm(sourceDetail = {}) {
   return {
     id: sourceDetail.id ?? "",
@@ -143,6 +170,7 @@ function loadEventIntoForm(entry, event) {
       ? event.conflicts.map(conflictToForm)
       : [],
   });
+  setTargetSourceFile(entry.sourceFile);
 }
 
 function createDraftForLane(entry) {
@@ -162,6 +190,9 @@ function createDraftForLane(entry) {
     end: createEmptyDate(),
     participants: entry?.category === "idolCommu" ? [entry.lane.id] : [],
   });
+  if (entry?.sourceFile) {
+    setTargetSourceFile(entry.sourceFile);
+  }
 }
 
 function compactObject(value) {
@@ -221,10 +252,12 @@ function formToEvent() {
 }
 
 function mutationRequest(action) {
+  const targetSourceFile = resolvedTargetSourceFile.value;
   return {
     action,
-    sourceFile: form.originalSourceFile || form.sourceFile,
-    targetSourceFile: form.sourceFile,
+    sourceFile: form.originalSourceFile || targetSourceFile,
+    targetSourceFile,
+    targetNewLane: isNewTargetFile.value ? targetNewLane.value : undefined,
     eventId: form.originalEventId || form.id,
     event: action === "delete" ? undefined : formToEvent(),
   };
@@ -263,9 +296,11 @@ async function loadState() {
     selectedEventId.value = firstEvent?.id ?? "";
     if (selectedLane.value && firstEvent) {
       loadEventIntoForm(selectedLane.value, firstEvent);
+      setTargetSourceFile(selectedLane.value.sourceFile);
     } else if (selectedLane.value) {
       editorMode.value = "add";
       createDraftForLane(selectedLane.value);
+      setTargetSourceFile(selectedLane.value.sourceFile);
     }
   } catch (error) {
     loadError.value = error.message;
@@ -286,8 +321,14 @@ const selectedCommuConfig = computed(() =>
   COMMU_TYPES.find((type) => type.id === selectedCommuType.value) ??
   COMMU_TYPES[0],
 );
+const targetCommuConfig = computed(() =>
+  COMMU_TYPES.find((type) => type.id === targetCommuType.value) ?? COMMU_TYPES[0],
+);
 const selectedCommuEntries = computed(() =>
   laneEntries.value.filter((entry) => entry.category === selectedCommuType.value),
+);
+const targetCommuEntries = computed(() =>
+  laneEntries.value.filter((entry) => entry.category === targetCommuType.value),
 );
 const activeSourceFile = computed(() =>
   selectedSourceFile.value === ALL_SOURCE_FILES
@@ -297,9 +338,46 @@ const activeSourceFile = computed(() =>
 const selectedLane = computed(() =>
   laneEntries.value.find((entry) => entry.sourceFile === activeSourceFile.value),
 );
-const destinationLane = computed(() =>
-  laneEntries.value.find((entry) => entry.sourceFile === form.sourceFile),
+const isNewTargetFile = computed(
+  () =>
+    targetCommuConfig.value.fileBacked &&
+    targetSourceFileChoice.value === NEW_SOURCE_FILE,
 );
+const resolvedTargetSourceFile = computed(() =>
+  isNewTargetFile.value ? sourceFileForNewTarget() : targetSourceFileChoice.value,
+);
+const targetNewLane = computed(() => ({
+  category: targetCommuType.value,
+  lane: {
+    id: newTargetFile.laneId.trim(),
+    name: newTargetFile.laneName.trim(),
+    color: newTargetFile.color.trim(),
+    events: [],
+  },
+}));
+const newTargetFileReady = computed(
+  () =>
+    !isNewTargetFile.value ||
+    (Boolean(resolvedTargetSourceFile.value) &&
+      Boolean(targetNewLane.value.lane.id) &&
+      Boolean(targetNewLane.value.lane.name) &&
+      Boolean(targetNewLane.value.lane.color)),
+);
+const destinationLane = computed(() => {
+  if (isNewTargetFile.value) {
+    if (!newTargetFileReady.value) return null;
+    return {
+      category: targetCommuType.value,
+      categoryLabel: targetCommuConfig.value.label,
+      sourceFile: resolvedTargetSourceFile.value,
+      lane: targetNewLane.value.lane,
+    };
+  }
+
+  return laneEntries.value.find(
+    (entry) => entry.sourceFile === resolvedTargetSourceFile.value,
+  );
+});
 const eventListEntries = computed(() => {
   if (
     !selectedCommuConfig.value.fileBacked ||
@@ -347,6 +425,43 @@ function firstSourceFileForCommu(commuType) {
   return (
     laneEntries.value.find((entry) => entry.category === commuType)?.sourceFile ?? ""
   );
+}
+
+function categoryFromSourceFile(sourceFile) {
+  const normalized = String(sourceFile ?? "");
+  return (
+    laneEntries.value.find((entry) => entry.sourceFile === normalized)?.category ??
+    Object.entries(NEW_FILE_DIRECTORIES).find(([, directory]) =>
+      normalized.startsWith(`${directory}/`),
+    )?.[0] ??
+    "commonTimeline"
+  );
+}
+
+function setTargetSourceFile(sourceFile) {
+  const normalized = String(sourceFile ?? "");
+  const category = categoryFromSourceFile(normalized);
+  targetCommuType.value = category;
+
+  if (laneEntries.value.some((entry) => entry.sourceFile === normalized)) {
+    targetSourceFileChoice.value = normalized;
+    return;
+  }
+
+  if (NEW_FILE_DIRECTORIES[category] && normalized) {
+    targetSourceFileChoice.value = NEW_SOURCE_FILE;
+    newTargetFile.fileName = normalized.split("/").pop() ?? "";
+    return;
+  }
+
+  targetSourceFileChoice.value = firstSourceFileForCommu(category);
+}
+
+function applyResolvedTargetSourceFile() {
+  const sourceFile = resolvedTargetSourceFile.value;
+  if (sourceFile && form.sourceFile !== sourceFile) {
+    form.sourceFile = sourceFile;
+  }
 }
 
 function eventDayValue(date, fallbackDay) {
@@ -644,7 +759,8 @@ const changedFields = computed(() => {
 const canSave = computed(
   () =>
     !busy.value &&
-    form.sourceFile &&
+    resolvedTargetSourceFile.value &&
+    newTargetFileReady.value &&
     form.id.trim() &&
     form.title.trim() &&
     form.detail.trim(),
@@ -679,6 +795,21 @@ watch(selectedCommuType, (commuType) => {
   if (editorMode.value === "add") {
     createDraftForLane(selectedLane.value);
   }
+});
+
+watch(targetCommuType, (commuType) => {
+  const currentEntry = laneEntries.value.find(
+    (entry) => entry.sourceFile === targetSourceFileChoice.value,
+  );
+  if (currentEntry?.category === commuType) return;
+
+  const firstFile = firstSourceFileForCommu(commuType);
+  targetSourceFileChoice.value =
+    firstFile || (targetCommuConfig.value.fileBacked ? NEW_SOURCE_FILE : "");
+});
+
+watch(resolvedTargetSourceFile, () => {
+  applyResolvedTargetSourceFile();
 });
 
 watch(
@@ -770,7 +901,7 @@ async function save(action = editorMode.value === "add" ? "add" : "update") {
   saveResult.value = null;
 
   try {
-    const savedSourceFile = form.sourceFile;
+    const savedSourceFile = resolvedTargetSourceFile.value;
     const savedEventId = form.id;
     saveResult.value = await fetchJson(`${API_ROOT}/save`, {
       method: "POST",
@@ -778,8 +909,10 @@ async function save(action = editorMode.value === "add" ? "add" : "update") {
     });
     await loadState();
     editorMode.value = "edit";
+    selectedCommuType.value = categoryFromSourceFile(savedSourceFile);
     selectedSourceFile.value = savedSourceFile;
     selectedEventId.value = savedEventId;
+    setTargetSourceFile(savedSourceFile);
   } catch (error) {
     saveResult.value = error.payload ?? {
       ok: false,
@@ -942,17 +1075,72 @@ onMounted(loadState);
               <input id="event-id" v-model="form.id" type="text" />
             </div>
             <div class="editor-field">
-              <label for="event-target-lane">保存先</label>
-              <select id="event-target-lane" v-model="form.sourceFile">
+              <label for="event-target-commu-type">保存先コミュ種別</label>
+              <select id="event-target-commu-type" v-model="targetCommuType">
                 <option
-                  v-for="entry in laneEntries"
-                  :key="entry.sourceFile"
-                  :value="entry.sourceFile"
+                  v-for="type in commuTypeOptions"
+                  :key="type.id"
+                  :value="type.id"
                 >
-                  {{ entry.categoryLabel }} / {{ entry.lane.name }}
+                  {{ type.label }}
                 </option>
               </select>
             </div>
+            <div class="editor-field">
+              <label for="event-target-file">保存先ファイル</label>
+              <select id="event-target-file" v-model="targetSourceFileChoice">
+                <option
+                  v-for="entry in targetCommuEntries"
+                  :key="entry.sourceFile"
+                  :value="entry.sourceFile"
+                >
+                  {{ entry.lane.name }}
+                </option>
+                <option
+                  v-if="targetCommuConfig.fileBacked"
+                  :value="NEW_SOURCE_FILE"
+                >
+                  新規ファイル
+                </option>
+              </select>
+            </div>
+            <template v-if="isNewTargetFile">
+              <div class="editor-field">
+                <label for="event-target-new-file">新規ファイル名</label>
+                <input
+                  id="event-target-new-file"
+                  v-model="newTargetFile.fileName"
+                  type="text"
+                  placeholder="014newCommu.json"
+                />
+              </div>
+              <div class="editor-field">
+                <label for="event-target-lane-id">新規レーン ID</label>
+                <input
+                  id="event-target-lane-id"
+                  v-model="newTargetFile.laneId"
+                  type="text"
+                  placeholder="new_commu_lane"
+                />
+              </div>
+              <div class="editor-field">
+                <label for="event-target-lane-name">新規レーン名</label>
+                <input
+                  id="event-target-lane-name"
+                  v-model="newTargetFile.laneName"
+                  type="text"
+                  placeholder="新規コミュ"
+                />
+              </div>
+              <div class="editor-field">
+                <label for="event-target-lane-color">新規レーン色</label>
+                <input
+                  id="event-target-lane-color"
+                  v-model="newTargetFile.color"
+                  type="color"
+                />
+              </div>
+            </template>
             <div class="editor-field editor-field--wide">
               <label for="event-title">タイトル</label>
               <input id="event-title" v-model="form.title" type="text" />
@@ -1158,7 +1346,7 @@ onMounted(loadState);
           <dl class="editor-summary">
             <div>
               <dt>対象</dt>
-              <dd>{{ form.sourceFile }}</dd>
+              <dd>{{ resolvedTargetSourceFile || "未選択" }}</dd>
             </div>
             <div>
               <dt>変更項目</dt>

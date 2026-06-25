@@ -133,6 +133,100 @@ describe("worldline editor api", () => {
     ]);
   });
 
+  it("adds an event to a new lane file", () => {
+    const result = applyWorldlineEditorMutation(baseState(), {
+      action: "add",
+      sourceFile: "data/raw/worldline_commu/idol_commu/001hanamiSaki.json",
+      targetSourceFile: "data/raw/worldline_commu/event_commu/001newEvent.json",
+      targetNewLane: {
+        category: "eventCommus",
+        lane: {
+          id: "new_event_commu",
+          name: "新規イベントコミュ",
+          color: "#888888",
+          events: [],
+        },
+      },
+      event: baseEvent("new_event", "New Event"),
+    });
+
+    const newLane = result.state.lanes.find(
+      (entry) =>
+        entry.sourceFile === "data/raw/worldline_commu/event_commu/001newEvent.json",
+    );
+
+    expect(newLane).toMatchObject({
+      category: "eventCommus",
+      generatedFile: "src/data/generated/worldline_commu/event_commu/001newEvent.js",
+      lane: {
+        id: "new_event_commu",
+        name: "新規イベントコミュ",
+        color: "#888888",
+      },
+    });
+    expect(newLane.lane.events.map((event) => event.id)).toEqual(["new_event"]);
+    expect(result.changedSourceFiles).toEqual([
+      "data/raw/worldline_commu/event_commu/001newEvent.json",
+    ]);
+  });
+
+  it("moves an existing event to a new lane file", () => {
+    const result = applyWorldlineEditorMutation(baseState(), {
+      action: "update",
+      sourceFile: "data/raw/worldline_commu/idol_commu/001hanamiSaki.json",
+      targetSourceFile: "data/raw/worldline_commu/event_commu/001newEvent.json",
+      targetNewLane: {
+        category: "eventCommus",
+        lane: {
+          id: "new_event_commu",
+          name: "新規イベントコミュ",
+          color: "#888888",
+          events: [],
+        },
+      },
+      eventId: "event_b",
+      event: baseEvent("event_b", "B"),
+    });
+
+    const newLane = result.state.lanes.find(
+      (entry) =>
+        entry.sourceFile === "data/raw/worldline_commu/event_commu/001newEvent.json",
+    );
+    const sourceLane = result.state.lanes.find(
+      (entry) =>
+        entry.sourceFile === "data/raw/worldline_commu/idol_commu/001hanamiSaki.json",
+    );
+
+    expect(sourceLane.lane.events.map((event) => event.id)).toEqual([
+      "event_a",
+    ]);
+    expect(newLane.lane.events.map((event) => event.id)).toEqual(["event_b"]);
+    expect(result.changedSourceFiles).toEqual([
+      "data/raw/worldline_commu/event_commu/001newEvent.json",
+      "data/raw/worldline_commu/idol_commu/001hanamiSaki.json",
+    ]);
+  });
+
+  it("rejects invalid new lane file paths", () => {
+    expect(() =>
+      applyWorldlineEditorMutation(baseState(), {
+        action: "add",
+        sourceFile: "data/raw/worldline_commu/idol_commu/001hanamiSaki.json",
+        targetSourceFile: "data/raw/worldline_commu/event_commu/nested/bad.json",
+        targetNewLane: {
+          category: "eventCommus",
+          lane: {
+            id: "bad",
+            name: "Bad",
+            color: "#888888",
+            events: [],
+          },
+        },
+        event: baseEvent("new_event", "New Event"),
+      }),
+    ).toThrow("Invalid new source file");
+  });
+
   it("rejects invalid proposed edits during preview", async () => {
     const result = await previewWorldlineEditorMutation(
       {

@@ -1,6 +1,10 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { GENERATED_DATA_FILES, generateDataFiles } from "./generate-data.mjs";
+import {
+  generateDataFiles,
+  generatedPathForRaw,
+  getGeneratedDataFiles,
+} from "./generate-data.mjs";
 import {
   formatTimelineDataIntegrityErrors,
   validateTimelineData,
@@ -16,6 +20,13 @@ const LOCAL_ADDRESSES = new Set([
   "::ffff:127.0.0.1",
   "localhost",
 ]);
+
+const NEW_FILE_DIRECTORIES = {
+  eventCommus: "data/raw/worldline_commu/event_commu",
+  hatsuboshiCommus: "data/raw/worldline_commu/hatsuboshi_commu",
+  idolCommu: "data/raw/worldline_commu/idol_commu",
+  supportCardCommus: "data/raw/worldline_commu/support_story",
+};
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -59,7 +70,7 @@ async function readRawLaneFile(root, file) {
 
 export async function readWorldlineEditorState({
   root = process.cwd(),
-  files = GENERATED_DATA_FILES,
+  files = getGeneratedDataFiles(),
 } = {}) {
   const lanes = [];
 
@@ -147,6 +158,85 @@ function requireEntry(entriesBySource, sourceFile) {
   return entry;
 }
 
+function categoryForNewSourceFile(category, sourceFile) {
+  const directory = NEW_FILE_DIRECTORIES[category];
+  const normalized = normalizeSourceFile(sourceFile);
+
+  if (!directory) {
+    throw new Error(`Cannot create files for category: ${category}`);
+  }
+
+  if (
+    !normalized.endsWith(".json") ||
+    normalized.includes("..") ||
+    path.posix.dirname(normalized) !== directory ||
+    !/^[a-zA-Z0-9_-]+\.json$/.test(path.posix.basename(normalized))
+  ) {
+    throw new Error(`Invalid new source file: ${sourceFile}`);
+  }
+
+  return normalized;
+}
+
+function requireNewLane(request, targetSourceFile) {
+  const newLane = request?.targetNewLane;
+  if (!newLane || typeof newLane !== "object") {
+    return null;
+  }
+
+  const category = String(newLane.category ?? "");
+  const sourceFile = categoryForNewSourceFile(category, targetSourceFile);
+  const lane = clone(newLane.lane);
+
+  if (!lane || typeof lane !== "object" || Array.isArray(lane)) {
+    throw new Error("New file lane must be an object.");
+  }
+
+  if (
+    typeof lane.id !== "string" ||
+    typeof lane.name !== "string" ||
+    typeof lane.color !== "string" ||
+    !lane.id.trim() ||
+    !lane.name.trim() ||
+    !lane.color.trim()
+  ) {
+    throw new Error("New file lane requires id, name, and color.");
+  }
+
+  return {
+    category,
+    categoryLabel: categoryLabel(category),
+    sourceFile,
+    generatedFile: generatedPathForRaw(sourceFile),
+    lane: {
+      ...lane,
+      id: lane.id.trim(),
+      name: lane.name.trim(),
+      color: lane.color.trim(),
+      events: Array.isArray(lane.events) ? lane.events : [],
+    },
+  };
+}
+
+function targetEntryForRequest(entriesBySource, request, targetSourceFile) {
+  const existing = entriesBySource.get(targetSourceFile);
+  const newEntry = requireNewLane(request, targetSourceFile);
+
+  if (existing) {
+    if (newEntry) {
+      throw new Error(`Source file already exists: ${targetSourceFile}`);
+    }
+    return existing;
+  }
+
+  if (!newEntry) {
+    return requireEntry(entriesBySource, targetSourceFile);
+  }
+
+  entriesBySource.set(targetSourceFile, newEntry);
+  return newEntry;
+}
+
 function requireEvent(entry, eventId) {
   const index = findEventIndex(entry, eventId);
   if (index === -1) {
@@ -208,11 +298,16 @@ export function applyWorldlineEditorMutation(state, request) {
     throw new Error(`Unsupported editor action: ${action}`);
   }
 
-  const sourceEntry = requireEntry(entriesBySource, request.sourceFile);
+  const sourceEntry =
+    action === "add" ? null : requireEntry(entriesBySource, request.sourceFile);
   const targetSourceFile = normalizeSourceFile(
     request.targetSourceFile || request.sourceFile,
   );
-  const targetEntry = requireEntry(entriesBySource, targetSourceFile);
+  const targetEntry = targetEntryForRequest(
+    entriesBySource,
+    request,
+    targetSourceFile,
+  );
 
   if (action === "add" || action === "duplicate") {
     insertEvent(targetEntry, request.event, request.insertAfterId);
@@ -350,12 +445,11 @@ async function writeChangedLanes(root, state, changedSourceFiles) {
   const changed = new Set(changedSourceFiles.map(normalizeSourceFile));
   const writes = state.lanes
     .filter((entry) => changed.has(normalizeSourceFile(entry.sourceFile)))
-    .map((entry) =>
-      fs.writeFile(
-        path.resolve(root, entry.sourceFile),
-        `${JSON.stringify(entry.lane, null, 2)}\n`,
-      ),
-    );
+    .map(async (entry) => {
+      const targetPath = path.resolve(root, entry.sourceFile);
+      await fs.mkdir(path.dirname(targetPath), { recursive: true });
+      await fs.writeFile(targetPath, `${JSON.stringify(entry.lane, null, 2)}\n`);
+    });
 
   await Promise.all(writes);
 }
