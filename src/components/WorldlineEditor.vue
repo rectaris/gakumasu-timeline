@@ -691,8 +691,15 @@ watch(
 function selectRow(row) {
   editorMode.value = "edit";
   selectedCommuType.value = row.entry.category;
-  selectedSourceFile.value = row.entry.sourceFile;
   selectedEventId.value = row.event.id;
+  if (selectedSourceFile.value === ALL_SOURCE_FILES) {
+    previewResult.value = null;
+    saveResult.value = null;
+    loadEventIntoForm(row.entry, row.event);
+    return;
+  }
+
+  selectedSourceFile.value = row.entry.sourceFile;
 }
 
 function startAdd() {
