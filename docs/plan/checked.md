@@ -59,3 +59,4 @@ id	path
 056	docs/plan/checked/056-worldline-editor-delete-button-toolbar.md
 057	docs/plan/checked/057-worldline-editor-save-target-file-creation.md
 058	docs/plan/checked/058-worldline-editor-field-tooltips.md
+059	docs/plan/checked/059-worldline-editor-single-tooltip.md

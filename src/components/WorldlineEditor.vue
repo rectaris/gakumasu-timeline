@@ -150,7 +150,6 @@ function helpAttrs(key) {
     ? {
         class: "editor-help-label",
         "data-tooltip": text,
-        title: text,
         tabindex: "0",
       }
     : {};
