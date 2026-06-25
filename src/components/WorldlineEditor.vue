@@ -912,6 +912,14 @@ onMounted(loadState);
             <button class="editor-button" type="button" @click="duplicateSelected">
               複製
             </button>
+            <button
+              class="editor-button editor-button--danger"
+              type="button"
+              :disabled="!selectedEvent"
+              @click="deleteSelected"
+            >
+              削除
+            </button>
             <button class="editor-button" type="submit" :disabled="!canSave">
               差分確認
             </button>
@@ -1218,9 +1226,6 @@ onMounted(loadState);
             </div>
             <p v-else class="editor-empty">保存先を選択してください。</p>
           </div>
-          <button class="editor-button" type="button" :disabled="!selectedEvent" @click="deleteSelected">
-            削除
-          </button>
         </section>
 
         <section v-if="previewResult" class="editor-section">

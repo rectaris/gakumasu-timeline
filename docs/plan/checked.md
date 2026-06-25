@@ -56,3 +56,4 @@ id	path
 053	docs/plan/checked/053-worldline-editor-preview-fixed-viewport.md
 054	docs/plan/checked/054-worldline-editor-file-filter.md
 055	docs/plan/checked/055-worldline-editor-preserve-all-file-selection.md
+056	docs/plan/checked/056-worldline-editor-delete-button-toolbar.md
