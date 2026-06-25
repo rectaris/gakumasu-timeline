@@ -281,8 +281,68 @@ select:focus-visible {
 }
 
 .detail-field dt {
+  position: relative;
   color: var(--text-muted);
   font-weight: 700;
+}
+
+.detail-help-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+  max-width: 100%;
+  border-radius: 4px;
+  cursor: help;
+  outline: none;
+}
+
+.detail-help-label::after {
+  content: "?";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  background: var(--surface-chip);
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.detail-help-label::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: calc(100% + 7px);
+  left: 0;
+  z-index: 1200;
+  width: min(260px, calc(100vw - 32px));
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: var(--surface-elevated);
+  box-shadow: 0 8px 20px var(--shadow);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.55;
+  white-space: normal;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-3px);
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+
+.detail-help-label:hover::before,
+.detail-help-label:focus::before,
+.detail-help-label:focus-visible::before {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .detail-field dd {
@@ -410,7 +470,12 @@ select:focus-visible {
   border-top: 1px solid var(--border-soft);
 }
 
+.detail-section--body {
+  margin-top: 12px;
+}
+
 .detail-section h3 {
+  position: relative;
   margin: 0 0 8px;
   color: var(--text-primary);
   font-size: 14px;

@@ -25,6 +25,34 @@ const showShareFallback = ref(false);
 const showAllSourceDetails = ref(false);
 const panelBodyRef = ref(null);
 const SOURCE_DETAIL_PREVIEW_LIMIT = 3;
+const DETAIL_HELP = {
+  lane: "このイベントが属するコミュまたは共通イベントの表示レーンです。",
+  period: "イベントが起きた時期です。期間内の1日は、候補範囲内のどこか1日を示します。",
+  occurrenceType: "継続期間か、候補範囲内の単日イベントかを示します。",
+  dateConfidence: "日付が確定か推定か、または範囲だけ特定されているかを示します。",
+  sourceBasis: "時期や内容の判断根拠が、明示情報・推論・混在のどれかを示します。",
+  sourceStatus: "出典の確認状態、推定根拠、矛盾、未確認、出典なしなどを示します。",
+  rangeReason: "候補範囲になっている理由です。月のみ確定、出典上の範囲、章順、前後関係などがあります。",
+  worldline: "イベントに紐づく世界線です。未設定の場合は明確な世界線分類がありません。",
+  participants: "イベントに関係する登場人物です。関連検索や絞り込みにも使われます。",
+  source: "簡易出典です。クリックすると同じ出典のイベントで絞り込めます。",
+  sourceDetails: "構造化された出典情報です。ID、確認状態、支える対象、主張を確認できます。",
+  conflicts: "複数の出典や解釈が食い違う場合の矛盾内容です。",
+  detail: "イベント本文です。タイムライン上の短いタイトルより詳しい説明を表示します。",
+  notes: "日付幅の根拠、推測理由、未登録人物、補足事項などの注記です。",
+  related: "同時期、同じレーン、同じ出典、同じ参加者など、参照しやすい関連イベントです。因果関係を示すものではありません。",
+};
+
+function helpAttrs(key) {
+  const text = DETAIL_HELP[key];
+  return text
+    ? {
+        class: "detail-help-label",
+        "data-tooltip": text,
+        tabindex: "0",
+      }
+    : {};
+}
 
 function hasExplicitDay(date) {
   return Number.isInteger(date?.day);
@@ -215,7 +243,6 @@ watch(
           class="close-btn"
           type="button"
           aria-label="詳細パネルを閉じる"
-          title="詳細パネルを閉じる"
           @click="closePanel"
         >×</button>
 
@@ -264,22 +291,22 @@ watch(
       <div ref="panelBodyRef" class="panel-body">
         <dl id="side-panel-meta" class="detail-fields">
         <div class="detail-field">
-          <dt>レーン</dt>
+          <dt v-bind="helpAttrs('lane')">レーン</dt>
           <dd>
             <span class="event-accent" aria-hidden="true"></span>
             {{ selectedEvent.character }}
           </dd>
         </div>
         <div class="detail-field">
-          <dt>期間</dt>
+          <dt v-bind="helpAttrs('period')">期間</dt>
           <dd>{{ formatEventOccurrence(selectedEvent) }}</dd>
         </div>
         <div class="detail-field">
-          <dt>発生形式</dt>
+          <dt v-bind="helpAttrs('occurrenceType')">発生形式</dt>
           <dd>{{ formatOccurrenceType(selectedEvent) }}</dd>
         </div>
         <div class="detail-field">
-          <dt>日付確度</dt>
+          <dt v-bind="helpAttrs('dateConfidence')">日付確度</dt>
           <dd>
             <span
               class="detail-chip"
@@ -288,7 +315,7 @@ watch(
           </dd>
         </div>
         <div class="detail-field">
-          <dt>根拠</dt>
+          <dt v-bind="helpAttrs('sourceBasis')">根拠</dt>
           <dd>
             <span class="detail-chip">
               {{ detailContext.uncertainty?.sourceBasisLabel }}
@@ -296,7 +323,7 @@ watch(
           </dd>
         </div>
         <div class="detail-field">
-          <dt>出典状態</dt>
+          <dt v-bind="helpAttrs('sourceStatus')">出典状態</dt>
           <dd>
             <span
               class="detail-chip"
@@ -308,7 +335,7 @@ watch(
           v-if="detailContext.uncertainty?.rangeReasonLabel"
           class="detail-field"
         >
-          <dt>範囲理由</dt>
+          <dt v-bind="helpAttrs('rangeReason')">範囲理由</dt>
           <dd>
             <span class="detail-chip">
               {{ detailContext.uncertainty.rangeReasonLabel }}
@@ -316,7 +343,7 @@ watch(
           </dd>
         </div>
         <div class="detail-field">
-          <dt>世界線</dt>
+          <dt v-bind="helpAttrs('worldline')">世界線</dt>
           <dd>
             <template v-if="hasListItems(detailContext.worldlineLabels)">
               <span
@@ -332,7 +359,7 @@ watch(
           v-if="hasListItems(detailContext.participantLabels)"
           class="detail-field"
         >
-          <dt>参加者</dt>
+          <dt v-bind="helpAttrs('participants')">参加者</dt>
           <dd>
             <span
               v-for="participant in detailContext.participantLabels"
@@ -342,7 +369,7 @@ watch(
           </dd>
         </div>
         <div class="detail-field">
-          <dt>出典</dt>
+          <dt v-bind="helpAttrs('source')">出典</dt>
           <dd>
             <template v-if="hasListItems(detailContext.sources)">
               <button
@@ -350,7 +377,7 @@ watch(
                 :key="source"
                 class="detail-chip detail-chip--source detail-chip--button"
                 type="button"
-                title="同じ出典で絞り込む"
+                :aria-label="`${source} と同じ出典で絞り込む`"
                 @click.stop="selectSourceLabel(source)"
               >{{ source }}</button>
             </template>
@@ -364,7 +391,7 @@ watch(
         class="detail-section"
         aria-labelledby="side-panel-source-details-title"
       >
-        <h3 id="side-panel-source-details-title">出典詳細</h3>
+        <h3 id="side-panel-source-details-title" v-bind="helpAttrs('sourceDetails')">出典詳細</h3>
         <ul class="detail-list">
           <li
             v-for="sourceDetail in visibleSourceDetails(detailContext.sourceDetails)"
@@ -373,7 +400,7 @@ watch(
             <button
               class="detail-source-action"
               type="button"
-              title="同じ出典で絞り込む"
+              :aria-label="`${sourceDetail.label} と同じ出典で絞り込む`"
               @click.stop="selectSourceDetail(sourceDetail)"
             >{{ sourceDetail.label }}</button>
             <span
@@ -401,7 +428,7 @@ watch(
         class="detail-section detail-section--warning"
         aria-labelledby="side-panel-conflicts-title"
       >
-        <h3 id="side-panel-conflicts-title">出典矛盾</h3>
+        <h3 id="side-panel-conflicts-title" v-bind="helpAttrs('conflicts')">出典矛盾</h3>
         <ul class="detail-list">
           <li
             v-for="conflict in detailContext.conflicts"
@@ -420,16 +447,22 @@ watch(
         現在の表示条件では非表示です。
       </p>
 
-      <p id="side-panel-detail" class="detail">
-        {{ selectedEvent.detail }}
-      </p>
+      <section
+        class="detail-section detail-section--body"
+        aria-labelledby="side-panel-detail-title"
+      >
+        <h3 id="side-panel-detail-title" v-bind="helpAttrs('detail')">詳細</h3>
+        <p id="side-panel-detail" class="detail">
+          {{ selectedEvent.detail }}
+        </p>
+      </section>
 
       <section
         v-if="hasListItems(detailContext.notes)"
         class="detail-section"
         aria-labelledby="side-panel-notes-title"
       >
-        <h3 id="side-panel-notes-title">注記</h3>
+        <h3 id="side-panel-notes-title" v-bind="helpAttrs('notes')">注記</h3>
         <ul class="detail-list">
           <li v-for="note in detailContext.notes" :key="note">{{ note }}</li>
         </ul>
@@ -440,7 +473,7 @@ watch(
         class="detail-section"
         aria-labelledby="side-panel-related-title"
       >
-        <h3 id="side-panel-related-title">関連コンテキスト</h3>
+        <h3 id="side-panel-related-title" v-bind="helpAttrs('related')">関連コンテキスト</h3>
         <div
           v-for="section in detailContext.relatedSections"
           :key="section.id"
