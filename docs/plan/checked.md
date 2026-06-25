@@ -62,3 +62,4 @@ id	path
 059	docs/plan/checked/059-worldline-editor-single-tooltip.md
 060	docs/plan/checked/060-timeline-event-tooltips.md
 061	docs/plan/checked/061-side-panel-field-tooltips.md
+062	docs/plan/checked/062-manual-docs-split.md
