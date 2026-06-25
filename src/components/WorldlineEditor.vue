@@ -6,6 +6,7 @@ import {
 } from "../utils/timelineLayout.js";
 
 const API_ROOT = "/__worldline-editor/api";
+const ALL_SOURCE_FILES = "__all__";
 const PREVIEW_EVENT_HEIGHT = 26;
 const PREVIEW_SUB_LANE_SPACING = 36;
 const PREVIEW_LANE_PADDING = 8;
@@ -288,19 +289,39 @@ const selectedCommuConfig = computed(() =>
 const selectedCommuEntries = computed(() =>
   laneEntries.value.filter((entry) => entry.category === selectedCommuType.value),
 );
+const activeSourceFile = computed(() =>
+  selectedSourceFile.value === ALL_SOURCE_FILES
+    ? form.originalSourceFile || form.sourceFile
+    : selectedSourceFile.value,
+);
 const selectedLane = computed(() =>
-  laneEntries.value.find((entry) => entry.sourceFile === selectedSourceFile.value),
+  laneEntries.value.find((entry) => entry.sourceFile === activeSourceFile.value),
 );
 const destinationLane = computed(() =>
   laneEntries.value.find((entry) => entry.sourceFile === form.sourceFile),
 );
+const eventListEntries = computed(() => {
+  if (
+    !selectedCommuConfig.value.fileBacked ||
+    selectedSourceFile.value === ALL_SOURCE_FILES
+  ) {
+    return selectedCommuEntries.value;
+  }
+
+  return selectedCommuEntries.value.filter(
+    (entry) => entry.sourceFile === selectedSourceFile.value,
+  );
+});
 const eventOptions = computed(() => selectedLane.value?.lane.events ?? []);
 const selectedEvent = computed(() =>
   eventOptions.value.find((event) => event.id === selectedEventId.value),
 );
+const canAddToSelectedFile = computed(
+  () => selectedSourceFile.value !== ALL_SOURCE_FILES && Boolean(selectedLane.value),
+);
 const filteredEvents = computed(() => {
   const query = searchQuery.value.trim().toLocaleLowerCase("ja-JP");
-  const rows = selectedCommuEntries.value.flatMap((entry) =>
+  const rows = eventListEntries.value.flatMap((entry) =>
     entry.lane.events.map((event) => ({ entry, event })),
   );
 
@@ -637,6 +658,8 @@ watch(selectedEvent, (event) => {
 });
 
 watch(selectedSourceFile, () => {
+  if (selectedSourceFile.value === ALL_SOURCE_FILES) return;
+
   if (editorMode.value === "add") {
     createDraftForLane(selectedLane.value);
     return;
@@ -673,7 +696,7 @@ function selectRow(row) {
 }
 
 function startAdd() {
-  if (!selectedLane.value) return;
+  if (!canAddToSelectedFile.value) return;
   editorMode.value = "add";
   previewResult.value = null;
   saveResult.value = null;
@@ -817,6 +840,11 @@ onMounted(loadState);
               :disabled="selectedCommuEntries.length === 0"
             >
               <option
+                :value="ALL_SOURCE_FILES"
+              >
+                すべて
+              </option>
+              <option
                 v-for="entry in selectedCommuEntries"
                 :key="entry.sourceFile"
                 :value="entry.sourceFile"
@@ -838,7 +866,7 @@ onMounted(loadState);
           <button
             class="editor-button editor-button--primary editor-button--sidebar"
             type="button"
-            :disabled="!selectedLane"
+            :disabled="!canAddToSelectedFile"
             @click="startAdd"
           >
             新規イベント

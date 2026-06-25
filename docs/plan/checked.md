@@ -54,3 +54,4 @@ id	path
 051	docs/plan/checked/051-worldline-editor-preview-clipping.md
 052	docs/plan/checked/052-worldline-editor-preview-layout.md
 053	docs/plan/checked/053-worldline-editor-preview-fixed-viewport.md
+054	docs/plan/checked/054-worldline-editor-file-filter.md
