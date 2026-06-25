@@ -98,10 +98,40 @@
 
 ## データの置き場所
 
-- キャラ/イベントデータ: [src/data/worldline_commu/](src/data/worldline_commu/)
+- 編集元データ: [data/raw/worldline_commu/](data/raw/worldline_commu/)
+- 生成済みデータ: [src/data/generated/worldline_commu/](src/data/generated/worldline_commu/)
 - データ集約: [src/data/index.js](src/data/index.js)（`idolCommu` / `hatsuboshiCommus` / `eventCommus` / `supportCardCommus`）
 - 世界線一覧: [src/data/worldlines.js](src/data/worldlines.js)
 - キャラクター一覧: [src/data/characterCatalog.js](src/data/characterCatalog.js)
+
+## イベントの追加・編集
+
+イベントの追加と編集には、ローカル開発サーバー専用の worldline データ編集画面を使えます。
+公開サイトは閲覧用で、データの保存機能はありません。
+
+```sh
+npm run dev
+```
+
+起動後、[ローカル編集画面](http://localhost:5173/timeline/?editor=worldline)を開きます。
+Vite が別のポートで起動した場合は、表示されたローカル URL の `/timeline/` に `?editor=worldline` を付けて開きます。
+
+編集画面では、左側で「コミュ種別」と「ファイル」を選びます。
+既存イベントを直す場合は、左側のイベント一覧から対象イベントを選びます。
+新しいイベントを追加する場合は、「新規イベント」を押して保存先、ID、タイトル、時期、分類、出典を入力します。
+
+右側の「保存前レビュー」では、保存先レーンに入れた場合の見え方を確認できます。
+レーンプレビューはドラッグで上下左右に移動でき、ホイールで拡大縮小できます。
+「差分確認」で保存前の検証と変更内容を確認し、「保存」で `data/raw/worldline_commu/` と `src/data/generated/worldline_commu/` を更新します。
+
+保存後は、必要に応じて次の検証を実行します。
+
+```sh
+npm run validate:data
+npm run build
+```
+
+直接 JSON を編集する場合の項目説明とチェックリストは、[docs/data-structure.md](docs/data-structure.md) を参照してください。
 
 ## 詳細ドキュメント
 
