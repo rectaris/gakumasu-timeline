@@ -627,7 +627,7 @@ const lane = {
       ],
     },
     {
-      id: "001_h_",
+      id: "001_h_hatsuboshi_idol_festival",
       start: { year: 1, month: 7, day: 1 },
       end: { year: 1, month: 9, day: 31 },
       title: "HIF本戦当日",

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "saki_hanami",
+    "name": "花海 咲季",
+    "category": "produce_idol",
+    "aliases": ["咲季"],
+    "color": "#E30920",
+    "sortOrder": 1
+  },
+  {
+    "id": "producer",
+    "name": "プロデューサー",
+    "category": "other_character",
+    "aliases": ["P"],
+    "sortOrder": 1001
+  }
+]
