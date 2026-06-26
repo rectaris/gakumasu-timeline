@@ -3,15 +3,236 @@
     "id": "saki_hanami",
     "name": "花海 咲季",
     "category": "produce_idol",
-    "aliases": ["咲季"],
+    "aliases": [
+      "咲季"
+    ],
+    "romanName": "Saki Hanami",
     "color": "#E30920",
-    "sortOrder": 1
+    "role": "初星学園アイドル科生徒",
+    "sortOrder": 1,
+    "sourceUrls": [
+      "https://gakuen.idolmaster-official.jp/idol/"
+    ]
+  },
+  {
+    "id": "temari_tsukimura",
+    "name": "月村 手毬",
+    "category": "produce_idol",
+    "aliases": [
+      "手毬"
+    ],
+    "romanName": "Temari Tsukimura",
+    "color": "#0D7CBC",
+    "role": "初星学園アイドル科生徒",
+    "sortOrder": 2,
+    "sourceUrls": [
+      "https://gakuen.idolmaster-official.jp/idol/temari/"
+    ]
+  },
+  {
+    "id": "kotone_fujita",
+    "name": "藤田 ことね",
+    "category": "produce_idol",
+    "aliases": [
+      "ことね"
+    ],
+    "romanName": "Kotone Fujita",
+    "color": "#F8C216",
+    "role": "初星学園アイドル科生徒",
+    "sortOrder": 3,
+    "sourceUrls": [
+      "https://gakuen.idolmaster-official.jp/idol/kotone/"
+    ]
+  },
+  {
+    "id": "mao_arimura",
+    "name": "有村 麻央",
+    "category": "produce_idol",
+    "aliases": [
+      "麻央"
+    ],
+    "romanName": "Mao Arimura",
+    "color": "#801184",
+    "role": "初星学園アイドル科生徒",
+    "sortOrder": 4,
+    "sourceUrls": [
+      "https://gakuen.idolmaster-official.jp/idol/mao/"
+    ]
+  },
+  {
+    "id": "lilja_katsuragi",
+    "name": "葛城 リーリヤ",
+    "category": "produce_idol",
+    "aliases": [
+      "リーリヤ"
+    ],
+    "romanName": "Lilja Katsuragi",
+    "color": "#EAFDFF",
+    "role": "初星学園アイドル科生徒",
+    "sortOrder": 5,
+    "sourceUrls": [
+      "https://gakuen.idolmaster-official.jp/idol/lilja/"
+    ]
+  },
+  {
+    "id": "china_kuramoto",
+    "name": "倉本 千奈",
+    "category": "produce_idol",
+    "aliases": [
+      "千奈"
+    ],
+    "romanName": "China Kuramoto",
+    "color": "#F68C21",
+    "role": "初星学園アイドル科生徒",
+    "sortOrder": 6,
+    "sourceUrls": [
+      "https://gakuen.idolmaster-official.jp/idol/china/"
+    ]
+  },
+  {
+    "id": "sumika_shiun",
+    "name": "紫雲 清夏",
+    "category": "produce_idol",
+    "aliases": [
+      "清夏"
+    ],
+    "romanName": "Sumika Shiun",
+    "color": "#7EFC04",
+    "role": "初星学園アイドル科生徒",
+    "sortOrder": 7,
+    "sourceUrls": [
+      "https://gakuen.idolmaster-official.jp/idol/sumika/"
+    ]
+  },
+  {
+    "id": "hiro_shinosawa",
+    "name": "篠澤 広",
+    "category": "produce_idol",
+    "aliases": [
+      "広"
+    ],
+    "romanName": "Hiro Shinosawa",
+    "color": "#02B0CD",
+    "role": "初星学園アイドル科生徒",
+    "sortOrder": 8,
+    "sourceUrls": [
+      "https://gakuen.idolmaster-official.jp/idol/hiro/"
+    ]
+  },
+  {
+    "id": "rinami_himesaki",
+    "name": "姫崎 莉波",
+    "category": "produce_idol",
+    "aliases": [
+      "莉波"
+    ],
+    "romanName": "Rinami Himesaki",
+    "color": "#F6AEC6",
+    "role": "初星学園アイドル科生徒",
+    "sortOrder": 9,
+    "sourceUrls": [
+      "https://gakuen.idolmaster-official.jp/idol/rinami/"
+    ]
+  },
+  {
+    "id": "ume_hanami",
+    "name": "花海 佑芽",
+    "category": "produce_idol",
+    "aliases": [
+      "佑芽"
+    ],
+    "romanName": "Ume Hanami",
+    "color": "#EA543B",
+    "role": "初星学園アイドル科生徒",
+    "sortOrder": 10,
+    "sourceUrls": [
+      "https://gakuen.idolmaster-official.jp/idol/ume/"
+    ]
+  },
+  {
+    "id": "sena_juo",
+    "name": "十王 星南",
+    "category": "produce_idol",
+    "aliases": [
+      "星南"
+    ],
+    "romanName": "Sena Juo",
+    "color": "#F7B869",
+    "role": "初星学園アイドル科生徒",
+    "sortOrder": 11,
+    "sourceUrls": [
+      "https://gakuen.idolmaster-official.jp/idol/sena/"
+    ]
+  },
+  {
+    "id": "misuzu_hataya",
+    "name": "秦谷 美鈴",
+    "category": "produce_idol",
+    "aliases": [
+      "美鈴"
+    ],
+    "romanName": "Misuzu Hataya",
+    "color": "#7B9ACF",
+    "role": "初星学園アイドル科生徒",
+    "sortOrder": 12,
+    "sourceUrls": [
+      "https://gakuen.idolmaster-official.jp/idol/misuzu/"
+    ]
+  },
+  {
+    "id": "tsubame_amaya",
+    "name": "雨夜 燕",
+    "category": "produce_idol",
+    "aliases": [
+      "燕"
+    ],
+    "romanName": "Tsubame Amaya",
+    "color": "#7C69EE",
+    "role": "初星学園アイドル科生徒",
+    "sortOrder": 13,
+    "sourceUrls": [
+      "https://gakuen.idolmaster-official.jp/idol/tsubame/"
+    ]
   },
   {
     "id": "producer",
     "name": "プロデューサー",
     "category": "other_character",
-    "aliases": ["P"],
-    "sortOrder": 1001
+    "aliases": [
+      "P"
+    ],
+    "role": "初星学園プロデューサー科生",
+    "sortOrder": 1001,
+    "sourceUrls": [
+      "https://gakuen.idolmaster-official.jp/system/"
+    ]
+  },
+  {
+    "id": "kunio_juo",
+    "name": "十王 邦夫",
+    "category": "other_character",
+    "aliases": [
+      "学園長"
+    ],
+    "romanName": "Kunio Juo",
+    "role": "初星学園 学園長",
+    "sortOrder": 1002,
+    "sourceUrls": [
+      "https://gakuen.idolmaster-official.jp/idol/kunio/"
+    ]
+  },
+  {
+    "id": "asari_neo",
+    "name": "根緒 亜紗里",
+    "category": "other_character",
+    "aliases": [
+      "亜紗里先生"
+    ],
+    "romanName": "Asari Neo",
+    "role": "初星学園 担任教員",
+    "sortOrder": 1003,
+    "sourceUrls": [
+      "https://gakuen.idolmaster-official.jp/idol/asari/"
+    ]
   }
 ]
