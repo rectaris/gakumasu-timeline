@@ -3,269 +3,205 @@
     "id": "saki_hanami",
     "name": "花海 咲季",
     "category": "produce_idol",
-    "aliases": [
-      "咲季"
-    ],
+    "aliases": ["咲季"],
     "romanName": "Saki Hanami",
     "color": "#E30920",
-    "role": "初星学園アイドル科生徒",
+    "roles": [
+      "初星学園アイドル科生徒",
+      "花海佑芽の姉",
+      "元アスリート",
+      "1年1組"
+    ],
     "sortOrder": 1,
-    "sourceUrls": [
-      "https://gakuen.idolmaster-official.jp/idol/"
-    ]
+    "sourceUrls": ["https://gakuen.idolmaster-official.jp/idol/"]
   },
   {
     "id": "temari_tsukimura",
     "name": "月村 手毬",
     "category": "produce_idol",
-    "aliases": [
-      "手毬"
-    ],
+    "aliases": ["手毬"],
     "romanName": "Temari Tsukimura",
     "color": "#0D7CBC",
-    "role": "初星学園アイドル科生徒",
+    "roles": ["初星学園アイドル科生徒", "SyngUp!元メンバー", "1年1組"],
     "sortOrder": 2,
-    "sourceUrls": [
-      "https://gakuen.idolmaster-official.jp/idol/temari/"
-    ]
+    "sourceUrls": ["https://gakuen.idolmaster-official.jp/idol/temari/"]
   },
   {
     "id": "kotone_fujita",
     "name": "藤田 ことね",
     "category": "produce_idol",
-    "aliases": [
-      "ことね"
-    ],
+    "aliases": ["ことね"],
     "romanName": "Kotone Fujita",
     "color": "#F8C216",
-    "role": "初星学園アイドル科生徒",
+    "roles": ["初星学園アイドル科生徒", "1年1組"],
     "sortOrder": 3,
-    "sourceUrls": [
-      "https://gakuen.idolmaster-official.jp/idol/kotone/"
-    ]
+    "sourceUrls": ["https://gakuen.idolmaster-official.jp/idol/kotone/"]
   },
   {
     "id": "mao_arimura",
     "name": "有村 麻央",
     "category": "produce_idol",
-    "aliases": [
-      "麻央"
-    ],
+    "aliases": ["麻央"],
     "romanName": "Mao Arimura",
     "color": "#801184",
-    "role": "初星学園アイドル科生徒",
+    "roles": ["初星学園アイドル科生徒", "元子役", "3年1組"],
     "sortOrder": 4,
-    "sourceUrls": [
-      "https://gakuen.idolmaster-official.jp/idol/mao/"
-    ]
+    "sourceUrls": ["https://gakuen.idolmaster-official.jp/idol/mao/"]
   },
   {
     "id": "lilja_katsuragi",
     "name": "葛城 リーリヤ",
     "category": "produce_idol",
-    "aliases": [
-      "リーリヤ"
-    ],
+    "aliases": ["リーリヤ"],
     "romanName": "Lilja Katsuragi",
     "color": "#EAFDFF",
-    "role": "初星学園アイドル科生徒",
+    "roles": [
+      "初星学園アイドル科生徒",
+      "アニメオタク",
+      "ゲームオタク",
+      "1年1組"
+    ],
     "sortOrder": 5,
-    "sourceUrls": [
-      "https://gakuen.idolmaster-official.jp/idol/lilja/"
-    ]
+    "sourceUrls": ["https://gakuen.idolmaster-official.jp/idol/lilja/"]
   },
   {
     "id": "china_kuramoto",
     "name": "倉本 千奈",
     "category": "produce_idol",
-    "aliases": [
-      "千奈"
-    ],
+    "aliases": ["千奈"],
     "romanName": "China Kuramoto",
     "color": "#F68C21",
-    "role": "初星学園アイドル科生徒",
+    "roles": ["初星学園アイドル科生徒", "倉本家令嬢", "1年2組"],
     "sortOrder": 6,
-    "sourceUrls": [
-      "https://gakuen.idolmaster-official.jp/idol/china/"
-    ]
+    "sourceUrls": ["https://gakuen.idolmaster-official.jp/idol/china/"]
   },
   {
     "id": "sumika_shiun",
     "name": "紫雲 清夏",
     "category": "produce_idol",
-    "aliases": [
-      "清夏"
-    ],
+    "aliases": ["清夏"],
     "romanName": "Sumika Shiun",
     "color": "#7EFC04",
-    "role": "初星学園アイドル科生徒",
+    "roles": ["初星学園アイドル科生徒", "元バレエダンサー", "1年1組"],
     "sortOrder": 7,
-    "sourceUrls": [
-      "https://gakuen.idolmaster-official.jp/idol/sumika/"
-    ]
+    "sourceUrls": ["https://gakuen.idolmaster-official.jp/idol/sumika/"]
   },
   {
     "id": "hiro_shinosawa",
     "name": "篠澤 広",
     "category": "produce_idol",
-    "aliases": [
-      "広"
-    ],
+    "aliases": ["広"],
     "romanName": "Hiro Shinosawa",
     "color": "#02B0CD",
-    "role": "初星学園アイドル科生徒",
+    "roles": ["初星学園アイドル科生徒"],
     "sortOrder": 8,
-    "sourceUrls": [
-      "https://gakuen.idolmaster-official.jp/idol/hiro/"
-    ]
+    "sourceUrls": ["https://gakuen.idolmaster-official.jp/idol/hiro/"]
   },
   {
     "id": "rinami_himesaki",
     "name": "姫崎 莉波",
     "category": "produce_idol",
-    "aliases": [
-      "莉波"
-    ],
+    "aliases": ["莉波"],
     "romanName": "Rinami Himesaki",
     "color": "#F6AEC6",
-    "role": "初星学園アイドル科生徒",
+    "roles": ["初星学園アイドル科生徒", "3年1組"],
     "sortOrder": 9,
-    "sourceUrls": [
-      "https://gakuen.idolmaster-official.jp/idol/rinami/"
-    ]
+    "sourceUrls": ["https://gakuen.idolmaster-official.jp/idol/rinami/"]
   },
   {
     "id": "ume_hanami",
     "name": "花海 佑芽",
     "category": "produce_idol",
-    "aliases": [
-      "佑芽"
-    ],
+    "aliases": ["佑芽"],
     "romanName": "Ume Hanami",
     "color": "#EA543B",
-    "role": "初星学園アイドル科生徒",
+    "roles": [
+      "初星学園アイドル科生徒",
+      "花海咲季の妹",
+      "元アスリート",
+      "1年2組"
+    ],
     "sortOrder": 10,
-    "sourceUrls": [
-      "https://gakuen.idolmaster-official.jp/idol/ume/"
-    ]
+    "sourceUrls": ["https://gakuen.idolmaster-official.jp/idol/ume/"]
   },
   {
     "id": "sena_juo",
     "name": "十王 星南",
     "category": "produce_idol",
-    "aliases": [
-      "星南"
-    ],
+    "aliases": ["星南"],
     "romanName": "Sena Juo",
     "color": "#F7B869",
-    "role": "初星学園アイドル科生徒",
+    "roles": ["初星学園アイドル科生徒", "3年1組"],
     "sortOrder": 11,
-    "sourceUrls": [
-      "https://gakuen.idolmaster-official.jp/idol/sena/"
-    ]
+    "sourceUrls": ["https://gakuen.idolmaster-official.jp/idol/sena/"]
   },
   {
     "id": "misuzu_hataya",
     "name": "秦谷 美鈴",
     "category": "produce_idol",
-    "aliases": [
-      "美鈴"
-    ],
+    "aliases": ["美鈴"],
     "romanName": "Misuzu Hataya",
     "color": "#7B9ACF",
-    "role": "初星学園アイドル科生徒",
+    "roles": ["初星学園アイドル科生徒", "SyngUp!元メンバー", "1年2組"],
     "sortOrder": 12,
-    "sourceUrls": [
-      "https://gakuen.idolmaster-official.jp/idol/misuzu/"
-    ]
+    "sourceUrls": ["https://gakuen.idolmaster-official.jp/idol/misuzu/"]
   },
   {
     "id": "tsubame_amaya",
     "name": "雨夜 燕",
     "category": "produce_idol",
-    "aliases": [
-      "燕"
-    ],
+    "aliases": ["燕"],
     "romanName": "Tsubame Amaya",
     "color": "#7C69EE",
-    "role": "初星学園アイドル科生徒",
+    "roles": ["初星学園アイドル科生徒", "3年1組"],
     "sortOrder": 13,
-    "sourceUrls": [
-      "https://gakuen.idolmaster-official.jp/idol/tsubame/"
-    ]
+    "sourceUrls": ["https://gakuen.idolmaster-official.jp/idol/tsubame/"]
   },
   {
     "id": "producer",
     "name": "プロデューサー",
     "category": "other_character",
-    "aliases": [
-      "P"
-    ],
-    "role": "初星学園プロデューサー科生",
+    "aliases": ["P", "学P"],
+    "roles": ["初星学園プロデューサー科生"],
     "sortOrder": 1001,
-    "sourceUrls": [
-      "https://gakuen.idolmaster-official.jp/system/"
-    ]
+    "sourceUrls": ["https://gakuen.idolmaster-official.jp/system/"]
   },
   {
     "id": "kunio_juo",
     "name": "十王 邦夫",
     "category": "other_character",
-    "aliases": [
-      "学園長"
-    ],
+    "aliases": ["学園長"],
     "romanName": "Kunio Juo",
-    "role": "初星学園 学園長",
+    "roles": ["初星学園 学園長"],
     "sortOrder": 1002,
-    "sourceUrls": [
-      "https://gakuen.idolmaster-official.jp/idol/kunio/"
-    ]
+    "sourceUrls": ["https://gakuen.idolmaster-official.jp/idol/kunio/"]
   },
   {
     "id": "asari_neo",
     "name": "根緒 亜紗里",
     "category": "other_character",
-    "aliases": [
-      "亜紗里先生"
-    ],
+    "aliases": ["亜紗里先生"],
     "romanName": "Asari Neo",
-    "role": "初星学園 担任教員",
+    "roles": ["初星学園 担任教員"],
     "sortOrder": 1003,
-    "sourceUrls": [
-      "https://gakuen.idolmaster-official.jp/idol/asari/"
-    ]
+    "sourceUrls": ["https://gakuen.idolmaster-official.jp/idol/asari/"]
   },
   {
     "id": "yu_mashiro",
     "name": "真城 優",
     "category": "other_character",
-    "aliases": [
-      "優",
-      "真城優"
-    ],
+    "aliases": ["優", "真城優"],
     "romanName": "Yu Mashiro",
-    "role": "初星学園高等部普通科2年 / 初星学園放送部MC",
-    "tags": [
-      "hatsuboshi_student",
-      "broadcast_club"
-    ],
+    "roles": ["初星学園高等部普通科2年", "初星学園放送部MC"],
     "sortOrder": 1101,
-    "sourceUrls": [
-      "https://dic.pixiv.net/a/%E7%9C%9F%E5%9F%8E%E5%84%AA"
-    ]
+    "sourceUrls": ["https://dic.pixiv.net/a/%E7%9C%9F%E5%9F%8E%E5%84%AA"]
   },
   {
     "id": "vo_trainer",
     "name": "Voトレーナー",
     "category": "other_character",
-    "aliases": [
-      "ボーカルトレーナー"
-    ],
-    "role": "専門大学のトレーナー",
-    "tags": [
-      "trainer",
-      "voice"
-    ],
+    "aliases": ["ボーカルトレーナー"],
+    "roles": ["初星学園のトレーナー"],
     "sortOrder": 1201,
     "sourceUrls": [
       "https://dic.pixiv.net/a/%E5%AD%A6%E5%9C%92%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC"
@@ -275,14 +211,8 @@
     "id": "da_trainer",
     "name": "Daトレーナー",
     "category": "other_character",
-    "aliases": [
-      "ダンストレーナー"
-    ],
-    "role": "専門大学のトレーナー",
-    "tags": [
-      "trainer",
-      "dance"
-    ],
+    "aliases": ["ダンストレーナー"],
+    "roles": ["初星学園のトレーナー"],
     "sortOrder": 1202,
     "sourceUrls": [
       "https://dic.pixiv.net/a/%E5%AD%A6%E5%9C%92%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC"
@@ -292,14 +222,8 @@
     "id": "vi_trainer",
     "name": "Viトレーナー",
     "category": "other_character",
-    "aliases": [
-      "ビジュアルトレーナー"
-    ],
-    "role": "専門大学のトレーナー",
-    "tags": [
-      "trainer",
-      "visual"
-    ],
+    "aliases": ["ビジュアルトレーナー"],
+    "roles": ["初星学園のトレーナー"],
     "sortOrder": 1203,
     "sourceUrls": [
       "https://dic.pixiv.net/a/%E5%AD%A6%E5%9C%92%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC"
@@ -309,15 +233,9 @@
     "id": "ryusei_juo",
     "name": "十王 龍正",
     "category": "other_character",
-    "aliases": [
-      "十王社長"
-    ],
+    "aliases": ["十王社長"],
     "romanName": "Ryusei Juo",
-    "role": "100プロ社長 / 十王星南の父",
-    "tags": [
-      "hundred_pro",
-      "family"
-    ],
+    "roles": ["100プロ社長", "十王星南の父"],
     "sortOrder": 1301,
     "sourceUrls": [
       "https://dic.pixiv.net/a/%E5%AD%A6%E5%9C%92%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC"
@@ -327,35 +245,29 @@
     "id": "kei_kaya",
     "name": "賀陽 継",
     "category": "other_character",
-    "aliases": [
-      "継"
-    ],
+    "aliases": ["継"],
     "romanName": "Kei Kaya",
-    "role": "元初星学園アイドル / HIF一番星",
-    "tags": [
-      "former_hatsuboshi_student",
-      "former_idol",
-      "syngup_related"
+    "roles": [
+      "元初星学園アイドル",
+      "元H.I.F優勝者",
+      "元一番星",
+      "賀陽燐羽の姉"
     ],
     "sortOrder": 1401,
-    "sourceUrls": [
-      "https://dic.pixiv.net/a/%E8%B3%80%E9%99%BD%E7%B6%99"
-    ]
+    "sourceUrls": ["https://dic.pixiv.net/a/%E8%B3%80%E9%99%BD%E7%B6%99"]
   },
   {
     "id": "rinha_kaya",
     "name": "賀陽 燐羽",
     "category": "other_character",
-    "aliases": [
-      "燐羽"
-    ],
+    "aliases": ["燐羽"],
     "romanName": "Rinha Kaya",
-    "role": "元初星学園高等部アイドル科1年3組 / 極月学園生徒",
-    "tags": [
-      "former_hatsuboshi_student",
-      "gokugetsu_student",
-      "rival_idol",
-      "syngup_related"
+    "roles": [
+      "元初星学園高等部アイドル科1年3組",
+      "SyngUp!元リーダー",
+      "賀陽継の妹",
+      "極月学園生徒",
+      "ライバルアイドル"
     ],
     "sortOrder": 1402,
     "sourceUrls": [
@@ -366,14 +278,13 @@
     "id": "shion_shirakusa",
     "name": "白草 四音",
     "category": "other_character",
-    "aliases": [
-      "四音"
-    ],
+    "aliases": ["四音"],
     "romanName": "Shion Shirakusa",
-    "role": "極月学園1年生 / ライバルアイドル",
-    "tags": [
-      "gokugetsu_student",
-      "rival_idol"
+    "roles": [
+      "極月学園1年生",
+      "白草月花の妹",
+      "ライバルアイドル",
+      "Aランクアイドル"
     ],
     "sortOrder": 1501,
     "sourceUrls": [
@@ -384,14 +295,13 @@
     "id": "gekka_shirakusa",
     "name": "白草 月花",
     "category": "other_character",
-    "aliases": [
-      "月花"
-    ],
+    "aliases": ["月花"],
     "romanName": "Gekka Shirakusa",
-    "role": "極月学園3年生 / 白草四音の姉",
-    "tags": [
-      "gokugetsu_student",
-      "rival_idol"
+    "roles": [
+      "極月学園3年生",
+      "白草四音の姉",
+      "ライバルアイドル",
+      "Sランクアイドル"
     ],
     "sortOrder": 1502,
     "sourceUrls": [
@@ -403,14 +313,13 @@
     "id": "nadeshiko_aoi",
     "name": "藍井 撫子",
     "category": "other_character",
-    "aliases": [
-      "撫子"
-    ],
+    "aliases": ["撫子"],
     "romanName": "Nadeshiko Aoi",
-    "role": "極月学園1年生 / ライバルアイドル",
-    "tags": [
-      "gokugetsu_student",
-      "rival_idol"
+    "roles": [
+      "極月学園1年生",
+      "藍井家令嬢",
+      "ライバルアイドル",
+      "Bランクアイドル"
     ],
     "sortOrder": 1503,
     "sourceUrls": [
@@ -422,14 +331,9 @@
     "id": "kano_haikawa",
     "name": "灰川 楓乃",
     "category": "other_character",
-    "aliases": [
-      "楓乃"
-    ],
-    "role": "極月学園生徒 / ライバルアイドル",
-    "tags": [
-      "gokugetsu_student",
-      "rival_idol"
-    ],
+    "aliases": ["楓乃"],
+    "roles": ["極月学園生徒", "ライバルアイドル"],
+    "tags": ["gokugetsu_student", "rival_idol"],
     "sortOrder": 1504,
     "sourceUrls": [
       "https://dic.pixiv.net/a/%E5%AD%A6%E5%9C%92%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC"
@@ -439,14 +343,9 @@
     "id": "suiri_haikawa",
     "name": "灰川 鈴吏",
     "category": "other_character",
-    "aliases": [
-      "鈴吏"
-    ],
-    "role": "極月学園生徒 / ライバルアイドル",
-    "tags": [
-      "gokugetsu_student",
-      "rival_idol"
-    ],
+    "aliases": ["鈴吏"],
+    "roles": ["極月学園生徒", "ライバルアイドル"],
+    "tags": ["gokugetsu_student", "rival_idol"],
     "sortOrder": 1505,
     "sourceUrls": [
       "https://dic.pixiv.net/a/%E5%AD%A6%E5%9C%92%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC"
