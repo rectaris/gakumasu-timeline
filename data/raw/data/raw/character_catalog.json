@@ -234,5 +234,222 @@
     "sourceUrls": [
       "https://gakuen.idolmaster-official.jp/idol/asari/"
     ]
+  },
+  {
+    "id": "yu_mashiro",
+    "name": "真城 優",
+    "category": "other_character",
+    "aliases": [
+      "優",
+      "真城優"
+    ],
+    "romanName": "Yu Mashiro",
+    "role": "初星学園高等部普通科2年 / 初星学園放送部MC",
+    "tags": [
+      "hatsuboshi_student",
+      "broadcast_club"
+    ],
+    "sortOrder": 1101,
+    "sourceUrls": [
+      "https://dic.pixiv.net/a/%E7%9C%9F%E5%9F%8E%E5%84%AA"
+    ]
+  },
+  {
+    "id": "vo_trainer",
+    "name": "Voトレーナー",
+    "category": "other_character",
+    "aliases": [
+      "ボーカルトレーナー"
+    ],
+    "role": "専門大学のトレーナー",
+    "tags": [
+      "trainer",
+      "voice"
+    ],
+    "sortOrder": 1201,
+    "sourceUrls": [
+      "https://dic.pixiv.net/a/%E5%AD%A6%E5%9C%92%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC"
+    ]
+  },
+  {
+    "id": "da_trainer",
+    "name": "Daトレーナー",
+    "category": "other_character",
+    "aliases": [
+      "ダンストレーナー"
+    ],
+    "role": "専門大学のトレーナー",
+    "tags": [
+      "trainer",
+      "dance"
+    ],
+    "sortOrder": 1202,
+    "sourceUrls": [
+      "https://dic.pixiv.net/a/%E5%AD%A6%E5%9C%92%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC"
+    ]
+  },
+  {
+    "id": "vi_trainer",
+    "name": "Viトレーナー",
+    "category": "other_character",
+    "aliases": [
+      "ビジュアルトレーナー"
+    ],
+    "role": "専門大学のトレーナー",
+    "tags": [
+      "trainer",
+      "visual"
+    ],
+    "sortOrder": 1203,
+    "sourceUrls": [
+      "https://dic.pixiv.net/a/%E5%AD%A6%E5%9C%92%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC"
+    ]
+  },
+  {
+    "id": "ryusei_juo",
+    "name": "十王 龍正",
+    "category": "other_character",
+    "aliases": [
+      "十王社長"
+    ],
+    "romanName": "Ryusei Juo",
+    "role": "100プロ社長 / 十王星南の父",
+    "tags": [
+      "hundred_pro",
+      "family"
+    ],
+    "sortOrder": 1301,
+    "sourceUrls": [
+      "https://dic.pixiv.net/a/%E5%AD%A6%E5%9C%92%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC"
+    ]
+  },
+  {
+    "id": "kei_kaya",
+    "name": "賀陽 継",
+    "category": "other_character",
+    "aliases": [
+      "継"
+    ],
+    "romanName": "Kei Kaya",
+    "role": "元初星学園アイドル / HIF一番星",
+    "tags": [
+      "former_hatsuboshi_student",
+      "former_idol",
+      "syngup_related"
+    ],
+    "sortOrder": 1401,
+    "sourceUrls": [
+      "https://dic.pixiv.net/a/%E8%B3%80%E9%99%BD%E7%B6%99"
+    ]
+  },
+  {
+    "id": "rinha_kaya",
+    "name": "賀陽 燐羽",
+    "category": "other_character",
+    "aliases": [
+      "燐羽"
+    ],
+    "romanName": "Rinha Kaya",
+    "role": "元初星学園高等部アイドル科1年3組 / 極月学園生徒",
+    "tags": [
+      "former_hatsuboshi_student",
+      "gokugetsu_student",
+      "rival_idol",
+      "syngup_related"
+    ],
+    "sortOrder": 1402,
+    "sourceUrls": [
+      "https://dic.pixiv.net/a/%E8%B3%80%E9%99%BD%E7%87%90%E7%BE%BD"
+    ]
+  },
+  {
+    "id": "shion_shirakusa",
+    "name": "白草 四音",
+    "category": "other_character",
+    "aliases": [
+      "四音"
+    ],
+    "romanName": "Shion Shirakusa",
+    "role": "極月学園1年生 / ライバルアイドル",
+    "tags": [
+      "gokugetsu_student",
+      "rival_idol"
+    ],
+    "sortOrder": 1501,
+    "sourceUrls": [
+      "https://dic.pixiv.net/a/%E7%99%BD%E8%8D%89%E5%9B%9B%E9%9F%B3"
+    ]
+  },
+  {
+    "id": "gekka_shirakusa",
+    "name": "白草 月花",
+    "category": "other_character",
+    "aliases": [
+      "月花"
+    ],
+    "romanName": "Gekka Shirakusa",
+    "role": "極月学園3年生 / 白草四音の姉",
+    "tags": [
+      "gokugetsu_student",
+      "rival_idol"
+    ],
+    "sortOrder": 1502,
+    "sourceUrls": [
+      "https://dic.pixiv.net/a/%E5%AD%A6%E5%9C%92%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC",
+      "https://dic.pixiv.net/a/%E7%99%BD%E8%8D%89%E5%9B%9B%E9%9F%B3"
+    ]
+  },
+  {
+    "id": "nadeshiko_aoi",
+    "name": "藍井 撫子",
+    "category": "other_character",
+    "aliases": [
+      "撫子"
+    ],
+    "romanName": "Nadeshiko Aoi",
+    "role": "極月学園1年生 / ライバルアイドル",
+    "tags": [
+      "gokugetsu_student",
+      "rival_idol"
+    ],
+    "sortOrder": 1503,
+    "sourceUrls": [
+      "https://dic.pixiv.net/a/%E5%AD%A6%E5%9C%92%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC",
+      "https://dic.pixiv.net/a/%E7%99%BD%E8%8D%89%E5%9B%9B%E9%9F%B3"
+    ]
+  },
+  {
+    "id": "kano_haikawa",
+    "name": "灰川 楓乃",
+    "category": "other_character",
+    "aliases": [
+      "楓乃"
+    ],
+    "role": "極月学園生徒 / ライバルアイドル",
+    "tags": [
+      "gokugetsu_student",
+      "rival_idol"
+    ],
+    "sortOrder": 1504,
+    "sourceUrls": [
+      "https://dic.pixiv.net/a/%E5%AD%A6%E5%9C%92%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC"
+    ]
+  },
+  {
+    "id": "suiri_haikawa",
+    "name": "灰川 鈴吏",
+    "category": "other_character",
+    "aliases": [
+      "鈴吏"
+    ],
+    "role": "極月学園生徒 / ライバルアイドル",
+    "tags": [
+      "gokugetsu_student",
+      "rival_idol"
+    ],
+    "sortOrder": 1505,
+    "sourceUrls": [
+      "https://dic.pixiv.net/a/%E5%AD%A6%E5%9C%92%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC"
+    ]
   }
 ]
