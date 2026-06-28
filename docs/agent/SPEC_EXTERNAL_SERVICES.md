@@ -4,7 +4,7 @@ This policy is optional. Generated settings:
 
 - MCP policy: `true`
 - Linear sync policy: `true`
-- Graph memory policy: `false`
+- Graph memory policy: `true`
 
 ## Baseline
 
@@ -86,4 +86,23 @@ When enabling an external-service option in this repository:
 
 ## Graph Memory Policy
 
-Graph memory is disabled by this template answer. Do not assume project graph state exists. To add graph memory later, define the project identifier, schema, read/write rules, credential source, and human review boundary before any write path is used.
+- Graph memory is auxiliary to repository files, tests, validation output, and Git history.
+- Default to read-only graph queries when they can affect the task.
+- Do not write graph memory unless the user explicitly requests a graph-memory write.
+- Do not store secrets, credentials, private configuration, raw personal data, generated dependency artifacts, build artifacts, or temporary task logs in graph memory.
+- Keep canonical graph fields stable and reviewable.
+
+### Graph Memory Setup
+
+- Define a stable project identifier before reading or writing project memory.
+- Document allowed node labels, relationship types, required fields, and review rules in a project-local graph-memory spec.
+- Keep graph credentials in the agent runtime, MCP config, or secret store, not in repository files.
+- Prefer read-only queries for prior decisions, known constraints, and cross-session context.
+
+### Graph Memory Write Pattern
+
+1. Propose candidate memories from reviewed local artifacts.
+2. Exclude secrets, temporary logs, raw personal data, generated artifacts, and speculative conclusions.
+3. Review the candidate shape against the project-local graph-memory policy.
+4. Write only when the user explicitly asks for a graph-memory write or an approved project workflow authorizes it.
+5. Record important implementation decisions in repository files even when graph memory is also updated.

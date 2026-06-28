@@ -10,6 +10,7 @@ This workflow is generated for `gakumasu-timeline`.
 4. Read `default_reads` and route `required` docs.
 5. Check `docs/plan/plan.md`.
 6. Treat checked archives as history; search an index before opening full archive files when possible.
+7. Do not load raw agent logs by default. Use run manifests, search, targeted excerpts, or context compression only when the route or task requires log evidence.
 
 ## Implementation
 
@@ -23,6 +24,7 @@ This workflow is generated for `gakumasu-timeline`.
 - Treat Copier-managed workflow files as shared template surface; avoid local-only edits unless the repository intentionally diverges.
 - Preserve explicit contracts for public APIs, generated artifacts, runtime data paths, and integration boundaries.
 - Keep README files human-facing; move reusable agent policy into `docs/agent/SPEC_*.md`.
+<<<<<<< before updating
 - Treat `docs/agent/SPEC_*.md` as the mandatory routing layer for agent-facing decisions.
 - Treat `agents-rules/` as detailed playbooks, invariants, and review checklists linked from the specs or `AGENTS.md`.
 - Use `agents-rules/decision-boundaries.md` before making approval-sensitive, dependency, generated-artifact, public URL, helper, or release decisions.
@@ -34,6 +36,10 @@ This workflow is generated for `gakumasu-timeline`.
 - Mechanical data-shape changes are allowed when scoped, validated, and behavior-preserving.
 - Preserve `canonicalId` compatibility for shared URLs. If an ID must change, document the migration or compatibility decision before implementation.
 - Represent uncertainty explicitly. Do not turn unknown single-day timing into a fake concrete date.
+=======
+- Keep `.agent-logs/` and `.agent-artifacts/` local-only. Use `docs/plan` for durable summaries and links to relevant run ids, not for raw log bodies.
+- Read normative instructions directly. Do not compress `AGENTS.md`, `docs/agent/`, validation policy, or security policy.
+>>>>>>> after updating
 
 ## Review Classes
 
@@ -49,3 +55,4 @@ This workflow is generated for `gakumasu-timeline`.
 - Complete active work by archiving the active plan to `docs/plan/checked/` when plan lifecycle scripts are enabled.
 - Record validation, unresolved risks, and deferred work in the checked record.
 - Do not use deferred-completion fields for finished work.
+- If raw logs support the completion record, reference the run id and manifest path instead of copying raw log content into `docs/plan`.

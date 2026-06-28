@@ -18,7 +18,9 @@ Maintain the Gakumasu timeline application, data, and UI interactions.
 - Static security checks: `true`
 - SkillSpector scan: `true`
 - Structure scanner: `true`
-- External service policies: MCP=`true`, Linear=`true`, graph memory=`false`
+- Local agent logs: `true`
+- Context compression helper: optional, Headroom-aware when available
+- External service policies: MCP=`true`, Linear=`true`, graph memory=`true`
 
 ## Priority
 
@@ -45,7 +47,21 @@ Maintain the Gakumasu timeline application, data, and UI interactions.
 >>>>>>> after updating
 - Treat `docs/plan/checked.md` and checked archives as lookup-only history; search metadata first when possible.
 - Keep human-facing README files separate from agent-facing operational policy.
+- Keep raw agent logs and large agent artifacts local under `.agent-logs/` and `.agent-artifacts/`; do not commit them.
+- Use run manifests, search, excerpts, and optional context compression before loading large raw logs.
+- Read `AGENTS.md`, `docs/agent/`, validation policy, and security policy directly; do not route normative instructions through compression.
 - When writing or editing Japanese prose, follow `docs/agent/SPEC_JAPANESE_TECH_WRITING.md`.
+- Run decision audit before creating or materially updating active plans when meaningful design, storage, validation, lifecycle, security, or artifact-boundary choices remain open; keep the full audit out of `docs/plan/active`.
+
+## CI Autofix Rules
+
+- Codex must make minimal changes when repairing CI failures.
+- Codex must not change unrelated behavior.
+- Codex must not weaken tests to make CI pass.
+- Codex must not delete failing tests unless the user explicitly requests it.
+- Codex must not modify secrets, deployment credentials, or production settings.
+- Codex must prefer fixing root causes over skipping checks.
+- Codex must stop and report when the failure is due to missing secrets, external service outages, or environment-only issues.
 
 ## Timeline Rules
 
