@@ -162,7 +162,7 @@
     "name": "プロデューサー",
     "category": "other_character",
     "aliases": ["P", "学P"],
-    "roles": ["初星学園プロデューサー科生"],
+    "roles": ["初星学園プロデューサー科生徒"],
     "sortOrder": 1001,
     "sourceUrls": ["https://gakuen.idolmaster-official.jp/system/"]
   },
@@ -240,6 +240,16 @@
     "sourceUrls": [
       "https://dic.pixiv.net/a/%E5%AD%A6%E5%9C%92%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC"
     ]
+  },
+  {
+    "id": "takao_kuroi",
+    "name": "黒井 崇男",
+    "category": "other_character",
+    "aliases": ["黒井社長"],
+    "romanName": "Takao Kuroi",
+    "roles": ["961プロ社長", "極月学園理事長"],
+    "sortOrder": 1302,
+    "sourceUrls": ["https://dic.pixiv.net/a/%E9%BB%92%E4%BA%95%E5%B4%87%E7%94%B7"]
   },
   {
     "id": "kei_kaya",
