@@ -11,9 +11,18 @@
 
 ## 現在の backlog
 
-現在、backlog にある計画ファイルはありません。
+- [064 Three-View Application Shell](064-three-view-application-shell.md)
+  - 「物語時系列」「物語イベント」「学マス情報史」を単一アプリ内の独立ビューとして切り替える共通基盤です。
+- [065 Story Event Graph View](065-story-event-graph-view.md)
+  - 親愛度、イベント、サポカなどの各話をノードとする「物語イベント」ビューです。
+  - データ契約と表示仕様を確定してから実装を開始します。
+- [066 Gakumasu Real-World History View](066-gakumasu-realworld-history-view.md)
+  - 現実世界の日付で公式展開をたどる「学マス情報史」ビューです。
+  - 収録範囲、出典方針、暦データ契約を確定してから実装を開始します。
 
-汎用タイムラインアプリ化は、現時点では対象外です。
+064 は 065 と 066 の共通基盤です。
+
+3ビューは同じ時間軸へ重ねず、選択中の1ビューだけを表示します。
 
 ## AI エージェント向け情報
 
