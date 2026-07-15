@@ -17,6 +17,7 @@ target_files:
   - scripts/generate-data.mjs
   - scripts/validate-data.mjs
   - tests/
+  - docs/story-event/
   - docs/data-structure.md
   - docs/ui-behavior.md
   - docs/manual.md
@@ -62,6 +63,7 @@ Do not begin implementation from this backlog outline alone.
 
 Before promotion to active, produce and approve a focused specification that defines the StoryBlock contract, StoryEdge contract, time-placement rules, relation taxonomy, layout behavior, source migration policy, and minimum representative data set.
 Record only the accepted decisions in the promoted active plan.
+Use `docs/story-event/` as the canonical product specification directory for that review.
 
 Plan 064 must provide the `mode=story-graph` page boundary and selection URL contract, or this plan must coordinate that prerequisite without duplicating shell ownership.
 

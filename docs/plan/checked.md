@@ -64,3 +64,4 @@ id	path
 061	docs/plan/checked/061-side-panel-field-tooltips.md
 062	docs/plan/checked/062-manual-docs-split.md
 063	docs/plan/checked/063-editor-list-item-manual.md
+067	docs/plan/checked/067-timeline-view-specification-templates.md

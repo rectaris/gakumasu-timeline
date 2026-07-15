@@ -16,6 +16,9 @@ target_files:
   - src/style.css
   - tests/viewStateUrl.test.js
   - tests/timelineModeUrl.test.js
+  - docs/narrative-timeline/
+  - docs/story-event/
+  - docs/realworld-history/
   - docs/ui-behavior.md
   - docs/manual.md
 required_specs:
@@ -64,6 +67,7 @@ Those views may begin as explicit scoped placeholders whose contracts are filled
 - This plan is the shared foundation for plans 065 and 066.
 - Plans 065 and 066 must not extend the existing narrative page by mixing their state or data into its lane model.
 - The shell may land before either feature view is complete if unfinished modes have a clear unavailable or specification-pending state.
+- Use the three view-specific specification directories as the product contract once each specification reaches Approved status.
 
 ## Decisions
 

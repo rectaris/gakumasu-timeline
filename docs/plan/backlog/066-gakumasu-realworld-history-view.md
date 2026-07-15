@@ -17,6 +17,7 @@ target_files:
   - scripts/generate-data.mjs
   - scripts/validate-data.mjs
   - tests/
+  - docs/realworld-history/
   - docs/data-structure.md
   - docs/ui-behavior.md
   - docs/manual.md
@@ -61,6 +62,7 @@ Do not begin implementation from this backlog outline alone.
 
 Before promotion to active, produce and approve a focused specification that defines content inclusion, official-source policy, Gregorian date and time fields, category taxonomy, correction workflow, update ownership, and representative initial records.
 Record only the accepted decisions in the promoted active plan.
+Use `docs/realworld-history/` as the canonical product specification directory for that review.
 
 Plan 064 must provide the `mode=realworld` page boundary and selection URL contract, or this plan must coordinate that prerequisite without duplicating shell ownership.
 
