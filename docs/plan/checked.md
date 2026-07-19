@@ -67,3 +67,4 @@ id	path
 067	docs/plan/checked/067-timeline-view-specification-templates.md
 068	docs/plan/checked/068-story-event-initial-specification-decisions.md
 069	docs/plan/checked/069-story-event-core-data-and-graph-decisions.md
+070	docs/plan/checked/070-story-event-id-and-category-contract.md

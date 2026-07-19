@@ -16,6 +16,8 @@
 - [001 初期対象、ノード単位、物語上の流れ](001-initial-scope-node-and-flow.md)
 - [002 StoryBlockの同一性と分類](002-story-block-identity-and-classification.md)
 - [003 前後関係、意味的エッジ、ビュー間参照](003-sequence-semantic-edge-and-reference-boundaries.md)
+- [004 ID、シリーズ階層、表示タイトル](004-id-series-hierarchy-and-derived-title.md)
+- [005 カテゴリ別フィールドとデータ作成境界](005-category-fields-and-authoring-boundaries.md)
 
 ## 保存しない内容
 

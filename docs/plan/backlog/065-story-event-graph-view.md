@@ -6,8 +6,7 @@ review_class: C
 human_design_required: yes
 human_approval_status: approved
 target_files:
-  - data/raw/story_blocks/
-  - data/raw/story_edges/
+  - data/raw/story_events/
   - data/raw/worldline_commu/
   - src/data/
   - src/types/
@@ -72,12 +71,15 @@ Plan 064 must provide the `mode=story-graph` page boundary and selection URL con
 
 ## Settled Direction
 
-- Store story blocks as first-class entities with immutable project-issued IDs rather than deriving runtime identity from free-form `source` labels.
-- Store official display labels separately from structured category-specific metadata, game IDs, and legacy aliases.
+- Store story series, story blocks, story edges, and cross-view references with generated `series_`, `block_`, `edge_`, or `ref_` prefixes followed by lowercase UUID values.
+- Store StorySeries as parent-linked records and have StoryBlock reference only the leaf series.
+- Derive each StoryBlock display title by joining visible StorySeries labels and the StoryBlock leaf label with spaces instead of storing an independent title.
+- Keep typed game IDs and legacy aliases separate from hierarchy labels.
 - Store typed StoryBlock references on 物語時系列 and 学マス情報史 records and derive reverse indexes.
 - Treat the graph as a mixed multigraph that allows parallel edges and cycles.
 - Require the sequence subgraph to be acyclic while allowing cycles in the complete mixed graph.
 - Keep one canonical node for a story block and use owner, focus, or participant character roles for filtering instead of duplicating the node per character.
+- Treat each Pアイドル as a StorySeries and each in-game commu beneath it as a StoryBlock.
 - Include アイドルコミュ, イベントコミュ, サポートコミュ, and 初星コミュ in the initial scope.
 - Treat one in-game commu episode as one canonical graph node, while series and chapters remain classification metadata.
 - Express story chronology only through before-and-after sequence relations without storing in-world or real-world timestamps.
@@ -89,13 +91,16 @@ Plan 064 must provide the `mode=story-graph` page boundary and selection URL con
 - Represent undirected, forward, and bidirectional relations as one logical edge with a direction field.
 - Use controlled relation types with optional display labels and require rationale or evidence for interpretive semantic edges.
 - Author raw data in category- or series-scoped units and generate runtime indexes.
+- Use JSON files scoped to a top-level or independent editing StorySeries and do not use file paths as entity identity.
 - Use a dedicated graph renderer while reusing application-level selection, detail, color, URL, zoom, and accessibility patterns where suitable.
 
 ## Specification Work
 
-- Define the concrete namespace, format, and issuance procedure for immutable story series, story block, and edge IDs.
-- Define the concrete field contract for the category-specific hierarchy of アイドルコミュ, イベントコミュ, サポートコミュ, and 初星コミュ.
-- Define how chapter, episode number, official title, character roles, game IDs, aliases, and source details are represented.
+- Implement and validate the approved UUID namespaces for story series, story blocks, edges, and cross-view references.
+- Implement and validate parent-linked StorySeries hierarchies for アイドルコミュ, イベントコミュ, サポートコミュ, and 初星コミュ.
+- Implement generated display titles from visible hierarchy labels and the StoryBlock leaf label.
+- Implement category-specific hierarchy validation, Pアイドル series handling, character-role cardinality, typed external IDs, and display aliases.
+- Generate IDs through a script or editor action and never regenerate them from labels or hierarchy changes.
 - Evaluate relation types, generated sequence edges, and authored semantic edges through representative examples and graph prototypes.
 - Define edge evidence and confidence rules for interpretive relationships.
 - Refine top-to-bottom grouping, collision avoidance, edge routing, dense display, and isolated-node layout during UI implementation.
@@ -107,6 +112,10 @@ Plan 064 must provide the `mode=story-graph` page boundary and selection URL con
 ## Initial Validation Rules
 
 - StoryBlock, StoryEdge, and series IDs are globally unique within their namespaces.
+- IDs use the approved prefix plus lowercase UUID format and remain stable after label or hierarchy changes.
+- StorySeries parent references are acyclic and every StoryBlock resolves to one leaf series.
+- Generated display titles match the visible hierarchy path plus StoryBlock label without storing an independent title.
+- Category-specific hierarchy, character-role, external-identifier, and series-order rules pass deterministic validation.
 - Every node and edge reference resolves.
 - Edge direction and relation type use approved values.
 - Sequence edges form an acyclic partial order, while semantic edges do not change story order.

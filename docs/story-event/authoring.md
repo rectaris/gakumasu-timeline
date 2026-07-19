@@ -5,13 +5,19 @@
 
 ## Source of Truth
 
-StorySeries、StoryBlock、StoryEdge、EvidenceLinkは、カテゴリまたはシリーズ単位の編集用原データとして管理します。
+StorySeries、StoryBlock、StoryEdge、EvidenceLinkは、JSONの編集用原データとして管理します。
+
+StorySeriesとStoryBlockは、最上位または独立して編集するStorySeriesごとに1ファイルへ保存します。
 
 アプリケーションが読み込む一覧、逆引き参照、検索用索引は原データから生成します。
 
 ## StoryBlockの作成
 
-カテゴリ選択、不変IDの発行、ゲーム内IDや別名、正式な表示名、カテゴリ別階層、章と話番号、役割付き人物参照の入力手順を定義します。
+カテゴリ選択、不変IDの発行、ゲーム内IDや別名、StorySeries階層、StoryBlockの話ラベル、表示順、話数、役割付き人物参照の入力手順を定義します。
+
+StoryBlockに独立したタイトルを入力しません。
+
+表示タイトルはStorySeries階層とStoryBlockの話ラベルから生成して確認します。
 
 物語上の位置が不明なStoryBlockも登録し、前後関係を付けない状態を許容します。
 
@@ -25,7 +31,9 @@ StorySeries、StoryBlock、StoryEdge、EvidenceLinkは、カテゴリまたは�
 
 ## EvidenceLinkの作成
 
-現行 `source` 文字列からStoryBlock候補を抽出し、人手で不変IDへ対応付ける手順を定義します。
+現行 `source` 文字列からStoryBlock候補を抽出し、レビュー済み対応表で不変IDへ対応付けます。
+
+実行時に`source`文字列を解析してStoryBlockを推定しません。
 
 「物語時系列」と「学マス情報史」の参照元データへ、StoryBlock IDと参照種別を登録します。
 
@@ -35,10 +43,9 @@ StorySeries、StoryBlock、StoryEdge、EvidenceLinkは、カテゴリまたは�
 
 ## 検証
 
-参照整合性、重複、カテゴリ別階層、人物の役割、方向、relationType、`sequence`部分グラフの非循環性、URL復元を検証します。
+ID書式、参照整合性、重複、StorySeries階層、生成表示タイトル、シリーズ内表示順、人物の役割、外部識別子、方向、relationType、`sequence`部分グラフの非循環性、URL復元を検証します。
 
 ## 未決定事項
 
-- 1ファイルに保存するStoryBlock数。
 - 初期relationTypeと参照種別の一覧。
-- グラフ専用編集画面を初期実装へ含めるか。
+- ID発行スクリプトとグラフ専用編集画面の実装範囲。
