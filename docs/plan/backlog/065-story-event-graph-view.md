@@ -54,6 +54,8 @@ checked_summary_ja: 各話を1ノードとする物語イベントの時系列�
 
 Build the 物語イベント view as a top-to-bottom mixed graph of canonical story blocks.
 
+Follow the durable specification stages and MVP gate in [物語イベント仕様策定ロードマップ](../../story-event/specification-roadmap.md).
+
 A story block is one episode or comparable unit, such as `花海咲季 親愛度 第5話` or one episode inside a support-card story.
 The graph may contain undirected, one-way, and bidirectional edges.
 Edges may carry explicit semantic meaning, evidence, and uncertainty.
@@ -64,6 +66,7 @@ Do not begin implementation from this backlog outline alone.
 
 Before promotion to active, produce and approve a focused specification that defines the StoryBlock contract, minimum StoryEdge contract, before-and-after sequence rules, source migration policy, and minimum representative data set.
 Layout and remaining UI details may be refined during implementation as long as the approved graph invariants remain unchanged.
+Complete stages 4 through 7 and pass the core-specification approval gate in the specification roadmap before beginning the MVP.
 Record only the accepted decisions in the promoted active plan.
 Use `docs/story-event/` as the canonical product specification directory for that review.
 

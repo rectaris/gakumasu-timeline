@@ -68,3 +68,4 @@ id	path
 068	docs/plan/checked/068-story-event-initial-specification-decisions.md
 069	docs/plan/checked/069-story-event-core-data-and-graph-decisions.md
 070	docs/plan/checked/070-story-event-id-and-category-contract.md
+071	docs/plan/checked/071-story-event-specification-roadmap.md

@@ -15,6 +15,7 @@ StoryBlock、StoryEdge、ビュー間参照、データ作成の契約がApprove
 
 ## 文書構成
 
+- [仕様策定ロードマップ](specification-roadmap.md)：確定済みの段階、今後の決定順、MVP開始条件を記録します。
 - [データモデル](data-model.md)：StorySeries、StoryBlock、StoryEdge、EvidenceLink、IDの契約を定義します。
 - [グラフ意味論](graph-semantics.md)：方向、関係種別、循環、物語上の流れを定義します。
 - [UI挙動](ui-behavior.md)：ノード、エッジ、操作、検索、共有URLを定義します。
