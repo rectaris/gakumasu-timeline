@@ -5,23 +5,29 @@
 
 ## Source of Truth
 
-StorySeries、StoryBlock、StoryEdge、EvidenceLinkの保存場所と生成物の境界を定義します。
+StorySeries、StoryBlock、StoryEdge、EvidenceLinkは、カテゴリまたはシリーズ単位の編集用原データとして管理します。
+
+アプリケーションが読み込む一覧、逆引き参照、検索用索引は原データから生成します。
 
 ## StoryBlockの作成
 
-カテゴリ選択、ID発行、カテゴリ別階層、章と話番号、表示名、人物タグの入力手順を定義します。
+カテゴリ選択、不変IDの発行、ゲーム内IDや別名、正式な表示名、カテゴリ別階層、章と話番号、役割付き人物参照の入力手順を定義します。
 
 物語上の位置が不明なStoryBlockも登録し、前後関係を付けない状態を許容します。
 
+内容が同一であることだけを理由に、ゲーム内で別のコミュを1つのStoryBlockへ統合しません。
+
 ## StoryEdgeの作成
 
-接続先、方向、関係種別、ラベル、根拠、確度を登録する基準を定義します。
+`sequence`または`semantic`の種別、接続先、方向、relationType、ラベル、根拠、確度を登録する基準を定義します。
+
+解釈を伴う`semantic`エッジには、根拠または説明と確度を入力します。
 
 ## EvidenceLinkの作成
 
-現行 `source` 文字列からStoryBlock候補を抽出し、人手で正規IDへ対応付ける手順を定義します。
+現行 `source` 文字列からStoryBlock候補を抽出し、人手で不変IDへ対応付ける手順を定義します。
 
-「学マス情報史」からStoryBlockを参照する場合の作成手順も、参照契約の確定後に定義します。
+「物語時系列」と「学マス情報史」の参照元データへ、StoryBlock IDと参照種別を登録します。
 
 ## レビュー
 
@@ -29,10 +35,10 @@ StorySeries、StoryBlock、StoryEdge、EvidenceLinkの保存場所と生成物�
 
 ## 検証
 
-参照整合性、重複、カテゴリ別階層、方向、relationType、循環許容、相対順序、URL復元の検証を定義します。
+参照整合性、重複、カテゴリ別階層、人物の役割、方向、relationType、`sequence`部分グラフの非循環性、URL復元を検証します。
 
 ## 未決定事項
 
 - 1ファイルに保存するStoryBlock数。
-- 意味付きエッジの根拠を必須にする範囲。
+- 初期relationTypeと参照種別の一覧。
 - グラフ専用編集画面を初期実装へ含めるか。
