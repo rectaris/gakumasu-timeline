@@ -7,9 +7,13 @@
 - StoryBlock、StoryEdge、EvidenceLinkの責務。
 - ID体系と公開URLの互換方針。
 - エッジ方向とrelationTypeの意味。
-- StoryBlockの時間配置規則。
+- StoryBlockの前後関係と相対的な配置規則。
 - 自動生成エッジと手動登録エッジの境界。
 - グラフ全体の操作モデル。
+
+## 決定一覧
+
+- [001 初期対象、ノード単位、物語上の流れ](001-initial-scope-node-and-flow.md)
 
 ## 保存しない内容
 

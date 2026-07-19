@@ -9,7 +9,9 @@ StorySeries、StoryBlock、StoryEdge、EvidenceLinkの保存場所と生成物�
 
 ## StoryBlockの作成
 
-系列選択、ID発行、章と話番号、表示名、参加者、本編発生時期、公開情報の入力手順を定義します。
+カテゴリ選択、ID発行、カテゴリ別階層、章と話番号、表示名、人物タグの入力手順を定義します。
+
+物語上の位置が不明なStoryBlockも登録し、前後関係を付けない状態を許容します。
 
 ## StoryEdgeの作成
 
@@ -19,13 +21,15 @@ StorySeries、StoryBlock、StoryEdge、EvidenceLinkの保存場所と生成物�
 
 現行 `source` 文字列からStoryBlock候補を抽出し、人手で正規IDへ対応付ける手順を定義します。
 
+「学マス情報史」からStoryBlockを参照する場合の作成手順も、参照契約の確定後に定義します。
+
 ## レビュー
 
 構造エッジ、意味付きエッジ、解釈を伴う関係、公開ID変更の承認境界を定義します。
 
 ## 検証
 
-参照整合性、重複、方向、relationType、循環許容、時期、不確実性、URL復元の検証を定義します。
+参照整合性、重複、カテゴリ別階層、方向、relationType、循環許容、相対順序、URL復元の検証を定義します。
 
 ## 未決定事項
 
