@@ -1860,6 +1860,14 @@ select:focus-visible {
         transform: translateY(100%);
     }
 
+    .app-header {
+        grid-template-columns: 1fr auto;
+    }
+
+    .app-title {
+        display: none;
+    }
+
     .side-panel.open {
         transform: translateY(0);
     }
@@ -2019,6 +2027,22 @@ select:focus-visible {
     }
 
     .zoom-hints {
+        display: none;
+    }
+}
+
+@media (max-width: 420px) {
+    .header-left {
+        gap: 4px;
+        margin-left: 6px;
+    }
+
+    .header-right {
+        gap: 4px;
+        margin-right: 6px;
+    }
+
+    .header-right .portal-link {
         display: none;
     }
 }

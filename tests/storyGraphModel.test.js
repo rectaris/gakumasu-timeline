@@ -1,0 +1,83 @@
+import { describe, expect, it } from "vitest";
+import rawStoryGraph from "../data/raw/story_events/mvp.json";
+import {
+  collectStoryGraphErrors,
+  collectStoryReferenceErrors,
+  normalizeStoryGraphData,
+} from "../src/data/storyGraphModel";
+
+describe("story graph data model", () => {
+  it("validates and derives titles from the series hierarchy", () => {
+    expect(collectStoryGraphErrors(rawStoryGraph)).toEqual([]);
+
+    const graph = normalizeStoryGraphData(rawStoryGraph);
+    expect(
+      graph.blockById.get(
+        "block_20000000-0000-4000-8000-000000000002",
+      ).title,
+    ).toBe("花海咲季 親愛度 STEP1 第5話");
+    expect(
+      graph.blockById.get(
+        "block_20000000-0000-4000-8000-000000000008",
+      ).title,
+    ).toBe("おでん、とおりま〜すッ！ 向き合うべきはおでん？");
+  });
+
+  it("rejects unsupported direction and relation combinations", () => {
+    const data = structuredClone(rawStoryGraph);
+    data.edges[7].direction = "undirected";
+
+    expect(collectStoryGraphErrors(data)).toContain(
+      "edges[7]: relationTypeとdirectionの組み合わせが不正です。",
+    );
+  });
+
+  it("rejects self edges", () => {
+    const data = structuredClone(rawStoryGraph);
+    data.edges[0].targetBlockId = data.edges[0].sourceBlockId;
+
+    expect(collectStoryGraphErrors(data)).toContain(
+      "edges[0]: 自己エッジは登録できません。",
+    );
+  });
+
+  it("rejects cycles in the sequence subgraph but allows semantic cycles", () => {
+    expect(collectStoryGraphErrors(rawStoryGraph)).toEqual([]);
+    const data = structuredClone(rawStoryGraph);
+    data.edges.push({
+      id: "edge_30000000-0000-4000-8000-000000000099",
+      sourceBlockId: "block_20000000-0000-4000-8000-000000000002",
+      targetBlockId: "block_20000000-0000-4000-8000-000000000001",
+      kind: "sequence",
+      direction: "forward",
+      relationType: "before",
+      origin: "authored",
+      rationale: "循環検証用。",
+      confidence: "confirmed",
+    });
+
+    expect(collectStoryGraphErrors(data)).toContain(
+      "edges: sequence部分グラフが循環しています。",
+    );
+  });
+
+  it("validates source-owned StoryReferences against canonical blocks", () => {
+    const blockIds = new Set(rawStoryGraph.blocks.map((block) => block.id));
+    const reference = {
+      id: "ref_40000000-0000-4000-8000-000000000001",
+      storyBlockId: rawStoryGraph.blocks[0].id,
+      type: "source",
+      order: 0,
+    };
+
+    expect(collectStoryReferenceErrors([reference], blockIds)).toEqual([]);
+    expect(
+      collectStoryReferenceErrors(
+        [{ ...reference, storyBlockId: "block_20000000-0000-4000-8000-999999999999" }],
+        blockIds,
+      ),
+    ).toContain(
+      "storyReferences[0].storyBlockId: 参照先StoryBlockが存在しません。",
+    );
+  });
+});

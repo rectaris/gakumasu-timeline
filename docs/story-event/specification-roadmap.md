@@ -1,9 +1,9 @@
 # 物語イベント仕様策定ロードマップ
 
 - 状態：In progress
-- 更新日：2026-07-20
+- 更新日：2026-07-24
 - 関連仕様：[物語イベント仕様](README.md)
-- 関連プラン：[065 Story Event Graph View](../plan/backlog/065-story-event-graph-view.md)
+- 関連プラン：[065 Story Event Graph View](../plan/checked/065-story-event-graph-view.md)
 
 ## 目的
 
@@ -27,19 +27,19 @@
   ↓
 第3段階 ID、シリーズ階層、表示タイトル        Completed
   ↓
-第4段階 StoryEdgeの初期契約                   Next
+第4段階 StoryEdgeの初期契約                   Completed
   ↓
-第5段階 ビュー間参照契約                      Pending
+第5段階 ビュー間参照契約                      Completed
   ↓
-第6段階 代表データと保存スキーマ              Pending
+第6段階 代表データと保存スキーマ              Completed
   ↓
-第7段階 データ作成、検証、移行                Pending
+第7段階 データ作成、検証、移行                Completed
   ↓
-コア仕様承認ゲート                            Gate
+コア仕様承認ゲート                            Passed
   ↓
-第8段階 MVP実装とUI調整                       Pending
+第8段階 MVP実装とUI調整                       Completed
   ↓
-第9段階 MVP評価と次期実装判断                 Pending
+第9段階 MVP評価と次期実装判断                 Next
 ```
 
 ## 第1段階：対象範囲とノード単位
@@ -109,7 +109,7 @@
 
 ## 第4段階：StoryEdgeの初期契約
 
-- 状態：Next
+- 状態：Completed
 - 依存：第2段階、第3段階
 
 ### 決める内容
@@ -134,7 +134,7 @@
 
 ## 第5段階：ビュー間参照契約
 
-- 状態：Pending
+- 状態：Completed
 - 依存：第4段階
 
 ### 決める内容
@@ -158,7 +158,7 @@
 
 ## 第6段階：代表データと保存スキーマ
 
-- 状態：Pending
+- 状態：Completed
 - 依存：第4段階、第5段階
 
 ### 決める内容
@@ -189,7 +189,7 @@
 
 ## 第7段階：データ作成、検証、移行
 
-- 状態：Pending
+- 状態：Completed
 - 依存：第6段階
 
 ### 決める内容
@@ -214,7 +214,7 @@
 
 ## コア仕様承認ゲート
 
-- 状態：Gate
+- 状態：Passed
 - 依存：第4段階から第7段階
 
 ### 承認条件
@@ -226,11 +226,11 @@
 - MVP中に変更できるUI事項と、変更してはならないデータ不変条件が区別されていること。
 - 共通シェルを扱うプラン064とのURL境界が整合していること。
 
-承認後、仕様を`Approved 1.0`へ変更し、プラン065をactiveへ昇格してMVP実装を開始します。
+2026-07-24に仕様を`Approved 1.0`へ変更し、プラン065をactiveへ昇格しました。
 
 ## 第8段階：MVP実装とUI調整
 
-- 状態：Pending
+- 状態：Completed
 - 依存：コア仕様承認ゲート、プラン064の共通シェル境界
 
 ### MVPへ含める範囲
@@ -277,7 +277,7 @@
 
 ## 第9段階：MVP評価と次期実装判断
 
-- 状態：Pending
+- 状態：Next
 - 依存：第8段階
 
 ### 決める内容

@@ -14,16 +14,12 @@
 - [064 Three-View Application Shell](064-three-view-application-shell.md)
   - 「物語時系列」「物語イベント」「学マス情報史」を単一アプリ内の独立ビューとして切り替える共通基盤です。
   - 関連仕様：[物語時系列](../../narrative-timeline/README.md)、[物語イベント](../../story-event/README.md)、[学マス情報史](../../realworld-history/README.md)
-- [065 Story Event Graph View](065-story-event-graph-view.md)
-  - 親愛度、イベント、サポカなどの各話をノードとする「物語イベント」ビューです。
-  - データ契約と表示仕様を確定してから実装を開始します。
-  - 仕様書：[物語イベント仕様](../../story-event/README.md)
 - [066 Gakumasu Real-World History View](066-gakumasu-realworld-history-view.md)
   - 現実世界の日付で公式展開をたどる「学マス情報史」ビューです。
   - 収録範囲、出典方針、暦データ契約を確定してから実装を開始します。
   - 仕様書：[学マス情報史仕様](../../realworld-history/README.md)
 
-064 は 065 と 066 の共通基盤です。
+064 は、MVPを完了した[065 Story Event Graph View](../checked/065-story-event-graph-view.md)と066の共通基盤です。
 
 3ビューは同じ時間軸へ重ねず、選択中の1ビューだけを表示します。
 

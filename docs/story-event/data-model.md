@@ -1,7 +1,7 @@
 # 物語イベントのデータモデル
 
-- 状態：Draft
-- 仕様バージョン：0.1
+- 状態：Approved
+- 仕様バージョン：1.0
 
 ## 対象
 
@@ -129,31 +129,46 @@ PアイドルはStorySeriesとして扱い、その配下にあるゲーム内�
 
 1つの論理エッジとして、次の情報を保持します。
 
-- 不変ID。
-- 接続元StoryBlock ID。
-- 接続先StoryBlock ID。
-- `sequence`または`semantic`のエッジ種別。
-- `undirected`、`forward`、`bidirectional`の方向。
-- 制御されたrelationType。
-- 任意の表示ラベル。
-- 必要に応じた根拠と確度。
+- `id`：`edge_`から始まる不変ID。
+- `sourceBlockId`、`targetBlockId`：接続するStoryBlock ID。
+- `kind`：`sequence`または`semantic`。
+- `direction`：`undirected`、`forward`、`bidirectional`。
+- `relationType`：制御された関係種別。
+- `label`：任意の表示ラベル。`other`では必須です。
+- `origin`：`authored`または`generated`。
+- `rationale`：関係を登録した理由。
+- `evidence`：根拠となる自由記述または出典識別子の配列。
+- `confidence`：`confirmed`、`inferred`、`speculative`。
 
-### EvidenceLink（仮称）
+`sequence`は`forward`かつ`before`だけを許可します。
+手動登録した`sequence`と全`semantic`には、`rationale`または`evidence`と`confidence`を要求します。
+シリーズで話番号順の生成を明示した場合だけ、`generated`の`sequence`を作成できます。
+
+### StoryReference
 
 「物語時系列」または「学マス情報史」の要素からStoryBlockを参照する型付き契約を定義します。
 
-参照元のデータがStoryBlock IDと参照種別を保持します。
+参照元のデータが次の情報を保持します。
+
+- `id`：`ref_`から始まる不変ID。
+- `storyBlockId`：参照するStoryBlock ID。
+- `type`：`evidence`、`source`、`subject`、`related`。
+- `label`：任意の補助表示。
+- `note`：任意の登録注記。
+- `order`：同じ参照元に複数ある場合の任意の表示順。
 
 StoryBlockから参照元を列挙する逆引き情報は、保存データへ重複させずに生成します。
+1つの参照元から複数のStoryBlockを参照できます。
+削除済みまたは未登録のStoryBlockへの参照は検証エラーとし、参照を伴うStoryBlockの削除は暗黙に連鎖させません。
 
 ## ID
 
-系列、ノード、エッジ、EvidenceLinkには、次の接頭辞と小文字UUIDを組み合わせた不変IDを発行します。
+系列、ノード、エッジ、StoryReferenceには、次の接頭辞と小文字UUIDを組み合わせた不変IDを発行します。
 
 - StorySeries：`series_<uuid>`。
 - StoryBlock：`block_<uuid>`。
 - StoryEdge：`edge_<uuid>`。
-- EvidenceLink：`ref_<uuid>`。
+- StoryReference：`ref_<uuid>`。
 
 UUIDはハイフンを含む標準形式で保存します。
 
@@ -185,8 +200,4 @@ StoryBlockには物語内時刻や現実世界の日時を保持しません。
 
 IDの書式と一意性、参照整合性、StorySeriesの循環、許可されたカテゴリ階層、StoryBlockラベル、シリーズ内表示順、人物の役割、外部識別子、方向、関係種別、自己エッジ、並列エッジ、前後関係の循環を検証します。
 
-## 未決定事項
-
-- ビューごとの参照種別と多重度。
-- EvidenceLinkを汎用的なビュー間参照に改称するかどうか。
-- `episodeOrder`を自動取得できないコミュの入力基準。
+`episodeOrder`を確認できない場合は省略し、推測値を保存しません。

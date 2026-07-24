@@ -1,5 +1,16 @@
 # UI 挙動
 
+## ビュー境界
+
+`src/ApplicationRoot.vue`は、URLの`mode`から表示するページを1つだけ選びます。
+
+- `mode`なし、`mode=narrative`、不正な値は「物語時系列」を表示します。
+- `mode=story-graph`は「物語イベント」を表示します。
+- `mode=realworld`は「学マス情報史」の準備中画面を表示します。
+- モード変更は`history.pushState`を使用し、`popstate`で表示を復元します。
+- 各ビュー固有のクエリは別のビューへ持ち越しません。
+- 開発用の`editor=worldline`は従来どおり編集画面を優先します。
+
 ## 水平移動 / 拡大縮小
 
 `src/App.vue` と `src/composables/useZoomMachine.js` では、水平方向を連続 viewport として扱います。
@@ -234,3 +245,19 @@
 - 文字色は公式色または既存データ色から解決した表示ロールを使用します
 - 背景色は OKLCH で色相反転＋高明度/低彩度に調整し、必要に応じてコントラストを確保します
 - 色の出典と派生ロールの詳細は `docs/color-system.md` にまとめます
+
+## 物語イベントグラフ
+
+`src/pages/StoryGraphPage.vue`は、StoryBlockをHTMLボタン、StoryEdgeをSVGパスとして同じ変形ステージへ描画します。
+
+- `sequence`エッジだけから段を計算し、接続先を接続元より下へ置きます。
+- `semantic`エッジは配置計算へ使用しません。
+- `sequence`を持たないノードは前後関係未確定領域へ置きます。
+- 描画座標、ノード間距離、エッジ長には時間的な意味を持たせません。
+- 実線は`sequence`、破線は`semantic`を表します。
+- `forward`は終点側、`bidirectional`は両端に矢印を表示します。
+- `undirected`は矢印を表示しません。
+- ノードとエッジはポインターとキーボードの両方で選択できます。
+- ノード選択は`node`、エッジ選択は`edge`へ保存し、同時には使用しません。
+- 絞り込み結果が変わると、表示中の全体が収まる倍率へ調整します。
+- 狭い画面では詳細パネルを画面下部へ配置します。

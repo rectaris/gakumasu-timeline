@@ -1,11 +1,11 @@
 # 物語イベントのデータ作成
 
-- 状態：Draft
-- 仕様バージョン：0.1
+- 状態：Approved
+- 仕様バージョン：1.0
 
 ## Source of Truth
 
-StorySeries、StoryBlock、StoryEdge、EvidenceLinkは、JSONの編集用原データとして管理します。
+StorySeries、StoryBlock、StoryEdge、StoryReferenceは、JSONの編集用原データとして管理します。
 
 StorySeriesとStoryBlockは、最上位または独立して編集するStorySeriesごとに1ファイルへ保存します。
 
@@ -29,13 +29,16 @@ StoryBlockに独立したタイトルを入力しません。
 
 解釈を伴う`semantic`エッジには、根拠または説明と確度を入力します。
 
-## EvidenceLinkの作成
+## StoryReferenceの作成
 
 現行 `source` 文字列からStoryBlock候補を抽出し、レビュー済み対応表で不変IDへ対応付けます。
 
 実行時に`source`文字列を解析してStoryBlockを推定しません。
 
 「物語時系列」と「学マス情報史」の参照元データへ、StoryBlock IDと参照種別を登録します。
+
+参照から物語イベントを開くURLは`?mode=story-graph&node=<StoryBlock ID>`とします。
+参照は参照元側へ保存し、StoryBlock側の逆引きは生成します。
 
 ## レビュー
 
@@ -45,7 +48,10 @@ StoryBlockに独立したタイトルを入力しません。
 
 ID書式、参照整合性、重複、StorySeries階層、生成表示タイトル、シリーズ内表示順、人物の役割、外部識別子、方向、relationType、`sequence`部分グラフの非循環性、URL復元を検証します。
 
-## 未決定事項
+## MVPの作成境界
 
-- 初期relationTypeと参照種別の一覧。
-- ID発行スクリプトとグラフ専用編集画面の実装範囲。
+- IDは`npm run story:id -- <series|block|edge|ref>`で発行します。
+- MVPではグラフ専用編集画面を作りません。
+- 原データの未知フィールドは入力誤りを検出するため拒否します。
+- `schemaVersion`のメジャー値を変更する場合は生成処理と保存データを同時に移行します。
+- 既存`source`文字列の全件移行はMVPに含めません。

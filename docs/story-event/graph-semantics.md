@@ -1,7 +1,7 @@
 # 物語イベントのグラフ意味論
 
-- 状態：Draft
-- 仕様バージョン：0.1
+- 状態：Approved
+- 仕様バージョン：1.0
 
 ## グラフ形式
 
@@ -25,7 +25,22 @@ StoryBlockを1つの正規ノードとして扱い、参加キャラクターご
 
 relationTypeは制御された値として保存し、必要に応じて任意の表示ラベルを併用します。
 
-初期relationType一覧は、グラフの試作と代表例の検討を通じて決定します。
+初期relationTypeと方向は次のとおりです。
+
+| kind | relationType | 許可する方向 | 意味 |
+| --- | --- | --- | --- |
+| sequence | `before` | `forward` | 接続元が接続先より物語上で前 |
+| semantic | `continuation` | `forward` | 内容上の続き |
+| semantic | `reference` | `forward`, `bidirectional` | 一方または相互の参照 |
+| semantic | `same_event` | `undirected` | 同じ出来事を扱う |
+| semantic | `alternative` | `undirected` | 代替的な展開 |
+| semantic | `complement` | `undirected` | 相互に内容を補う |
+| semantic | `contrast` | `undirected` | 対比関係 |
+| semantic | `other` | すべて | 初期一覧にない関係 |
+
+`other`では表示ラベルを必須とします。
+既存relationTypeの意味または許可方向を変える場合はデータ移行と仕様レビューを要求します。
+既存の意味を変えないrelationTypeの追加はMVP評価で扱えます。
 
 ## 前後関係と意味的関係
 
@@ -49,8 +64,12 @@ relationTypeは制御された値として保存し、必要に応じて任意�
 
 話番号などから機械的に生成する`sequence`エッジには、個別の解釈根拠を要求しません。
 
-## 未決定事項
+確度は`confirmed`、`inferred`、`speculative`のいずれかです。
 
-- 初期relationType一覧と方向の許可組み合わせ。
-- 自己エッジを許可する例外条件。
-- 循環を利用者へ説明する方法。
+## 重複と削除
+
+- 自己エッジは禁止します。
+- kind、direction、relationType、および方向を正規化した端点が同一のエッジは重複として拒否します。
+- relationTypeが異なる並列エッジは許可します。
+- 同じ関係を支える複数の根拠は1エッジの`evidence`へまとめます。
+- 接続中のStoryBlock削除は拒否し、暗黙の連鎖削除をしません。

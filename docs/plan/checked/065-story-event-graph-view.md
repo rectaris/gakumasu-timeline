@@ -1,6 +1,6 @@
 # Story Event Graph View
 
-status: backlog
+status: completed
 task_type: product_logic
 review_class: C
 human_design_required: yes
@@ -13,6 +13,8 @@ target_files:
   - src/pages/StoryGraphPage.vue
   - src/components/story-graph/
   - src/composables/
+  - src/utils/storyGraph.js
+  - src/utils/timelineModeUrl.js
   - scripts/generate-data.mjs
   - scripts/validate-data.mjs
   - tests/
@@ -60,17 +62,16 @@ A story block is one episode or comparable unit, such as `花海咲季 親愛度
 The graph may contain undirected, one-way, and bidirectional edges.
 Edges may carry explicit semantic meaning, evidence, and uncertainty.
 
-## Start Gate
+## Start Gate Result
 
-Do not begin implementation from this backlog outline alone.
+The user approved the proposed StoryEdge, StoryReference, representative-data,
+validation, and MVP boundaries on 2026-07-24. The accepted contracts are recorded
+as `Approved 1.0` under `docs/story-event/`.
 
-Before promotion to active, produce and approve a focused specification that defines the StoryBlock contract, minimum StoryEdge contract, before-and-after sequence rules, source migration policy, and minimum representative data set.
-Layout and remaining UI details may be refined during implementation as long as the approved graph invariants remain unchanged.
-Complete stages 4 through 7 and pass the core-specification approval gate in the specification roadmap before beginning the MVP.
-Record only the accepted decisions in the promoted active plan.
-Use `docs/story-event/` as the canonical product specification directory for that review.
-
-Plan 064 must provide the `mode=story-graph` page boundary and selection URL contract, or this plan must coordinate that prerequisite without duplicating shell ownership.
+This plan owns only the minimum application-shell subset needed to address
+`mode=story-graph` and restore `node` or `edge` selection. Plan 064 remains the
+owner of the complete three-view shell, remembered per-view state, and the final
+学マス情報史 page.
 
 ## Settled Direction
 
@@ -138,3 +139,50 @@ Plan 064 must provide the `mode=story-graph` page boundary and selection URL con
 - Do not derive authoritative node IDs solely from Japanese display titles.
 - Do not replace the existing 物語時系列 event model.
 - Do not implement automatic source scraping as part of the first graph release.
+
+## MVP Decisions
+
+- Render the representative graph with repository-native Vue, HTML, CSS, and SVG;
+  do not add a graph-layout dependency before MVP evaluation.
+- Generate runtime data from a reviewed JSON source and reject invalid IDs,
+  hierarchy cycles, dangling references, illegal direction/type pairs, duplicate
+  logical edges, self-edges, and sequence cycles.
+- Use fixed-rank top-to-bottom layout derived only from sequence edges. Semantic
+  edges and visual distance never change chronology.
+- Keep unknown-position blocks valid and show them in a separate isolated area.
+- Mount only the active heavy view. Preserve the existing narrative timeline as
+  the default when `mode` is absent or invalid.
+- Treat the included records as representative MVP data, not a claim of complete
+  story coverage.
+
+## Work Log
+
+- [x] Promote plan 065 and record the decision audit.
+- [x] Approve stages 4 through 7 and the core specification gate.
+- [x] Add representative raw StorySeries, StoryBlock, and StoryEdge data.
+- [x] Generate runtime data and deterministic integrity validation.
+- [x] Add stable ID generation for authoring.
+- [x] Add the minimum three-mode application boundary and URL parser.
+- [x] Implement top-to-bottom nodes, mixed edge directions, isolated nodes, and
+      responsive details.
+- [x] Implement search, category/person filters, zoom, pan, pointer selection,
+      keyboard selection, and URL restoration.
+- [x] Add unit tests and update user/data/UI documentation.
+- [x] Run data validation, tests, build, browser/keyboard/mobile verification,
+      change validation, and diff checks.
+
+## Completion Record
+
+- `npm run verify`: passed with 101 unit tests and a production Vite build.
+- `node scripts/verify-story-graph.mjs`: passed at 1440×900 and 390×844,
+  including direct URL restoration, browser history, selection, filtering, zoom,
+  pan, keyboard navigation, responsive details, and all three mode boundaries.
+- `python3 scripts/validate-changes.py`: passed.
+- `python3 scripts/security-static-check.py`: passed.
+- `bash scripts/format-plan-docs.sh --check`: passed.
+- `git diff --check`: passed.
+- No runtime or development dependency was added.
+
+The MVP contains representative records only. Full commu registration,
+source-string migration, the dedicated editor, dense-graph optimization, and the
+final real-world history page remain follow-up work.

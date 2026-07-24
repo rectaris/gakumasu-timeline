@@ -8,6 +8,7 @@
     "test": "vitest run",
     "measure:layout": "node scripts/measure-timeline-layout.mjs",
     "generate:data": "node scripts/generate-data.mjs",
+    "story:id": "node scripts/create-story-id.mjs",
     "validate:data": "node scripts/generate-data.mjs --check && node scripts/validate-data.mjs",
     "verify": "npm run validate:data && npm run test && npm run build",
     "build": "vite build",

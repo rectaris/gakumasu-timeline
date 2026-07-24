@@ -2,6 +2,7 @@ import { readdirSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { assertValidStoryGraphData } from "../src/data/storyGraphModel.js";
 
 const GENERATED_DATA_ROOT = "src/data/generated";
 const RAW_DATA_ROOT = "data/raw";
@@ -11,6 +12,11 @@ const STATIC_GENERATED_DATA_FILES = [
     category: "commonTimeline",
     raw: "data/raw/worldline_commu/common_timeline.json",
     generated: "src/data/generated/worldline_commu/common_timeline.js",
+  },
+  {
+    category: "storyEvents",
+    raw: "data/raw/story_events/mvp.json",
+    generated: "src/data/generated/story_events/mvp.js",
   },
 ];
 
@@ -255,10 +261,20 @@ async function loadRawLane(sourceFile) {
   return lane;
 }
 
-export async function renderGeneratedFile(file) {
-  const lane = await loadRawLane(file.raw);
+async function loadRawStoryGraph(sourceFile) {
+  const rawContent = await fs.readFile(sourceFile, "utf8");
+  const graph = JSON.parse(rawContent);
+  return assertValidStoryGraphData(graph, sourceFile);
+}
 
-  return `${HEADER}const lane = ${renderValue(lane, 0)};\n\nexport default lane;\n`;
+export async function renderGeneratedFile(file) {
+  const data =
+    file.category === "storyEvents"
+      ? await loadRawStoryGraph(file.raw)
+      : await loadRawLane(file.raw);
+  const bindingName = file.category === "storyEvents" ? "data" : "lane";
+
+  return `${HEADER}const ${bindingName} = ${renderValue(data, 0)};\n\nexport default ${bindingName};\n`;
 }
 
 export async function generateDataFiles({

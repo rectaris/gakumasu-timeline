@@ -18,6 +18,7 @@
 - [003 前後関係、意味的エッジ、ビュー間参照](003-sequence-semantic-edge-and-reference-boundaries.md)
 - [004 ID、シリーズ階層、表示タイトル](004-id-series-hierarchy-and-derived-title.md)
 - [005 カテゴリ別フィールドとデータ作成境界](005-category-fields-and-authoring-boundaries.md)
+- [006 MVPコア契約](006-mvp-core-contract.md)
 
 ## 保存しない内容
 

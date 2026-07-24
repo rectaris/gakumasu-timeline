@@ -282,3 +282,39 @@ focused validation は指定ファイルを主対象にしますが、イベン�
 
 参加者 ID は既存の `participants`、出典状態と不確実性は上記の任意メタデータで扱います。
 raw/generated の契約変更は、通常のデータ追加とは別の実装計画で扱います。
+
+## 物語イベントMVPのデータ
+
+物語イベントの編集元データは`data/raw/story_events/mvp.json`です。
+`npm run generate:data`は、検証後の生成物を`src/data/generated/story_events/mvp.js`へ出力します。
+
+ルートは`schemaVersion`、`dataset`、`series`、`blocks`、`edges`を持ちます。
+`dataset.status`が`representative`のデータは、表示と契約の確認用であり、全件版として扱いません。
+
+StorySeriesは`series_<小文字UUID>`形式のID、カテゴリ、階層種別、ラベル、任意の親IDを持ちます。
+StoryBlockは`block_<小文字UUID>`形式のID、末端のStorySeries ID、話ラベル、役割付き人物を持ちます。
+表示タイトルはStorySeriesのラベルを親から順に並べ、最後に話ラベルを追加して生成します。
+
+StoryEdgeは`edge_<小文字UUID>`形式のID、接続元と接続先のStoryBlock ID、`kind`、`direction`、`relationType`、`origin`を持ちます。
+手動登録するエッジには、理由または根拠と確度が必要です。
+`sequence`は`forward`かつ`before`だけを許可し、`semantic`は物語上の配置順へ影響しません。
+
+IDは表示名から作らず、次のコマンドで発行します。
+
+```bash
+npm run story:id -- series
+npm run story:id -- block
+npm run story:id -- edge
+npm run story:id -- ref
+```
+
+`npm run validate:data`は、物語イベントについて次の条件も検証します。
+
+- IDの形式と重複。
+- StorySeriesの親参照、許可階層、循環。
+- StoryBlockからStorySeriesへの参照とアイドルコミュのowner。
+- StoryEdgeの参照先、方向、relationType、根拠、確度。
+- 自己エッジと同一論理エッジの重複。
+- `sequence`部分グラフの循環。
+
+保存契約、意味論、作成境界の正規仕様は[物語イベント仕様](story-event/README.md)に保存します。

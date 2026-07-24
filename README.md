@@ -1,14 +1,37 @@
 # gakumasu-timeline
 
-キャラクターやストーリーごとの出来事（期間）を、横軸＝時間・縦軸＝レーンで可視化するタイムライン表示アプリです。
+学園アイドルマスターの出来事を、独立した複数の見方でたどるアプリです。
+
+現在は、キャラクターやストーリーごとの出来事をレーンで示す「物語時系列」と、ゲーム内の各コミュを1ノードとして関係を示す「物語イベント」MVPを表示できます。
+「学マス情報史」は現実世界史として表示境界だけを用意しており、内容は今後実装します。
 
 ## 公開サイト（GitHub Pages）
 
 このプロジェクトは GitHub Pages 上で動作することを前提としています。
 
 - URL: `https://rectaris.github.io/timeline/`
+- 物語イベントMVP: `https://rectaris.github.io/timeline/?mode=story-graph`
 
 ## 使い方（サイト操作）
+
+### ビューの切り替え
+
+- ヘッダーの「表示」から「物語時系列」「物語イベント」「学マス情報史」を選択できます。
+- 「物語時系列」は従来のレーン型タイムラインです。
+- 「物語イベント」は、1つのコミュを1ノードとして前後関係と意味的関係を表示します。
+- 「学マス情報史」は開発準備中です。
+
+### 物語イベントMVP
+
+- ノードを選ぶと、カテゴリ、シリーズ階層、人物タグ、物語上の位置を確認できます。
+- 実線は物語上の前後関係、破線は配置順を変えない意味的関係です。
+- ノード間距離と線の長さは、経過時間を表しません。
+- 前後関係が未確定の話は、孤立ノードとして別領域に表示します。
+- 検索、カテゴリ、人物で表示を絞り込めます。
+- ドラッグで移動し、ホイールまたは画面左下の操作で拡大縮小できます。
+- ノードへフォーカスした状態では、上下キーで前後関係、左右キーで表示中の隣接ノードへ移動できます。
+- `?mode=story-graph&node=<StoryBlock ID>`または`edge=<StoryEdge ID>`で選択を復元できます。
+- 現在の収録内容は表示とデータ契約を検証する代表データであり、全コミュを網羅していません。
 
 ### 画面の見方
 
@@ -100,6 +123,8 @@
 
 - 編集元データ: [data/raw/worldline_commu/](data/raw/worldline_commu/)
 - 生成済みデータ: [src/data/generated/worldline_commu/](src/data/generated/worldline_commu/)
+- 物語イベントの編集元代表データ: [data/raw/story_events/](data/raw/story_events/)
+- 物語イベントの生成済みデータ: [src/data/generated/story_events/](src/data/generated/story_events/)
 - データ集約: [src/data/index.js](src/data/index.js)（`idolCommu` / `hatsuboshiCommus` / `eventCommus` / `supportCardCommus`）
 - 世界線一覧: [src/data/worldlines.js](src/data/worldlines.js)
 - キャラクター一覧: [src/data/characterCatalog.js](src/data/characterCatalog.js)
