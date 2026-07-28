@@ -9,7 +9,6 @@ import {
   watch,
 } from "vue";
 import TimelineModeSwitcher from "../components/TimelineModeSwitcher.vue";
-import { usePersistedSettings } from "../composables/usePersistedSettings";
 import { storyGraph } from "../data/storyGraph";
 import {
   createNarrativeEventUrl,
@@ -24,8 +23,6 @@ import {
   STORY_DIRECTION_LABELS,
   STORY_RELATION_LABELS,
 } from "../utils/storyGraph";
-
-usePersistedSettings();
 
 const viewportRef = ref(null);
 const selected = ref(null);
@@ -323,11 +320,19 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section class="story-page">
+  <section
+    class="story-page"
+    role="main"
+    aria-labelledby="story-graph-page-title"
+  >
     <header class="story-header">
       <div class="story-header__identity">
         <span class="story-header__eyebrow">STORY GRAPH</span>
-        <h1>物語イベント</h1>
+        <h1
+          id="story-graph-page-title"
+          data-timeline-page-heading
+          tabindex="-1"
+        >物語イベント</h1>
       </div>
       <div class="story-header__actions">
         <TimelineModeSwitcher />

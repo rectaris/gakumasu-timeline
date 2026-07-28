@@ -14,42 +14,43 @@ import {
   eventCommus,
   supportCardCommus,
   commonTimeline
-} from "./data";
-import { characterCatalog } from "./data/characterCatalog";
-import { worldlines } from "./data/worldlines";
-import { useKeyboard } from "./composables/useKeyboard";
-import { useMenuState } from "./composables/useMenuState";
-import { usePointer } from "./composables/usePointer";
-import { useCategoryFilter } from "./composables/useCategoryFilter";
-import { useEventSearchFilter } from "./composables/useEventSearchFilter";
-import { useSelection } from "./composables/useSelection";
-import { useEventDetailContext } from "./composables/useEventDetailContext";
-import { useTimelineData } from "./composables/useTimelineData";
-import { useTimelineLayout } from "./composables/useTimelineLayout";
-import { useTimelineMetrics } from "./composables/useTimelineMetrics";
-import { useTimelineScales } from "./composables/useTimelineScales";
-import { useZoomMachine } from "./composables/useZoomMachine";
-import { usePersistedSettings } from "./composables/usePersistedSettings";
-import ManualModal from "./components/ManualModal.vue";
-import ZoomControls from "./components/ZoomControls.vue";
-import SidePanel from "./components/SidePanel.vue";
-import AdSlot from "./components/AdSlot.vue";
-import IntroGuide from "./components/IntroGuide.vue";
-import TimelineScaleOverlay from "./components/TimelineScaleOverlay.vue";
-import TimelineSvg from "./components/TimelineSvg.vue";
-import TimelineModeSwitcher from "./components/TimelineModeSwitcher.vue";
-import { invertHexColor } from "./utils/colors";
+} from "../data";
+import { characterCatalog } from "../data/characterCatalog";
+import { worldlines } from "../data/worldlines";
+import { useKeyboard } from "../composables/useKeyboard";
+import { useMenuState } from "../composables/useMenuState";
+import { usePointer } from "../composables/usePointer";
+import { useCategoryFilter } from "../composables/useCategoryFilter";
+import { useEventSearchFilter } from "../composables/useEventSearchFilter";
+import { useSelection } from "../composables/useSelection";
+import { useEventDetailContext } from "../composables/useEventDetailContext";
+import { useTimelineData } from "../composables/useTimelineData";
+import { useTimelineLayout } from "../composables/useTimelineLayout";
+import { useTimelineMetrics } from "../composables/useTimelineMetrics";
+import { useTimelineScales } from "../composables/useTimelineScales";
+import { useZoomMachine } from "../composables/useZoomMachine";
+import { useApplicationAppearance } from "../composables/useApplicationAppearance";
+import { usePersistedTimelineSettings } from "../composables/usePersistedSettings";
+import ManualModal from "../components/ManualModal.vue";
+import ZoomControls from "../components/ZoomControls.vue";
+import SidePanel from "../components/SidePanel.vue";
+import AdSlot from "../components/AdSlot.vue";
+import IntroGuide from "../components/IntroGuide.vue";
+import TimelineScaleOverlay from "../components/TimelineScaleOverlay.vue";
+import TimelineSvg from "../components/TimelineSvg.vue";
+import TimelineModeSwitcher from "../components/TimelineModeSwitcher.vue";
+import { invertHexColor } from "../utils/colors";
 import {
   EVENT_AUDIT_CATEGORY_LABELS,
   isSingleWithinRange,
-} from "./utils/events";
-import { yearLabel } from "./utils/labels";
+} from "../utils/events";
+import { yearLabel } from "../utils/labels";
 import {
   parseTimelineViewState,
   replaceTimelineViewStateInUrl,
-} from "./utils/viewStateUrl";
-import { LEFT_LABEL_WIDTH, RIGHT_PADDING, WIDTH } from "./utils/constants";
-import manualContent from "../docs/manual.md?raw";
+} from "../utils/viewStateUrl";
+import { LEFT_LABEL_WIDTH, RIGHT_PADDING, WIDTH } from "../utils/constants";
+import manualContent from "../../docs/manual.md?raw";
 
 const DEFAULT_CATEGORY_ID = "idol";
 const DEFAULT_FILTER_VALUE = "all";
@@ -60,7 +61,7 @@ const MAX_COMPARE_LANES = 4;
 const TIMELINE_DEBUG_METRICS_STORAGE_KEY = "gakumasu:debug-metrics";
 const initialViewState = parseTimelineViewState(window.location.search);
 const WorldlineEditor = import.meta.env.DEV
-  ? defineAsyncComponent(() => import("./components/WorldlineEditor.vue"))
+  ? defineAsyncComponent(() => import("../components/WorldlineEditor.vue"))
   : null;
 const isWorldlineEditorMode =
   import.meta.env.DEV &&
@@ -216,13 +217,13 @@ const {
 
 const TIMELINE_FOOTER_AD_SLOT = "1582586734";
 
+const { themeMode } = useApplicationAppearance();
 const {
-  themeMode,
   showZoomHints,
   showCommonEvents,
   showIntroGuide,
   dismissIntroGuide
-} = usePersistedSettings({
+} = usePersistedTimelineSettings({
   initialShowCommonEvents: initialViewState.showCommonEvents,
 });
 
@@ -1279,7 +1280,12 @@ onUnmounted(() => {
         @click="toggleSettingsMenu"
       >⚙</button>
     </div>
-    <div class="app-title">キャラクタータイムライン</div>
+    <h1
+      id="narrative-page-title"
+      class="app-title"
+      data-timeline-page-heading
+      tabindex="-1"
+    >キャラクタータイムライン</h1>
     <div class="header-right">
       <TimelineModeSwitcher />
       <a
@@ -1748,7 +1754,11 @@ onUnmounted(() => {
     :show-hints="showZoomHints"
   />
 
-  <div class="timeline-shell">
+  <div
+    class="timeline-shell"
+    role="main"
+    aria-labelledby="narrative-page-title"
+  >
     <div
       class="timeline-frame"
       role="region"

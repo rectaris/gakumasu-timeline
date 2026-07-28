@@ -8,12 +8,15 @@
 - `mode=story-graph`は「物語イベント」を表示します。
 - `mode=realworld`は「学マス情報史」の準備中画面を表示します。
 - モード変更は`history.pushState`を使用し、`popstate`で表示を復元します。
+- 同じタブでモード選択欄から戻る場合は、そのモードで最後に開いていた選択や表示条件を含むURLへ戻ります。
 - 各ビュー固有のクエリは別のビューへ持ち越しません。
 - 開発用の`editor=worldline`は従来どおり編集画面を優先します。
+- キーボードでモードを変更した場合は、新しいページの見出しへフォーカスを移します。
+- アプリケーション共通の配色は`ApplicationRoot.vue`が保持し、ページを切り替えても再初期化しません。
 
 ## 水平移動 / 拡大縮小
 
-`src/App.vue` と `src/composables/useZoomMachine.js` では、水平方向を連続 viewport として扱います。
+`src/pages/NarrativeTimelinePage.vue` と `src/composables/useZoomMachine.js` では、水平方向を連続 viewport として扱います。
 
 - `viewRange.min / max` が現在の表示範囲です
 - 内部的には `horizontalCenter` と `horizontalSpan` から算出します

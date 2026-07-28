@@ -65,7 +65,7 @@
 変更候補:
 
 - `index.html`
-- `src/App.vue`
+- `src/pages/NarrativeTimelinePage.vue`
 - `src/composables/useTimelineLayout.js`
 - `src/style.css`
 

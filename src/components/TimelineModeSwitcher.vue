@@ -3,9 +3,13 @@ import { TIMELINE_MODE_OPTIONS } from "../utils/timelineModeUrl";
 import { useTimelineMode } from "../composables/useTimelineMode";
 
 const { mode, navigateToMode } = useTimelineMode();
+let interactionMethod = "unknown";
 
 function handleChange(event) {
-  navigateToMode(event.target.value);
+  navigateToMode(event.target.value, {
+    focusPage: interactionMethod === "keyboard",
+  });
+  interactionMethod = "unknown";
 }
 </script>
 
@@ -16,6 +20,8 @@ function handleChange(event) {
       class="mode-switcher__select"
       :value="mode"
       aria-label="表示するタイムライン"
+      @keydown="interactionMethod = 'keyboard'"
+      @pointerdown="interactionMethod = 'pointer'"
       @change="handleChange"
     >
       <option

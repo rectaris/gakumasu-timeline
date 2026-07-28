@@ -21,8 +21,33 @@ function applyThemeMode(mode) {
   root.setAttribute("data-theme", mode);
 }
 
-export function usePersistedSettings({ initialShowCommonEvents } = {}) {
+export function usePersistedThemeMode() {
   const themeMode = ref("system");
+  const settingsReady = ref(false);
+
+  onMounted(() => {
+    const storedThemeMode = window.localStorage.getItem(THEME_MODE_STORAGE_KEY);
+    if (
+      storedThemeMode === "system" ||
+      storedThemeMode === "light" ||
+      storedThemeMode === "dark"
+    ) {
+      themeMode.value = storedThemeMode;
+    }
+    applyThemeMode(themeMode.value);
+    settingsReady.value = true;
+  });
+
+  watch(themeMode, (mode) => {
+    applyThemeMode(mode);
+    if (!settingsReady.value) return;
+    window.localStorage.setItem(THEME_MODE_STORAGE_KEY, mode);
+  });
+
+  return { themeMode };
+}
+
+export function usePersistedTimelineSettings({ initialShowCommonEvents } = {}) {
   const showZoomHints = ref(true);
   const showCommonEvents = ref(initialShowCommonEvents ?? true);
   const showIntroGuide = ref(true);
@@ -34,14 +59,6 @@ export function usePersistedSettings({ initialShowCommonEvents } = {}) {
   }
 
   onMounted(() => {
-    const storedThemeMode = window.localStorage.getItem(THEME_MODE_STORAGE_KEY);
-    if (
-      storedThemeMode === "system" ||
-      storedThemeMode === "light" ||
-      storedThemeMode === "dark"
-    ) {
-      themeMode.value = storedThemeMode;
-    }
     showZoomHints.value = readBooleanSetting(
       SHOW_ZOOM_HINTS_STORAGE_KEY,
       true,
@@ -56,14 +73,7 @@ export function usePersistedSettings({ initialShowCommonEvents } = {}) {
       INTRO_GUIDE_DISMISSED_KEY,
       false,
     );
-    applyThemeMode(themeMode.value);
     settingsReady.value = true;
-  });
-
-  watch(themeMode, (mode) => {
-    applyThemeMode(mode);
-    if (!settingsReady.value) return;
-    window.localStorage.setItem(THEME_MODE_STORAGE_KEY, mode);
   });
 
   watch(showZoomHints, (value) => {
@@ -77,7 +87,6 @@ export function usePersistedSettings({ initialShowCommonEvents } = {}) {
   });
 
   return {
-    themeMode,
     showZoomHints,
     showCommonEvents,
     showIntroGuide,

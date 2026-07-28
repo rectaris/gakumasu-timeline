@@ -5,11 +5,13 @@
 ## 起動
 
 - `index.html` に `#app` があり、`src/main.js` が読み込まれる
-- `src/main.js` で `createApp(App).mount('#app')`
+- `src/main.js` で`ApplicationRoot.vue`をマウントする
+- `ApplicationRoot.vue`はURLの`mode`から1ページだけを遅延読込し、モード別の最終URL、ブラウザ履歴、共通配色を管理する
+- 「物語時系列」の実装本体は`src/pages/NarrativeTimelinePage.vue`が所有する
 
 ## データの取り込み
 
-- `src/App.vue` が `src/data/index.js` から `idolCommu` / `hatsuboshiCommus` / `eventCommus` / `supportCardCommus` / `commonTimeline` を import
+- `src/pages/NarrativeTimelinePage.vue` が `src/data/index.js` から `idolCommu` / `hatsuboshiCommus` / `eventCommus` / `supportCardCommus` / `commonTimeline` を import
 - アイドルコミュは `data/raw/worldline_commu/idol_commu/` から `src/data/generated/worldline_commu/idol_commu/` へ生成され、`import.meta.glob` により番号付きファイル名順で自動集約される
 - 初星コミュは `data/raw/worldline_commu/hatsuboshi_commu/` から `src/data/generated/worldline_commu/hatsuboshi_commu/` へ生成され、`import.meta.glob` により番号付きファイル名順で自動集約される
 - イベントコミュとサポートカードコミュは `data/raw/worldline_commu/event_commu/` と `data/raw/worldline_commu/support_story/` から対応する generated ディレクトリへ生成され、番号付きファイル名順で自動集約される

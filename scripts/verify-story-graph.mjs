@@ -105,6 +105,7 @@ try {
     fullPage: true,
   });
 
+  const rememberedStoryUrl = page.url();
   await page.getByLabel("表示するタイムライン").selectOption("narrative");
   await page.locator(".timeline-frame").waitFor();
   await page.screenshot({
@@ -113,10 +114,37 @@ try {
   });
   await page.getByLabel("表示するタイムライン").selectOption("story-graph");
   await page.getByRole("heading", { name: "物語イベント" }).waitFor();
-  await page.getByLabel("表示するタイムライン").selectOption("realworld");
+  if (page.url() !== rememberedStoryUrl) {
+    throw new Error("Returning through the mode selector did not restore graph state.");
+  }
+  await page.getByText("STORY BLOCK").waitFor();
+
+  const modeSwitcher = page.getByLabel("表示するタイムライン");
+  await modeSwitcher.focus();
+  await modeSwitcher.press("ArrowDown");
   await page.getByRole("heading", { name: "学マス情報史" }).waitFor();
+  const realworldHeadingFocused = await page
+    .getByRole("heading", { name: "学マス情報史" })
+    .evaluate((heading) => document.activeElement === heading);
+  if (!realworldHeadingFocused) {
+    throw new Error("Keyboard mode switching did not move focus to the new page.");
+  }
   await page.getByLabel("表示するタイムライン").selectOption("story-graph");
   await page.getByRole("heading", { name: "物語イベント" }).waitFor();
+
+  await page.goto(new URL("?debugMetrics=1", baseUrl).href, {
+    waitUntil: "networkidle",
+  });
+  await page.locator(".timeline-debug-metrics").waitFor();
+
+  await page.goto(
+    new URL("?editor=worldline&mode=story-graph", baseUrl).href,
+    { waitUntil: "domcontentloaded" },
+  );
+  await page.getByRole("heading", { name: "Worldline Data Editor" }).waitFor();
+  if (await page.getByRole("heading", { name: "物語イベント" }).count()) {
+    throw new Error("Editor override mounted the public story graph.");
+  }
 
   console.log("Story graph browser verification passed.");
 } finally {

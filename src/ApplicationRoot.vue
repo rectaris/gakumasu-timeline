@@ -2,23 +2,30 @@
 import {
   computed,
   defineAsyncComponent,
+  nextTick,
   onMounted,
   onUnmounted,
   provide,
   ref,
 } from "vue";
 import TimelineModeSwitcher from "./components/TimelineModeSwitcher.vue";
+import { APPLICATION_APPEARANCE_CONTEXT } from "./composables/useApplicationAppearance";
+import { usePersistedThemeMode } from "./composables/usePersistedSettings";
 import { TIMELINE_MODE_CONTEXT } from "./composables/useTimelineMode";
 import {
-  createTimelineModeUrl,
   parseTimelineMode,
 } from "./utils/timelineModeUrl";
+import { createTimelineModeMemory } from "./utils/timelineModeMemory";
 
-const NarrativeTimeline = defineAsyncComponent(() => import("./App.vue"));
+const NarrativeTimeline = defineAsyncComponent(
+  () => import("./pages/NarrativeTimelinePage.vue"),
+);
 const StoryGraphPage = defineAsyncComponent(
   () => import("./pages/StoryGraphPage.vue"),
 );
 const locationSearch = ref(window.location.search);
+const modeMemory = createTimelineModeMemory();
+const appearance = usePersistedThemeMode();
 const isWorldlineEditorMode =
   import.meta.env.DEV &&
   new URLSearchParams(window.location.search).get("editor") === "worldline";
@@ -30,16 +37,32 @@ function syncLocation() {
   locationSearch.value = window.location.search;
 }
 
-function navigateToMode(nextMode) {
-  const url = createTimelineModeUrl(window.location, nextMode);
+async function focusActivePageHeading() {
+  await nextTick();
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    const heading = document.querySelector("[data-timeline-page-heading]");
+    if (heading) {
+      heading.focus();
+      return;
+    }
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+  }
+}
+
+function navigateToMode(nextMode, { focusPage = false } = {}) {
+  if (nextMode === mode.value) return;
+  modeMemory.remember(mode.value, window.location);
+  const url = modeMemory.resolve(nextMode, window.location);
   window.history.pushState(null, "", url);
   syncLocation();
+  if (focusPage) void focusActivePageHeading();
 }
 
 provide(TIMELINE_MODE_CONTEXT, {
   mode,
   navigateToMode,
 });
+provide(APPLICATION_APPEARANCE_CONTEXT, appearance);
 
 onMounted(() => window.addEventListener("popstate", syncLocation));
 onUnmounted(() => window.removeEventListener("popstate", syncLocation));
@@ -48,9 +71,18 @@ onUnmounted(() => window.removeEventListener("popstate", syncLocation));
 <template>
   <NarrativeTimeline v-if="mode === 'narrative'" />
   <StoryGraphPage v-else-if="mode === 'story-graph'" />
-  <section v-else class="realworld-placeholder">
+  <section
+    v-else
+    class="realworld-placeholder"
+    role="main"
+    aria-labelledby="realworld-page-title"
+  >
     <header class="placeholder-header">
-      <h1>学マス情報史</h1>
+      <h1
+        id="realworld-page-title"
+        data-timeline-page-heading
+        tabindex="-1"
+      >学マス情報史</h1>
       <TimelineModeSwitcher />
     </header>
     <div class="placeholder-content">

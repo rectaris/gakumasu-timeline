@@ -1471,6 +1471,7 @@ select:focus-visible {
 }
 
 .app-title {
+    margin: 0;
     font-size: 18px;
     font-weight: 700;
     color: var(--text-primary);

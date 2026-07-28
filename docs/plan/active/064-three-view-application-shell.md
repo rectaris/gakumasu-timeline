@@ -6,7 +6,8 @@ review_class: C
 human_design_required: yes
 human_approval_status: approved
 target_files:
-  - src/App.vue
+  - src/ApplicationRoot.vue
+  - src/pages/NarrativeTimelinePage.vue
   - src/main.js
   - src/components/
   - src/composables/
@@ -172,28 +173,41 @@ The shell owns the mode selector label, keyboard focus behavior, and accessible 
 - [x] Add a pure mode parser and URL builder with focused unit tests. Delivered by plan 065.
 - [x] Define the parameter ownership and cleanup helpers without changing current narrative URL output. Delivered by plan 065.
 - [x] Introduce the shell and mode switcher while keeping narrative as the default complete timeline page. Delivered by plan 065.
-- [ ] Extract the existing narrative page with behavior-preserving component boundaries.
+- [x] Extract the existing narrative page with behavior-preserving component boundaries.
 - [x] Add a real-world history placeholder and a separately mounted story graph page. Delivered by plan 065.
-- [ ] Complete mode navigation state. `pushState` and `popstate` restoration are delivered; per-mode last-URL memory remains.
-- [ ] Move shared appearance state and header responsibilities to the shell where required.
-- [ ] Complete editor and debug query verification. Editor precedence is implemented; explicit debug-query regression coverage remains.
+- [x] Complete mode navigation state, including `pushState`, `popstate`, and in-memory per-mode last URLs.
+- [x] Move shared theme ownership and mode-navigation responsibilities to the application root.
+- [x] Complete editor precedence and debug-query browser verification.
 - [x] Update human-facing behavior and manual documentation for the delivered shell.
-- [ ] Run full interaction and responsive regression checks.
+- [x] Run full interaction and responsive regression checks.
 
 ## Current Implementation State
 
 As of 2026-07-29, `ApplicationRoot.vue` mounts only the selected heavy view,
 supports canonical mode URLs, and restores mode changes through browser history.
-The narrative implementation remains in `App.vue`, the story graph is a
-separate page, and the real-world history view is an explicit placeholder.
+The narrative implementation is owned by `pages/NarrativeTimelinePage.vue`,
+the story graph is a separate page, and the real-world history view is an
+explicit placeholder.
 
-The remaining work in this plan is limited to:
+The application root now owns per-mode URL memory, shared theme state, mode
+navigation, and keyboard-triggered focus transfer. Page-specific headers keep
+their existing controls and render the shared native select component, whose
+selected option exposes the current mode without a custom tab role.
 
-- per-mode last-URL memory;
-- behavior-preserving narrative page extraction;
-- application-level ownership for appearance and shared header state;
-- focus transfer and current-mode semantics beyond the native select value;
-- editor/debug regression coverage and the final cross-mode regression pass.
+The final cross-mode regression pass is complete.
+
+## Validation Notes
+
+Validation passed on 2026-07-29:
+
+- `npm run verify` (21 files, 112 tests, production build).
+- `node scripts/verify-story-graph.mjs` at desktop and mobile viewports.
+- Browser coverage included direct mode URLs, graph state restoration, keyboard
+  focus transfer, browser history, narrative rendering, the real-world
+  placeholder, `debugMetrics`, and the development editor override.
+- `python3 scripts/validate-changes.py`.
+- `python3 scripts/security-static-check.py`.
+- plan lint, plan format, and `git diff --check`.
 
 ## Regression Safeguards
 
