@@ -106,7 +106,7 @@ approved 1.0 contracts, then stop at the factual mapping and publication gates.
 - [x] Generate a reverse StoryReference index for StoryBlock details.
 - [x] Add conditional narrative-to-graph and graph-to-narrative detail links.
 - [x] Reconcile the Story Event specifications and plan 064 backlog state.
-- [ ] Run automated, browser, responsive, documentation, and completion checks.
+- [x] Run automated, browser, responsive, documentation, and completion checks.
 
 ## Validation Notes
 
@@ -121,3 +121,12 @@ The exact remaining decisions are recorded in
 `docs/story-event/mvp-evaluation.md`: factual pilot approval, publication
 status, full-data migration order, relation types based on real examples, and
 the need for a dedicated editor.
+
+Validation passed on 2026-07-29:
+
+- `npm run verify` (20 files, 110 tests, production build).
+- `node scripts/evaluate-story-graph.mjs`.
+- `node scripts/verify-story-graph.mjs` at desktop and mobile viewports.
+- `python3 scripts/validate-changes.py`.
+- `python3 scripts/security-static-check.py`.
+- plan lint, plan format, and `git diff --check`.
