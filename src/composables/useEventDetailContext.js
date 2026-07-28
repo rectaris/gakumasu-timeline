@@ -4,6 +4,7 @@ import {
   isUncertainEvent,
   sourceKeysForEvent,
 } from "../utils/events.js";
+import { createStoryGraphSelectionUrl } from "../utils/timelineModeUrl.js";
 
 const RELATED_LIMIT = 3;
 
@@ -140,6 +141,7 @@ export function resolveEventDetailContext({
       worldlineLabels: [],
       sources: [],
       sourceDetails: [],
+      storyReferences: [],
       conflicts: [],
       notes: [],
       isUncertain: false,
@@ -170,6 +172,20 @@ export function resolveEventDetailContext({
     sharesParticipant(selectedEvent, event),
   );
   const sameSource = allEvents.filter((event) => sharesSource(selectedEvent, event));
+  const storyReferences = asArray(selectedEvent.storyReferences)
+    .map((reference) => ({
+      ...reference,
+      url: createStoryGraphSelectionUrl(locationLike, {
+        type: "node",
+        id: reference.storyBlockId,
+      }),
+    }))
+    .sort(
+      (a, b) =>
+        (a.order ?? Number.MAX_SAFE_INTEGER) -
+          (b.order ?? Number.MAX_SAFE_INTEGER) ||
+        a.id.localeCompare(b.id, "en"),
+    );
 
   return {
     shareUrl: createEventShareUrl(selectedEvent, locationLike),
@@ -177,6 +193,7 @@ export function resolveEventDetailContext({
     worldlineLabels,
     sources: asArray(selectedEvent.source),
     sourceDetails: asArray(selectedEvent.sourceDetails),
+    storyReferences,
     conflicts: asArray(selectedEvent.conflicts),
     notes: asArray(selectedEvent.note),
     uncertainty: eventUncertaintySummary(selectedEvent),

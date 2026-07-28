@@ -118,6 +118,48 @@ describe("event detail context", () => {
     });
   });
 
+  it("links reviewed StoryReference entries to their story graph nodes", () => {
+    const selectedEvent = event({
+      storyReferences: [
+        {
+          id: "ref_b",
+          storyBlockId: "block_bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+          type: "related",
+          label: "関連する話",
+          order: 2,
+        },
+        {
+          id: "ref_a",
+          storyBlockId: "block_aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+          type: "source",
+          label: "出典となる話",
+          order: 1,
+        },
+      ],
+    });
+
+    const context = resolveEventDetailContext({
+      selectedEvent,
+      allEvents: [selectedEvent],
+      visibleEvents: [selectedEvent],
+      characterCatalog,
+      worldlines,
+      locationLike: {
+        href: "https://example.test/timeline/?foo=bar&event=event-a",
+        pathname: "/timeline/",
+        search: "?foo=bar&event=event-a",
+      },
+    });
+
+    expect(context.storyReferences.map((reference) => reference.id)).toEqual([
+      "ref_a",
+      "ref_b",
+    ]);
+    expect(context.storyReferences[0].url).toBe(
+      "/timeline/?foo=bar&mode=story-graph&node=block_aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+    );
+  });
+
   it("deduplicates related events by canonical id and prefers the selected lane instance", () => {
     const selectedEvent = event();
     const commonLaneZero = event({

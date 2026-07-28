@@ -37,10 +37,17 @@ const DETAIL_HELP = {
   participants: "イベントに関係する登場人物です。関連検索や絞り込みにも使われます。",
   source: "簡易出典です。クリックすると同じ出典のイベントで絞り込めます。",
   sourceDetails: "構造化された出典情報です。ID、確認状態、支える対象、主張を確認できます。",
+  storyReferences: "この出来事が参照する物語イベントのコミュです。",
   conflicts: "複数の出典や解釈が食い違う場合の矛盾内容です。",
   detail: "イベント本文です。タイムライン上の短いタイトルより詳しい説明を表示します。",
   notes: "日付幅の根拠、推測理由、未登録人物、補足事項などの注記です。",
   related: "同時期、同じレーン、同じ出典、同じ参加者など、参照しやすい関連イベントです。因果関係を示すものではありません。",
+};
+const STORY_REFERENCE_TYPE_LABELS = {
+  evidence: "根拠",
+  source: "出典",
+  subject: "主題",
+  related: "関連",
 };
 
 function helpAttrs(key) {
@@ -385,6 +392,31 @@ watch(
           </dd>
         </div>
         </dl>
+
+      <section
+        v-if="hasListItems(detailContext.storyReferences)"
+        class="detail-section"
+        aria-labelledby="side-panel-story-references-title"
+      >
+        <h3
+          id="side-panel-story-references-title"
+          v-bind="helpAttrs('storyReferences')"
+        >物語イベント</h3>
+        <ul class="detail-list">
+          <li
+            v-for="reference in detailContext.storyReferences"
+            :key="reference.id"
+          >
+            <a class="detail-story-link" :href="reference.url">
+              {{ reference.label || "該当するコミュを開く" }}
+            </a>
+            <span class="detail-list__meta">
+              {{ STORY_REFERENCE_TYPE_LABELS[reference.type] || reference.type }}
+              <template v-if="reference.note"> / {{ reference.note }}</template>
+            </span>
+          </li>
+        </ul>
+      </section>
 
       <section
         v-if="hasListItems(detailContext.sourceDetails)"

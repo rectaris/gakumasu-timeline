@@ -8,6 +8,24 @@ import {
 
 const VALID_OCCURRENCE_TYPES = new Set(["continuous", "singleWithinRange"]);
 const ARRAY_FIELDS = ["source", "note", "participants", "worldlineId"];
+const VALID_STORY_REFERENCE_TYPES = new Set([
+  "evidence",
+  "source",
+  "subject",
+  "related",
+]);
+const STORY_REFERENCE_KEYS = new Set([
+  "id",
+  "storyBlockId",
+  "type",
+  "label",
+  "note",
+  "order",
+]);
+const STORY_REFERENCE_ID_PATTERN =
+  /^ref_[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+const STORY_BLOCK_ID_PATTERN =
+  /^block_[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 
 function eventLabel(event) {
   if (!event || typeof event !== "object") {
@@ -438,6 +456,128 @@ function validateConflicts(entry, event, eventIndex, errors) {
   });
 }
 
+function validateStoryReferences(
+  entry,
+  event,
+  eventIndex,
+  storyBlockIds,
+  referenceIdOccurrences,
+  errors,
+) {
+  const references = event?.storyReferences;
+  if (references === undefined) return;
+  if (!Array.isArray(references)) {
+    errors.push(
+      createError(entry, event, eventIndex, "storyReferences", "must be an array"),
+    );
+    return;
+  }
+
+  references.forEach((reference, referenceIndex) => {
+    const field = `storyReferences[${referenceIndex}]`;
+    if (!reference || typeof reference !== "object" || Array.isArray(reference)) {
+      errors.push(
+        createError(entry, event, eventIndex, field, "must be an object"),
+      );
+      return;
+    }
+
+    Object.keys(reference)
+      .filter((key) => !STORY_REFERENCE_KEYS.has(key))
+      .forEach((key) => {
+        errors.push(
+          createError(
+            entry,
+            event,
+            eventIndex,
+            `${field}.${key}`,
+            "is not an allowed field",
+          ),
+        );
+      });
+
+    if (
+      typeof reference.id !== "string" ||
+      !STORY_REFERENCE_ID_PATTERN.test(reference.id)
+    ) {
+      errors.push(
+        createError(
+          entry,
+          event,
+          eventIndex,
+          `${field}.id`,
+          "must use ref_<lowercase UUID>",
+        ),
+      );
+    } else {
+      const occurrences = referenceIdOccurrences.get(reference.id) ?? [];
+      occurrences.push({ entry, event, eventIndex, referenceIndex });
+      referenceIdOccurrences.set(reference.id, occurrences);
+    }
+
+    if (
+      typeof reference.storyBlockId !== "string" ||
+      !STORY_BLOCK_ID_PATTERN.test(reference.storyBlockId)
+    ) {
+      errors.push(
+        createError(
+          entry,
+          event,
+          eventIndex,
+          `${field}.storyBlockId`,
+          "must use block_<lowercase UUID>",
+        ),
+      );
+    } else if (!storyBlockIds.has(reference.storyBlockId)) {
+      errors.push(
+        createError(
+          entry,
+          event,
+          eventIndex,
+          `${field}.storyBlockId`,
+          `unknown StoryBlock id "${reference.storyBlockId}"`,
+        ),
+      );
+    }
+
+    if (!VALID_STORY_REFERENCE_TYPES.has(reference.type)) {
+      errors.push(
+        createError(
+          entry,
+          event,
+          eventIndex,
+          `${field}.type`,
+          `must be one of: ${Array.from(VALID_STORY_REFERENCE_TYPES).join(", ")}`,
+        ),
+      );
+    }
+    ["label", "note"].forEach((key) =>
+      validateOptionalString(
+        entry,
+        event,
+        eventIndex,
+        `${field}.${key}`,
+        reference[key],
+        errors,
+      ),
+    );
+    if (
+      reference.order !== undefined &&
+      (!Number.isInteger(reference.order) || reference.order < 0)
+    ) {
+      errors.push(
+        createError(
+          entry,
+          event,
+          eventIndex,
+          `${field}.order`,
+          "must be an integer greater than or equal to 0",
+        ),
+      );
+    }
+  });
+}
+
 function validateUncertaintyMetadata(entry, event, eventIndex, errors) {
   validateEnumField(
     entry,
@@ -570,10 +710,16 @@ function validateUncertaintyMetadata(entry, event, eventIndex, errors) {
 
 export function validateTimelineData(
   entries,
-  { characterIds, worldlineIds, focusSourceFiles = null },
+  {
+    characterIds,
+    worldlineIds,
+    storyBlockIds = new Set(),
+    focusSourceFiles = null,
+  },
 ) {
   const errors = [];
   const eventIdOccurrences = new Map();
+  const referenceIdOccurrences = new Map();
   const shouldReportEntry = (entry) =>
     !focusSourceFiles || focusSourceFiles.has(entry.sourceFile);
 
@@ -669,6 +815,14 @@ export function validateTimelineData(
         validateStringArrayField(entry, event, eventIndex, field, entryErrors);
       });
       validateUncertaintyMetadata(entry, event, eventIndex, entryErrors);
+      validateStoryReferences(
+        entry,
+        event,
+        eventIndex,
+        storyBlockIds,
+        referenceIdOccurrences,
+        entryErrors,
+      );
 
       validateReferences(
         entry,
@@ -708,6 +862,26 @@ export function validateTimelineData(
 
     duplicateOccurrences.forEach((occurrence) => {
       errors.push(createDuplicateIdError(occurrence, firstOccurrence));
+    });
+  });
+
+  referenceIdOccurrences.forEach((occurrences, referenceId) => {
+    if (occurrences.length < 2) return;
+    const [firstOccurrence, ...duplicateOccurrences] = occurrences;
+    const reportOccurrences = focusSourceFiles
+      ? occurrences.filter((occurrence) => shouldReportEntry(occurrence.entry))
+      : duplicateOccurrences;
+
+    reportOccurrences.forEach((occurrence) => {
+      errors.push(
+        createError(
+          occurrence.entry,
+          occurrence.event,
+          occurrence.eventIndex,
+          `storyReferences[${occurrence.referenceIndex}].id`,
+          `duplicate StoryReference id "${referenceId}"; first seen at ${firstOccurrence.entry.sourceFile} / ${firstOccurrence.event?.id ?? "(missing event id)"}`,
+        ),
+      );
     });
   });
 

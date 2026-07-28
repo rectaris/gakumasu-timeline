@@ -12,6 +12,7 @@ import TimelineModeSwitcher from "../components/TimelineModeSwitcher.vue";
 import { usePersistedSettings } from "../composables/usePersistedSettings";
 import { storyGraph } from "../data/storyGraph";
 import {
+  createNarrativeEventUrl,
   createStoryGraphSelectionUrl,
   parseStoryGraphSelection,
 } from "../utils/timelineModeUrl";
@@ -93,6 +94,11 @@ const selectedEdgeTarget = computed(() =>
     ? storyGraph.blockById.get(selectedEdge.value.targetBlockId)
     : null,
 );
+const selectedNodeReferences = computed(() =>
+  selectedNode.value
+    ? storyGraph.referencesByBlockId.get(selectedNode.value.id) ?? []
+    : [],
+);
 const resultSummary = computed(
   () =>
     `${filteredGraph.value.blocks.length}件の話、${filteredGraph.value.edges.length}件の関係`,
@@ -107,6 +113,10 @@ function categoryLabel(categoryId) {
 
 function relationLabel(edge) {
   return edge.label || STORY_RELATION_LABELS[edge.relationType] || edge.relationType;
+}
+
+function narrativeReferenceUrl(reference) {
+  return createNarrativeEventUrl(window.location, reference.eventId);
 }
 
 function markerStart(edge) {
@@ -332,7 +342,7 @@ onUnmounted(() => {
 
     <div class="story-toolbar" aria-label="物語イベントの絞り込み">
       <div class="story-toolbar__intro">
-        <span class="dataset-badge">MVP代表データ</span>
+        <span class="dataset-badge">{{ storyGraph.dataset.label }}</span>
         <strong>{{ resultSummary }}</strong>
         <span>線の長さやノード間距離は時間差を表しません。</span>
       </div>
@@ -566,6 +576,21 @@ onUnmounted(() => {
           <p v-if="selectedNode.sourceNotes" class="detail-note">
             {{ selectedNode.sourceNotes }}
           </p>
+          <section
+            v-if="selectedNodeReferences.length"
+            class="node-references"
+            aria-labelledby="story-node-references-title"
+          >
+            <h3 id="story-node-references-title">物語時系列からの参照</h3>
+            <a
+              v-for="reference in selectedNodeReferences"
+              :key="reference.referenceId"
+              :href="narrativeReferenceUrl(reference)"
+            >
+              <strong>{{ reference.eventTitle }}</strong>
+              <span>{{ reference.laneName }}</span>
+            </a>
+          </section>
           <code>{{ selectedNode.id }}</code>
         </template>
 
@@ -1074,6 +1099,39 @@ onUnmounted(() => {
   display: block;
   overflow-wrap: anywhere;
   color: var(--text-faint);
+  font-size: 9px;
+}
+
+.node-references {
+  display: grid;
+  gap: 7px;
+  margin: 0 0 16px;
+}
+
+.node-references h3 {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.node-references a {
+  display: grid;
+  gap: 2px;
+  padding: 8px 9px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  color: var(--text-primary);
+  font-size: 11px;
+  text-decoration: none;
+}
+
+.node-references a:hover {
+  border-color: var(--border-strong);
+}
+
+.node-references span {
+  color: var(--text-muted);
   font-size: 9px;
 }
 

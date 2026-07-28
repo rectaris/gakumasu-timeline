@@ -14,8 +14,8 @@ try {
   if ((await nodes.count()) !== 11) {
     throw new Error(`Expected 11 story nodes, received ${await nodes.count()}.`);
   }
-  if ((await edges.count()) !== 10) {
-    throw new Error(`Expected 10 story edges, received ${await edges.count()}.`);
+  if ((await edges.count()) !== 4) {
+    throw new Error(`Expected 4 story edges, received ${await edges.count()}.`);
   }
 
   await nodes.first().click();

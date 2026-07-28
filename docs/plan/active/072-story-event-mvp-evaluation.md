@@ -99,16 +99,25 @@ approved 1.0 contracts, then stop at the factual mapping and publication gates.
 
 ## Tasks
 
-- [ ] Separate runtime pilot data from display-only semantic relationships.
-- [ ] Add deterministic mixed-graph and scale fixtures.
-- [ ] Add layout evaluation tooling and regression expectations.
-- [ ] Integrate StoryReference validation into timeline data integrity.
-- [ ] Generate a reverse StoryReference index for StoryBlock details.
-- [ ] Add conditional narrative-to-graph and graph-to-narrative detail links.
-- [ ] Reconcile the Story Event specifications and plan 064 backlog state.
+- [x] Separate runtime pilot data from display-only semantic relationships.
+- [x] Add deterministic mixed-graph and scale fixtures.
+- [x] Add layout evaluation tooling and regression expectations.
+- [x] Integrate StoryReference validation into timeline data integrity.
+- [x] Generate a reverse StoryReference index for StoryBlock details.
+- [x] Add conditional narrative-to-graph and graph-to-narrative detail links.
+- [x] Reconcile the Story Event specifications and plan 064 backlog state.
 - [ ] Run automated, browser, responsive, documentation, and completion checks.
 
 ## Validation Notes
 
-Record measured fixture results and the exact remaining user decisions before
-archiving this plan.
+The repeatable 2026-07-29 fixture run used seven layout calculations per size:
+
+- 50 nodes / 40 edges / 3310 x 1020 / median 0.675 ms.
+- 100 nodes / 90 edges / 3310 x 2000 / median 0.529 ms.
+- 300 nodes / 290 edges / 3310 x 5920 / median 0.911 ms.
+
+Durations are environment observations, not performance guarantees.
+The exact remaining decisions are recorded in
+`docs/story-event/mvp-evaluation.md`: factual pilot approval, publication
+status, full-data migration order, relation types based on real examples, and
+the need for a dedicated editor.

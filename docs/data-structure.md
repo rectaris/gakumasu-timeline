@@ -283,13 +283,14 @@ focused validation は指定ファイルを主対象にしますが、イベン�
 参加者 ID は既存の `participants`、出典状態と不確実性は上記の任意メタデータで扱います。
 raw/generated の契約変更は、通常のデータ追加とは別の実装計画で扱います。
 
-## 物語イベントMVPのデータ
+## 物語イベントのパイロットデータ
 
-物語イベントの編集元データは`data/raw/story_events/mvp.json`です。
-`npm run generate:data`は、検証後の生成物を`src/data/generated/story_events/mvp.js`へ出力します。
+物語イベントの編集元パイロットデータは`data/raw/story_events/pilot.json`です。
+`npm run generate:data`は、検証後の生成物を`src/data/generated/story_events/pilot.js`へ出力します。
 
 ルートは`schemaVersion`、`dataset`、`series`、`blocks`、`edges`を持ちます。
-`dataset.status`が`representative`のデータは、表示と契約の確認用であり、全件版として扱いません。
+`dataset.status`が`pilot-unreviewed`のデータは、表示と契約の確認用です。
+内容の正確性、公開可否、全コミュの網羅を確認済みのデータとして扱いません。
 
 StorySeriesは`series_<小文字UUID>`形式のID、カテゴリ、階層種別、ラベル、任意の親IDを持ちます。
 StoryBlockは`block_<小文字UUID>`形式のID、末端のStorySeries ID、話ラベル、役割付き人物を持ちます。
@@ -316,5 +317,13 @@ npm run story:id -- ref
 - StoryEdgeの参照先、方向、relationType、根拠、確度。
 - 自己エッジと同一論理エッジの重複。
 - `sequence`部分グラフの循環。
+
+「物語時系列」のイベントには、レビュー済みの対応だけを`storyReferences`として保存できます。
+各参照は`ref_<小文字UUID>`形式のID、参照先`storyBlockId`、`type`を持ちます。
+参照先が未登録、IDが重複、または未知フィールドを含む参照は検証エラーです。
+
+StoryBlockから参照元を引くための索引は、`npm run generate:data`で
+`src/data/generated/story_events/referenceIndex.js`へ生成します。
+逆引き索引は編集せず、参照元の`storyReferences`を修正します。
 
 保存契約、意味論、作成境界の正規仕様は[物語イベント仕様](story-event/README.md)に保存します。

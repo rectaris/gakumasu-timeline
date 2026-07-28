@@ -64,7 +64,8 @@ Those views may begin as explicit scoped placeholders whose contracts are filled
 
 ## Dependencies
 
-- This plan is the shared foundation for plans 065 and 066.
+- Plan 065 delivered the initial shell together with the Story Graph MVP.
+- Plan 066 remains dependent on the shell for the final real-world history view.
 - Plans 065 and 066 must not extend the existing narrative page by mixing their state or data into its lane model.
 - The shell may land before either feature view is complete if unfinished modes have a clear unavailable or specification-pending state.
 - Use the three view-specific specification directories as the product contract once each specification reaches Approved status.
@@ -168,16 +169,31 @@ The shell owns the mode selector label, keyboard focus behavior, and accessible 
 
 ## Implementation Phases
 
-- [ ] Add a pure mode parser and URL builder with focused unit tests.
-- [ ] Define the parameter ownership and cleanup helpers without changing current narrative URL output.
-- [ ] Introduce the shell and mode switcher while keeping narrative as the default and only complete page.
+- [x] Add a pure mode parser and URL builder with focused unit tests. Delivered by plan 065.
+- [x] Define the parameter ownership and cleanup helpers without changing current narrative URL output. Delivered by plan 065.
+- [x] Introduce the shell and mode switcher while keeping narrative as the default complete timeline page. Delivered by plan 065.
 - [ ] Extract the existing narrative page with behavior-preserving component boundaries.
-- [ ] Add scoped placeholders for story graph and real-world history.
-- [ ] Add `pushState` mode navigation, `popstate` restoration, and per-mode last-URL memory.
+- [x] Add a real-world history placeholder and a separately mounted story graph page. Delivered by plan 065.
+- [ ] Complete mode navigation state. `pushState` and `popstate` restoration are delivered; per-mode last-URL memory remains.
 - [ ] Move shared appearance state and header responsibilities to the shell where required.
-- [ ] Verify development-only editor precedence and debug query behavior.
-- [ ] Update human-facing behavior and manual documentation.
+- [ ] Complete editor and debug query verification. Editor precedence is implemented; explicit debug-query regression coverage remains.
+- [x] Update human-facing behavior and manual documentation for the delivered shell.
 - [ ] Run full interaction and responsive regression checks.
+
+## Current Implementation State
+
+As of 2026-07-29, `ApplicationRoot.vue` mounts only the selected heavy view,
+supports canonical mode URLs, and restores mode changes through browser history.
+The narrative implementation remains in `App.vue`, the story graph is a
+separate page, and the real-world history view is an explicit placeholder.
+
+The remaining work in this plan is limited to:
+
+- per-mode last-URL memory;
+- behavior-preserving narrative page extraction;
+- application-level ownership for appearance and shared header state;
+- focus transfer and current-mode semantics beyond the native select value;
+- editor/debug regression coverage and the final cross-mode regression pass.
 
 ## Regression Safeguards
 

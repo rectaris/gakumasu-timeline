@@ -4,7 +4,7 @@
 
 ## 保存対象
 
-- StoryBlock、StoryEdge、EvidenceLinkの責務。
+- StoryBlock、StoryEdge、StoryReferenceの責務。
 - ID体系と公開URLの互換方針。
 - エッジ方向とrelationTypeの意味。
 - StoryBlockの前後関係と相対的な配置規則。

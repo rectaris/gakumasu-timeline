@@ -3,6 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { assertValidStoryGraphData } from "../src/data/storyGraphModel.js";
+import { buildStoryReferenceIndex } from "../src/data/storyReferences.js";
 
 const GENERATED_DATA_ROOT = "src/data/generated";
 const RAW_DATA_ROOT = "data/raw";
@@ -15,8 +16,13 @@ const STATIC_GENERATED_DATA_FILES = [
   },
   {
     category: "storyEvents",
-    raw: "data/raw/story_events/mvp.json",
-    generated: "src/data/generated/story_events/mvp.js",
+    raw: "data/raw/story_events/pilot.json",
+    generated: "src/data/generated/story_events/pilot.js",
+  },
+  {
+    category: "storyReferenceIndex",
+    raw: "data/raw/worldline_commu",
+    generated: "src/data/generated/story_events/referenceIndex.js",
   },
 ];
 
@@ -81,8 +87,17 @@ const KEY_ORDERS = {
     "participants",
     "source",
     "sourceDetails",
+    "storyReferences",
     "conflicts",
     "note",
+  ],
+  storyReference: [
+    "id",
+    "storyBlockId",
+    "type",
+    "label",
+    "note",
+    "order",
   ],
   date: ["year", "month", "day"],
   sourceDetail: ["id", "label", "url", "status", "claim", "supports"],
@@ -109,6 +124,10 @@ function classifyObject(value) {
 
   if ("year" in value || "month" in value || "day" in value) {
     return "date";
+  }
+
+  if ("storyBlockId" in value) {
+    return "storyReference";
   }
 
   if ("supports" in value || "claim" in value || "label" in value) {
@@ -267,7 +286,28 @@ async function loadRawStoryGraph(sourceFile) {
   return assertValidStoryGraphData(graph, sourceFile);
 }
 
+async function renderStoryReferenceIndex() {
+  const timelineFiles = getGeneratedDataFiles().filter(
+    (file) =>
+      file.category !== "storyEvents" &&
+      file.category !== "storyReferenceIndex",
+  );
+  const entries = await Promise.all(
+    timelineFiles.map(async (file) => ({
+      category: file.category,
+      sourceFile: file.raw,
+      lane: await loadRawLane(file.raw),
+    })),
+  );
+  const index = buildStoryReferenceIndex(entries);
+  return `${HEADER}const data = ${renderValue(index, 0)};\n\nexport default data;\n`;
+}
+
 export async function renderGeneratedFile(file) {
+  if (file.category === "storyReferenceIndex") {
+    return renderStoryReferenceIndex();
+  }
+
   const data =
     file.category === "storyEvents"
       ? await loadRawStoryGraph(file.raw)

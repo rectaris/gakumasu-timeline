@@ -512,6 +512,17 @@ select:focus-visible {
   font-size: 12px;
 }
 
+.detail-story-link {
+  color: var(--button-text);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.detail-story-link:hover,
+.detail-story-link:focus-visible {
+  color: var(--timeline-focus-stroke);
+}
+
 .detail-source-action {
   display: inline;
   max-width: 100%;

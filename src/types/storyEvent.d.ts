@@ -50,3 +50,17 @@ export interface StoryReference {
   note?: string;
   order?: number;
 }
+
+export interface StoryReferenceIndexRecord {
+  referenceId: `ref_${string}`;
+  type: StoryReference["type"];
+  label?: string;
+  note?: string;
+  order?: number;
+  sourceView: "narrative";
+  eventId: string;
+  eventTitle: string;
+  laneId: string;
+  laneName: string;
+  sourceFile: string;
+}

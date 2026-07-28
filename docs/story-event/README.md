@@ -14,11 +14,12 @@
 ## 文書構成
 
 - [仕様策定ロードマップ](specification-roadmap.md)：確定済みの段階、今後の決定順、MVP開始条件を記録します。
-- [データモデル](data-model.md)：StorySeries、StoryBlock、StoryEdge、EvidenceLink、IDの契約を定義します。
+- [データモデル](data-model.md)：StorySeries、StoryBlock、StoryEdge、StoryReference、IDの契約を定義します。
 - [グラフ意味論](graph-semantics.md)：方向、関係種別、循環、物語上の流れを定義します。
 - [UI挙動](ui-behavior.md)：ノード、エッジ、操作、検索、共有URLを定義します。
 - [データ作成](authoring.md)：StoryBlockと意味付きエッジの登録、出典対応、検証を定義します。
 - [例](examples.md)：代表的なノードとエッジの例を保存します。
+- [MVP評価](mvp-evaluation.md)：技術評価、既知制約、次に必要な決定を記録します。
 - [決定記録](decisions/README.md)：長期的な影響がある承認済み判断を保存します。
 
 ## 確定済みの前提
@@ -50,7 +51,7 @@
 - 実装開始に必要な最小限のStoryEdge契約が確定していること。
 - 検証とデータ作成手順が定義されていること。
 - UI実装中に調整できる事項と、変更してはならない不変条件が区別されていること。
-- 代表データによる仕様レビューが完了していること。
+- テスト例による保存契約と操作のレビューが完了していること。
 
 ## MVPで調整する事項
 

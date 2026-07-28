@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  createNarrativeEventUrl,
   createStoryGraphSelectionUrl,
   createTimelineModeUrl,
   parseStoryGraphSelection,
@@ -38,5 +39,11 @@ describe("timeline mode URL", () => {
       type: "edge",
       id: "edge_new",
     });
+  });
+
+  it("creates a narrative event URL without carrying graph state", () => {
+    expect(createNarrativeEventUrl(locationLike, "event_new")).toBe(
+      "/timeline/?utm_source=test&event=event_new#note",
+    );
   });
 });

@@ -36,6 +36,15 @@ export interface SourceConflict {
   resolution?: string;
 }
 
+export interface StoryReference {
+  id: `ref_${string}`;
+  storyBlockId: `block_${string}`;
+  type: "evidence" | "source" | "subject" | "related";
+  label?: string;
+  note?: string;
+  order?: number;
+}
+
 export interface DateLike {
   year: number;
   month: number;
@@ -57,6 +66,7 @@ export interface TimelineEvent {
   participants?: string[];
   source?: string[];
   sourceDetails?: SourceDetail[];
+  storyReferences?: StoryReference[];
   conflicts?: SourceConflict[];
   note?: string[];
 }

@@ -8,6 +8,9 @@ import { runTimelineDataIntegrityValidation } from "../src/data/integrityRunner"
 const ids = {
   characterIds: new Set(["character-a"]),
   worldlineIds: new Set(["worldline-a"]),
+  storyBlockIds: new Set([
+    "block_20000000-0000-4000-8000-000000000001",
+  ]),
 };
 
 function entry(events) {
@@ -216,6 +219,83 @@ describe("timeline data integrity", () => {
     );
 
     expect(errors).toEqual([]);
+  });
+
+  it("validates source-owned StoryReferences against StoryBlock IDs", () => {
+    const errors = validateTimelineData(
+      entry([
+        validEvent({
+          storyReferences: [
+            {
+              id: "ref_40000000-0000-4000-8000-000000000001",
+              storyBlockId:
+                "block_20000000-0000-4000-8000-000000000001",
+              type: "source",
+              label: "該当コミュ",
+              order: 0,
+            },
+          ],
+        }),
+      ]),
+      ids,
+    );
+
+    expect(errors).toEqual([]);
+  });
+
+  it("rejects invalid, dangling, and duplicate StoryReferences", () => {
+    const duplicateId = "ref_40000000-0000-4000-8000-000000000002";
+    const danglingBlockId =
+      "block_20000000-0000-4000-8000-999999999999";
+    const errors = validateTimelineData(
+      entry([
+        validEvent({
+          storyReferences: [
+            {
+              id: duplicateId,
+              storyBlockId: danglingBlockId,
+              type: "invalid",
+              order: -1,
+              unknown: true,
+            },
+          ],
+        }),
+        validEvent({
+          id: "event-b",
+          storyReferences: [
+            {
+              id: duplicateId,
+              storyBlockId:
+                "block_20000000-0000-4000-8000-000000000001",
+              type: "related",
+            },
+          ],
+        }),
+      ]),
+      ids,
+    );
+
+    expect(errors).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          field: "storyReferences[0].storyBlockId",
+          reason: expect.stringContaining("unknown StoryBlock id"),
+        }),
+        expect.objectContaining({
+          field: "storyReferences[0].type",
+        }),
+        expect.objectContaining({
+          field: "storyReferences[0].order",
+        }),
+        expect.objectContaining({
+          field: "storyReferences[0].unknown",
+        }),
+        expect.objectContaining({
+          field: "storyReferences[0].id",
+          reason: expect.stringContaining("duplicate StoryReference id"),
+        }),
+      ]),
+    );
   });
 
   it("detects unsupported uncertainty metadata combinations", () => {

@@ -14,6 +14,8 @@
 - 初星コミュは `data/raw/worldline_commu/hatsuboshi_commu/` から `src/data/generated/worldline_commu/hatsuboshi_commu/` へ生成され、`import.meta.glob` により番号付きファイル名順で自動集約される
 - イベントコミュとサポートカードコミュは `data/raw/worldline_commu/event_commu/` と `data/raw/worldline_commu/support_story/` から対応する generated ディレクトリへ生成され、番号付きファイル名順で自動集約される
 - 共通イベントは `data/raw/worldline_commu/common_timeline.json` から `src/data/generated/worldline_commu/common_timeline.js` へ生成され、`src/data/index.js` は生成済みモジュールを import する
+- 物語イベントの未レビューパイロットは `data/raw/story_events/pilot.json` から `src/data/generated/story_events/pilot.js` へ生成される
+- 物語時系列の `storyReferences` は raw 側を正本とし、StoryBlockから参照元を引く逆引き索引を `src/data/generated/story_events/referenceIndex.js` へ生成する
 - 生成済みデータは `npm run generate:data` で更新し、`npm run validate:data` で raw との鮮度一致を確認する
 - ローカル開発時の `/timeline/?editor=worldline` は dev server 専用 API から raw JSON を読み込み、保存時に raw JSON と generated データを更新する
 - 編集画面では保存先をコミュ種別とファイルで選び、ファイル付きカテゴリでは新規 raw JSON ファイルを作成してから generated データへ反映できる
@@ -26,6 +28,7 @@
 - `npm run validate:data -- <path>` は指定ファイルまたは指定ディレクトリを主対象にした focused validation を実行する
 - focused validation でも、イベント ID の重複と参加者/世界線参照は全データ文脈を使って確認する
 - 検証は表示用正規化の前に、イベント ID、日付範囲、`occurrenceType`、参加者参照、世界線参照、空文字値、不確実性メタデータを確認する
+- `storyReferences`は参照IDの一意性、型、表示順、StoryBlockの参照整合性を全データ文脈で確認する
 - 失敗時は元ファイル、カテゴリ、レーン、イベント ID / title、フィールド、理由を表示する
 - `npm run verify` はデータ検証、ユニットテスト、ビルドを実行する
 
@@ -49,6 +52,7 @@
 - URL 同期は `canonicalId`、描画キーは `instanceId` を使います
 - `dateConfidence`、`sourceBasis`、`sourceStatus`、`rangeReason`、`sourceDetails`、`conflicts` はイベント上に保持され、詳細パネルや検索で `src/utils/events.js` の派生ヘルパーから日本語ラベルへ変換されます
 - `sourceDetails[].id` と `sourceDetails[].supports` は出典追跡、詳細表示、検索テキストに使われます
+- レビュー済みの`storyReferences`がある場合は、物語イベントの該当StoryBlockを開くリンクとして詳細パネルへ表示します
 - メタデータ未指定の `singleWithinRange` は `rangeOnly` として派生し、未確定の単日候補であることを保ちます
 - source model 強化では `canonicalId` を変更しません。共有 URL と初回復元は既存 ID を使い続けます
 
@@ -148,6 +152,9 @@
 ## URL からの復元
 
 初回マウント時に `window.location.search` を読み、`?event=<id>` があれば `allEvents` から該当 canonical ID のイベントを検索して `selectedEvent` を復元します。
+
+物語イベントは`?mode=story-graph`で開き、`node=<StoryBlock ID>`または`edge=<StoryEdge ID>`を選択として復元します。
+生成済み逆引き索引に参照元があるStoryBlockでは、`?event=<event ID>`で物語時系列へ戻るリンクを表示します。
 
 ## 既知の制約（現状）
 

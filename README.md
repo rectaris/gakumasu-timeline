@@ -31,7 +31,8 @@
 - ドラッグで移動し、ホイールまたは画面左下の操作で拡大縮小できます。
 - ノードへフォーカスした状態では、上下キーで前後関係、左右キーで表示中の隣接ノードへ移動できます。
 - `?mode=story-graph&node=<StoryBlock ID>`または`edge=<StoryEdge ID>`で選択を復元できます。
-- 現在の収録内容は表示とデータ契約を検証する代表データであり、全コミュを網羅していません。
+- 現在の収録内容は表示とデータ契約を検証する未レビューパイロットであり、全コミュの網羅、内容の正確性、公開可否を確認済みではありません。
+- 意味的関係の表示機能はテスト専用データで検証し、表示目的だけの関係をパイロットへ混ぜません。
 
 ### 画面の見方
 
@@ -123,7 +124,7 @@
 
 - 編集元データ: [data/raw/worldline_commu/](data/raw/worldline_commu/)
 - 生成済みデータ: [src/data/generated/worldline_commu/](src/data/generated/worldline_commu/)
-- 物語イベントの編集元代表データ: [data/raw/story_events/](data/raw/story_events/)
+- 物語イベントの編集元パイロットデータ: [data/raw/story_events/](data/raw/story_events/)
 - 物語イベントの生成済みデータ: [src/data/generated/story_events/](src/data/generated/story_events/)
 - データ集約: [src/data/index.js](src/data/index.js)（`idolCommu` / `hatsuboshiCommus` / `eventCommus` / `supportCardCommus`）
 - 世界線一覧: [src/data/worldlines.js](src/data/worldlines.js)

@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "dataset": {
-    "id": "story-graph-mvp",
-    "label": "物語イベント MVP代表データ",
-    "status": "representative",
-    "description": "表示とデータ契約を検証する代表データです。全コミュの網羅や意味的関係の確定を示しません。"
+    "id": "story-graph-pilot",
+    "label": "物語イベント 未レビューパイロット",
+    "status": "pilot-unreviewed",
+    "description": "データ契約を評価する未レビューのパイロットです。全コミュの網羅、公開可否、未確認の関係を示しません。"
   },
   "series": [
     {
@@ -236,17 +236,6 @@
       "confidence": "confirmed"
     },
     {
-      "id": "edge_30000000-0000-4000-8000-000000000003",
-      "sourceBlockId": "block_20000000-0000-4000-8000-000000000005",
-      "targetBlockId": "block_20000000-0000-4000-8000-000000000007",
-      "kind": "sequence",
-      "direction": "forward",
-      "relationType": "before",
-      "origin": "authored",
-      "rationale": "分岐するsequence配置を確認するMVP代表関係。",
-      "confidence": "inferred"
-    },
-    {
       "id": "edge_30000000-0000-4000-8000-000000000004",
       "sourceBlockId": "block_20000000-0000-4000-8000-000000000009",
       "targetBlockId": "block_20000000-0000-4000-8000-000000000010",
@@ -267,66 +256,6 @@
       "origin": "authored",
       "rationale": "初星コミュの物語上の前後関係。",
       "confidence": "confirmed"
-    },
-    {
-      "id": "edge_30000000-0000-4000-8000-000000000006",
-      "sourceBlockId": "block_20000000-0000-4000-8000-000000000006",
-      "targetBlockId": "block_20000000-0000-4000-8000-000000000007",
-      "kind": "semantic",
-      "direction": "undirected",
-      "relationType": "alternative",
-      "label": "分岐例",
-      "origin": "authored",
-      "rationale": "無方向と並列エッジを確認するMVP表示用の仮関係。",
-      "confidence": "speculative"
-    },
-    {
-      "id": "edge_30000000-0000-4000-8000-000000000007",
-      "sourceBlockId": "block_20000000-0000-4000-8000-000000000006",
-      "targetBlockId": "block_20000000-0000-4000-8000-000000000007",
-      "kind": "semantic",
-      "direction": "bidirectional",
-      "relationType": "reference",
-      "label": "相互参照例",
-      "origin": "authored",
-      "rationale": "双方向と並列エッジを確認するMVP表示用の仮関係。",
-      "confidence": "speculative"
-    },
-    {
-      "id": "edge_30000000-0000-4000-8000-000000000008",
-      "sourceBlockId": "block_20000000-0000-4000-8000-000000000009",
-      "targetBlockId": "block_20000000-0000-4000-8000-000000000010",
-      "kind": "semantic",
-      "direction": "forward",
-      "relationType": "reference",
-      "label": "循環表示例 1",
-      "origin": "authored",
-      "rationale": "semantic循環を確認するMVP表示用の仮関係。",
-      "confidence": "speculative"
-    },
-    {
-      "id": "edge_30000000-0000-4000-8000-000000000009",
-      "sourceBlockId": "block_20000000-0000-4000-8000-000000000010",
-      "targetBlockId": "block_20000000-0000-4000-8000-000000000011",
-      "kind": "semantic",
-      "direction": "forward",
-      "relationType": "reference",
-      "label": "循環表示例 2",
-      "origin": "authored",
-      "rationale": "semantic循環を確認するMVP表示用の仮関係。",
-      "confidence": "speculative"
-    },
-    {
-      "id": "edge_30000000-0000-4000-8000-000000000010",
-      "sourceBlockId": "block_20000000-0000-4000-8000-000000000011",
-      "targetBlockId": "block_20000000-0000-4000-8000-000000000009",
-      "kind": "semantic",
-      "direction": "forward",
-      "relationType": "reference",
-      "label": "循環表示例 3",
-      "origin": "authored",
-      "rationale": "semantic循環を確認するMVP表示用の仮関係。",
-      "confidence": "speculative"
     }
   ]
 }

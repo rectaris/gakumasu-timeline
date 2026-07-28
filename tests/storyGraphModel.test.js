@@ -1,10 +1,11 @@
 import { describe, expect, it } from "vitest";
-import rawStoryGraph from "../data/raw/story_events/mvp.json";
+import rawStoryGraph from "../data/raw/story_events/pilot.json";
 import {
   collectStoryGraphErrors,
   collectStoryReferenceErrors,
   normalizeStoryGraphData,
 } from "../src/data/storyGraphModel";
+import { createMixedStoryGraphFixture } from "./fixtures/storyGraphFixtures";
 
 describe("story graph data model", () => {
   it("validates and derives titles from the series hierarchy", () => {
@@ -24,16 +25,22 @@ describe("story graph data model", () => {
   });
 
   it("rejects unsupported direction and relation combinations", () => {
-    const data = structuredClone(rawStoryGraph);
-    data.edges[7].direction = "undirected";
+    const data = createMixedStoryGraphFixture();
+    const referenceEdgeIndex = data.edges.findIndex(
+      (edge) =>
+        edge.kind === "semantic" &&
+        edge.relationType === "reference" &&
+        edge.direction === "bidirectional",
+    );
+    data.edges[referenceEdgeIndex].direction = "undirected";
 
     expect(collectStoryGraphErrors(data)).toContain(
-      "edges[7]: relationTypeとdirectionの組み合わせが不正です。",
+      `edges[${referenceEdgeIndex}]: relationTypeとdirectionの組み合わせが不正です。`,
     );
   });
 
   it("rejects self edges", () => {
-    const data = structuredClone(rawStoryGraph);
+    const data = createMixedStoryGraphFixture();
     data.edges[0].targetBlockId = data.edges[0].sourceBlockId;
 
     expect(collectStoryGraphErrors(data)).toContain(
@@ -42,12 +49,12 @@ describe("story graph data model", () => {
   });
 
   it("rejects cycles in the sequence subgraph but allows semantic cycles", () => {
-    expect(collectStoryGraphErrors(rawStoryGraph)).toEqual([]);
-    const data = structuredClone(rawStoryGraph);
+    const data = createMixedStoryGraphFixture();
+    expect(collectStoryGraphErrors(data)).toEqual([]);
     data.edges.push({
       id: "edge_30000000-0000-4000-8000-000000000099",
-      sourceBlockId: "block_20000000-0000-4000-8000-000000000002",
-      targetBlockId: "block_20000000-0000-4000-8000-000000000001",
+      sourceBlockId: data.blocks[2].id,
+      targetBlockId: data.blocks[0].id,
       kind: "sequence",
       direction: "forward",
       relationType: "before",

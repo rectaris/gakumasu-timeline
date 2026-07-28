@@ -78,4 +78,10 @@ export function createStoryGraphSelectionUrl(locationLike, selection) {
   return createUrl(locationLike, params);
 }
 
+export function createNarrativeEventUrl(locationLike, eventId) {
+  const params = baseParams(locationLike.search);
+  if (eventId) params.set("event", eventId);
+  return createUrl(locationLike, params);
+}
+
 export { VIEW_PARAMS as TIMELINE_VIEW_PARAM_NAMES };
