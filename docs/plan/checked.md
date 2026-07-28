@@ -71,3 +71,4 @@ id	path
 071	docs/plan/checked/071-story-event-specification-roadmap.md
 065	docs/plan/checked/065-story-event-graph-view.md
 072	docs/plan/checked/072-story-event-mvp-evaluation.md
+064	docs/plan/checked/064-three-view-application-shell.md
