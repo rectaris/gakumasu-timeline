@@ -74,3 +74,4 @@ id	path
 064	docs/plan/checked/064-three-view-application-shell.md
 073	docs/plan/checked/073-story-data-publication-lifecycle.md
 074	docs/plan/checked/074-realworld-history-specification-proposal.md
+066	docs/plan/checked/066-gakumasu-realworld-history-view.md
