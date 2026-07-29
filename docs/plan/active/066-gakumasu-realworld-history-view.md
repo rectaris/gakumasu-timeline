@@ -145,6 +145,8 @@ Canonical details and synthetic examples are linked from
 - Screenshots inspected:
   `/tmp/realworld-history-desktop.png` and
   `/tmp/realworld-history-mobile.png`.
+- The default viewport covers the previous 12 months through the next 90 days;
+  `全期間` fits older reviewed records.
 - The first production record was checked against the official product site;
   details are in `docs/realworld-history/initial-dataset-review.md`.
 - `python3 scripts/security-static-check.py`,

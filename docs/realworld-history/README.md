@@ -2,7 +2,7 @@
 
 - 状態：Approved
 - 仕様バージョン：0.2
-- 実装状態：MVP実装開始可
+- 実装状態：MVP実装済み
 - 関連プラン：[066 Gakumasu Real-World History View](../plan/backlog/066-gakumasu-realworld-history-view.md)
 
 ## 目的
