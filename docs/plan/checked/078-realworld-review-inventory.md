@@ -68,13 +68,13 @@ durable review decisions or inferring story-level event grouping.
 
 ## Tasks
 
-- [ ] Implement the deterministic review inventory model.
-- [ ] Add exact-match clues and source-level completeness summaries.
-- [ ] Add a local JSON and Markdown report generator with manifest and redaction report.
-- [ ] Add focused tests and a package command.
-- [ ] Generate and inspect the current inventory.
-- [ ] Update authoring, data-flow, README, and stale backlog documentation.
-- [ ] Run full validation and archive the plan.
+- [x] Implement the deterministic review inventory model.
+- [x] Add exact-match clues and source-level completeness summaries.
+- [x] Add a local JSON and Markdown report generator with manifest and redaction report.
+- [x] Add focused tests and a package command.
+- [x] Generate and inspect the current inventory.
+- [x] Update authoring, data-flow, README, and stale backlog documentation.
+- [x] Run full validation and archive the plan.
 
 ## Boundaries
 
@@ -84,3 +84,35 @@ durable review decisions or inferring story-level event grouping.
 - Do not group candidates by semantic similarity.
 - Do not create or publish InfoEvents.
 - Do not commit generated review artifacts.
+
+## Validation Notes
+
+The current inventory contains 203 eligible candidates from seven registered
+sources.
+The two YouTube datasets remain partial at 100 candidates each, X contributes
+no candidates, and the remaining three candidates come from official websites.
+
+Exact matching found no shared resource-key group, 26 normalized-title groups,
+and one candidate whose canonical URL equals a published InfoEvent source URL.
+These results remain review clues and did not create decisions or InfoEvents.
+
+Validation completed:
+
+- `npm test -- --run tests/realworldReview.test.js tests/realworldIntake.test.js`
+- `npm run review:realworld`
+- `npm run verify`
+- `python3 scripts/security-static-check.py`
+- `python3 scripts/validate-changes.py`
+- `bash scripts/lint-plan-docs.sh`
+- `bash scripts/format-plan-docs.sh --check`
+- `git diff --check`
+
+## Deferred Decisions
+
+- Define the durable candidate review statuses and whether a reviewer identity
+  and decision timestamp are required.
+- Define controlled exclusion-reason values and whether free-form notes are
+  allowed.
+- Select the first candidate batch or information category for factual review.
+- Define when multiple official resources represent one InfoEvent and when
+  they must remain separate.
