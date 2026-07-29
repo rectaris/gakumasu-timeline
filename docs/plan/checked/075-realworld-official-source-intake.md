@@ -82,7 +82,7 @@ InfoEvent lifecycle.
 - [x] Strengthen InfoEvent source validation and add focused tests.
 - [x] Run credential-free collection and collect all sources available without new credentials.
 - [x] Update authoring, source, data-structure, and processing-flow documentation.
-- [ ] Run full validation and archive the plan.
+- [x] Run full validation and archive the plan.
 
 ## Boundaries
 
@@ -91,3 +91,24 @@ InfoEvent lifecycle.
 - Do not scrape authenticated or browser-only views.
 - Do not automatically create or publish factual InfoEvents from collected text.
 - Do not change existing public IDs or URL semantics.
+
+## Validation Notes
+
+The credential-free collection produced seven intake datasets.
+The two public website adapters collected three page candidates in total.
+The three YouTube origins and two X origins were recorded as `skipped` because
+their environment credentials were not configured; their adapters and
+secret-redaction behavior are covered by tests.
+
+No new InfoEvent was promoted from the page candidates because the collected
+pages did not provide enough reviewed occurrence-time evidence.
+
+Validation completed:
+
+- `npm run collect:realworld -- --max-pages 1`
+- `npm run verify`
+- `python3 scripts/security-static-check.py`
+- `python3 scripts/validate-changes.py`
+- `bash scripts/lint-plan-docs.sh`
+- `bash scripts/format-plan-docs.sh --check`
+- `git diff --check`
