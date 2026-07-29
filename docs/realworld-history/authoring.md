@@ -27,6 +27,7 @@ data/raw/realworld_events/
 - アプリの本番ビルドは `published.json` から生成したデータだけを参照します。
 - StoryBlockから投影する公開情報は、元の公開データから生成し、InfoEventへ複製しません。
 - 取得レスポンスの全文は `.agent-artifacts/realworld-ingest/<run ID>/` にのみ保存し、コミットしません。
+- 取り込み候補のレビュー在庫は `.agent-artifacts/realworld-review/<run ID>/` にのみ生成し、コミットしません。
 
 データセットのライフサイクルは `draft`、`unreviewed`、`approved`、`published` を使用します。
 `approved` はレビュー完了、`published` は本番入力として採用済みであることを表します。
@@ -57,6 +58,26 @@ YouTubeで`--max-pages`の上限に達して次ページが残る場合は、`st
 発信元ごとの通信失敗は後続ソースを止めません。
 失敗した発信元の既存ファイルを保持し、コマンドは全ソースの処理後に失敗終了します。
 `--require-all`を指定した場合は、通信失敗に加えて`skipped`がある場合も失敗終了します。
+
+## 取り込み候補の確認
+
+現在の取り込み候補は次のコマンドで一覧化します。
+
+```bash
+npm run review:realworld
+```
+
+コマンドは外部通信を行わず、`intake/`、`published.json`、`unreviewed/`を読み取ります。
+実行ごとに`.agent-artifacts/realworld-review/<run ID>/`へ`inventory.json`、`summary.md`、`manifest.json`、`redaction-report.md`を生成します。
+認証情報、環境変数、`.env.local`は読み取りません。
+
+`summary.md`は取得元ごとの候補数、取得状態、ページング状態、公開日時範囲を示します。
+候補には同一`resourceKey`、同一正規化タイトル、既存InfoEventの出典URLとの完全一致を手掛かりとして付けます。
+タイトル正規化はUnicode NFKC、英字の小文字化、連続空白の統一だけを行います。
+似た表記、内容、開催回、公開物の関係は推定しません。
+
+完全一致があっても、同じ出来事であることや公開可能であることは確定しません。
+レビュー担当者は確認資料を基に公式出典の内容を確認し、別途定めるレビュー状態と除外理由に従って判断します。
 
 ## X取得の保留
 
@@ -135,10 +156,9 @@ YouTubeで`--max-pages`の上限に達して次ページが残る場合は、`st
 
 事実の正しさは自動検証だけでは証明できないため、出典レビューを公開条件に含めます。
 
-## 初回実装前に必要な作業
+## 初期データセット拡充前に必要な作業
 
 1. [承認チェックリスト](review-checklist.md)を確定します。
 2. 代表的な実在情報を各カテゴリから選び、公式出典を確認します。
 3. そのデータで重複、日時精度、訂正、複数公演、StoryBlock投影の境界を再確認します。
 4. 承認された判断をADRへ記録します。
-5. 仕様を `Approved` にしてから実装計画066を開始します。

@@ -342,6 +342,9 @@ StoryBlockから参照元を引くための索引は、`npm run generate:data`�
 
 取得レスポンス全文は`.agent-artifacts/realworld-ingest/`へローカル保存し、リポジトリへコミットしません。
 `intake/`の項目はInfoEventではなく、レビュー後に同じ出来事を示す複数項目を1件へ統合できます。
+`npm run review:realworld`は、全取得元の状態と`intake/`の候補を読み取り専用のレビュー在庫へ変換します。
+レビュー在庫の`inventory.json`と`summary.md`は`.agent-artifacts/realworld-review/<run ID>/`へ保存し、正本またはコミット対象にしません。
+レビュー在庫が示す`resourceKey`、正規化タイトル、InfoEvent出典URLの完全一致は確認の手掛かりであり、統合または公開の決定ではありません。
 ページ上限までの取得は`partial`としてページング情報を持ち、既存候補とマージして候補の減少を防ぎます。
 通信失敗時は発信元ごとの既存ファイルを保持し、後続ソースの取得を続けます。
 Xの取得元はレジストリ上で`paused`とし、取得を保留しています。
@@ -351,6 +354,7 @@ InfoEventは一回の公開、更新、公演、配信を表し、`info_<小文�
 日時値は`value`、`precision`、必要な場合の`timezone`を持ち、精度は`month`、`date`、`minute`です。
 
 `npm run collect:realworld`は登録済み公式ソースを取得し、`intake/`を更新します。
+`npm run review:realworld`は外部通信を行わず、現在の候補分布と完全一致の手掛かりをローカルへ出力します。
 `npm run validate:data`は、取得元と取り込みデータに加え、InfoEventのID、カテゴリ、状態、日時精度、タイムゾーン、開始終了順、公開項目の公式出典を検証します。
 `npm run verify`は、本番成果物へ`unreviewed`の学マス情報史データが混入していないことも確認します。
 

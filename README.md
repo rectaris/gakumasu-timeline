@@ -149,11 +149,14 @@
 ```sh
 npm run collect:realworld -- --max-pages 1
 npm run validate:data
+npm run review:realworld
 ```
 
 YouTubeには`YOUTUBE_API_KEY`を環境変数で設定します。
 ページ上限に達した結果は`partial`として既存候補とマージされ、公開データへ自動反映されません。
 Xの取得はレジストリ上で保留しており、`X_BEARER_TOKEN`が設定されていても通信しません。
+`review:realworld`は候補を変更せず、確認用のJSONとMarkdownを`.agent-artifacts/realworld-review/`へ生成します。
+生成した確認資料はローカル専用であり、同一タイトルやURLの一致を公開判断として扱いません。
 
 ## イベントの追加・編集
 

@@ -15,7 +15,7 @@
 
 [064 Three-View Application Shell](../checked/064-three-view-application-shell.md)は完了済みで、
 MVPを完了した[065 Story Event Graph View](../checked/065-story-event-graph-view.md)と
-[activeの066](../active/066-gakumasu-realworld-history-view.md)の共通基盤を提供します。
+[066 Gakumasu Real-World History View](../checked/066-gakumasu-realworld-history-view.md)の共通基盤を提供します。
 
 3ビューは同じ時間軸へ重ねず、選択中の1ビューだけを表示します。
 

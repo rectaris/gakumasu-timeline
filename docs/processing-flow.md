@@ -24,6 +24,10 @@
 - ページ上限に達したYouTube結果は`partial`とし、`resourceKey`で既存候補とマージして未取得ページの候補を保持する
 - 発信元固有の通信失敗は後続処理から隔離し、失敗した発信元の最後の有効なデータセットを変更しない
 - 取得レスポンス全文は`.agent-artifacts/realworld-ingest/`へローカル保存し、本番入力またはコミット対象にしない
+- `npm run review:realworld`は外部通信を行わず、全`intake/`を読み取り専用のレビュー在庫へ集約する
+- レビュー在庫は取得元の状態、候補数、公開日時範囲、完全一致した`resourceKey`、正規化タイトル、InfoEvent出典URLを確認の手掛かりとして示す
+- レビュー在庫とMarkdownレポートは`.agent-artifacts/realworld-review/`へ保存し、本番入力またはコミット対象にしない
+- 完全一致の手掛かりから意味上の重複、収録可否、除外理由、InfoEventを自動決定しない
 - `intake/`は出典候補であり、レビュー担当者が同じ出来事の候補をまとめて`unreviewed/`のInfoEventを作成する
 - 学マス情報史の本番データは、構造レビューと事実レビューを通過した`data/raw/realworld_events/published.json`だけから生成する
 - 生成済みデータは `npm run generate:data` で更新し、`npm run validate:data` で raw との鮮度一致を確認する
@@ -40,6 +44,7 @@
 - 検証は表示用正規化の前に、イベント ID、日付範囲、`occurrenceType`、参加者参照、世界線参照、空文字値、不確実性メタデータを確認する
 - `storyReferences`は参照IDの一意性、型、表示順、StoryBlockの参照整合性を全データ文脈で確認する
 - 公式ソース取り込みは、取得元ID、取得状態、ページング完全性、取得件数、保持件数、URL、日時、プラットフォーム識別子、`resourceKey`を検証し、ソースをまたぐ同一リソース候補を報告する
+- レビュー在庫の生成前にも取得元、取り込みデータ、参照対象InfoEventを既存のデータ契約で検証する
 - 失敗時は元ファイル、カテゴリ、レーン、イベント ID / title、フィールド、理由を表示する
 - `npm run verify` はデータ検証、ユニットテスト、ビルド、本番成果物の公開境界検証を実行する
 
