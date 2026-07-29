@@ -336,6 +336,7 @@ StoryBlockから参照元を引くための索引は、`npm run generate:data`�
 
 - `source-registry.json`：取得を許可した公式発信元と学マス候補の判定範囲です。
 - `intake/`：公式ページ、動画、投稿を正規化したレビュー前の取得候補です。
+- `reviews/`：取得元と候補IDの組に対するレビュー判断です。
 - `published.json`：公式出典と事実レビューを通過した本番データです。
 - `unreviewed/`：候補または表示検証用のデータです。
 - `src/data/generated/realworld_events/`：生成物であり、直接編集しません。
@@ -345,6 +346,12 @@ StoryBlockから参照元を引くための索引は、`npm run generate:data`�
 `npm run review:realworld`は、全取得元の状態と`intake/`の候補を読み取り専用のレビュー在庫へ変換します。
 レビュー在庫の`inventory.json`と`summary.md`は`.agent-artifacts/realworld-review/<run ID>/`へ保存し、正本またはコミット対象にしません。
 レビュー在庫が示す`resourceKey`、正規化タイトル、InfoEvent出典URLの完全一致は確認の手掛かりであり、統合または公開の決定ではありません。
+レビュー判断は`reviews/<sourceRegistryId>.json`へ保存し、取得処理が更新する`intake/`へ混在させません。
+未登録の候補は`pending`とみなし、保存する判断は`include`、`exclude`、`defer`です。
+判断には`reviewedAt`、公開可能な`reviewedBy`、確認時の`reviewedContentHash`を保存します。
+現在の`contentHash`が確認時と異なる判断は削除せず、再確認対象として派生します。
+取得候補が存在しなくなった判断も削除せず、孤立判断としてレビュー在庫へ表示します。
+`include`はInfoEvent作成対象への採用を示すだけであり、承認または公開を意味しません。
 ページ上限までの取得は`partial`としてページング情報を持ち、既存候補とマージして候補の減少を防ぎます。
 通信失敗時は発信元ごとの既存ファイルを保持し、後続ソースの取得を続けます。
 Xの取得元はレジストリ上で`paused`とし、取得を保留しています。
@@ -355,6 +362,7 @@ InfoEventは一回の公開、更新、公演、配信を表し、`info_<小文�
 
 `npm run collect:realworld`は登録済み公式ソースを取得し、`intake/`を更新します。
 `npm run review:realworld`は外部通信を行わず、現在の候補分布と完全一致の手掛かりをローカルへ出力します。
+`npm run review:realworld:decide`は候補の存在、理由コード、確認ハッシュ、InfoEvent参照を検証し、明示された1件の判断だけを更新します。
 `npm run validate:data`は、取得元と取り込みデータに加え、InfoEventのID、カテゴリ、状態、日時精度、タイムゾーン、開始終了順、公開項目の公式出典を検証します。
 `npm run verify`は、本番成果物へ`unreviewed`の学マス情報史データが混入していないことも確認します。
 

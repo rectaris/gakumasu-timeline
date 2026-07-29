@@ -158,6 +158,22 @@ Xの取得はレジストリ上で保留しており、`X_BEARER_TOKEN`が設定
 `review:realworld`は候補を変更せず、確認用のJSONとMarkdownを`.agent-artifacts/realworld-review/`へ生成します。
 生成した確認資料はローカル専用であり、同一タイトルやURLの一致を公開判断として扱いません。
 
+候補ごとの判断は、取得データと分離した発信元別のレビュー台帳へ記録します。
+最初に`--dry-run`を指定し、入力と既存参照を検証してください。
+
+```sh
+npm run review:realworld:decide -- \
+  --source SOURCE_REGISTRY_ID \
+  --intake INTAKE_ID \
+  --decision defer \
+  --reason needs_source_review \
+  --reviewed-by PUBLIC_REVIEWER_ID \
+  --dry-run
+```
+
+`--dry-run`を外した場合だけ`data/raw/realworld_events/reviews/`を更新します。
+このコマンドはInfoEventを作成または公開しません。
+
 ## イベントの追加・編集
 
 イベントの追加と編集には、ローカル開発サーバー専用の worldline データ編集画面を使えます。

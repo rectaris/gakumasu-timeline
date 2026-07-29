@@ -28,6 +28,12 @@
 - レビュー在庫は取得元の状態、候補数、公開日時範囲、完全一致した`resourceKey`、正規化タイトル、InfoEvent出典URLを確認の手掛かりとして示す
 - レビュー在庫とMarkdownレポートは`.agent-artifacts/realworld-review/`へ保存し、本番入力またはコミット対象にしない
 - 完全一致の手掛かりから意味上の重複、収録可否、除外理由、InfoEventを自動決定しない
+- 候補レビューは`data/raw/realworld_events/reviews/<sourceRegistryId>.json`へ保存し、再取得される`intake/`と分離する
+- 保存されていない候補は`pending`とし、保存済みの判断は`include`、`exclude`、`defer`のいずれかとする
+- `reviewedContentHash`と現在の`contentHash`が異なる場合は、判断を維持したまま再確認対象として派生する
+- 取得候補が存在しなくなった判断は孤立判断として報告し、自動削除しない
+- レビュー在庫はWebサイト候補3件、プレイリスト最新10件、最新の同一タイトルグループから重複なしのパイロット候補を派生する
+- `npm run review:realworld:decide`は`--dry-run`で書き込み前検証を行い、通常実行でもInfoEventを自動作成しない
 - `intake/`は出典候補であり、レビュー担当者が同じ出来事の候補をまとめて`unreviewed/`のInfoEventを作成する
 - 学マス情報史の本番データは、構造レビューと事実レビューを通過した`data/raw/realworld_events/published.json`だけから生成する
 - 生成済みデータは `npm run generate:data` で更新し、`npm run validate:data` で raw との鮮度一致を確認する
@@ -45,6 +51,7 @@
 - `storyReferences`は参照IDの一意性、型、表示順、StoryBlockの参照整合性を全データ文脈で確認する
 - 公式ソース取り込みは、取得元ID、取得状態、ページング完全性、取得件数、保持件数、URL、日時、プラットフォーム識別子、`resourceKey`を検証し、ソースをまたぐ同一リソース候補を報告する
 - レビュー在庫の生成前にも取得元、取り込みデータ、参照対象InfoEventを既存のデータ契約で検証する
+- レビュー台帳は候補ID、判断、理由、担当者、判断日時、確認ハッシュ、InfoEvent参照を検証し、内容変更と孤立判断を報告する
 - 失敗時は元ファイル、カテゴリ、レーン、イベント ID / title、フィールド、理由を表示する
 - `npm run verify` はデータ検証、ユニットテスト、ビルド、本番成果物の公開境界検証を実行する
 

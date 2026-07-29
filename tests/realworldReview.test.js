@@ -15,8 +15,14 @@ async function readJson(file) {
   return JSON.parse(await fs.readFile(file, "utf8"));
 }
 
-async function readJsonDirectory(directory) {
-  const entries = await fs.readdir(directory, { withFileTypes: true });
+async function readJsonDirectory(directory, optional = false) {
+  let entries;
+  try {
+    entries = await fs.readdir(directory, { withFileTypes: true });
+  } catch (error) {
+    if (optional && error.code === "ENOENT") return [];
+    throw error;
+  }
   return Promise.all(
     entries
       .filter((entry) => entry.isFile() && entry.name.endsWith(".json"))
@@ -25,16 +31,24 @@ async function readJsonDirectory(directory) {
   );
 }
 
-async function buildCurrentInventory() {
+async function currentInputs() {
   const root = path.join(projectRoot, "data/raw/realworld_events");
-  return buildRealworldReviewInventory({
+  return {
     registry: await readJson(path.join(root, "source-registry.json")),
     intakeDatasets: await readJsonDirectory(path.join(root, "intake")),
     infoEventDatasets: [
       await readJson(path.join(root, "published.json")),
       ...(await readJsonDirectory(path.join(root, "unreviewed"))),
     ],
-  });
+    reviewDatasets: await readJsonDirectory(
+      path.join(root, "reviews"),
+      true,
+    ),
+  };
+}
+
+async function buildCurrentInventory() {
+  return buildRealworldReviewInventory(await currentInputs());
 }
 
 afterEach(async () => {
@@ -55,6 +69,12 @@ describe("real-world review inventory", () => {
 
     expect(inventory.summary.candidateCount).toBe(expectedCandidateCount);
     expect(inventory.summary.candidateCount).toBeGreaterThan(0);
+    expect(inventory.summary.reviewDecisionCounts).toMatchObject({
+      pending: inventory.summary.candidateCount,
+      include: 0,
+      exclude: 0,
+      defer: 0,
+    });
     expect(
       inventory.sources
         .filter((source) => source.platform === "x-account")
@@ -65,6 +85,79 @@ describe("real-world review inventory", () => {
             source.candidateCount === 0,
         ),
     ).toBe(true);
+  });
+
+  it("derives a deterministic mixed pilot batch without recording decisions", async () => {
+    const inventory = await buildCurrentInventory();
+    const pilotKeys = new Set(
+      inventory.pilotBatch.candidates.map(
+        (item) => `${item.sourceRegistryId}\0${item.intakeId}`,
+      ),
+    );
+
+    expect(pilotKeys.size).toBe(inventory.summary.pilotCandidateCount);
+    expect(inventory.summary.pilotCandidateCount).toBe(15);
+    expect(
+      inventory.candidates.filter((item) =>
+        item.pilotReasons.includes("website"),
+      ),
+    ).toHaveLength(3);
+    expect(
+      inventory.candidates.filter((item) =>
+        item.pilotReasons.includes("latest-playlist"),
+      ),
+    ).toHaveLength(10);
+    expect(
+      inventory.candidates.filter((item) =>
+        item.pilotReasons.includes("newest-exact-title-group"),
+      ).length,
+    ).toBeGreaterThanOrEqual(2);
+  });
+
+  it("reports changed and orphaned decisions without deleting them", async () => {
+    const inputs = await currentInputs();
+    const officialSite = inputs.intakeDatasets
+      .find(
+        (dataset) =>
+          dataset.sourceRegistryId === "origin_gakumas_official_site",
+      )
+      .items[0];
+    inputs.reviewDatasets = [
+      {
+        schemaVersion: 1,
+        sourceRegistryId: "origin_gakumas_official_site",
+        decisions: [
+          {
+            intakeId: officialSite.id,
+            decision: "include",
+            reviewedAt: "2026-07-29T12:00:00.000Z",
+            reviewedBy: "maintainer",
+            reviewedContentHash: "f".repeat(64),
+            infoEventIds: [],
+          },
+          {
+            intakeId: `intake_${"0".repeat(64)}`,
+            decision: "exclude",
+            reason: "not_an_event",
+            reviewedAt: "2026-07-29T12:00:00.000Z",
+            reviewedBy: "maintainer",
+            reviewedContentHash: "e".repeat(64),
+            infoEventIds: [],
+          },
+        ],
+      },
+    ];
+    const inventory = buildRealworldReviewInventory(inputs);
+
+    expect(inventory.summary.needsRecheckCount).toBe(1);
+    expect(inventory.summary.orphanReviewCount).toBe(1);
+    expect(inventory.summary.reviewDecisionCounts.include).toBe(1);
+    expect(inventory.orphanReviews).toEqual([
+      expect.objectContaining({
+        intakeId: `intake_${"0".repeat(64)}`,
+        decision: "exclude",
+      }),
+    ]);
   });
 
   it("uses conservative title normalization and does not infer similar titles", () => {

@@ -63,6 +63,53 @@ YouTubeの`collected`と`partial`では`pagination`を必須とし、`pagesFetch
 IntakeRecordはInfoEventではありません。
 複数のIntakeRecordを1件のInfoEventの出典へまとめることがあり、候補の公開日時をInfoEventの発生日時として自動採用しません。
 
+## ReviewDecision
+
+候補に対するレビュー判断は`reviews/<sourceRegistryId>.json`へ保存します。
+取得処理が更新するIntakeRecordへ判断を追加しません。
+
+各レビューデータセットは`schemaVersion`、`sourceRegistryId`、`decisions`を持ちます。
+ファイル名は`<sourceRegistryId>.json`とし、取得元IDと一致させます。
+ファイルが存在しない取得元や、判断が保存されていない候補は`pending`とみなします。
+
+保存するReviewDecisionは次の情報を持ちます。
+
+- `intakeId`：対象取得元内の候補IDです。
+- `decision`：`include`、`exclude`、`defer`のいずれかです。
+- `reason`：除外または保留の制御された理由です。
+- `note`：任意の説明です。
+- `reviewedAt`：判断を記録したISO 8601日時です。
+- `reviewedBy`：公開可能なレビュー担当者識別子です。
+- `reviewedContentHash`：判断時に確認した候補の`contentHash`です。
+- `infoEventIds`：候補が支える既存InfoEventのID配列です。
+
+`include`はInfoEvent作成候補として採用することを示します。
+InfoEventの`approved`または`published`を意味せず、InfoEventを自動作成しません。
+`include`だけが既存InfoEventを0件以上参照できます。
+
+`exclude`では次の理由を使用します。
+
+- `out_of_scope`
+- `not_an_event`
+- `duplicate_candidate`
+- `superseded_resource`
+- `unverifiable`
+- `other`
+
+`defer`では次の理由を使用します。
+
+- `needs_source_review`
+- `needs_grouping_decision`
+- `incomplete_source_data`
+- `other`
+
+理由が`other`の場合は`note`を必須とします。
+自由記述だけで判断区分を置き換えません。
+
+現在の候補ハッシュが`reviewedContentHash`と異なる場合は、レビュー在庫が`needsRecheck`を派生します。
+以前の判断は自動で削除または変更しません。
+対象候補が現在のIntakeRecordに存在しない判断は、孤立判断として保持して報告します。
+
 ## InfoEventの単位
 
 現実世界で発生する1つの公開、更新、公演、配信を1件のInfoEventとします。
@@ -206,3 +253,7 @@ SourceOriginとIntakeRecordもアプリの本番入力へ含めません。
 - SourceOrigin IDとIntakeRecord IDが規定形式で一意であること。
 - IntakeRecordが登録済みSourceOriginを参照し、取得状態、URL、日時、`resourceKey`を満たすこと。
 - `partial`が次ページの存在と取得件数、保持件数を明示すること。
+- ReviewDecisionが登録済みSourceOriginと候補IDの組を使用すること。
+- ReviewDecisionの判断、理由、担当者、日時、確認ハッシュが契約を満たすこと。
+- `infoEventIds`が重複せず、既存InfoEventだけを参照すること。
+- 変更された候補の再確認件数と、候補が存在しない孤立判断を報告すること。

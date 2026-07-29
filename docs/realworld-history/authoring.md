@@ -15,6 +15,8 @@ data/raw/realworld_events/
 ├── source-registry.json
 ├── intake/
 │   └── <sourceRegistryId>.json
+├── reviews/
+│   └── <sourceRegistryId>.json
 ├── unreviewed/
 │   └── *.json
 └── published.json
@@ -22,6 +24,7 @@ data/raw/realworld_events/
 
 - `source-registry.json` は、取得を許可した公式発信元と収録範囲を定義します。
 - `intake/` は、取得したページ、動画、投稿を正規化した軽量な候補を置きます。
+- `reviews/` は、取得元IDと候補IDの組に対するレビュー判断を置きます。
 - `unreviewed/` は候補、調査中、レビュー待ちのレコードを置きます。
 - `published.json` は仕様と出典のレビューを通過したレコードだけを置きます。
 - アプリの本番ビルドは `published.json` から生成したデータだけを参照します。
@@ -78,6 +81,54 @@ npm run review:realworld
 
 完全一致があっても、同じ出来事であることや公開可能であることは確定しません。
 レビュー担当者は確認資料を基に公式出典の内容を確認し、別途定めるレビュー状態と除外理由に従って判断します。
+
+レポートの「パイロット候補」は、公式Webサイト候補、プレイリストの最新10件、最新の同一正規化タイトルグループから重複を除いて選びます。
+現在のデータでは15件が対象です。
+
+## レビュー判断の記録
+
+候補レビューは取得処理と分離した`reviews/<sourceRegistryId>.json`へ保存します。
+保存されていない候補は`pending`として扱います。
+判断値は`include`、`exclude`、`defer`です。
+
+最初に`--dry-run`で候補、理由、参照を検証します。
+
+```bash
+npm run review:realworld:decide -- \
+  --source SOURCE_REGISTRY_ID \
+  --intake INTAKE_ID \
+  --decision include \
+  --reviewed-by PUBLIC_REVIEWER_ID \
+  --dry-run
+```
+
+`include`はInfoEvent作成候補として採用する判断であり、公開承認ではありません。
+既存InfoEventを支える候補では、`--info-event INFO_EVENT_ID`を複数回指定できます。
+候補の日時やタイトルはInfoEventへ自動転記しません。
+
+除外または保留では、判断に対応する理由を指定します。
+
+```bash
+npm run review:realworld:decide -- \
+  --source SOURCE_REGISTRY_ID \
+  --intake INTAKE_ID \
+  --decision exclude \
+  --reason not_an_event \
+  --reviewed-by PUBLIC_REVIEWER_ID \
+  --dry-run
+```
+
+除外理由は`out_of_scope`、`not_an_event`、`duplicate_candidate`、`superseded_resource`、`unverifiable`、`other`です。
+保留理由は`needs_source_review`、`needs_grouping_decision`、`incomplete_source_data`、`other`です。
+`other`では`--note`を必須とします。
+
+`--dry-run`を外した場合だけ台帳を更新します。
+記録時の`contentHash`は`reviewedContentHash`として自動保存します。
+候補内容が後から変化した場合は、以前の判断を残して`needsRecheck`として報告します。
+候補が取得データから消えた場合も判断は自動削除せず、孤立判断として報告します。
+
+初回の永続的なレビュー判断は、構造レビューと事実レビューを承認できる担当者を決めてから記録します。
+担当者が確定するまでは、`--dry-run`とローカルレポートだけを使用します。
 
 ## X取得の保留
 
