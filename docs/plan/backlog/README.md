@@ -11,14 +11,11 @@
 
 ## 現在の backlog
 
-- [066 Gakumasu Real-World History View](066-gakumasu-realworld-history-view.md)
-  - 現実世界の日付で公式展開をたどる「学マス情報史」ビューです。
-  - Proposed 0.2 の収録範囲、出典方針、暦データ契約を承認してから実装を開始します。
-  - 仕様書：[学マス情報史仕様](../../realworld-history/README.md)
-  - 次の確認：[仕様承認チェックリスト](../../realworld-history/review-checklist.md)
+現在、登録済みのbacklogはありません。
 
 [064 Three-View Application Shell](../checked/064-three-view-application-shell.md)は完了済みで、
-MVPを完了した[065 Story Event Graph View](../checked/065-story-event-graph-view.md)と066の共通基盤を提供します。
+MVPを完了した[065 Story Event Graph View](../checked/065-story-event-graph-view.md)と
+[activeの066](../active/066-gakumasu-realworld-history-view.md)の共通基盤を提供します。
 
 3ビューは同じ時間軸へ重ねず、選択中の1ビューだけを表示します。
 

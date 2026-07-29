@@ -1,6 +1,6 @@
 # Gakumasu Real-World History View
 
-status: backlog
+status: active
 task_type: product_logic
 review_class: C
 human_design_required: yes
@@ -58,22 +58,21 @@ It must not reuse the narrative timeline's fixed 31-day month semantics.
 
 ## Start Gate
 
-Do not begin implementation from this backlog outline alone.
+The contract review is complete and recorded in
+`docs/realworld-history/decisions/`.
 
 The focused specification proposal now exists in `docs/realworld-history/`.
 Before promotion to active:
 
-1. Review every item in `docs/realworld-history/review-checklist.md`.
-2. Apply accepted changes and record only approved decisions in
-   `docs/realworld-history/decisions/`.
-3. Select representative factual records and verify their official sources.
-4. Change the specification from `Proposed` to `Approved`.
-5. Confirm that every specification task below is checked.
+Completed:
 
-Until those steps finish, do not create factual production records or start the
-runtime implementation.
+- [x] Review every item in `docs/realworld-history/review-checklist.md`.
+- [x] Record accepted decisions in `docs/realworld-history/decisions/`.
+- [x] Change the specification from `Proposed` to `Approved`.
 
-Plan 064 must provide the `mode=realworld` page boundary and selection URL contract, or this plan must coordinate that prerequisite without duplicating shell ownership.
+Representative factual records still require official-source verification.
+The storage, validation, and UI implementation may proceed with an empty
+published dataset; no candidate becomes production data before that review.
 
 Plan 064 is complete. The application shell already provides the
 `mode=realworld` page boundary; this plan owns the real-world page contents and
@@ -90,10 +89,9 @@ the `item` selection contract.
 - Reuse the shared application shell, selection, detail, color, URL, and interaction patterns while providing a Gregorian scale adapter and mode-owned filters.
 - Derive eligible story-release history items from StoryBlock release metadata instead of manually maintaining duplicate records.
 
-## Proposed Specification 0.2
+## Approved Specification 0.2
 
-The following recommendations are concrete enough for review but are not yet
-approved contracts:
+The following contracts are approved:
 
 - Include high-signal game updates, story releases, music releases, official
   live events, and official streams.
@@ -125,6 +123,17 @@ Canonical details and synthetic examples are linked from
 - [x] Receive explicit approval or requested revisions for specification 0.2.
 - [ ] Select and verify the representative factual initial data set.
 - [x] Record approved decisions and mark the specification `Approved`.
+
+## Implementation Tasks
+
+- [ ] Add the InfoEvent model, datetime parsing, validation, and tests.
+- [ ] Add unreviewed and published raw-data boundaries and deterministic generation.
+- [ ] Prove that production bundles exclude unreviewed real-world records.
+- [ ] Build the Gregorian timeline scale, category lanes, precision-aware items, and status display.
+- [ ] Add search, category and status filters, viewport controls, details, and `item` URL restoration.
+- [ ] Verify desktop and mobile interaction, layout, empty states, and direct URLs.
+- [ ] Verify and publish a small representative official-source dataset, or document why production remains empty.
+- [ ] Update user and data documentation, run full validation, and archive this plan.
 
 ## Initial Validation Rules
 
