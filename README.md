@@ -2,8 +2,7 @@
 
 学園アイドルマスターの出来事を、独立した複数の見方でたどるアプリです。
 
-現在は、キャラクターやストーリーごとの出来事をレーンで示す「物語時系列」と、ゲーム内の各コミュを1ノードとして関係を示す「物語イベント」MVPを表示できます。
-「学マス情報史」は現実世界史として表示境界だけを用意しており、内容は今後実装します。
+現在は、キャラクターやストーリーごとの出来事をレーンで示す「物語時系列」、ゲーム内の各コミュを1ノードとして関係を示す「物語イベント」、現実世界の日付で公式展開をたどる「学マス情報史」を表示できます。
 
 ## 公開サイト（GitHub Pages）
 
@@ -11,6 +10,7 @@
 
 - URL: `https://rectaris.github.io/timeline/`
 - 物語イベントMVP: `https://rectaris.github.io/timeline/?mode=story-graph`
+- 学マス情報史MVP: `https://rectaris.github.io/timeline/?mode=realworld`
 
 ## 使い方（サイト操作）
 
@@ -19,7 +19,18 @@
 - ヘッダーの「表示」から「物語時系列」「物語イベント」「学マス情報史」を選択できます。
 - 「物語時系列」は従来のレーン型タイムラインです。
 - 「物語イベント」は、1つのコミュを1ノードとして前後関係と意味的関係を表示します。
-- 「学マス情報史」は開発準備中です。
+- 「学マス情報史」は、グレゴリオ暦上の公式情報をカテゴリレーンで表示します。
+
+### 学マス情報史MVP
+
+- 検索、カテゴリ、状態で表示を絞り込めます。
+- 月、日、分の日時精度を区別し、不明な日や時刻を補いません。
+- 予定、開催中、完了、延期、中止をラベルと線種で区別します。
+- `−`、`＋`、`現在へ`、`全期間`で表示範囲を操作できます。
+- 項目を選ぶと日時、精度、概要、公式出典を確認できます。
+- `?mode=realworld&item=<InfoEvent ID>`で選択を復元できます。
+- 本番には公式出典をレビューした項目だけを収録します。
+- ローカル開発では、精度や状態の表示確認用の合成データも表示します。
 
 ### 物語イベントMVP
 
@@ -127,6 +138,8 @@
 - 生成済みデータ: [src/data/generated/worldline_commu/](src/data/generated/worldline_commu/)
 - 物語イベントの編集元パイロットデータ: [data/raw/story_events/](data/raw/story_events/)
 - 物語イベントの生成済みデータ: [src/data/generated/story_events/](src/data/generated/story_events/)
+- 学マス情報史の編集元データ: [data/raw/realworld_events/](data/raw/realworld_events/)
+- 学マス情報史の生成済みデータ: [src/data/generated/realworld_events/](src/data/generated/realworld_events/)
 - データ集約: [src/data/index.js](src/data/index.js)（`idolCommu` / `hatsuboshiCommus` / `eventCommus` / `supportCardCommus`）
 - 世界線一覧: [src/data/worldlines.js](src/data/worldlines.js)
 - キャラクター一覧: [src/data/characterCatalog.js](src/data/characterCatalog.js)

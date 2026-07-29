@@ -121,19 +121,35 @@ Canonical details and synthetic examples are linked from
 - [x] Propose lanes, filters, date labels, default range, and mobile behavior.
 - [x] Propose the projection and cross-view reference boundary.
 - [x] Receive explicit approval or requested revisions for specification 0.2.
-- [ ] Select and verify the representative factual initial data set.
+- [x] Select and verify the representative factual initial data set.
 - [x] Record approved decisions and mark the specification `Approved`.
 
 ## Implementation Tasks
 
-- [ ] Add the InfoEvent model, datetime parsing, validation, and tests.
-- [ ] Add unreviewed and published raw-data boundaries and deterministic generation.
-- [ ] Prove that production bundles exclude unreviewed real-world records.
-- [ ] Build the Gregorian timeline scale, category lanes, precision-aware items, and status display.
-- [ ] Add search, category and status filters, viewport controls, details, and `item` URL restoration.
-- [ ] Verify desktop and mobile interaction, layout, empty states, and direct URLs.
-- [ ] Verify and publish a small representative official-source dataset, or document why production remains empty.
-- [ ] Update user and data documentation, run full validation, and archive this plan.
+- [x] Add the InfoEvent model, datetime parsing, validation, and tests.
+- [x] Add unreviewed and published raw-data boundaries and deterministic generation.
+- [x] Prove that production bundles exclude unreviewed real-world records.
+- [x] Build the Gregorian timeline scale, category lanes, precision-aware items, and status display.
+- [x] Add search, category and status filters, viewport controls, details, and `item` URL restoration.
+- [x] Verify desktop and mobile interaction, layout, empty states, and direct URLs.
+- [x] Verify and publish a small representative official-source dataset, or document why production remains empty.
+- [x] Update user and data documentation, run full validation, and archive this plan.
+
+## Validation Notes
+
+- `npm run verify`: 22 test files and 118 tests passed, production build passed,
+  and both publication boundaries passed.
+- `node scripts/verify-realworld-history.mjs`: development and production,
+  desktop and mobile, filtering, selection URL, and unpublished-data exclusion
+  passed.
+- Screenshots inspected:
+  `/tmp/realworld-history-desktop.png` and
+  `/tmp/realworld-history-mobile.png`.
+- The first production record was checked against the official product site;
+  details are in `docs/realworld-history/initial-dataset-review.md`.
+- `python3 scripts/security-static-check.py`,
+  `python3 scripts/validate-changes.py`, plan lint, plan format, and
+  `git diff --check` passed.
 
 ## Initial Validation Rules
 

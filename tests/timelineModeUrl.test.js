@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
   createNarrativeEventUrl,
+  createRealworldSelectionUrl,
   createStoryGraphSelectionUrl,
   createTimelineModeUrl,
   parseStoryGraphSelection,
+  parseRealworldSelection,
   parseTimelineMode,
 } from "../src/utils/timelineModeUrl";
 
@@ -44,6 +46,15 @@ describe("timeline mode URL", () => {
   it("creates a narrative event URL without carrying graph state", () => {
     expect(createNarrativeEventUrl(locationLike, "event_new")).toBe(
       "/timeline/?utm_source=test&event=event_new#note",
+    );
+  });
+
+  it("stores and parses one real-world item selection", () => {
+    expect(
+      createRealworldSelectionUrl(locationLike, "info_new"),
+    ).toBe("/timeline/?utm_source=test&mode=realworld&item=info_new#note");
+    expect(parseRealworldSelection("?mode=realworld&item=info_new")).toBe(
+      "info_new",
     );
   });
 });

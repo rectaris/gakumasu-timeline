@@ -78,6 +78,17 @@ export function createStoryGraphSelectionUrl(locationLike, selection) {
   return createUrl(locationLike, params);
 }
 
+export function parseRealworldSelection(search) {
+  return new URLSearchParams(search).get("item");
+}
+
+export function createRealworldSelectionUrl(locationLike, itemId) {
+  const params = baseParams(locationLike.search);
+  params.set("mode", "realworld");
+  if (itemId) params.set("item", itemId);
+  return createUrl(locationLike, params);
+}
+
 export function createNarrativeEventUrl(locationLike, eventId) {
   const params = baseParams(locationLike.search);
   if (eventId) params.set("event", eventId);

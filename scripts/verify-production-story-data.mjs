@@ -6,8 +6,14 @@ const PROHIBITED_MARKERS = [
   "story-graph-pilot",
   "block_20000000-0000-4000-8000-000000000001",
   "edge_30000000-0000-4000-8000-000000000001",
+  "realworld-history-unreviewed-examples",
+  "info_22222222-2222-4222-8222-222222222221",
+  "検証用ストーリー公開",
 ];
-const REQUIRED_MARKER = "story-graph-published";
+const REQUIRED_MARKERS = [
+  "story-graph-published",
+  "realworld-history-published",
+];
 
 async function collectFiles(directory) {
   const entries = await fs.readdir(directory, { withFileTypes: true });
@@ -43,8 +49,10 @@ if (leaks.length) {
   );
 }
 
-if (!contents.some(({ content }) => content.includes(REQUIRED_MARKER))) {
-  throw new Error("Production assets do not contain the published story dataset.");
-}
+REQUIRED_MARKERS.forEach((marker) => {
+  if (!contents.some(({ content }) => content.includes(marker))) {
+    throw new Error(`Production assets do not contain published marker: ${marker}`);
+  }
+});
 
-console.log("Production story publication boundary check passed.");
+console.log("Production story and real-world publication boundary check passed.");

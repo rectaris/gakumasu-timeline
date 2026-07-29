@@ -329,3 +329,20 @@ StoryBlockから参照元を引くための索引は、`npm run generate:data`�
 逆引き索引は編集せず、参照元の`storyReferences`を修正します。
 
 保存契約、意味論、作成境界の正規仕様は[物語イベント仕様](story-event/README.md)に保存します。
+
+## 学マス情報史
+
+現実世界の公式情報は`data/raw/realworld_events/`を正本とします。
+
+- `published.json`：公式出典と事実レビューを通過した本番データです。
+- `unreviewed/`：候補または表示検証用のデータです。
+- `src/data/generated/realworld_events/`：生成物であり、直接編集しません。
+
+InfoEventは一回の公開、更新、公演、配信を表し、`info_<小文字UUID>`形式の不変IDを持ちます。
+告知日時は`announcedAt`、発生日時は`startsAt`、終了は`endsAt`へ分けます。
+日時値は`value`、`precision`、必要な場合の`timezone`を持ち、精度は`month`、`date`、`minute`です。
+
+`npm run validate:data`は、ID、カテゴリ、状態、日時精度、タイムゾーン、開始終了順、公開項目の公式出典を検証します。
+`npm run verify`は、本番成果物へ`unreviewed`の学マス情報史データが混入していないことも確認します。
+
+完全な契約は[学マス情報史仕様](realworld-history/README.md)を参照してください。

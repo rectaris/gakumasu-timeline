@@ -3,6 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { assertValidStoryGraphData } from "../src/data/storyGraphModel.js";
+import { assertValidRealworldHistoryData } from "../src/data/realworldHistoryModel.js";
 import { buildStoryReferenceIndex } from "../src/data/storyReferences.js";
 
 const GENERATED_DATA_ROOT = "src/data/generated";
@@ -30,6 +31,18 @@ const STATIC_GENERATED_DATA_FILES = [
     category: "storyReferenceIndex",
     raw: "data/raw/worldline_commu",
     generated: "src/data/generated/story_events/referenceIndex.js",
+  },
+  {
+    category: "realworldHistoryPublished",
+    dataType: "realworldHistory",
+    raw: "data/raw/realworld_events/published.json",
+    generated: "src/data/generated/realworld_events/published.js",
+  },
+  {
+    category: "realworldHistoryUnreviewed",
+    dataType: "realworldHistory",
+    raw: "data/raw/realworld_events/unreviewed/examples.json",
+    generated: "src/data/generated/realworld_events/unreviewed/examples.js",
   },
 ];
 
@@ -293,10 +306,16 @@ async function loadRawStoryGraph(sourceFile) {
   return assertValidStoryGraphData(graph, sourceFile);
 }
 
+async function loadRawRealworldHistory(sourceFile) {
+  const rawContent = await fs.readFile(sourceFile, "utf8");
+  const data = JSON.parse(rawContent);
+  return assertValidRealworldHistoryData(data, sourceFile);
+}
+
 async function renderStoryReferenceIndex() {
   const timelineFiles = getGeneratedDataFiles().filter(
     (file) =>
-      file.dataType !== "storyGraph" &&
+      !file.dataType &&
       file.category !== "storyReferenceIndex",
   );
   const entries = await Promise.all(
@@ -315,11 +334,15 @@ export async function renderGeneratedFile(file) {
     return renderStoryReferenceIndex();
   }
 
-  const data =
-    file.dataType === "storyGraph"
-      ? await loadRawStoryGraph(file.raw)
-      : await loadRawLane(file.raw);
-  const bindingName = file.dataType === "storyGraph" ? "data" : "lane";
+  let data;
+  if (file.dataType === "storyGraph") {
+    data = await loadRawStoryGraph(file.raw);
+  } else if (file.dataType === "realworldHistory") {
+    data = await loadRawRealworldHistory(file.raw);
+  } else {
+    data = await loadRawLane(file.raw);
+  }
+  const bindingName = file.dataType ? "data" : "lane";
 
   return `${HEADER}const ${bindingName} = ${renderValue(data, 0)};\n\nexport default ${bindingName};\n`;
 }

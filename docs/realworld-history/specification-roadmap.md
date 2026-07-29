@@ -16,9 +16,9 @@
 | 2 | 暦、日時精度、状態、訂正 | Complete | 日時と変更履歴の意味を承認 |
 | 3 | 出典、公開境界、保守 | Complete | 公開可能な根拠と運用責任を承認 |
 | 4 | UI、URL、将来予定 | Complete | 表示方式と既定範囲を承認 |
-| 5 | 代表的な実在情報のレビュー | Pending | 初期候補と公式出典を確認 |
+| 5 | 代表的な実在情報のレビュー | Complete | 初期候補と公式出典を確認 |
 | 6 | 仕様の確定 | Complete | 判断をADRへ記録し、仕様を `Approved` に変更 |
-| 7 | MVP実装 | Ready | [開発計画066](../plan/backlog/066-gakumasu-realworld-history-view.md)をactiveへ移動 |
+| 7 | MVP実装 | In Progress | [開発計画066](../plan/active/066-gakumasu-realworld-history-view.md)を実施 |
 
 ## MVP実装で行うこと
 
