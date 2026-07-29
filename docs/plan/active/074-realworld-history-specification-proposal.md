@@ -80,15 +80,30 @@ entry or production implementation.
 
 ## Tasks
 
-- [ ] Define scope, exclusions, entities, fields, and stable IDs.
-- [ ] Define Gregorian precision, ranges, timezone, and schedule states.
-- [ ] Define official-source hierarchy, deletion, correction, and lifecycle.
-- [ ] Define lanes, filters, selection URLs, mobile behavior, and future items.
-- [ ] Define manual authoring, validation, review, and maintenance procedures.
-- [ ] Add synthetic contract examples and an explicit approval checklist.
-- [ ] Reconcile plan 066 and backlog documentation with the proposal.
-- [ ] Run documentation and plan validation.
+- [x] Define scope, exclusions, entities, fields, and stable IDs.
+- [x] Define Gregorian precision, ranges, timezone, and schedule states.
+- [x] Define official-source hierarchy, deletion, correction, and lifecycle.
+- [x] Define lanes, filters, selection URLs, mobile behavior, and future items.
+- [x] Define manual authoring, validation, review, and maintenance procedures.
+- [x] Add synthetic contract examples and an explicit approval checklist.
+- [x] Reconcile plan 066 and backlog documentation with the proposal.
+- [x] Run documentation and plan validation.
 
 ## Validation Notes
 
 Do not promote plan 066 or mark the specification Approved in this plan.
+
+The proposal is intentionally limited to contracts and synthetic examples.
+No factual Gakumasu record was selected, researched, or added.
+
+Validation completed:
+
+- `bash scripts/lint-plan-docs.sh`
+- `bash scripts/format-plan-docs.sh --check`
+- `git diff --check`
+- `python3 scripts/validate-changes.py`
+
+The plan linter requires Class C backlog plans to retain
+`human_approval_status: approved`. Plan 066 therefore uses its explicit Start
+Gate and unchecked specification tasks to represent the remaining product
+approval, rather than overloading that workflow field.

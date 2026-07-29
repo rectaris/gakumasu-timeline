@@ -7,7 +7,7 @@ human_design_required: yes
 human_approval_status: approved
 target_files:
   - data/raw/realworld_events/
-  - data/raw/story_blocks/
+  - data/raw/story_events/
   - src/data/
   - src/types/
   - src/pages/RealworldHistoryPage.vue
@@ -60,11 +60,24 @@ It must not reuse the narrative timeline's fixed 31-day month semantics.
 
 Do not begin implementation from this backlog outline alone.
 
-Before promotion to active, produce and approve a focused specification that defines content inclusion, official-source policy, Gregorian date and time fields, category taxonomy, correction workflow, update ownership, and representative initial records.
-Record only the accepted decisions in the promoted active plan.
-Use `docs/realworld-history/` as the canonical product specification directory for that review.
+The focused specification proposal now exists in `docs/realworld-history/`.
+Before promotion to active:
+
+1. Review every item in `docs/realworld-history/review-checklist.md`.
+2. Apply accepted changes and record only approved decisions in
+   `docs/realworld-history/decisions/`.
+3. Select representative factual records and verify their official sources.
+4. Change the specification from `Proposed` to `Approved`.
+5. Confirm that every specification task below is checked.
+
+Until those steps finish, do not create factual production records or start the
+runtime implementation.
 
 Plan 064 must provide the `mode=realworld` page boundary and selection URL contract, or this plan must coordinate that prerequisite without duplicating shell ownership.
+
+Plan 064 is complete. The application shell already provides the
+`mode=realworld` page boundary; this plan owns the real-world page contents and
+the `item` selection contract.
 
 ## Settled Direction
 
@@ -77,18 +90,41 @@ Plan 064 must provide the `mode=realworld` page boundary and selection URL contr
 - Reuse the shared application shell, selection, detail, color, URL, and interaction patterns while providing a Gregorian scale adapter and mode-owned filters.
 - Derive eligible story-release history items from StoryBlock release metadata instead of manually maintaining duplicate records.
 
+## Proposed Specification 0.2
+
+The following recommendations are concrete enough for review but are not yet
+approved contracts:
+
+- Include high-signal game updates, story releases, music releases, official
+  live events, and official streams.
+- Exclude routine social posts, merchandise, minor campaign notices, and
+  community-run events from the MVP.
+- Treat one real-world occurrence as one InfoEvent. Store announcement and
+  occurrence time separately on that record, and group separate performances
+  with `groupId`.
+- Use explicit `month`, `date`, or `minute` precision and preserve the authored
+  timezone without viewer-local conversion.
+- Keep official corrections as revisions, and show approved future events with
+  a visible scheduled state.
+- Require official provenance for published records. Keep secondary-source-only
+  candidates unreviewed.
+- Use category lanes, with an initial viewport from the previous 12 months to
+  the next 90 days.
+- Start with manual JSON authoring and a four-state publication lifecycle.
+
+Canonical details and synthetic examples are linked from
+`docs/realworld-history/README.md`.
+
 ## Specification Work
 
-- Define the initial inclusion boundary for game, story, music, live, stream, media, product, campaign, and announcement records.
-- Define whether routine social posts, minor corrections, reruns, merchandise, and community events belong in the first release.
-- Define the InfoEvent contract for stable ID, category, title, announcement time, start, end, precision, timezone, detail, source, and related entities.
-- Define all-day, month-only, scheduled, postponed, cancelled, corrected, and ongoing-event semantics.
-- Define the canonical source hierarchy and how deleted or corrected official pages are recorded.
-- Define the update and review workflow so the timeline does not become stale or silently rewrite history.
-- Define grouping lanes, category filters, density handling, date labels, default range, and mobile inspection behavior.
-- Define cross-view links between real-world story releases and their 物語イベント nodes.
-- Define the initial manually curated data set before considering automated collection.
-- Define whether future events are shown and how scheduled information is visually distinguished from completed history.
+- [x] Propose the initial inclusion boundary and exclusions.
+- [x] Propose the InfoEvent contract, datetime precision, states, and revisions.
+- [x] Propose the official-source hierarchy and publication lifecycle.
+- [x] Propose lanes, filters, date labels, default range, and mobile behavior.
+- [x] Propose the projection and cross-view reference boundary.
+- [ ] Receive explicit approval or requested revisions for specification 0.2.
+- [ ] Select and verify the representative factual initial data set.
+- [ ] Record approved decisions and mark the specification `Approved`.
 
 ## Initial Validation Rules
 
@@ -100,6 +136,7 @@ Plan 064 must provide the `mode=realworld` page boundary and selection URL contr
 - Every factual record includes the required official provenance or an explicit unresolved source status.
 - Derived story-release items reference an existing StoryBlock and are not duplicated by authored InfoEvent records.
 - Published item URLs restore the same canonical record after data regeneration.
+- Production bundles contain no `unreviewed` real-world records.
 
 ## Non-Goals For The Initial Specification
 
