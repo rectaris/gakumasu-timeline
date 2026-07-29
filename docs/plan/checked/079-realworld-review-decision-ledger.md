@@ -81,13 +81,13 @@ review or granting publication authority.
 
 ## Tasks
 
-- [ ] Implement and validate the durable review decision contract.
-- [ ] Add a safe per-candidate decision recording command.
-- [ ] Integrate decisions, recheck state, and orphan state into the inventory.
-- [ ] Add deterministic pilot-batch selection and reporting.
-- [ ] Add focused model, CLI, and integration tests.
-- [ ] Update data model, authoring, processing, and README documentation.
-- [ ] Run full validation and archive the plan.
+- [x] Implement and validate the durable review decision contract.
+- [x] Add a safe per-candidate decision recording command.
+- [x] Integrate decisions, recheck state, and orphan state into the inventory.
+- [x] Add deterministic pilot-batch selection and reporting.
+- [x] Add focused model, CLI, and integration tests.
+- [x] Update data model, authoring, processing, and README documentation.
+- [x] Run full validation and archive the plan.
 
 ## Boundaries
 
@@ -97,3 +97,35 @@ review or granting publication authority.
 - Do not create, modify, approve, or publish InfoEvents.
 - Do not add a review UI before the contract is validated through CLI and JSON.
 - Do not change public routes, IDs, or production data inputs.
+
+## Validation Notes
+
+The current inventory contains 203 pending candidates, no stored review
+decisions, no recheck items, and no orphan decisions.
+The deterministic pilot batch contains 15 candidates: three website
+candidates, ten latest playlist candidates, and two candidates from the newest
+exact-title group.
+
+The decision command completed a dry run against a current official-site
+candidate and did not create a review file.
+Fixture tests confirmed atomic creation and replacement of one per-source
+decision without modifying repository data.
+
+Validation completed:
+
+- `npm run review:realworld:decide -- --source origin_gakumas_official_site --intake intake_2281c0dcbbd1f5a72b1e3e42b3e10bf19e6b6454d47db84547d975a5606d1653 --decision defer --reason needs_source_review --reviewed-by validation-test --dry-run`
+- `npm run review:realworld`
+- `npm test -- --run tests/realworldReviewDecision.test.js tests/realworldReview.test.js tests/realworldIntake.test.js`
+- `npm run verify`
+- `python3 scripts/security-static-check.py`
+- `python3 scripts/validate-changes.py`
+- `bash scripts/lint-plan-docs.sh`
+- `bash scripts/format-plan-docs.sh --check`
+- `git diff --check`
+
+## Deferred Decision
+
+The repository owner must select whether one maintainer may approve both
+structure and facts or factual approval requires a separate reviewer.
+Until this authority is selected, the workflow permits local reports and dry
+runs but no durable factual decision or publication.
