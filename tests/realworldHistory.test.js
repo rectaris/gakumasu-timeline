@@ -47,5 +47,13 @@ describe("real-world history model", () => {
     const layout = layoutInfoEvents(events, { width: 1000 });
     expect(layout.items[0].y).toBe(24);
     expect(layout.items[0].width).toBeGreaterThanOrEqual(12);
+    const bounded = layoutInfoEvents(events, {
+      width: 1000,
+      bounds: {
+        start: Date.UTC(2025, 0, 1),
+        end: Date.UTC(2026, 0, 1),
+      },
+    });
+    expect(bounded.end).toBeGreaterThanOrEqual(Date.UTC(2026, 0, 1));
   });
 });

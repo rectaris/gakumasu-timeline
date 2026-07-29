@@ -45,24 +45,27 @@ export function filterInfoEvents(events, { query = "", category = "all", status 
   });
 }
 
-export function layoutInfoEvents(events, { width = 1600, laneHeight = 116 } = {}) {
+export function layoutInfoEvents(
+  events,
+  { width = 1600, laneHeight = 116, bounds = null } = {},
+) {
   if (!events.length) {
     return { width, height: laneHeight * 5, start: 0, end: 1, items: [] };
   }
-  const rawStart = Math.min(...events.map((event) => temporalStart(event.startsAt)));
-  const rawEnd = Math.max(
+  const eventStart = Math.min(...events.map((event) => temporalStart(event.startsAt)));
+  const eventEnd = Math.max(
     ...events.map((event) => temporalEnd(event.endsAt ?? event.startsAt)),
   );
-  const padding = Math.max((rawEnd - rawStart) * 0.06, 86_400_000 * 12);
-  const start = rawStart - padding;
-  const end = rawEnd + padding;
+  const padding = Math.max((eventEnd - eventStart) * 0.06, 86_400_000 * 12);
+  const start = bounds ? Math.min(eventStart - padding, bounds.start) : eventStart - padding;
+  const end = bounds ? Math.max(eventEnd + padding, bounds.end) : eventEnd + padding;
   const span = end - start;
   const categories = Object.keys(INFO_CATEGORY_META);
   const items = events.map((event) => {
-    const eventStart = temporalStart(event.startsAt);
-    const eventEnd = temporalEnd(event.endsAt ?? event.startsAt);
-    const x = ((eventStart - start) / span) * width;
-    const naturalWidth = ((eventEnd - eventStart) / span) * width;
+    const itemStart = temporalStart(event.startsAt);
+    const itemEnd = temporalEnd(event.endsAt ?? event.startsAt);
+    const x = ((itemStart - start) / span) * width;
+    const naturalWidth = ((itemEnd - itemStart) / span) * width;
     return {
       event,
       x,

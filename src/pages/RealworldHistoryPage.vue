@@ -20,6 +20,7 @@ const query = ref("");
 const category = ref("all");
 const status = ref("all");
 const zoom = ref(1);
+const viewportWidth = ref(1000);
 const selectedId = ref(null);
 const categories = Object.entries(INFO_CATEGORY_META);
 
@@ -30,9 +31,36 @@ const filteredEvents = computed(() =>
     status: status.value,
   }),
 );
-const stageWidth = computed(() => Math.round(1500 * zoom.value));
+const defaultRange = (() => {
+  const now = new Date();
+  const start = Date.UTC(
+    now.getUTCFullYear() - 1,
+    now.getUTCMonth(),
+    now.getUTCDate(),
+  );
+  return { start, end: Date.now() + 90 * 86_400_000 };
+})();
+const dataBounds = computed(() => {
+  if (!filteredEvents.value.length) return defaultRange;
+  const eventLayout = layoutInfoEvents(filteredEvents.value, { width: 1 });
+  return {
+    start: Math.min(eventLayout.start, defaultRange.start),
+    end: Math.max(eventLayout.end, defaultRange.end),
+  };
+});
+const defaultSpan = defaultRange.end - defaultRange.start;
+const stageWidth = computed(() => {
+  const totalSpan = dataBounds.value.end - dataBounds.value.start;
+  return Math.round(
+    Math.max(viewportWidth.value, (totalSpan / defaultSpan) * viewportWidth.value) *
+      zoom.value,
+  );
+});
 const layout = computed(() =>
-  layoutInfoEvents(filteredEvents.value, { width: stageWidth.value }),
+  layoutInfoEvents(filteredEvents.value, {
+    width: stageWidth.value,
+    bounds: defaultRange,
+  }),
 );
 const yearTicks = computed(() =>
   createYearTicks(layout.value.start, layout.value.end, layout.value.width),
@@ -71,11 +99,12 @@ function clearFilters() {
 }
 
 function setZoom(value) {
-  zoom.value = Math.min(2, Math.max(0.65, value));
+  zoom.value = Math.min(2, Math.max(0.3, value));
 }
 
 function showAll() {
-  setZoom(0.65);
+  const totalSpan = dataBounds.value.end - dataBounds.value.start;
+  setZoom(Math.min(1, defaultSpan / totalSpan));
   nextTick(() => {
     if (viewportRef.value) viewportRef.value.scrollLeft = 0;
   });
@@ -90,6 +119,19 @@ function goToNow() {
     0,
     ratio * layout.value.width - viewport.clientWidth / 2,
   );
+}
+
+function measureViewport() {
+  if (viewportRef.value) viewportWidth.value = viewportRef.value.clientWidth;
+}
+
+function focusDefaultRange() {
+  const viewport = viewportRef.value;
+  if (!viewport || !filteredEvents.value.length) return;
+  const ratio =
+    (defaultRange.start - layout.value.start) /
+    (layout.value.end - layout.value.start);
+  viewport.scrollLeft = Math.max(0, ratio * layout.value.width);
 }
 
 function handleKeydown(event) {
@@ -112,10 +154,16 @@ onMounted(() => {
   syncSelectionFromUrl();
   window.addEventListener("popstate", syncSelectionFromUrl);
   window.addEventListener("keydown", handleKeydown);
+  window.addEventListener("resize", measureViewport);
+  nextTick(() => {
+    measureViewport();
+    nextTick(focusDefaultRange);
+  });
 });
 onUnmounted(() => {
   window.removeEventListener("popstate", syncSelectionFromUrl);
   window.removeEventListener("keydown", handleKeydown);
+  window.removeEventListener("resize", measureViewport);
 });
 </script>
 

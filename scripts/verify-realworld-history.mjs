@@ -34,6 +34,7 @@ async function verifyProduction() {
   if (await page.getByText("検証用ストーリー公開").count()) {
     throw new Error("Production UI contains unreviewed data.");
   }
+  await page.getByRole("button", { name: "全期間" }).click();
   await items.first().click();
   await page.locator(".realworld-detail").waitFor();
   await page.screenshot({ path: "/tmp/realworld-history-mobile.png", fullPage: true });
