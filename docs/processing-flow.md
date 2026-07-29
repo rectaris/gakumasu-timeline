@@ -19,6 +19,10 @@
 - 物語イベントの未レビューパイロットは`data/raw/story_events/unreviewed/pilot.json`からローカル検証用データへ生成される
 - 本番ビルドの物語イベントは`data/raw/story_events/published.json`だけを読み込み、未レビューデータを成果物へ含めない
 - 物語時系列の `storyReferences` は raw 側を正本とし、StoryBlockから参照元を引く逆引き索引を `src/data/generated/story_events/referenceIndex.js` へ生成する
+- 学マス情報史の取得元は`data/raw/realworld_events/source-registry.json`で許可し、`npm run collect:realworld`が公式サイト、YouTube Data API、X APIの応答を`intake/`の共通形式へ正規化する
+- 取得レスポンス全文は`.agent-artifacts/realworld-ingest/`へローカル保存し、本番入力またはコミット対象にしない
+- `intake/`は出典候補であり、レビュー担当者が同じ出来事の候補をまとめて`unreviewed/`のInfoEventを作成する
+- 学マス情報史の本番データは、構造レビューと事実レビューを通過した`data/raw/realworld_events/published.json`だけから生成する
 - 生成済みデータは `npm run generate:data` で更新し、`npm run validate:data` で raw との鮮度一致を確認する
 - ローカル開発時の `/timeline/?editor=worldline` は dev server 専用 API から raw JSON を読み込み、保存時に raw JSON と generated データを更新する
 - 編集画面では保存先をコミュ種別とファイルで選び、ファイル付きカテゴリでは新規 raw JSON ファイルを作成してから generated データへ反映できる
@@ -32,6 +36,7 @@
 - focused validation でも、イベント ID の重複と参加者/世界線参照は全データ文脈を使って確認する
 - 検証は表示用正規化の前に、イベント ID、日付範囲、`occurrenceType`、参加者参照、世界線参照、空文字値、不確実性メタデータを確認する
 - `storyReferences`は参照IDの一意性、型、表示順、StoryBlockの参照整合性を全データ文脈で確認する
+- 公式ソース取り込みは、取得元ID、取得状態、URL、日時、プラットフォーム識別子、`resourceKey`を検証し、ソースをまたぐ同一リソース候補を報告する
 - 失敗時は元ファイル、カテゴリ、レーン、イベント ID / title、フィールド、理由を表示する
 - `npm run verify` はデータ検証、ユニットテスト、ビルド、本番成果物の公開境界検証を実行する
 

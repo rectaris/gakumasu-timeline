@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "sourceRegistryId": "origin_gakumas_official_site",
+  "collectedAt": "2026-07-29T08:46:17.281Z",
+  "status": "collected",
+  "items": [
+    {
+      "id": "intake_7df965e055f0a9735bab9d19e2dc68219e3a002ee3fbe24432422a496c652980",
+      "resourceType": "web-page",
+      "externalId": "https://gakuen.idolmaster-official.jp/",
+      "resourceKey": "web:https://gakuen.idolmaster-official.jp/",
+      "canonicalUrl": "https://gakuen.idolmaster-official.jp/",
+      "title": "学園アイドルマスター（学マス）｜君と出会い、夢に翔ける",
+      "summary": "学園アイドルマスター（学マス）｜君と出会い、夢に翔ける Loading MENU 学園長挨拶 Introduction プロデューサー科 Game System 学園名簿 Idol 学園案内 Media 在校生のみなさまへ Road to A+ Official Account 好評配信中！ 初星学園公式動画 MORE 学園長挨拶 わしは十王邦夫。 この 初星学園 の 学園長 じゃ。 おぬしが入学する この学園には、 アイドル科 ── すなわち、 トップアイドルを育てるための 学び舎がある。 MORE 公式SNS 公式X （旧：Twitter） アカウント Follow 公式Discordアカウント Join Introduction 学園長挨拶 まずは知りたい初星学園のこと Game System プロデューサー科 プロデューサー科のカリキュラム Idol 学園名簿 アイドル科生徒及び教員紹介 Media 学園案内 初星学園の発行物 Road to A+ 在学生のみなさまへ プロデュースのアドバイス Saki Hanami 花海 咲季 MORE タイトル 学園アイドルマスター ジャンル 歌とダンスが上手くなる アイドル育成シミュレーション 価格 基本無料 ※一部有料アイテムがございます。 配信プラットフォーム App Store、Google Play、DMM GAMES 配信日",
+      "retrievedAt": "2026-07-29T08:46:17.281Z",
+      "contentHash": "d4c20973aaa3cb21fc82cba105610217bc0525206521331323e25d5c91404ff9",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_2281c0dcbbd1f5a72b1e3e42b3e10bf19e6b6454d47db84547d975a5606d1653",
+      "resourceType": "web-page",
+      "externalId": "https://gakuen.idolmaster-official.jp/media/",
+      "resourceKey": "web:https://gakuen.idolmaster-official.jp/media/",
+      "canonicalUrl": "https://gakuen.idolmaster-official.jp/media/",
+      "title": "Media ｜ 学園アイドルマスター（学マス）｜君と出会い、夢に翔ける",
+      "summary": "Media ｜ 学園アイドルマスター（学マス）｜君と出会い、夢に翔ける Loading MENU 学園長挨拶 Introduction プロデューサー科 Game System 学園名簿 Idol 学園案内 Media 在校生のみなさまへ Road to A+ Official Account 学園案内 初星学園の発行物についてご紹介します。 Movie Fankit Comics 「初星コミュ」13話＆14話 「初星コミュ」11話＆12話 「初星コミュ」9話＆10話 「初星コミュ」7話＆8話 「初星コミュ」5話＆6話 「初星コミュ」3話＆4話 「初星コミュ」1話＆2話 「360度」初星学園ツアー動画 （中庭ステージ） 「360度」初星学園ツアー動画 （特別教育棟 ダンスレッスン室） 「360度」初星学園ツアー動画 （本校舎 屋上） 「360度」初星学園ツアー動画 （本校舎 中庭） 「360度」初星学園ツアー動画 （アイドル科 教室） 「360度」初星学園ツアー動画 （初星学園 校門） 「360度」初星学園ツアー動画 （特別教育棟 ビジュアルレッスン室） 「360度」初星学園ツアー動画 （特別教育棟 ボイスレッスン室） 第1弾ＰＶ 新作発表会生配信 ティザーPV Introduction 学園長挨拶 まずは知りたい初星学園のこと Game System プロデューサー科 プロデュー",
+      "retrievedAt": "2026-07-29T08:46:17.281Z",
+      "contentHash": "2897f655e589c0fdc974e25a4d2b36a224ce71390fb90c745f8b6088e13276a5",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    }
+  ]
+}

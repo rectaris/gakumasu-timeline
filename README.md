@@ -144,6 +144,16 @@
 - 世界線一覧: [src/data/worldlines.js](src/data/worldlines.js)
 - キャラクター一覧: [src/data/characterCatalog.js](src/data/characterCatalog.js)
 
+学マス情報史の公式ソース候補は次のコマンドで取得します。
+
+```sh
+npm run collect:realworld -- --max-pages 1
+npm run validate:data
+```
+
+YouTubeには`YOUTUBE_API_KEY`、Xには`X_BEARER_TOKEN`を環境変数で設定します。
+認証情報がない取得元は`skipped`として記録され、公開データへ自動反映されません。
+
 ## イベントの追加・編集
 
 イベントの追加と編集には、ローカル開発サーバー専用の worldline データ編集画面を使えます。

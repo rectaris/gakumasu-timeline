@@ -38,12 +38,6 @@ const STATIC_GENERATED_DATA_FILES = [
     raw: "data/raw/realworld_events/published.json",
     generated: "src/data/generated/realworld_events/published.js",
   },
-  {
-    category: "realworldHistoryUnreviewed",
-    dataType: "realworldHistory",
-    raw: "data/raw/realworld_events/unreviewed/examples.json",
-    generated: "src/data/generated/realworld_events/unreviewed/examples.js",
-  },
 ];
 
 export function generatedPathForRaw(rawPath) {
@@ -52,13 +46,14 @@ export function generatedPathForRaw(rawPath) {
     .replace(/\.json$/, ".js");
 }
 
-function collectGeneratedDataFiles(category, rawDirectory) {
+function collectGeneratedDataFiles(category, rawDirectory, dataType = null) {
   return readdirSync(rawDirectory, { withFileTypes: true })
     .filter((entry) => entry.isFile() && entry.name.endsWith(".json"))
     .map((entry) => path.posix.join(rawDirectory, entry.name))
     .sort((pathA, pathB) => pathA.localeCompare(pathB, "en"))
     .map((raw) => ({
       category,
+      ...(dataType ? { dataType } : {}),
       raw,
       generated: generatedPathForRaw(raw),
     }));
@@ -82,6 +77,11 @@ export function getGeneratedDataFiles() {
     ...collectGeneratedDataFiles(
       "supportCardCommus",
       "data/raw/worldline_commu/support_story",
+    ),
+    ...collectGeneratedDataFiles(
+      "realworldHistoryUnreviewed",
+      "data/raw/realworld_events/unreviewed",
+      "realworldHistory",
     ),
   ];
 }

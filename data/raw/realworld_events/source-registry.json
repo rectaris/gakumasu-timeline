@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "id": "origin_gakumas_official_site",
+      "label": "学園アイドルマスター 公式サイト",
+      "platform": "website",
+      "ownerScope": "gakumas",
+      "url": "https://gakuen.idolmaster-official.jp/",
+      "acquisition": "website",
+      "externalId": "gakuen.idolmaster-official.jp",
+      "scopeMode": "all",
+      "keywords": [],
+      "discoveryUrls": [
+        "https://gakuen.idolmaster-official.jp/",
+        "https://gakuen.idolmaster-official.jp/media/"
+      ]
+    },
+    {
+      "id": "origin_hatsuboshi_youtube",
+      "label": "初星学園 YouTube",
+      "platform": "youtube-channel",
+      "ownerScope": "gakumas",
+      "url": "https://www.youtube.com/@hatsuboshi_gakuen",
+      "acquisition": "youtube-data-api",
+      "externalId": "@hatsuboshi_gakuen",
+      "scopeMode": "all",
+      "keywords": []
+    },
+    {
+      "id": "origin_gakumas_x",
+      "label": "学園アイドルマスター 公式X",
+      "platform": "x-account",
+      "ownerScope": "gakumas",
+      "url": "https://x.com/gkmas_official",
+      "acquisition": "x-api",
+      "externalId": "gkmas_official",
+      "scopeMode": "all",
+      "keywords": []
+    },
+    {
+      "id": "origin_idolmaster_portal",
+      "label": "アイドルマスター ポータル",
+      "platform": "website",
+      "ownerScope": "idolmaster",
+      "url": "https://idolmaster-official.jp/",
+      "acquisition": "website",
+      "externalId": "idolmaster-official.jp",
+      "scopeMode": "gakumas-explicit",
+      "keywords": ["学園アイドルマスター", "学マス", "初星学園"],
+      "discoveryUrls": [
+        "https://idolmaster-official.jp/gakuen"
+      ]
+    },
+    {
+      "id": "origin_imas_youtube",
+      "label": "アイドルマスターチャンネル",
+      "platform": "youtube-channel",
+      "ownerScope": "idolmaster",
+      "url": "https://www.youtube.com/@imas-official",
+      "acquisition": "youtube-data-api",
+      "externalId": "@imas-official",
+      "scopeMode": "gakumas-explicit",
+      "keywords": ["学園アイドルマスター", "学マス", "初星学園"]
+    },
+    {
+      "id": "origin_imas_gakumas_playlist",
+      "label": "アイドルマスターチャンネル 学マス関連プレイリスト",
+      "platform": "youtube-playlist",
+      "ownerScope": "idolmaster",
+      "url": "https://www.youtube.com/playlist?list=PLsezBU1tkb0lA8L6ANRSbnncfD-GCBFlL",
+      "acquisition": "youtube-data-api",
+      "externalId": "PLsezBU1tkb0lA8L6ANRSbnncfD-GCBFlL",
+      "scopeMode": "all",
+      "keywords": []
+    },
+    {
+      "id": "origin_imas_x",
+      "label": "アイドルマスター 公式X",
+      "platform": "x-account",
+      "ownerScope": "idolmaster",
+      "url": "https://x.com/imas_official",
+      "acquisition": "x-api",
+      "externalId": "imas_official",
+      "scopeMode": "gakumas-explicit",
+      "keywords": ["学園アイドルマスター", "学マス", "初星学園"]
+    }
+  ]
+}

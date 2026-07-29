@@ -334,15 +334,21 @@ StoryBlockから参照元を引くための索引は、`npm run generate:data`�
 
 現実世界の公式情報は`data/raw/realworld_events/`を正本とします。
 
+- `source-registry.json`：取得を許可した公式発信元と学マス候補の判定範囲です。
+- `intake/`：公式ページ、動画、投稿を正規化したレビュー前の取得候補です。
 - `published.json`：公式出典と事実レビューを通過した本番データです。
 - `unreviewed/`：候補または表示検証用のデータです。
 - `src/data/generated/realworld_events/`：生成物であり、直接編集しません。
+
+取得レスポンス全文は`.agent-artifacts/realworld-ingest/`へローカル保存し、リポジトリへコミットしません。
+`intake/`の項目はInfoEventではなく、レビュー後に同じ出来事を示す複数項目を1件へ統合できます。
 
 InfoEventは一回の公開、更新、公演、配信を表し、`info_<小文字UUID>`形式の不変IDを持ちます。
 告知日時は`announcedAt`、発生日時は`startsAt`、終了は`endsAt`へ分けます。
 日時値は`value`、`precision`、必要な場合の`timezone`を持ち、精度は`month`、`date`、`minute`です。
 
-`npm run validate:data`は、ID、カテゴリ、状態、日時精度、タイムゾーン、開始終了順、公開項目の公式出典を検証します。
+`npm run collect:realworld`は登録済み公式ソースを取得し、`intake/`を更新します。
+`npm run validate:data`は、取得元と取り込みデータに加え、InfoEventのID、カテゴリ、状態、日時精度、タイムゾーン、開始終了順、公開項目の公式出典を検証します。
 `npm run verify`は、本番成果物へ`unreviewed`の学マス情報史データが混入していないことも確認します。
 
 完全な契約は[学マス情報史仕様](realworld-history/README.md)を参照してください。

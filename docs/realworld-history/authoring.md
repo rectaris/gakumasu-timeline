@@ -5,36 +5,61 @@
 
 ## Source of Truth
 
-InfoEventはリポジトリ内のJSONを手動編集する方式から開始します。
-MVPではデータ追加用の管理画面や自動収集を作りません。
+InfoEventはリポジトリ内のJSONをレビューして公開します。
+公式ソースの取得処理は候補を集めるところまでを担当し、InfoEventを自動作成または自動公開しません。
 
 保存境界は次のとおりです。
 
 ```text
 data/raw/realworld_events/
+├── source-registry.json
+├── intake/
+│   └── <sourceRegistryId>.json
 ├── unreviewed/
 │   └── *.json
 └── published.json
 ```
 
+- `source-registry.json` は、取得を許可した公式発信元と収録範囲を定義します。
+- `intake/` は、取得したページ、動画、投稿を正規化した軽量な候補を置きます。
 - `unreviewed/` は候補、調査中、レビュー待ちのレコードを置きます。
 - `published.json` は仕様と出典のレビューを通過したレコードだけを置きます。
 - アプリの本番ビルドは `published.json` から生成したデータだけを参照します。
 - StoryBlockから投影する公開情報は、元の公開データから生成し、InfoEventへ複製しません。
+- 取得レスポンスの全文は `.agent-artifacts/realworld-ingest/<run ID>/` にのみ保存し、コミットしません。
 
 データセットのライフサイクルは `draft`、`unreviewed`、`approved`、`published` を使用します。
 `approved` はレビュー完了、`published` は本番入力として採用済みであることを表します。
 
+## 公式ソースの取得
+
+取得元の追加や収録範囲の変更は、先に`source-registry.json`をレビューします。
+
+```bash
+npm run collect:realworld -- --max-pages 1
+npm run validate:data
+```
+
+YouTube Data APIを使う取得では`YOUTUBE_API_KEY`、X APIを使う取得では`X_BEARER_TOKEN`を環境変数から読みます。
+値はJSON、ログ、コマンド引数へ保存しません。
+認証情報がない取得元は失敗扱いにせず、`status: "skipped"`と理由を`intake/`へ記録します。
+一部だけを再取得するときは`--source <sourceRegistryId>`を指定します。
+
+各取り込み項目は、取得元内の`externalId`に加え、プラットフォームをまたいだ重複確認に使う`resourceKey`を持ちます。
+アイドルマスター全体の発信元では、題名と本文に学マス判定語を含む項目だけを候補とします。
+
 ## 新規項目の追加
 
-1. 同じ出来事、同じ開催回、同じ公開物の既存レコードがないか確認します。
-2. `info_<UUID>` のIDを発行します。
-3. [データモデル](data-model.md)に従い、カテゴリ、タイトル、概要、日時、状態を入力します。
-4. 発表と発生を別レコードにせず、`announcedAt` と `startsAt` へ分けます。
-5. 複数公演など別の発生単位は別レコードとし、共通の `groupId` を付けます。
-6. 各事実を裏付ける公式出典を登録します。
-7. 関連キャラクターや物語イベントがある場合だけ参照を追加します。
-8. `unreviewed` データで構造検証を行い、レビューを依頼します。
+1. `intake/`の候補が収録範囲に含まれるか確認します。取得候補を使わず手動登録することもできます。
+2. 同じ出来事、同じ開催回、同じ公開物の既存レコードがないか確認します。
+3. 複数の投稿、動画、ページが同じ出来事を示す場合は、別イベントにせず1件のInfoEventの出典候補としてまとめます。
+4. `info_<UUID>` のIDを発行します。
+5. [データモデル](data-model.md)に従い、カテゴリ、タイトル、概要、日時、状態を入力します。
+6. 発表と発生を別レコードにせず、`announcedAt` と `startsAt` へ分けます。
+7. 複数公演など別の発生単位は別レコードとし、共通の `groupId` を付けます。
+8. 各事実を裏付ける公式出典を登録します。
+9. 関連キャラクターや物語イベントがある場合だけ参照を追加します。
+10. `unreviewed` データで構造検証を行い、レビューを依頼します。
 
 ## 出典確認
 

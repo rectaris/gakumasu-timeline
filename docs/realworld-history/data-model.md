@@ -5,7 +5,45 @@
 
 ## 対象
 
-この文書は、現実世界の学マス関連情報を保存するInfoEventと、その表示用派生データを定義します。
+この文書は、現実世界の学マス関連情報を取得する境界、InfoEvent、表示用派生データを定義します。
+
+## 取得境界
+
+取得データは次の二つの契約を使います。
+
+### SourceOrigin
+
+`source-registry.json`の各項目は、取得を許可した公式発信元を表します。
+
+- `id`：`origin_<英小文字・数字・_>`形式の不変IDです。
+- `platform`：Webサイト、YouTubeチャンネル、YouTubeプレイリスト、Xアカウントの種別です。
+- `url`：人が確認する代表URLです。
+- `externalId`：APIまたは取得処理で使う発信元IDです。
+- `acquisition`：Web取得、YouTube Data API、X APIの取得方式です。
+- `scopeMode`：全件を候補にするか、学マス明示項目だけを候補にするかを示します。
+- `keywords`：学マス明示判定に使う語です。
+- `discoveryUrls`：Webサイトで取得対象にする任意のページ一覧です。
+
+### IntakeRecord
+
+`intake/<sourceRegistryId>.json`は、一回の取得結果と正規化済み候補を保存します。
+データセットは`collected`または`skipped`の状態を持ち、取得できなかった理由を区別します。
+
+各候補は次の情報を持ちます。
+
+- `id`：正規化した識別情報から作る`intake_<SHA-256>`形式のIDです。
+- `resourceType`：Webページ、YouTube動画、X投稿の種別です。
+- `externalId`：取得元プラットフォーム内の識別子です。
+- `resourceKey`：`web:`、`youtube:`、`x:`を接頭辞にした重複確認用の識別子です。
+- `canonicalUrl`：公式リソースへ到達するHTTPS URLです。
+- `title`、`summary`：候補判定とレビューに使う軽量な表示情報です。
+- `publishedAt`：取得元が提供する任意の公開日時です。
+- `retrievedAt`：取得を実行した日時です。
+- `contentHash`：取得内容の変化を比較するSHA-256です。
+- `match`：学マス候補に含めるかと、その判定理由です。
+
+IntakeRecordはInfoEventではありません。
+複数のIntakeRecordを1件のInfoEventの出典へまとめることがあり、候補の公開日時をInfoEventの発生日時として自動採用しません。
 
 ## InfoEventの単位
 
@@ -131,6 +169,7 @@ InfoEvent IDは表示名、日付、URLから生成しません。
 StoryBlockからの投影、検索索引、カテゴリ別一覧、描画座標は生成物とします。
 
 未レビュー候補を本番成果物へ含めません。
+SourceOriginとIntakeRecordもアプリの本番入力へ含めません。
 
 ## 検証
 
@@ -146,3 +185,5 @@ StoryBlockからの投影、検索索引、カテゴリ別一覧、描画座標�
 - 変更履歴が参照する出典が存在すること。
 - StoryBlock参照が公開済みStoryBlockを指すこと。
 - 投影項目と手動項目が重複しないこと。
+- SourceOrigin IDとIntakeRecord IDが規定形式で一意であること。
+- IntakeRecordが登録済みSourceOriginを参照し、取得状態、URL、日時、`resourceKey`を満たすこと。

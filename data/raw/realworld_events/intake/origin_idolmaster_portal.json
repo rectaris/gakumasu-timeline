@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "sourceRegistryId": "origin_idolmaster_portal",
+  "collectedAt": "2026-07-29T08:46:17.281Z",
+  "status": "collected",
+  "items": [
+    {
+      "id": "intake_ffb73f88f974ba82a21c01da84c48d8eee0f6551e24db7f098f60f2b00d7a7e8",
+      "resourceType": "web-page",
+      "externalId": "https://idolmaster-official.jp/gakuen",
+      "resourceKey": "web:https://idolmaster-official.jp/gakuen",
+      "canonicalUrl": "https://idolmaster-official.jp/gakuen",
+      "title": "ブランド情報 - 学園アイドルマスター | 【公式】アイドルマスター ポータル（アイマス）",
+      "summary": "ブランド情報 - 学園アイドルマスター | 【公式】アイドルマスター ポータル（アイマス） メニュー スケジュール 検索 検索 ブランド 選択 THE IDOL M@STER シンデレラ ガールズ ミリオンライブ！ SideM シャイニー カラーズ 学園 アイドルマスター ヴイアライヴ ブランド選択 ニュース ゲーム ライブ・ イベント アニメ 配信番組 ラジオ グッズ コラボ・ キャンペーン ミュージック ブック・ コミック メディア ムービー SCHEDULE more BRAND X （旧:Twitter） Discord BRAND MUSIC YouTube ニコニコ チャンネル YouTube 学園アイドルマスター ASOBI STORE 学園アイドルマスター レーベル公式サイト 学園アイドルマスター公式WEB SHOP 初星学園放送部 ©窪岡俊之 THE IDOLM@STER™& ©Bandai Namco Entertainment Inc.",
+      "retrievedAt": "2026-07-29T08:46:17.281Z",
+      "contentHash": "59ba5b5cfb173aae0c07da0d9082683ce2f7b391db865afb37e9025ebd86f173",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "学園アイドルマスター",
+          "初星学園"
+        ]
+      }
+    }
+  ]
+}

@@ -13,6 +13,21 @@ export const INFO_PUBLICATION_STATUSES = [
   "published",
 ];
 export const INFO_TIME_PRECISIONS = ["month", "date", "minute"];
+export const INFO_SOURCE_TYPES = [
+  "official-site",
+  "in-game",
+  "official-stream",
+  "official-social",
+  "official-store",
+];
+export const INFO_SOURCE_AVAILABILITY = ["available", "moved", "deleted"];
+export const INFO_SOURCE_SUPPORTS = [
+  "identity",
+  "announcement",
+  "schedule",
+  "status",
+  "detail",
+];
 
 const INFO_ID_PATTERN =
   /^info_[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
@@ -22,6 +37,7 @@ const DATE_PATTERNS = {
   minute:
     /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])T([01]\d|2[0-3]):[0-5]\d$/,
 };
+const SOURCE_ID_PATTERN = /^source_[a-z0-9_]+$/;
 
 function isValidCalendarValue(value, precision) {
   const [datePart] = value.split("T");
@@ -77,6 +93,52 @@ function validateTemporal(errors, value, path, required = false) {
   ) {
     errors.push(`${path}.timezone: IANAタイムゾーンが必要です。`);
   }
+}
+
+function validateSources(errors, sources, path) {
+  if (!Array.isArray(sources)) {
+    errors.push(`${path}: 配列が必要です。`);
+    return;
+  }
+  const ids = new Set();
+  sources.forEach((source, index) => {
+    const itemPath = `${path}[${index}]`;
+    if (!isRecord(source)) {
+      errors.push(`${itemPath}: オブジェクトが必要です。`);
+      return;
+    }
+    if (!SOURCE_ID_PATTERN.test(source.id ?? "")) {
+      errors.push(`${itemPath}.id: source_<英小文字・数字・_>形式が必要です。`);
+    }
+    if (ids.has(source.id)) errors.push(`${itemPath}.id: IDが重複しています。`);
+    ids.add(source.id);
+    requireText(errors, source.label, `${itemPath}.label`);
+    try {
+      const url = new URL(source.url);
+      if (url.protocol !== "https:") {
+        errors.push(`${itemPath}.url: HTTPS URLが必要です。`);
+      }
+    } catch {
+      errors.push(`${itemPath}.url: 有効なURLが必要です。`);
+    }
+    if (!INFO_SOURCE_TYPES.includes(source.type)) {
+      errors.push(`${itemPath}.type: 未対応の出典種別です。`);
+    }
+    if (!INFO_SOURCE_AVAILABILITY.includes(source.availability)) {
+      errors.push(`${itemPath}.availability: 未対応の到達状態です。`);
+    }
+    if (!DATE_PATTERNS.date.test(source.checkedAt ?? "")) {
+      errors.push(`${itemPath}.checkedAt: YYYY-MM-DD形式が必要です。`);
+    }
+    if (
+      !Array.isArray(source.supports) ||
+      source.supports.length === 0 ||
+      source.supports.some((value) => !INFO_SOURCE_SUPPORTS.includes(value)) ||
+      new Set(source.supports).size !== source.supports.length
+    ) {
+      errors.push(`${itemPath}.supports: 重複のない有効な主張が必要です。`);
+    }
+  });
 }
 
 export function temporalStart(value) {
@@ -162,9 +224,7 @@ export function validateRealworldHistoryData(data, source = "InfoEvent dataset")
     ) {
       errors.push(`${path}.endsAt: startsAtより前にはできません。`);
     }
-    if (!Array.isArray(event.sources)) {
-      errors.push(`${path}.sources: 配列が必要です。`);
-    }
+    validateSources(errors, event.sources, `${path}.sources`);
     if (
       event.publicationStatus === "published" &&
       !event.sources?.some(

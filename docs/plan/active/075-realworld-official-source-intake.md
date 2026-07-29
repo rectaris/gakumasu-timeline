@@ -73,15 +73,15 @@ InfoEvent lifecycle.
 
 ## Tasks
 
-- [ ] Define and validate source-registry and intake-record contracts.
-- [ ] Register all seven approved origins and platform-specific scope rules.
-- [ ] Implement secret-safe website, YouTube, playlist, and X collection adapters.
-- [ ] Store normalized intake records deterministically and keep full payloads local.
-- [ ] Add duplicate detection and explicit Gakumas filtering for umbrella sources.
-- [ ] Make unreviewed InfoEvent generation discover review files without hardcoded names.
-- [ ] Strengthen InfoEvent source validation and add focused tests.
-- [ ] Run credential-free collection and collect all sources available without new credentials.
-- [ ] Update authoring, source, data-structure, and processing-flow documentation.
+- [x] Define and validate source-registry and intake-record contracts.
+- [x] Register all seven approved origins and platform-specific scope rules.
+- [x] Implement secret-safe website, YouTube, playlist, and X collection adapters.
+- [x] Store normalized intake records deterministically and keep full payloads local.
+- [x] Add duplicate detection and explicit Gakumas filtering for umbrella sources.
+- [x] Make unreviewed InfoEvent generation discover review files without hardcoded names.
+- [x] Strengthen InfoEvent source validation and add focused tests.
+- [x] Run credential-free collection and collect all sources available without new credentials.
+- [x] Update authoring, source, data-structure, and processing-flow documentation.
 - [ ] Run full validation and archive the plan.
 
 ## Boundaries

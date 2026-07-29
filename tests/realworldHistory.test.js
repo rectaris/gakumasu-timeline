@@ -30,6 +30,15 @@ describe("real-world history model", () => {
     expect(errors.some((error) => error.includes("公式出典"))).toBe(true);
   });
 
+  it("validates every official source field", () => {
+    const invalid = structuredClone(published);
+    invalid.events[0].sources[0].type = "social";
+    invalid.events[0].sources[0].supports = ["identity", "identity"];
+    const errors = validateRealworldHistoryData(invalid);
+    expect(errors.some((error) => error.includes("出典種別"))).toBe(true);
+    expect(errors.some((error) => error.includes("有効な主張"))).toBe(true);
+  });
+
   it("maps month and date precision to ranges without inventing labels", () => {
     const month = { value: "2024-02", precision: "month" };
     const date = { value: "2024-02-20", precision: "date" };
