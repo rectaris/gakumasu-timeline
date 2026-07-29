@@ -16,7 +16,8 @@
 - 初星コミュは `data/raw/worldline_commu/hatsuboshi_commu/` から `src/data/generated/worldline_commu/hatsuboshi_commu/` へ生成され、`import.meta.glob` により番号付きファイル名順で自動集約される
 - イベントコミュとサポートカードコミュは `data/raw/worldline_commu/event_commu/` と `data/raw/worldline_commu/support_story/` から対応する generated ディレクトリへ生成され、番号付きファイル名順で自動集約される
 - 共通イベントは `data/raw/worldline_commu/common_timeline.json` から `src/data/generated/worldline_commu/common_timeline.js` へ生成され、`src/data/index.js` は生成済みモジュールを import する
-- 物語イベントの未レビューパイロットは `data/raw/story_events/pilot.json` から `src/data/generated/story_events/pilot.js` へ生成される
+- 物語イベントの未レビューパイロットは`data/raw/story_events/unreviewed/pilot.json`からローカル検証用データへ生成される
+- 本番ビルドの物語イベントは`data/raw/story_events/published.json`だけを読み込み、未レビューデータを成果物へ含めない
 - 物語時系列の `storyReferences` は raw 側を正本とし、StoryBlockから参照元を引く逆引き索引を `src/data/generated/story_events/referenceIndex.js` へ生成する
 - 生成済みデータは `npm run generate:data` で更新し、`npm run validate:data` で raw との鮮度一致を確認する
 - ローカル開発時の `/timeline/?editor=worldline` は dev server 専用 API から raw JSON を読み込み、保存時に raw JSON と generated データを更新する
@@ -32,7 +33,7 @@
 - 検証は表示用正規化の前に、イベント ID、日付範囲、`occurrenceType`、参加者参照、世界線参照、空文字値、不確実性メタデータを確認する
 - `storyReferences`は参照IDの一意性、型、表示順、StoryBlockの参照整合性を全データ文脈で確認する
 - 失敗時は元ファイル、カテゴリ、レーン、イベント ID / title、フィールド、理由を表示する
-- `npm run verify` はデータ検証、ユニットテスト、ビルドを実行する
+- `npm run verify` はデータ検証、ユニットテスト、ビルド、本番成果物の公開境界検証を実行する
 
 ## カテゴリ/レーンの選択
 

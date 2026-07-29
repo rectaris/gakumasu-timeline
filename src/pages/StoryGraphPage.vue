@@ -103,6 +103,11 @@ const resultSummary = computed(
 const hasFilters = computed(
   () => query.value || category.value !== "all" || character.value !== "all",
 );
+const isPublishedEmpty = computed(
+  () =>
+    storyGraph.dataset.status === "published" &&
+    storyGraph.blocks.length === 0,
+);
 
 function categoryLabel(categoryId) {
   return STORY_CATEGORY_META[categoryId]?.label ?? categoryId;
@@ -408,8 +413,19 @@ onUnmounted(() => {
         @keydown="handleViewportKeydown"
       >
         <div v-if="filteredGraph.blocks.length === 0" class="story-empty">
-          <strong>該当する話がありません</strong>
-          <button type="button" @click="clearFilters">条件を解除</button>
+          <strong>
+            {{
+              isPublishedEmpty
+                ? "公開済みの物語イベントはまだありません"
+                : "該当する話がありません"
+            }}
+          </strong>
+          <p v-if="isPublishedEmpty">
+            出典レビューと公開判断を完了したデータから順次追加します。
+          </p>
+          <button v-if="hasFilters" type="button" @click="clearFilters">
+            条件を解除
+          </button>
         </div>
 
         <div v-else class="story-stage" :style="stageStyle">
@@ -522,7 +538,11 @@ onUnmounted(() => {
           </button>
         </div>
 
-        <div class="graph-controls" aria-label="グラフの拡大縮小">
+        <div
+          v-if="filteredGraph.blocks.length"
+          class="graph-controls"
+          aria-label="グラフの拡大縮小"
+        >
           <button type="button" aria-label="拡大" @click="zoomIn">＋</button>
           <output aria-label="拡大率">{{ Math.round(scale * 100) }}%</output>
           <button type="button" aria-label="縮小" @click="zoomOut">−</button>
@@ -1180,6 +1200,14 @@ onUnmounted(() => {
   gap: 12px;
   color: var(--text-secondary);
   text-align: center;
+}
+
+.story-empty p {
+  max-width: 32rem;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.7;
 }
 
 .story-empty button {

@@ -32,7 +32,8 @@ describe("story graph scale fixtures", () => {
 
   it("keeps mixed directions, parallel edges, and semantic cycles test-only", () => {
     const fixture = createMixedStoryGraphFixture();
-    expect(fixture.dataset.status).toBe("test-only");
+    expect(fixture.dataset.status).toBe("draft");
+    expect(fixture.dataset.description).toContain("検証専用");
     expect(collectStoryGraphErrors(fixture)).toEqual([]);
 
     const graph = normalizeStoryGraphData(fixture);

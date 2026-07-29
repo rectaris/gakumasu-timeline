@@ -137,7 +137,7 @@ const data = {
   dataset: {
     id: "story-graph-pilot",
     label: "物語イベント 未レビューパイロット",
-    status: "pilot-unreviewed",
+    status: "unreviewed",
     description: "データ契約を評価する未レビューのパイロットです。全コミュの網羅、公開可否、未確認の関係を示しません。",
   },
   edges: [

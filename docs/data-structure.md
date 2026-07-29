@@ -283,14 +283,16 @@ focused validation は指定ファイルを主対象にしますが、イベン�
 参加者 ID は既存の `participants`、出典状態と不確実性は上記の任意メタデータで扱います。
 raw/generated の契約変更は、通常のデータ追加とは別の実装計画で扱います。
 
-## 物語イベントのパイロットデータ
+## 物語イベントの公開ライフサイクル
 
-物語イベントの編集元パイロットデータは`data/raw/story_events/pilot.json`です。
-`npm run generate:data`は、検証後の生成物を`src/data/generated/story_events/pilot.js`へ出力します。
+未レビューパイロットは`data/raw/story_events/unreviewed/pilot.json`です。
+本番表示の正本は`data/raw/story_events/published.json`です。
+`npm run generate:data`は、対応する生成物を`src/data/generated/story_events/`へ出力します。
 
 ルートは`schemaVersion`、`dataset`、`series`、`blocks`、`edges`を持ちます。
-`dataset.status`が`pilot-unreviewed`のデータは、表示と契約の確認用です。
-内容の正確性、公開可否、全コミュの網羅を確認済みのデータとして扱いません。
+`dataset.status`には`draft`、`unreviewed`、`approved`、`published`のいずれかを指定します。
+ローカル開発とテストは`unreviewed`を使用でき、本番ビルドは`published`だけを使用します。
+`npm run verify`は、本番成果物に未レビューパイロットのIDが含まれないことも確認します。
 
 StorySeriesは`series_<小文字UUID>`形式のID、カテゴリ、階層種別、ラベル、任意の親IDを持ちます。
 StoryBlockは`block_<小文字UUID>`形式のID、末端のStorySeries ID、話ラベル、役割付き人物を持ちます。

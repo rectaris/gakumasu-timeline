@@ -16,6 +16,12 @@ export const STORY_REFERENCE_TYPES = [
   "subject",
   "related",
 ];
+export const STORY_DATASET_STATUSES = [
+  "draft",
+  "unreviewed",
+  "approved",
+  "published",
+];
 
 export const STORY_RELATION_DIRECTIONS = {
   before: ["forward"],
@@ -406,6 +412,11 @@ export function collectStoryGraphErrors(data) {
     ["id", "label", "status"].forEach((key) =>
       requireText(errors, data.dataset[key], `dataset.${key}`),
     );
+    if (!STORY_DATASET_STATUSES.includes(data.dataset.status)) {
+      errors.push(
+        `dataset.status: ${STORY_DATASET_STATUSES.join("、")}のいずれかが必要です。`,
+      );
+    }
   }
   if (!Array.isArray(data.series)) errors.push("series: 配列が必要です。");
   if (!Array.isArray(data.blocks)) errors.push("blocks: 配列が必要です。");

@@ -2,6 +2,11 @@ export type StoryCategory = "idol" | "event" | "support" | "hatsuboshi";
 export type StoryEdgeKind = "sequence" | "semantic";
 export type StoryEdgeDirection = "undirected" | "forward" | "bidirectional";
 export type StoryConfidence = "confirmed" | "inferred" | "speculative";
+export type StoryDatasetStatus =
+  | "draft"
+  | "unreviewed"
+  | "approved"
+  | "published";
 
 export interface StoryCharacter {
   id: string;

@@ -39,7 +39,7 @@
   ↓
 第8段階 MVP実装とUI調整                       Completed
   ↓
-第9段階 MVP評価と次期実装判断                 In Progress
+第9段階 MVP評価と次期実装判断                 Completed
 ```
 
 ## 第1段階：対象範囲とノード単位
@@ -277,12 +277,12 @@
 
 ## 第9段階：MVP評価と次期実装判断
 
-- 状態：In Progress
+- 状態：Completed
 - 依存：第8段階
 
 技術評価、StoryReference基盤、既知制約は
 [MVP評価](mvp-evaluation.md)へ記録済みです。
-実在データの承認、公開状態、全件移行の開始順は未決定です。
+公開ライフサイクル、最初の登録対象、relationTypeの追加方針、次の主作業を決定済みです。
 
 ### 決める内容
 

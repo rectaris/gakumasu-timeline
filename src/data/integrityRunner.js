@@ -1,6 +1,6 @@
 import { characterCatalog } from "./characterCatalog";
 import { worldlines } from "./worldlines";
-import { storyGraph } from "./storyGraph";
+import { publishedStoryGraph } from "./storyGraph";
 import {
   formatTimelineDataIntegrityErrors,
   validateTimelineData,
@@ -96,7 +96,9 @@ function formatTargetPaths(targetPaths) {
 export function runTimelineDataIntegrityValidation({ targetPaths = [] } = {}) {
   const characterIds = new Set(characterCatalog.map((character) => character.id));
   const worldlineIds = new Set(worldlines.map((worldline) => worldline.id));
-  const storyBlockIds = new Set(storyGraph.blocks.map((block) => block.id));
+  const storyBlockIds = new Set(
+    publishedStoryGraph.blocks.map((block) => block.id),
+  );
   const entries = getTimelineDataEntries();
   const normalizedTargetPaths = targetPaths.map(normalizeTargetPath);
   const focusedEntries = normalizedTargetPaths.length

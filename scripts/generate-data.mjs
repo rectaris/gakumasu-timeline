@@ -15,9 +15,16 @@ const STATIC_GENERATED_DATA_FILES = [
     generated: "src/data/generated/worldline_commu/common_timeline.js",
   },
   {
-    category: "storyEvents",
-    raw: "data/raw/story_events/pilot.json",
-    generated: "src/data/generated/story_events/pilot.js",
+    category: "storyEventsPublished",
+    dataType: "storyGraph",
+    raw: "data/raw/story_events/published.json",
+    generated: "src/data/generated/story_events/published.js",
+  },
+  {
+    category: "storyEventsUnreviewed",
+    dataType: "storyGraph",
+    raw: "data/raw/story_events/unreviewed/pilot.json",
+    generated: "src/data/generated/story_events/unreviewed/pilot.js",
   },
   {
     category: "storyReferenceIndex",
@@ -289,7 +296,7 @@ async function loadRawStoryGraph(sourceFile) {
 async function renderStoryReferenceIndex() {
   const timelineFiles = getGeneratedDataFiles().filter(
     (file) =>
-      file.category !== "storyEvents" &&
+      file.dataType !== "storyGraph" &&
       file.category !== "storyReferenceIndex",
   );
   const entries = await Promise.all(
@@ -309,10 +316,10 @@ export async function renderGeneratedFile(file) {
   }
 
   const data =
-    file.category === "storyEvents"
+    file.dataType === "storyGraph"
       ? await loadRawStoryGraph(file.raw)
       : await loadRawLane(file.raw);
-  const bindingName = file.category === "storyEvents" ? "data" : "lane";
+  const bindingName = file.dataType === "storyGraph" ? "data" : "lane";
 
   return `${HEADER}const ${bindingName} = ${renderValue(data, 0)};\n\nexport default ${bindingName};\n`;
 }

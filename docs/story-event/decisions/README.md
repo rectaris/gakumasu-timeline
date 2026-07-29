@@ -19,6 +19,7 @@
 - [004 ID、シリーズ階層、表示タイトル](004-id-series-hierarchy-and-derived-title.md)
 - [005 カテゴリ別フィールドとデータ作成境界](005-category-fields-and-authoring-boundaries.md)
 - [006 MVPコア契約](006-mvp-core-contract.md)
+- [007 公開ライフサイクルと最初の登録対象](007-publication-lifecycle-and-first-data-slice.md)
 
 ## 保存しない内容
 

@@ -39,7 +39,7 @@ export function createScaleStoryGraphFixture(nodeCount, { layerWidth = 10 } = {}
     dataset: {
       id: `test-scale-${nodeCount}`,
       label: `${nodeCount}ノードのテスト専用fixture`,
-      status: "test-only",
+      status: "draft",
       description: "レイアウト規模評価専用であり、物語データではありません。",
     },
     series: [
@@ -61,7 +61,7 @@ export function createMixedStoryGraphFixture() {
   data.dataset = {
     id: "test-mixed-graph",
     label: "混合グラフのテスト専用fixture",
-    status: "test-only",
+    status: "draft",
     description: "方向、並列エッジ、semantic循環の検証専用です。",
   };
   const nextEdge = (edge) => {

@@ -14,6 +14,7 @@ target_files:
   - src/types/storyEvent.d.ts
   - scripts/generate-data.mjs
   - scripts/verify-production-story-data.mjs
+  - scripts/verify-story-publication-ui.mjs
   - scripts/verify-story-graph.mjs
   - package.json
   - tests/
@@ -96,15 +97,28 @@ contains only explicitly published story records.
 
 ## Tasks
 
-- [ ] Split unreviewed and published story source/generated files.
-- [ ] Validate lifecycle states and production-only StoryReference targets.
-- [ ] Select development and production story data without changing public URLs.
-- [ ] Add production artifact leakage verification.
-- [ ] Add the published empty state and update browser checks.
-- [ ] Record authoring, approval, and publication procedures.
-- [ ] Run automated, production artifact, browser, responsive, and docs checks.
+- [x] Split unreviewed and published story source/generated files.
+- [x] Validate lifecycle states and production-only StoryReference targets.
+- [x] Select development and production story data without changing public URLs.
+- [x] Add production artifact leakage verification.
+- [x] Add the published empty state and update browser checks.
+- [x] Record authoring, approval, and publication procedures.
+- [x] Run automated, production artifact, browser, responsive, and docs checks.
 
 ## Validation Notes
 
-Record the exact production bundle inspection and the remaining real-world
-history decisions before archiving.
+Validation passed on 2026-07-29:
+
+- `npm run verify` (21 files, 113 tests, production build, artifact boundary).
+- `node scripts/verify-story-graph.mjs` against the local development server.
+- `node scripts/verify-story-publication-ui.mjs` against the production preview
+  at desktop and mobile viewports.
+- Production assets contain `story-graph-published` and contain none of the
+  prohibited pilot dataset, StoryBlock, or StoryEdge identifiers.
+- `python3 scripts/validate-changes.py`.
+- `python3 scripts/security-static-check.py`.
+- plan lint, plan format, and `git diff --check`.
+
+Real-world history still requires decisions for its initial category boundary,
+InfoEvent identity, future-event window, correction history, source hierarchy,
+and initial representative records.

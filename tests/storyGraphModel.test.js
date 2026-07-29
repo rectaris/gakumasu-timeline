@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import rawStoryGraph from "../data/raw/story_events/pilot.json";
+import rawStoryGraph from "../data/raw/story_events/unreviewed/pilot.json";
 import {
   collectStoryGraphErrors,
   collectStoryReferenceErrors,
@@ -22,6 +22,15 @@ describe("story graph data model", () => {
         "block_20000000-0000-4000-8000-000000000008",
       ).title,
     ).toBe("おでん、とおりま〜すッ！ 向き合うべきはおでん？");
+  });
+
+  it("rejects story data outside the publication lifecycle", () => {
+    const data = structuredClone(rawStoryGraph);
+    data.dataset.status = "pilot";
+
+    expect(collectStoryGraphErrors(data)).toContain(
+      "dataset.status: draft、unreviewed、approved、publishedのいずれかが必要です。",
+    );
   });
 
   it("rejects unsupported direction and relation combinations", () => {
