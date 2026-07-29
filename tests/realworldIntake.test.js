@@ -3,6 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import registry from "../data/raw/realworld_events/source-registry.json";
+import youtubeSnapshot from "../data/raw/realworld_events/intake/origin_hatsuboshi_youtube.json";
 import {
   isEligibleForSource,
   validateIntakeDataset,
@@ -54,6 +55,28 @@ describe("real-world intake model", () => {
       false,
     );
     expect(isEligibleForSource(playlist, "タイトルだけの動画")).toBe(true);
+  });
+
+  it("requires bounded pagination metadata for successful YouTube datasets", () => {
+    const missingPagination = structuredClone(youtubeSnapshot);
+    missingPagination.status = "collected";
+    delete missingPagination.pagination;
+    expect(
+      validateIntakeDataset(missingPagination, registry).some((error) =>
+        error.includes("YouTubeの取得成功データ"),
+      ),
+    ).toBe(true);
+
+    const overLimit = structuredClone(youtubeSnapshot);
+    overLimit.pagination.pagesFetched =
+      overLimit.pagination.pageLimit + 1;
+    const errors = validateIntakeDataset(overLimit, registry);
+    expect(
+      errors.some((error) => error.includes("pageLimit以下")),
+    ).toBe(true);
+    expect(
+      errors.some((error) => error.includes("pageLimitと一致")),
+    ).toBe(true);
   });
 
   it("collects a public website into a normalized intake file", async () => {

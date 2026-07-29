@@ -60,10 +60,10 @@ completeness metadata.
 
 ## Tasks
 
-- [ ] Review the three collected snapshots for identity, uniqueness, dates, and secrets.
-- [ ] Require pagination metadata on successful YouTube datasets.
-- [ ] Add focused validation regression tests.
-- [ ] Update the data-model validation contract.
+- [x] Review the three collected snapshots for identity, uniqueness, dates, and secrets.
+- [x] Require pagination metadata on successful YouTube datasets.
+- [x] Add focused validation regression tests.
+- [x] Update the data-model validation contract.
 - [ ] Run full validation, commit the snapshots, and archive the plan.
 
 ## Boundaries

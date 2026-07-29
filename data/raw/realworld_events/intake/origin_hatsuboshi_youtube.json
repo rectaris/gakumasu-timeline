@@ -1,8 +1,1815 @@
 {
   "schemaVersion": 1,
   "sourceRegistryId": "origin_hatsuboshi_youtube",
-  "collectedAt": "2026-07-29T08:46:17.281Z",
-  "status": "skipped",
-  "skipReason": "YOUTUBE_API_KEY is not set",
-  "items": []
+  "collectedAt": "2026-07-29T12:10:40.157Z",
+  "status": "partial",
+  "pagination": {
+    "pagesFetched": 2,
+    "pageLimit": 2,
+    "nextPageAvailable": true,
+    "fetchedItemCount": 100,
+    "retainedItemCount": 0
+  },
+  "items": [
+    {
+      "id": "intake_b74004c8751f47479c36bd1edaf88aab6d75124c43bfc1a8d5e6bac6da2684a7",
+      "resourceType": "youtube-video",
+      "externalId": "_HGeKmOZJJA",
+      "resourceKey": "youtube:_HGeKmOZJJA",
+      "canonicalUrl": "https://www.youtube.com/watch?v=_HGeKmOZJJA",
+      "title": "初星学園 「真っ白いページと水彩の主人公」Official Music Video (A Blank White Page and a Watercolor Hero) #学マス #shorts",
+      "summary": "[EN Credits.]\nA Blank White Page and a Watercolor Hero\n\n▶Music\nSong by Ume Hanami（VA.Ayane Matsuda）\nLyrics written, Composed by Takafumi Sato\nArranged by Tsubasa Handa\n\nAcoustic & Electric Guitar : Yuto “Carlos” Shimizu\nElectric Bass : Ryosuke Nikamoto\nDrums : Leon Yuki\nStrings : Yu Manabe Strings\nTrumpet : Teppei Kawakami\nAlto & Tenor Sax : Ryoji Ihara\n\nMusicians Coordinator : Takahiro Ikeda (Miracle Bus)\nRecording & Mixing Engineer : Mitsunori Aizawa\nAssistant Engineer : Reina Ohki (Sound City)\nRecording Studio : Sound City / Miracle Bus Studio\nMixing Studio : 32Studio / Miracle Bus Studio\n\n",
+      "publishedAt": "2026-04-23T09:01:00.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "a403a2629c85401d3307469fc7c967d22ccfa1b684ce7cbe05dac04d46fd9406",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_d7b712b18e7e44df4a25b1dcad4c08b904a98a6344d4b48f7fd46da6e3a49ff0",
+      "resourceType": "youtube-video",
+      "externalId": "-6ukHEaeBzU",
+      "resourceKey": "youtube:-6ukHEaeBzU",
+      "canonicalUrl": "https://www.youtube.com/watch?v=-6ukHEaeBzU",
+      "title": "初星学園 「EGO」Official Music Video (HATSUBOSHI GAKUEN -  EGO)",
+      "summary": "[EN Credits.]\nEGO\n\n▶Music\nSaki Hanami（VA.Aoi Nagatsuki）\nLyrics written, Composed, Arranged by Kijibato (Dream Monster)\n\nAlto Sax：Masato Honma\nAll Other Instruments：Kijibato(Dream Monster)\n\nRecording Engineer：Ryuma Annaka(birdie house)\nRecording Studio：ABS RECORDING\nMixing Engineer：Masahiko Fukui\n\n▶Movie\nDirector：Kijibato(FEAT Production Team)\nCo-director：Yamakawa Yama(FEAT Production Team)\nCompositing & Graphic Design：;3ZUTAMA\nAnimation, Illustration：higoAkari.,pre_sktch,ukairo,KagenOyuhi,coyoshi yoco,Notona,Matsumoto Nokori\nBackground Design：Hiroyoshi\nLogo Design：HONOKA\nMV Production：FEAT Pro",
+      "publishedAt": "2026-04-02T13:00:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "a8ce882b28e53fff973f4b1206727170116e66f9f465f55a7afa7ddfcf9afedc",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_24040f577ff0f0ee29e1be2e2011d8e2db3b8ccd57a0f2f25793341426e0aa67",
+      "resourceType": "youtube-video",
+      "externalId": "-P0WvzRp-ZI",
+      "resourceKey": "youtube:-P0WvzRp-ZI",
+      "canonicalUrl": "https://www.youtube.com/watch?v=-P0WvzRp-ZI",
+      "title": "初星学園 「Luna say maybe (gaburyu Remix)」 Official Visualiser (HATSUBOSHI GAKUEN)",
+      "summary": "『Hatsuboshi Gakuen Remix Album 「ReCollection」vol.1』\n▶Streaming Now!\nhttps://nex-tone.link/c36kmBPyx\n\n[EN Credits.]\n▶Music\n【Original】\nLyrics written, Composed by Minami\nArranged by Minami, Katsuhiro Mafune\n\n【Remix】\ngaburyu\n\n▶Movie\nDesign：punch\nAnimation：Shoo Joo Misobata\nMovie：Naohiro Yako\nDirector：Keisuke Yano , Frog96, Sasuke Haraguchi\n\n[JP Credits.]\n▶Music\n【Original】\n作詞・作曲：美波\n編曲：美波、真船勝博\n\n【Remix】\ngaburyu\n\n▶Movie\nDesign：パンチ\nAnimation：驟々みそばた\nMovie：Naohiro Yako\nDirector：矢野圭将・フロクロ・原口沙輔\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Producer : 矢野圭将\nLabel Director : 尾上和駿、大石和馬\nS",
+      "publishedAt": "2026-05-25T13:05:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "2c41be6e067e15ad06006ee082900d1c74a3df73c7bc090fdbffe6c65c222b7d",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_a665ed295351c38227b6cdd746bd0ec7356081ea20884ff327b38c8130c4110f",
+      "resourceType": "youtube-video",
+      "externalId": "-xG_GHShvD8",
+      "resourceKey": "youtube:-xG_GHShvD8",
+      "canonicalUrl": "https://www.youtube.com/watch?v=-xG_GHShvD8",
+      "title": "初星学園 「歌声は君いろ」Official Music Video (HATSUBOSHI GAKUEN - The singing voice is your color) #学マス #姫崎莉波",
+      "summary": "[EN Credits.]\nThe singing voice is your color\n\n▶Music\nSong by Rinami Himesaki（VA.Yuri Usui）\nLyrics written by Kenta Kuriyama、Honoka Watanabe\nComposed, Arranged by Hinano Tanaka（IKW）\n\nAcoustic＆Electric Guitar：Mitsuhiro Ohta\nElectric Bass：Atsushi Yano\nFlute：Leo Ito\nChorus：Hinano Tanaka\nTrumpet：Tatsuhiko Yoshizawa\nDrums＆Percussion：Shun Oba\nAll Other Instruments & Programming：Hinano Tanaka（IKW）\n\nMusic Product Management：Momo Sasaki（IKW）\nRecording Engineer：Ruihei Matsumura\nMixing Engineer：Macoteau T\nRecording & Mixing Studio：Studio Recolte\n\n▶Movie\nDirector：Kakeru(Bolt.inc)\nAnimator：Dangotaso\nCompos",
+      "publishedAt": "2026-07-03T09:00:18.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "dcc5b89b047b9395ef38aada1d1335546f19d2a05f2ed60b074b6f6b9ff8925d",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_9843165f7f2f3bbd8c659a944ec3c3eed9c332855d7d08554041073d9c35d634",
+      "resourceType": "youtube-video",
+      "externalId": "0cNpijWDcXs",
+      "resourceKey": "youtube:0cNpijWDcXs",
+      "canonicalUrl": "https://www.youtube.com/watch?v=0cNpijWDcXs",
+      "title": "初星学園 「空と約束」Official Music Video (HATSUBOSHI GAKUEN - A Tiny Brave Promise )",
+      "summary": "[EN Credits.]\nA Tiny Brave Promise\n▶Music\nSong by China Kuramoto (VA. Mao Ito)\nLyric written by Shoko Ohmori\nComposed, Arranged by Evan Call\n\n【Musicians】\nDrums : Leon Yuki\nAcoustic Guitar : Hiroaki Tsutsumi\nElectric Bass : Kazuhiro Sunaga\n\n【Production in Hungary】\nOrchestra : Budapest Scoring Orchestra\nConductor : Ábel Tompa\nSession Producer : Bálint Sapszon\nOrchestra Coordinator : Bertalan Veér\nRecording Engineer : Viktor Szabó\nStudio assistant :  Botond Buczkó / Marcell Novák\nLibrarian : Ágnes Sapszon\n\nInstrumental Recording & Mixing Engineer : Atsushi Fujita\nAssistant Engineer : Seiya Kawago",
+      "publishedAt": "2025-10-23T10:00:02.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "bcdf408b9688265e163495bc857ecf175bf775f8de5492726080b3058e66238d",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_cf2382311617a634d8dc3a4cd4cb6887b85e59f702c5fd99fcc55cf2d01b6cab",
+      "resourceType": "youtube-video",
+      "externalId": "0dy0sVIaXjE",
+      "resourceKey": "youtube:0dy0sVIaXjE",
+      "canonicalUrl": "https://www.youtube.com/watch?v=0dy0sVIaXjE",
+      "title": "初星学園 「Campus mode!!」Official Music Video (HATSUBOSHI GAKUEN - Campus mode!!) #学マス #shorts",
+      "summary": "[EN Credits.]\nCampus mode!!\n\n▶Music\nSong by Hatsuboshi Gakuen\nLyric written, Composed by Tomoya Tabuchi\nArranged by Shunsuke Takizawa (TRYTONELABO)\n\nPiano：Shunsuke Takizawa (TRYTONELABO)\nGuitar：yamamoto yohske.\nBass：ygarshy (from HITORIE) by the courtesy of Sony Music Labels Inc.\nDrums：Kohsuke Higuchi \nViolin：Koichiro Muroya, Eriko Ukimura, Rina Odera, Nagisa Sakaki, Momoko Takeda, Mika Naramura, Ryuto Murao, Lisa Yamamoto\nViola : Shoko Mabuchi, Tomoko Shimaoka\nCello : Masami Horisawa, Yuki Mizuno\nTrumpet : Tatsuhiko Yoshizawa\nTrombone : Yusuke Enomoto\nSax：Yuta Ishii \nRecording Engineer：Yoshik",
+      "publishedAt": "2026-05-26T10:00:12.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "839d201f0f059bd4f1100da0c9dad7ef6be30c50c95e4af2c5701943bf2959fe",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_2eb74a5848484d297876b40b915d088dbc55f965d961b39fc95c3dafde674530",
+      "resourceType": "youtube-video",
+      "externalId": "0ZWUdwVQOJA",
+      "resourceKey": "youtube:0ZWUdwVQOJA",
+      "canonicalUrl": "https://www.youtube.com/watch?v=0ZWUdwVQOJA",
+      "title": "初星学園 「理論武装して」Official Music Video (HATSUBOSHI GAKUEN - RIRONBUSO SITE)",
+      "summary": "[EN Credits.]\nRIRONBUSO SITE\n\n▶Music\nSong by Tsubame Amaya (VA. Amane Yukari)\nLyric written by Kenta Matsukuma, GBB Ayaka\nComposed by Kenta Matsukuma\nArranged by SCRAMBLES\n\nTrack Design：YUNOSY\nBass：Ohara just begun\nDrum：Toshiyuki Wakayama\n\nRecording Studio：SCRAMBLE STUDIO DAIZAWA\n\nRecording Engineer：Shota Mohri\nMixing Engineer：Ohara just begun\n\n▶Movie\nDirector：kouko\nCharacter Designer：Inuha\nLead Animator：LINTALO\nAdditional Animation：Go Kawashima, Akiya Lemonsour\nPainters：aini., Kanna Shiohari, trout\nGraphic Designer：Opus\nPerformer：Hikari Ikeda\n3D Artist：ANJU KAWAMOTO (SAMPRAS DESIGN)\nCompositi",
+      "publishedAt": "2025-11-15T13:00:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "061b167b6cbd0656a4d21bf79590e339537d72fddcb54f5134e632685df36bc3",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_b39ec5b2b056ee111da3e0c02ecc3aa0b999ae3ea47065ec5be4ce1fd3b3f5bb",
+      "resourceType": "youtube-video",
+      "externalId": "1sbaf7-QdsI",
+      "resourceKey": "youtube:1sbaf7-QdsI",
+      "canonicalUrl": "https://www.youtube.com/watch?v=1sbaf7-QdsI",
+      "title": "初星学園 「ヨルニテ」Official Music Video (HATSUBOSHI GAKUEN - yorunite) #学マス #shorts",
+      "summary": "[EN Credits.]\nyorunite\n\n▶Music\nSong by Misuzu Hataya (VA. Non Harusaki)\nLyric written, Composed, Arranged by Shogo Nomura(Bandai Namco Studios Inc.)\n\nGuitar/Piano：Shogo Nomura(Bandai Namco Studios Inc.)\nMix Engineer：Shogo Nomura(Bandai Namco Studios Inc.)\n\n▶Movie\nDirector:YYG NT Lab(Fudinoyamai/Kazuma Kanai)\nIllustration & Animation:Iou,Kuroda,kate,Konro,sa(same),JunchukanBonta,shirai_momokichi,temari izon,Nishiuri tsukasa,hige,Kaito Hirose,bonsai,mikan_city,Miyamori She,rerenge\nInterlude Visuals:haruka teramoto\nVideographer:Tamaki Terashima\nLyric Design:Ayu Kimura\nLyric Motion Design:40kl\nMV ",
+      "publishedAt": "2026-05-04T09:00:02.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "412601979ae69017e0d129e68bfc3dfee6ee378ced73b256eb113b6ed31a18b7",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_309a308393c01347b7d0f2319267c7cd4e5ae80d04bb505388ab190657eff61b",
+      "resourceType": "youtube-video",
+      "externalId": "2jxZb2Zd368",
+      "resourceKey": "youtube:2jxZb2Zd368",
+      "canonicalUrl": "https://www.youtube.com/watch?v=2jxZb2Zd368",
+      "title": "初星学園 「Choo Choo Choo」Official Music Video (HATSUBOSHI GAKUEN - Choo Choo Choo) #学マス #shorts",
+      "summary": "[EN Credits.]\nChoo Choo Choo\n\n▶Music\nSong by Sena Juo（VA.Mashiro Hitaka）\nLyrics written, Composed, Arranged by BOYHOOD (Digz, Inc. Group)\n\nAll Instruments & Programming：BOYHOOD (Digz, Inc. Group)\nMixing Engineer：Kanako Hayashi (canalabo)\n\n▶Movie\nDirector：FUKUDA.（THINGS.）\nIllust：HINATSU\nGraphic Design：Hayakawa (A.G.P), nm3(A.G.P)\nCreative Producer：Kensaku Iwashiki（THINGS.）\n\n[JP Credits.]\nChoo Choo Choo\n\n▶Music\n歌：十王星南（CV.陽高真白）\n作詞・作曲・編曲：BOYHOOD (Digz, Inc. Group)\n\nAll Instruments & Programming：BOYHOOD (Digz, Inc. Group)\nMix Engineer：林可奈子 (canalabo)\n\n▶Movie\nDirector：FUKUDA.（THINGS.）\nIllust：ひなつ\nGra",
+      "publishedAt": "2026-06-20T09:00:22.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "3c147ef5d8b3a781c1f35aee3923068e8c953e6d27a60dfa612766d681cb416c",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_667b793491352b228ca3faa6c682c8c7d09fe424dc5564543bc168726d9f6d4f",
+      "resourceType": "youtube-video",
+      "externalId": "2V8Jicraa_M",
+      "resourceKey": "youtube:2V8Jicraa_M",
+      "canonicalUrl": "https://www.youtube.com/watch?v=2V8Jicraa_M",
+      "title": "初星学園 「白線 (やしきん Remix)」 Official Visualiser (HATSUBOSHI GAKUEN)",
+      "summary": "『Hatsuboshi Gakuen Remix Album 「ReCollection」vol.1』\n▶Streaming Now!\nhttps://nex-tone.link/c36kmBPyx\n\n[EN Credits.]\n▶Music\n【Original】\nLyrics written, Composed, Arranged by NayutalieN\n\n【Remix】\nYashikin\n\n▶Movie\nDesign：punch\nAnimation：Shoo Joo Misobata\nMovie：Naohiro Yako\nDirector：Keisuke Yano , Frog96, Sasuke Haraguchi\n\n[JP Credits.]\n▶Music\n【Original】\n作詞・作曲・編曲：ナユタン星人\n\n【Remix】\nやしきん\n\n▶Movie\nDesign：パンチ\nAnimation：驟々みそばた\nMovie：Naohiro Yako\nDirector：矢野圭将・フロクロ・原口沙輔\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Producer : 矢野圭将\nLabel Director : 尾上和駿、大石和馬\nSound Producer : 佐藤貴文\nSound Di",
+      "publishedAt": "2026-05-25T13:20:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "beb38adaf500f8fc35645e6f7e1c0b38dbdd40e9c8e62e6d3ba105c975ee9d15",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_e3cd789888ddf83c0d7f95ed3f21dc006830ca322ffcc7be0d72adeebcef75c0",
+      "resourceType": "youtube-video",
+      "externalId": "440qLE6mJXw",
+      "resourceKey": "youtube:440qLE6mJXw",
+      "canonicalUrl": "https://www.youtube.com/watch?v=440qLE6mJXw",
+      "title": "初星学園 「ガラクタロード」Official Music Video (HATSUBOSHI GAKUEN - GARAKUTA ROAD) #学マス #shorts",
+      "summary": "[EN Credits.]\nGARAKUTA ROAD\n\n▶Music\nSong by Hatsuboshi Gakuen\nLyric written by Rou-hou\nComposed by Takafumi Sato \nArranged by Suzuki Shunsuke、Mei Osawa (Bandai Namco Studios Inc.)\n\nDrums: Yasuo Sano\nPiano: Keiji Matsumoto\nBass: Yasushi Sasamoto \nGuitar: Shunsuke Suzuki\nSax: Yoshinari Takegami\nTb: Kanade Kato\nTp: Tatsuhiko Yoshizawa\nBrass Arrangement: Yoshinari Takegami\nRecording Engineer: Ryo Wakisaka\nStudio: Sound Crew Studio, Sound City\n\nChorus：Maho Inagawa\n\n▶Movie\nDirection, Character Design, Camera, Edit : kouko\nClay Puppet Fabrication : kouko / Momo Ohmizu\nArt Production : kouko / Momo Oh",
+      "publishedAt": "2026-05-22T09:00:01.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "6d4597bbfa573c7d4d07eb3ef9ea6fdcca93755e337284de5c798b066c0d8f09",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_7721492f409dc2c4527b910080619b575897d13013ccfe890065150e296330c3",
+      "resourceType": "youtube-video",
+      "externalId": "72SMwSKBaQo",
+      "resourceKey": "youtube:72SMwSKBaQo",
+      "canonicalUrl": "https://www.youtube.com/watch?v=72SMwSKBaQo",
+      "title": "初星学園 「ガラクタロード」Official Music Video (HATSUBOSHI GAKUEN - GARAKUTA ROAD) #学マス #shorts",
+      "summary": "[EN Credits.]\nGARAKUTA ROAD\n\n▶Music\nSong by Hatsuboshi Gakuen\nLyric written by Rou-hou\nComposed by Takafumi Sato \nArranged by Suzuki Shunsuke、Mei Osawa (Bandai Namco Studios Inc.)\n\nDrums: Yasuo Sano\nPiano: Keiji Matsumoto\nBass: Yasushi Sasamoto \nGuitar: Shunsuke Suzuki\nSax: Yoshinari Takegami\nTb: Kanade Kato\nTp: Tatsuhiko Yoshizawa\nBrass Arrangement: Yoshinari Takegami\nRecording Engineer: Ryo Wakisaka\nStudio: Sound Crew Studio, Sound City\n\nChorus：Maho Inagawa\n\n▶Movie\nDirection, Character Design, Camera, Edit : kouko\nClay Puppet Fabrication : kouko / Momo Ohmizu\nArt Production : kouko / Momo Oh",
+      "publishedAt": "2026-05-21T09:00:21.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "3fcfb019f0804c93d648070fac4d2628085fd6386baac755b56e45feceee85a0",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_44d423a0d63d85f0717899f4f109821fa802e4f9042b360dc2061e7fb60b6ca3",
+      "resourceType": "youtube-video",
+      "externalId": "7i27l7uvTd4",
+      "resourceKey": "youtube:7i27l7uvTd4",
+      "canonicalUrl": "https://www.youtube.com/watch?v=7i27l7uvTd4",
+      "title": "初星学園 「歌声は君いろ」Official Music Video (HATSUBOSHI GAKUEN - The singing voice is your color)",
+      "summary": "[EN Credits.]\nThe singing voice is your color\n\n▶Music\nSong by Rinami Himesaki（VA.Yuri Usui）\nLyrics written by Kenta Kuriyama、Honoka Watanabe\nComposed, Arranged by Hinano Tanaka（IKW）\n\nAcoustic＆Electric Guitar：Mitsuhiro Ohta\nElectric Bass：Atsushi Yano\nFlute：Leo Ito\nChorus：Hinano Tanaka\nTrumpet：Tatsuhiko Yoshizawa\nDrums＆Percussion：Shun Oba\nAll Other Instruments & Programming：Hinano Tanaka（IKW）\n\nMusic Product Management：Momo Sasaki（IKW）\nRecording Engineer：Ruihei Matsumura\nMixing Engineer：Macoteau T\nRecording & Mixing Studio：Studio Recolte\n\n▶Movie\nDirector：Kakeru(Bolt.inc)\nAnimator：Dangotaso\nCompos",
+      "publishedAt": "2026-07-02T13:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "b68e36235c8124a5ae8232fd35225bd0a84d137406e532c68025a8868d26dabb",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_9112a359df4916c6af4b528ebbd5e2d61083b067ce1cf7557539479b5ba72239",
+      "resourceType": "youtube-video",
+      "externalId": "7tdvilHhpPs",
+      "resourceKey": "youtube:7tdvilHhpPs",
+      "canonicalUrl": "https://www.youtube.com/watch?v=7tdvilHhpPs",
+      "title": "初星学園 「空と約束」Official Music Video (HATSUBOSHI GAKUEN - A Tiny Brave Promise )",
+      "summary": "[EN Credits.]\nA Tiny Brave Promise\n▶Music\nSong by China Kuramoto (VA. Mao Ito)\nLyric written by Shoko Ohmori\nComposed, Arranged by Evan Call\n\n【Musicians】\nDrums : Leon Yuki\nAcoustic Guitar : Hiroaki Tsutsumi\nElectric Bass : Kazuhiro Sunaga\n\n【Production in Hungary】\nOrchestra : Budapest Scoring Orchestra\nConductor : Ábel Tompa\nSession Producer : Bálint Sapszon\nOrchestra Coordinator : Bertalan Veér\nRecording Engineer : Viktor Szabó\nStudio assistant :  Botond Buczkó / Marcell Novák\nLibrarian : Ágnes Sapszon\n\nInstrumental Recording & Mixing Engineer : Atsushi Fujita\nAssistant Engineer : Seiya Kawago",
+      "publishedAt": "2025-10-22T10:00:14.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "ab8e390c86aca55a92988b990b0a4feab8b3893f3c117e998f3b6007016010e7",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_8d714f18d290226866766627ab408e2a2be6dac5fac59a1abc705a5e76de05d9",
+      "resourceType": "youtube-video",
+      "externalId": "82SGsHkhySg",
+      "resourceKey": "youtube:82SGsHkhySg",
+      "canonicalUrl": "https://www.youtube.com/watch?v=82SGsHkhySg",
+      "title": "初星学園 「コンテンポラリのダンス」Official Music Video (HATSUBOSHI GAKUEN - contemporary dance)",
+      "summary": "[EN Credits.]\ncontemporary dance\n\n▶Music\nSong by Hiro Shinosawa（VA.Reina Kawamura）\nLyrics written, Composed, Arranged by mashima yuro\n\n▶Movie\nMV TOKICHIAKI\nMV asst. Mei yokoyama\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\nコンテンポラリのダンス\n\n▶Music\n歌：篠澤 広（CV.川村玲奈）\n作詞・作曲・編曲：真島ゆろ\n\n▶Movie\nMV トキチアキ\nMV asst. Mei yokoyama\nMV Producer：矢野圭将\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Producer : 矢野圭将\nLabel Director : 尾上和駿、大石和馬\nSound Producer : 佐藤貴文\nSound Director : 大澤めい\n------------------------------\n\n「学マス」で検索！\n▶学マスアプリのDLはこちら！\nhttps://app.adjust.com/19512hnz\n\nTHE IDOLM@STER™& ©Bandai Namco",
+      "publishedAt": "2026-05-28T13:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "51474f91155ac70ae9dbae786bfaa5129f0b469b5d77ded5cbe56f6229262407",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_899bbe513baebc1b8a8ba50cadb0050fab192a93cc9a571d801c7ea9bfe3d4e7",
+      "resourceType": "youtube-video",
+      "externalId": "83aawu6BwxQ",
+      "resourceKey": "youtube:83aawu6BwxQ",
+      "canonicalUrl": "https://www.youtube.com/watch?v=83aawu6BwxQ",
+      "title": "初星学園 「Fragile Heart」Official Music Video (HATSUBOSHI GAKUEN - Fragile Heart)　 #学マス　#shorts",
+      "summary": "[EN Credits.]\nFragile Heart\n\n▶Music\nSong by Lilja Katsuragi（VA.Kana Hanaiwa）\nLyrics written, Composed, Arranged by Ash Inoue (Dream Monster)\n\nDrums：Junya Yamamoto\nBass：Rock Sakurai\nViolin：Mamiko Amemiya\nGuitar & All Other Instruments：Ash Inoue(Dream Monster)\n\nRecording Engineer：Yohei Horiuchi(Joint 1)\nRecording Studio：HeartBeat RECORDING STUDIO\nMixing Engineer：Masahiko Fukui\n\n▶Movie\nDirector：TAMU (Bolt.inc)\nLogo Design：Takagaki\nIllustration：Hayase\nAnimation：Nemuke\nVideographer ：Hiroki Sato\n3D Design & Motion Graphics & Compositor：Kuuru\nProduction：Bolt.inc\n\n[JP Credits.]\nFragile Heart\n\n▶Music\n歌",
+      "publishedAt": "2026-06-12T09:00:24.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "9b4aa095b2e772c638edd544a73e79715a45c5430ddc0a80c24848d1b862c178",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_670c700f0b9474acd21307dda2ccc5d65058ed431581685bf2c91ced7006c54a",
+      "resourceType": "youtube-video",
+      "externalId": "8s71ErlDg_0",
+      "resourceKey": "youtube:8s71ErlDg_0",
+      "canonicalUrl": "https://www.youtube.com/watch?v=8s71ErlDg_0",
+      "title": "初星学園 「みちなるひろがる」Official Music Video (HATSUBOSHI GAKUEN - Unknown Unbound) #学マス #shorts",
+      "summary": "[EN Credits.]\nUnknown Unbound\n\nSong by China Kuramoto (VA. Mao Ito), Hiro Shinosawa (VA. Reina Kawamura)\nLyric written, Composed, Arranged, Movie created by Iyowa\n\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\nみちなるひろがる\n\n歌：倉本千奈 (CV. 伊藤舞音) 、篠澤広 (CV. 川村玲奈) \n作詞・作曲・編曲・動画：いよわ\n\nMV Producer：矢野圭将\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Producer : 矢野圭将\nLabel Director : 尾上和駿、大石和馬\nSound Producer : 佐藤貴文\nSound Director : 大澤めい\n------------------------------\n\n「学マス」で検索！\n▶学マスアプリのDLはこちら！\nhttps://app.adjust.com/19512hnz\n\nTHE IDOLM@STER™& ©Bandai Namco Entertainment Inc.\nⓅ2026 Bandai Namco En",
+      "publishedAt": "2026-01-29T09:05:26.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "c3bb486ca4c78df1aa4a5895cf94a65162a24a6b5eac59ce7a5e83eac9a31f93",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_9364adb73a79dcae5a4b6a1404cc41ac28095a2ec6e902636c77d1ea3ef6df0c",
+      "resourceType": "youtube-video",
+      "externalId": "9GN-YRLOGZM",
+      "resourceKey": "youtube:9GN-YRLOGZM",
+      "canonicalUrl": "https://www.youtube.com/watch?v=9GN-YRLOGZM",
+      "title": "初星学園 「ときめきエモーション」Official Music Video (HATSUBOSHI GAKUEN -  Tokimeki Emotion) #学マス #shorts",
+      "summary": "[EN Credits.]\nTokimeki Emotion\n\n▶Music\nSong by Lilja Katsuragi（VA.Kana Hanaiwa）, Sumika Shiun (VA. Miya Minato)\nLyrics written, Composed, Arranged by Yoh Kamiyama\n\nProgramming & All Instruments by Yoh Kamiyama\n\n▶Movie\nProduction: nim  \nDirection: Nate(nim), Tatsuya Suga(nim)  \nArt Direction: Kaoru Miyazaki(nim)  \nGraphic Design: Kaoru Miyazaki, Tatsuya Suga, Nate  \nMotion Design: Tatsuya Suga, Nate, sisyamo(nim)  \n3D Design: sisyamo  \nCompositing: sisyamo, Nate  \nIllustration: wata  \nIllustration Processing: Ayumu Funaki(SIKAKU Inc.)  \nSpecial Thanks: sowiti, Sam(nim)\n \nMV Producer: Keisuke Ya",
+      "publishedAt": "2026-04-03T11:00:20.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "159f82fbf1e2e3eef5993e64c3100bf27168aaeb80d92eecdda7bfd5c7f4575a",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_9a0c1bd1d8f07aa2f3bca33d0a1e4cd452d469f2d4a441bf612f33540f2c7855",
+      "resourceType": "youtube-video",
+      "externalId": "9jNisN0VTfc",
+      "resourceKey": "youtube:9jNisN0VTfc",
+      "canonicalUrl": "https://www.youtube.com/watch?v=9jNisN0VTfc",
+      "title": "初星学園 「赤裸々」Official Music Video (HATSUBOSHI GAKUEN - SEKIRARA) #学マス #初星学園 #shorts",
+      "summary": "[EN Credits.]\nSEKIRARA\n▶Music\nSong by Sena Juo (VA. Mashiro Hitaka)\nLyric written by Yuho Iwasato\nComposed, Arranged by Keiichi Okabe(MONACA)\n\nRecorded, Mixed & ProTools Operated by Takashi Koiwa(SIGN SOUND LLC)\n\nStrings：Koichiro Muroya Strings\n　1st Violin：Koichiro Muroya、Tomomi Tokunaga、Yuya Yanagihara、Hideki Imaoka\n　2nd Violin：Rina Odera、Eriko Ukimura、Emiko Ujikawa\n　Viola： Tomoko Shimaoka、Mayu Takashima\n　Cello： Masateru Nishikata、Yuki Mizuno\nAll Other Instruments & Programming：Keiichi Okabe(MONACA)\n\nRecording Studio：Sound City\n\nMixing Studio：Studio Earkth\n\n▶Movie\nDirector: Akira Gunji(maxill",
+      "publishedAt": "2026-02-11T09:00:23.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "f9cf89568d6ef89965c0350c2e356e55ab4293fae57ea1cd7f7615cf408d82d2",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_a91414cc6fc0928b27a154580fdc18b70a65787e0be9ff37d2fbd8286c11b899",
+      "resourceType": "youtube-video",
+      "externalId": "9tMj2ytElGo",
+      "resourceKey": "youtube:9tMj2ytElGo",
+      "canonicalUrl": "https://www.youtube.com/watch?v=9tMj2ytElGo",
+      "title": "初星学園 「ときめきのソルフェージュ」Official Music Video (HATSUBOSHI GAKUEN - Fantasy Solfege)",
+      "summary": "[EN Credits.]\nFantasy Solfege\n\n▶Music\nSong by China Kuramoto (VA. Mao Ito)\nLyric written by Cocoro. (Dream Monster)\nComposed, Arranged by Tomoari Taguma (Dream Monster)\n\nDrums&Percussion：Jyunya Yamamoto\nBass：Ryosuke Nikamoto\nGuitar：Sho Horizaki\nViolin：Takahiro Takai\nAll Other Programing：Tomoari Taguma(Dream Monster)\nRecording Engineer：Yohei Horiuchi\nMixing Engineer：Masahiko Fukui\n\n▶Movie\nIllust&Animation：Morinoji\nIllust：Shizumorokoshi\nMovie：Rinami Rai\nAnimation assistant：Nerve.\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\nときめきのソルフェージュ\n\n▶Music\n歌：倉本千奈 (CV. 伊藤舞音)\n作詞：Cocoro. (Dream Monster)\n作曲編曲：田熊知存 (",
+      "publishedAt": "2026-04-15T13:00:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "06c00383fe1499a1fd9e0c287e36c60a5360ece286425a064eddc84452fa81d0",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_8cc47d49214efe50b66ed395f73716b41cfa07320c6ef2b2529f319d19c6aeb8",
+      "resourceType": "youtube-video",
+      "externalId": "AbxzlgJTM-I",
+      "resourceKey": "youtube:AbxzlgJTM-I",
+      "canonicalUrl": "https://www.youtube.com/watch?v=AbxzlgJTM-I",
+      "title": "初星学園 「VEIL」Official Music Video (HATSUBOSHI GAKUEN - VEIL)",
+      "summary": "[EN Credits.]\nVEIL\n\n▶Music\nSong by Misuzu Hataya (VA. Non Harusaki)\nLyric written by GUCCHO\nComposed by GUCCHO, Dubscribe\nArranged by Dubscribe, GUCCHO\n\n▶Movie\nDirector: Kosuke Tsukagawa (SIGNIF)\nCharacter Design / Illustrator: match\nAnimator: Kana Kurimoto, Haru Yamao, Amanotou, Souupbox, Akihiko Wakahoi, Sota Fukushima, Ranka, Kyo Tanaka, bibi, tyodendo, aki\n3D Artist: Reika, Ai Ikeda, Akari Kumagai (SIGNIF), Sakura Misawa\nEffects Artist: Ryoma Sanpei (SIGNIF)\nProducer: Musashi Ito (SIGNIF)\nMV Producer:KEISUKE YANO\n\n[JP Credits.]\nVEIL\n\n▶Music\n歌：秦谷美鈴 (CV. 春咲 暖)\n作詞：GUCCHO\n作曲：GUCCHO, Dubscribe\n",
+      "publishedAt": "2026-04-29T13:00:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "188bb0eb8222c4ce2dd7241478b81cbaac19b4c8ea5d3f5ddd325844558daefc",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_5ccb08a696a07d275dda4b9219d61e78494c38539142f84724aa6795b8596d23",
+      "resourceType": "youtube-video",
+      "externalId": "afh9Sq0Dtq4",
+      "resourceKey": "youtube:afh9Sq0Dtq4",
+      "canonicalUrl": "https://www.youtube.com/watch?v=afh9Sq0Dtq4",
+      "title": "初星学園 「赤裸々」Official Music Video (HATSUBOSHI GAKUEN - SEKIRARA)",
+      "summary": "[EN Credits.]\nSEKIRARA\n▶Music\nSong by Sena Juo (VA. Mashiro Hitaka)\nLyric written by Yuho Iwasato\nComposed, Arranged by Keiichi Okabe(MONACA)\n\nRecorded, Mixed & ProTools Operated by Takashi Koiwa(SIGN SOUND LLC)\n\nStrings：Koichiro Muroya Strings\n　1st Violin：Koichiro Muroya、Tomomi Tokunaga、Yuya Yanagihara、Hideki Imaoka\n　2nd Violin：Rina Odera、Eriko Ukimura、Emiko Ujikawa\n　Viola： Tomoko Shimaoka、Mayu Takashima\n　Cello： Masateru Nishikata、Yuki Mizuno\nAll Other Instruments & Programming：Keiichi Okabe(MONACA)\n\nRecording Studio：Sound City\n\nMixing Studio：Studio Earkth\n\n▶Movie\nDirector: Akira Gunji(maxill",
+      "publishedAt": "2026-02-09T13:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "5f2ca194741fbe4ba37ca0edf7b265f0c110b222e9569dc72f144c7f715dc0ae",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_9887a7af98ba6b39aea2c5d2d1fc7c422ee2bf4ab6fcc4f71b05fcd3be1ae7f0",
+      "resourceType": "youtube-video",
+      "externalId": "AUqf24HCNk0",
+      "resourceKey": "youtube:AUqf24HCNk0",
+      "canonicalUrl": "https://www.youtube.com/watch?v=AUqf24HCNk0",
+      "title": "初星学園 「Kira Kira (r-906 Remix)」 Official Visualiser (HATSUBOSHI GAKUEN)",
+      "summary": "『Hatsuboshi Gakuen Remix Album 「ReCollection」vol.1』\n▶Streaming Now!\nhttps://nex-tone.link/c36kmBPyx\n\n[EN Credits.]\n▶Music\n【Original】\nLyrics written by Chica\nComposed by Dirty Orange (Digz, Inc. Group)、MOMONADY、Chica\nArranged by Dirty Orange (Digz, Inc. Group)\n\n【Remix】\nr-906\n\n▶Movie\nDesign：punch\nAnimation：Shoo Joo Misobata\nMovie：Naohiro Yako\nDirector：Keisuke Yano , Frog96, Sasuke Haraguchi\n\n[JP Credits.]\n▶Music\n【Original】\n作詞：Chica\n作曲：Dirty Orange (Digz, Inc. Group)、MOMONADY、Chica\n編曲：Dirty Orange (Digz, Inc. Group)\n\n【Remix】\nr-906\n\n▶Movie\nDesign：パンチ\nAnimation：驟々みそばた\nMovie：Naohiro Yako\nDirector：矢野",
+      "publishedAt": "2026-05-25T13:30:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "deed00ef7a9f200ba8327f4b30a2eaf74fe7706b4786b52928845880414ab9c9",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_b664debf725450106f4b01fb7c64d2d214058bef6e6f00ab178196a5e30c451c",
+      "resourceType": "youtube-video",
+      "externalId": "BdLHmP0QTo4",
+      "resourceKey": "youtube:BdLHmP0QTo4",
+      "canonicalUrl": "https://www.youtube.com/watch?v=BdLHmP0QTo4",
+      "title": "初星学園 「The Rolling Riceball (LindaAI-CUE Remix)」 Official Visualiser (HATSUBOSHI GAKUEN)",
+      "summary": "『Hatsuboshi Gakuen Remix Album 「ReCollection」vol.1』\n▶Streaming Now!\nhttps://nex-tone.link/c36kmBPyx\n\n[EN Credits.]\n▶Music\n【Original】\nLyrics written, Composed by Takafumi Sato (Bandai Namco Studios Inc.)\nArranged by Akinori Handa\n\n【Remix】\nLindaAI-CUE (Bandai Namco Studios Inc.)\n\n▶Movie\nDesign：punch\nAnimation：Shoo Joo Misobata\nMovie：chlumi\nDirector：Keisuke Yano , Frog96, Sasuke Haraguchi\n\n[JP Credits.]\n▶Music\n【Original】\n作詞・作曲：佐藤貴文 (Bandai Namco Studios Inc.)\n編曲：半田彬倫\n\n【Remix】\nLindaAI-CUE (Bandai Namco Studios Inc.)\n\n▶Movie\nDesign：パンチ\nAnimation：驟々みそばた\nMovie：chlumi\nDirector：矢野圭将・フロクロ・原口沙輔\n\n--------",
+      "publishedAt": "2026-05-25T13:50:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "9a4706789b26a409c2b9f69b88a38152c442a6bf57f9cbb9708a6af4c3e2bf3a",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_943b7272de5406ecc7eca75c4183a0f0aab013dab946b6cbbfdf6be2e1cd3b37",
+      "resourceType": "youtube-video",
+      "externalId": "byvZ-mQcKcU",
+      "resourceKey": "youtube:byvZ-mQcKcU",
+      "canonicalUrl": "https://www.youtube.com/watch?v=byvZ-mQcKcU",
+      "title": "初星学園 「メクルメ (PAS TASTA Remix)」 Official Visualiser (HATSUBOSHI GAKUEN)",
+      "summary": "『Hatsuboshi Gakuen Remix Album 「ReCollection」vol.1』\n▶Streaming Now!\nhttps://nex-tone.link/c36kmBPyx\n\n[EN Credits.]\n▶Music\n【Original】\nLyrics written, Composed, Arranged by Frog96\n\n【Remix】\nPAS TASTA\n\n▶Movie\nDesign：punch\nAnimation：Shoo Joo Misobata\nMovie：Naohiro Yako\nDirector：Keisuke Yano , Frog96, Sasuke Haraguchi\n      \n[JP Credits.]\n▶Music\n【Original】\n作詞・作曲・編曲：フロクロ\n\n【Remix】\nPAS TASTA\n\n▶Movie\nDesign：パンチ\nAnimation：驟々みそばた\nMovie：Naohiro Yako\nDirector：矢野圭将・フロクロ・原口沙輔\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Producer : 矢野圭将\nLabel Director : 尾上和駿、大石和馬\nSound Producer : 佐藤貴文\nSo",
+      "publishedAt": "2026-05-25T13:35:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "5fc1a05393838f7bed5346322fd31979cd6bd61c15656fa65c24628798e46a61",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_1f6436c9bafb4b6cef7778034c0a4f781a259c4e5e1f3d1decccb3cacd3e912a",
+      "resourceType": "youtube-video",
+      "externalId": "bZTt7SyPKSA",
+      "resourceKey": "youtube:bZTt7SyPKSA",
+      "canonicalUrl": "https://www.youtube.com/watch?v=bZTt7SyPKSA",
+      "title": "初星学園 「理論武装して」Official Music Video (HATSUBOSHI GAKUEN - RIRONBUSO SITE) #初星学園 #学園アイドルマスター  #shorts",
+      "summary": "[EN Credits.]\nRIRONBUSO SITE\n\n▶Music\nSong by Tsubame Amaya (VA. Amane Yukari)\nLyric written by Kenta Matsukuma, GBB Ayaka\nComposed by Kenta Matsukuma\nArranged by SCRAMBLES\n\nTrack Design：YUNOSY\nBass：Ohara just begun\nDrum：Toshiyuki Wakayama\n\nRecording Studio：SCRAMBLE STUDIO DAIZAWA\n\nRecording Engineer：Shota Mohri\nMixing Engineer：Ohara just begun\n\n▶Movie\nDirector：kouko\nCharacter Designer：Inuha\nLead Animator：LINTALO\nAdditional Animation：Go Kawashima, Akiya Lemonsour\nPainters：aini., Kanna Shiohari, trout\nGraphic Designer：Opus\nPerformer：Hikari Ikeda\n3D Artist：ANJU KAWAMOTO (SAMPRAS DESIGN)\nCompositi",
+      "publishedAt": "2025-11-18T09:01:02.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "d20a8084772282da7932e0b7deaa717966d5afa5e0416f257a3fb23b77197fa0",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_28b4671f68eb5c91aa8fe40384e6153913e6021dc1308efa6cf84af76660213d",
+      "resourceType": "youtube-video",
+      "externalId": "CkPRTIwPPAs",
+      "resourceKey": "youtube:CkPRTIwPPAs",
+      "canonicalUrl": "https://www.youtube.com/watch?v=CkPRTIwPPAs",
+      "title": "初星学園 「わかし・さわがし・スカパンク」Official Music Video (HATSUBOSHI GAKUEN - Wakashi,Sawagashi,SKA PUNK) #学マス",
+      "summary": "[EN Credits.]\nWakashi,Sawagashi,SKA PUNK\n\n▶Music\nSong by Ume Hanami (VA. Ayane Matsuda), Misuzu Hataya (VA. Non Harusaki), Sena Juo (VA. Mashiro Hitaka)\nLyric written by Mei Osawa (Bandai Namco Studios Inc.)\nComposed by AYATOMO (MAYSON's PARTY)、Takaaki Kimura\nArranged by Takaaki Kimura\n\nGt.AYATOMO (MAYSON's PARTY)\nGt.MIKI (MAYSON's PARTY)\nBa.TSUKASA (MAYSON's PARTY)\nDr.YANOK (MAYSON's PARTY)\nTp.SAKI (MAYSON's PARTY)\nTb.MOE (MAYSON's PARTY)\nT-sax.PON (MAYSON's PARTY)\n\nChorus: Maho Inagawa\nKeyboard & All Other Instruments: Takaaki Kimura\n \n▶Movie\nDirector：TAMU (Bolt.inc)\nIllustration：pelyopelyo\n",
+      "publishedAt": "2026-02-20T10:00:28.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "1cefa9e00a86863ddb1eef808639652dd1658bc215f7a0f8f334586170afa51d",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_fa38b8a59b8c394ae5003052e0f51e2183c5a106a7ce0d16fbae34ca6c08502c",
+      "resourceType": "youtube-video",
+      "externalId": "cVWMDBExr6g",
+      "resourceKey": "youtube:cVWMDBExr6g",
+      "canonicalUrl": "https://www.youtube.com/watch?v=cVWMDBExr6g",
+      "title": "初星学園 「Fragile Heart」Official Music Video (HATSUBOSHI GAKUEN - Fragile Heart)　 #学マス　#shorts",
+      "summary": "[EN Credits.]\nFragile Heart\n\n▶Music\nSong by Lilja Katsuragi（VA.Kana Hanaiwa）\nLyrics written, Composed, Arranged by Ash Inoue (Dream Monster)\n\nDrums：Junya Yamamoto\nBass：Rock Sakurai\nViolin：Mamiko Amemiya\nGuitar & All Other Instruments：Ash Inoue(Dream Monster)\n\nRecording Engineer：Yohei Horiuchi(Joint 1)\nRecording Studio：HeartBeat RECORDING STUDIO\nMixing Engineer：Masahiko Fukui\n\n▶Movie\nDirector：TAMU (Bolt.inc)\nLogo Design：Takagaki\nIllustration：Hayase\nAnimation：Nemuke\nVideographer ：Hiroki Sato\n3D Design & Motion Graphics & Compositor：Kuuru\nProduction：Bolt.inc\n\n[JP Credits.]\nFragile Heart\n\n▶Music\n歌",
+      "publishedAt": "2026-06-13T09:00:39.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "851b088814d6170c028e872c1b553cf46314f21f005476b2792babd044f5eefd",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_4b8505ef8f07b0b617973e9ac3c1739b9bbfa297e07d053d5a79d3ffd7f37bc5",
+      "resourceType": "youtube-video",
+      "externalId": "dfICZOrFMMY",
+      "resourceKey": "youtube:dfICZOrFMMY",
+      "canonicalUrl": "https://www.youtube.com/watch?v=dfICZOrFMMY",
+      "title": "初星学園 「ヨルニテ」Official Music Video (HATSUBOSHI GAKUEN - yorunite) #学マス #shorts",
+      "summary": "[EN Credits.]\nyorunite\n\n▶Music\nSong by Misuzu Hataya (VA. Non Harusaki)\nLyric written, Composed, Arranged by Shogo Nomura(Bandai Namco Studios Inc.)\n\nGuitar/Piano：Shogo Nomura(Bandai Namco Studios Inc.)\nMix Engineer：Shogo Nomura(Bandai Namco Studios Inc.)\n\n▶Movie\nDirector:YYG NT Lab(Fudinoyamai/Kazuma Kanai)\nIllustration & Animation:Iou,Kuroda,kate,Konro,sa(same),JunchukanBonta,shirai_momokichi,temari izon,Nishiuri tsukasa,hige,Kaito Hirose,bonsai,mikan_city,Miyamori She,rerenge\nInterlude Visuals:haruka teramoto\nVideographer:Tamaki Terashima\nLyric Design:Ayu Kimura\nLyric Motion Design:40kl\nMV ",
+      "publishedAt": "2026-05-03T09:00:47.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "eea7d1210df6167b0335810e7bb448cedb16894baddbb8c324fec6022b619fc7",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_ad67864fd09a408caf4ac482cab1a2549792e8ce063c2eb8af21b8da81808279",
+      "resourceType": "youtube-video",
+      "externalId": "e-6E34o9QmU",
+      "resourceKey": "youtube:e-6E34o9QmU",
+      "canonicalUrl": "https://www.youtube.com/watch?v=e-6E34o9QmU",
+      "title": "初星学園 「仮装狂騒曲 (原口沙輔 Remix)」 Official Visualiser (HATSUBOSHI GAKUEN)",
+      "summary": "『Hatsuboshi Gakuen Remix Album 「ReCollection」vol.1』\n▶Streaming Now!\nhttps://nex-tone.link/c36kmBPyx\n\n[EN Credits.]\n▶Music\n【Original】\nLyrics written by TOPHAMHAT-KYO (FAKE TYPE.)\nComposed by FAKE TYPE.\nArranged by DYES IWASAKI (FAKE TYPE.)\n\n【Remix】\nSasuke Haraguchi\n\n▶Movie\nDesign：punch\nAnimation：Shoo Joo Misobata\nMovie：Naohiro Yako\nDirector：Keisuke Yano , Frog96, Sasuke Haraguchi\n\n[JP Credits.]\n▶Music\n【Original】\n作詞：TOPHAMHAT-KYO (FAKE TYPE.)\n作曲：FAKE TYPE.\n編曲：DYES IWASAKI (FAKE TYPE.)\n\n【Remix】\n原口沙輔\n\n▶Movie\nDesign：パンチ\nAnimation：驟々みそばた\nMovie：Naohiro Yako\nDirector：矢野圭将・フロクロ・原口沙輔\n\n------------------",
+      "publishedAt": "2026-05-25T14:05:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "84e0c381070cef61ad1f3be32ac07b3095c093c3e412d5f229dd582628e9ee16",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_75b2c86ed7193aa701df2f15caef1c2026921c95520fb369ceb025177b6d4aca",
+      "resourceType": "youtube-video",
+      "externalId": "E8G7BMd2a7g",
+      "resourceKey": "youtube:E8G7BMd2a7g",
+      "canonicalUrl": "https://www.youtube.com/watch?v=E8G7BMd2a7g",
+      "title": "初星学園 「冠菊」Official Music Video (HATSUBOSHI GAKUEN -  Kamurogiku)",
+      "summary": "[EN Credits.]\n Kamurogiku\n\n▶Music\nSong by Lilja Katsuragi（VA.Kana Hanaiwa）,Saki Hanami（VA.Aoi Nagatsuki）, Kotone Fujita（VA.Hikaru Iida）\nLyrics written by Kyouko Ohyama (Rebrast)\nComposed by Hirotaka Hayakawa (Rebrast), Reo Kawahara (Rebrast)\narranged by Reo Kawahara (Rebrast)\n\nGuitar：Reo Kawahara (Rebrast)\nRecording Engineer：Naofumi Momota (Rebrast)\nMixing Engineer：Masahiro Shinbo\nChorus：Eri Sasaki\n\n▶Movie\nCreative Produce：reinou\nMovie：kanekokaihatsu\nIllustration：△○□×\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\n冠菊\n▶Music\n歌：葛城リーリヤ（CV.花岩香奈）、花海咲季（CV.長月あおい）藤田ことね（CV.飯田ヒカル）\n作詞：大山恭子 (Rebrast)\n作曲：早川博隆 (Re",
+      "publishedAt": "2026-03-11T13:00:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "4dbe93d8d324a7576ef94e04cbbcd66239fd2d0b5121a5cc20647f0d24136574",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_ff3a1400360fad712364408079adbb22670ad71ae662c1a241d13e95beceda10",
+      "resourceType": "youtube-video",
+      "externalId": "eclbV7rXm_M",
+      "resourceKey": "youtube:eclbV7rXm_M",
+      "canonicalUrl": "https://www.youtube.com/watch?v=eclbV7rXm_M",
+      "title": "初星学園 「コンテンポラリのダンス」Official Music Video (HATSUBOSHI GAKUEN - contemporary dance) #学マス #shorts",
+      "summary": "[EN Credits.]\ncontemporary dance\n\n▶Music\nSong by Hiro Shinosawa（VA.Reina Kawamura）\nLyrics written, Composed, Arranged by mashima yuro\n\n▶Movie\nMV TOKICHIAKI\nMV asst. Mei yokoyama\n\n[JP Credits.]\nコンテンポラリのダンス\n\n▶Music\n歌：篠澤 広（CV.川村玲奈）\n作詞・作曲・編曲：真島ゆろ\n\n▶Movie\nMV トキチアキ\nMV asst. Mei yokoyama\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Producer : 矢野圭将\nLabel Director : 尾上和駿、大石和馬\nSound Producer : 佐藤貴文\nSound Director : 大澤めい\n------------------------------\n\n「学マス」で検索！\n▶学マスアプリのDLはこちら！\nhttps://app.adjust.com/19512hnz\n\nTHE IDOLM@STER™& ©Bandai Namco Entertainment Inc.\nⓅ2026 Bandai Namco Ent",
+      "publishedAt": "2026-05-30T09:00:30.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "eb1574ea180f32463b9a57f835afca7c190877df0efefbb32b4b85e6e641288e",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_5923f64e9a7fdb3e25403fa071aab3360e5e3f8fef50e134920f9d21fa035ad6",
+      "resourceType": "youtube-video",
+      "externalId": "FFQJpcD9wg4",
+      "resourceKey": "youtube:FFQJpcD9wg4",
+      "canonicalUrl": "https://www.youtube.com/watch?v=FFQJpcD9wg4",
+      "title": "初星学園 「Cosmetic (REDALiCE Remix)」Official Visualiser (HATSUBOSHI GAKUEN)",
+      "summary": "『Hatsuboshi Gakuen Remix Album 「ReCollection」vol.1』\n▶Streaming Now!\nhttps://nex-tone.link/c36kmBPyx\n\n[EN Credits.]\n▶Music\n【Original】\nLyrics written by Stephanie Topalian、MOMONADY\nComposed by MOMONADY、YUKI FUNAKOSHI (Digz, Inc. Group)\nArranged by YUKI FUNAKOSHI (Digz, Inc. Group)\n\n【Remix】\nREDALiCE\n\n▶Movie\nDesign：punch\nAnimation：Shoo Joo Misobata\nMovie：Naohiro Yako\nDirector：Keisuke Yano , Frog96, Sasuke Haraguchi\n\n[JP Credits.]\n▶Music\n【Original】\n作詞：Stephanie Topalian、MOMONADY\n作曲：MOMONADY、YUKI FUNAKOSHI (Digz, Inc. Group)\n編曲：YUKI FUNAKOSHI (Digz, Inc. Group)\n\n【Remix】\nREDALiCE\n\n▶Movie\nDesign：パンチ\nA",
+      "publishedAt": "2026-05-25T13:55:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "87264fb1f440aef4d6d8a20a5cfbacfe998b99fcac894ed00f32b270e5f9b51c",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_15b57b163af2087bbd14e4393a87d2f217bc18d0a786877e52af0c26ef88e747",
+      "resourceType": "youtube-video",
+      "externalId": "fLG0nBHi0k8",
+      "resourceKey": "youtube:fLG0nBHi0k8",
+      "canonicalUrl": "https://www.youtube.com/watch?v=fLG0nBHi0k8",
+      "title": "初星学園 「Kira Kira」Official Music Video (HATSUBOSHI GAKUEN - Kira Kira) #学マス #shorts",
+      "summary": "[EN Credits.]\nKira Kira\n\n▶Music\nSong by Sumika Shiun（VA.Miya Minato）\nLyrics written by Chica\nComposed by Dirty Orange (Digz, Inc. Group)、MOMONADY、Chica\nArranged by Dirty Orange (Digz, Inc. Group)\n\nAll instruments & programming：Dirty Orange (Digz, Inc. Group)\nMixing Engineer：Kanako Hayashi (canalabo)\n\n▶Movie\nMovie：meri\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\nKira Kira\n\n▶Music\n歌：紫雲清夏（CV.湊 みや）\n作詞：Chica\n作曲：Dirty Orange (Digz, Inc. Group)、MOMONADY、Chica\n編曲：Dirty Orange (Digz, Inc. Group)\n\nAll instruments & programming：Dirty Orange (Digz, Inc. Group)\nMixing Engineer：林可奈子 (canalabo)\n\n▶Movie\nMovie：めり\n",
+      "publishedAt": "2026-06-24T09:00:05.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "dca4ea29c15df62a9c4b86c5641d40ff1f3600ac4905fc8026e2eb6306f037b4",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_3b7f29f6151d6d2a7a54692124e359ca8ce37865c66d654f14004f13f0b13fab",
+      "resourceType": "youtube-video",
+      "externalId": "FpIJf77Ac2s",
+      "resourceKey": "youtube:FpIJf77Ac2s",
+      "canonicalUrl": "https://www.youtube.com/watch?v=FpIJf77Ac2s",
+      "title": "初星学園 「理論武装して」Official Music Video (HATSUBOSHI GAKUEN - RIRONBUSO SITE) #初星学園 #学園アイドルマスター  #shorts",
+      "summary": "[EN Credits.]\nRIRONBUSO SITE\n\n▶Music\nSong by Tsubame Amaya (VA. Amane Yukari)\nLyric written by Kenta Matsukuma, GBB Ayaka\nComposed by Kenta Matsukuma\nArranged by SCRAMBLES\n\nTrack Design：YUNOSY\nBass：Ohara just begun\nDrum：Toshiyuki Wakayama\n\nRecording Studio：SCRAMBLE STUDIO DAIZAWA\n\nRecording Engineer：Shota Mohri\nMixing Engineer：Ohara just begun\n\n▶Movie\nDirector：kouko\nCharacter Designer：Inuha\nLead Animator：LINTALO\nAdditional Animation：Go Kawashima, Akiya Lemonsour\nPainters：aini., Kanna Shiohari, trout\nGraphic Designer：Opus\nPerformer：Hikari Ikeda\n3D Artist：ANJU KAWAMOTO (SAMPRAS DESIGN)\nCompositi",
+      "publishedAt": "2025-11-20T10:00:34.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "7b048eb7bd38541ab936c52bc202cfc864a0891a5fe07433b1a85de02961acef",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_02994bb4ac01d1c0f026ba4d1e39d184a5793b7387ace2f831efe85bc9ee6569",
+      "resourceType": "youtube-video",
+      "externalId": "GbDf8b1tkoY",
+      "resourceKey": "youtube:GbDf8b1tkoY",
+      "canonicalUrl": "https://www.youtube.com/watch?v=GbDf8b1tkoY",
+      "title": "初星学園 「ふわふわ」Official Music Video (HATSUBOSHI GAKUEN - Fuwafuwa) #学マス #shorts",
+      "summary": "[EN Credits.]\nFuwafuwa\n\n▶Music\nSong by Kotone Fujita (VA. Hikaru Iida)\nLyric written by Itsuki Shinagawa\nComposed by Hiroya Kato\nArranged by Yugen Sudo 、Hiroya Kato\n\nGuitar : Yugen Sudo \nOther instruments : Yugen Sudo\nRecording Engineer：Naofumi Momota (Rebrast)\nMixing Engineer：Sotaro Kitamura\n\n▶Movie\nDirector: Funya (SIGNIF)\nCharacter Design / Illustrator: mitsuki sanagi\nAnimator / Storyboard: Ranka\nAnimator: Souupbox\nPainter: Amanotou\nAssistant Designer: Mizumi\nProducer: Musashi Ito (SIGNIF)\nMV Producer:KEISUKE YANO\n\n[JP Credits.]\nふわふわ\n\n▶Music\n歌：藤田ことね(CV. 飯田ヒカル)\n作詞：品川 樹\n作曲：加藤弘也\n編曲：須藤幽玄、加藤弘也\n\n",
+      "publishedAt": "2026-05-06T09:00:33.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "4a35d5a7f2bad93efd1b4837ad47f1e45b74c285e5ab022a6cbb8c5b0b4ae229",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_494704b7c191537b68cbd78526c10e51ee0187bdcc97442b337c89c0f6a6dba0",
+      "resourceType": "youtube-video",
+      "externalId": "GMA_wa9OY-I",
+      "resourceKey": "youtube:GMA_wa9OY-I",
+      "canonicalUrl": "https://www.youtube.com/watch?v=GMA_wa9OY-I",
+      "title": "初星学園 「SUGAR FLAVOR」Official Music Video (HATSUBOSHI GAKUEN - SUGAR FLAVOR) #学マス #shorts",
+      "summary": "[EN Credits.]\nSUGAR FLAVOR\n\n▶Music\nSong by Mao Arimura (VA. Tsumugi Nanase), Rinami Himesaki (VA. Yuri Usui)\nLyrics written, Composed, Arranged by Kai Takahashi\n\n▶Movie\nDirection & Charactor design & Storyboard：2z2\nComposite direction：Yu Nakagaito(Folium)\nMotion graphics design：Hidetaka Kamada(Folium)\nLogo design：SHU.\nBackground art：Nakatsuji Sakutaro\nIllustration / Prop design：Ochiai Haruka / SHU. / Tonchi\nAnimation & Paint：2z2 / matsuoka toma / Uekibachi Kingyo / Shirosan / moon7110 / ENKN / MOFUJIRO. / numamomi / Kuroirozuki / sakume / nabe\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\nSUGAR FLAV",
+      "publishedAt": "2026-06-18T09:00:35.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "342d78a46c0ad32564767e42df9eaaafdb843162a065917838167fd598c3d284",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_bcaf9bdfe17e434a0aae262c14ab565eef64f7419000198249fc8a6dc07a5a3f",
+      "resourceType": "youtube-video",
+      "externalId": "H-JPpcy0OXQ",
+      "resourceKey": "youtube:H-JPpcy0OXQ",
+      "canonicalUrl": "https://www.youtube.com/watch?v=H-JPpcy0OXQ",
+      "title": "初星学園 「VEIL」Official Music Video (HATSUBOSHI GAKUEN - VEIL) #学マス #shorts",
+      "summary": "[EN Credits.]\nVEIL\n\n▶Music\nSong by Misuzu Hataya (VA. Non Harusaki)\nLyric written by GUCCHO\nComposed by GUCCHO, Dubscribe\nArranged by Dubscribe, GUCCHO\n\n▶Movie\nDirector: Kosuke Tsukagawa (SIGNIF)\nCharacter Design / Illustrator: match\nAnimator: Kana Kurimoto, Haru Yamao, Amanotou, Souupbox, Akihiko Wakahoi, Sota Fukushima, Ranka, Kyo Tanaka, bibi, tyodendo, aki\n3D Artist: Reika, Ai Ikeda, Akari Kumagai (SIGNIF), Sakura Misawa\nEffects Artist: Ryoma Sanpei (SIGNIF)\nProducer: Musashi Ito (SIGNIF)\nMV Producer:KEISUKE YANO\n\n[JP Credits.]\nVEIL\n\n▶Music\n歌：秦谷美鈴 (CV. 春咲 暖)\n作詞：GUCCHO\n作曲：GUCCHO, Dubscribe\n",
+      "publishedAt": "2026-05-11T11:09:20.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "e6fbbfa201274d22a2cd7483b552d082268899999369e4a4a79bb2e37ffb0aea",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_d7b91ee005bb3cbdf9be4aadc0fe38b49bc3396a7d3544c3df8919e674ee913d",
+      "resourceType": "youtube-video",
+      "externalId": "IHe1Akvj_3w",
+      "resourceKey": "youtube:IHe1Akvj_3w",
+      "canonicalUrl": "https://www.youtube.com/watch?v=IHe1Akvj_3w",
+      "title": "初星学園 「Atmosphere」Official Music Video (HATSUBOSHI GAKUEN - Atmosphere) #初星学園 #学マス #shorts",
+      "summary": "[EN Credits.]\nAtmosphere\n▶Music\nSong by Lilja Katsuragi (VA. Kana Hanaiwa)\nLyric written, Composed, Arranged by Heart's Cry\n\nBass:Yuki Endo\nDrums:yasushi(TOKYO LOGIC)\nOther Instruments & Programming:Heart's Cry\nMixing:Tomiaki Ishikawa(TOKYO LOGIC)\nSound Direction:Yusaku Murata(TOKYO LOGIC)\n\n▶Movie\nDirector / 3DCG Designer / Compositor：Toroch\nIllustrator：nekome toworu\nLogo Designer：Haduki\nSpecial Thanks：Oshima Tsukumo\nCreative Producer / Live2D Animator：Yuimi Hiroi（Hifumi,inc.）\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\nAtmosphere\n▶Music\n歌：葛城リーリヤ (CV. 花岩香奈)\n作詞・作曲・編曲：Heart's Cry\n\nBass:遠藤優樹\nDrums:ya",
+      "publishedAt": "2025-12-13T03:00:31.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "44899a0cd4c037765af837496070bb55542aa251138c3777083a9827047bfb62",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_374d44b224e6fec295daa5747698ed1ec1afcc73ec40c4d3deabef68739a72f9",
+      "resourceType": "youtube-video",
+      "externalId": "iiiLtE4w2pE",
+      "resourceKey": "youtube:iiiLtE4w2pE",
+      "canonicalUrl": "https://www.youtube.com/watch?v=iiiLtE4w2pE",
+      "title": "初星学園 「Wildest Flower」Official Music Video (HATSUBOSHI GAKUEN -  Wildest Flower)",
+      "summary": "[EN Credits.]\nWildest Flower\n\n▶Music\nSaki Hanami（VA.Aoi Nagatsuki）\nLyrics written by HIROMI\nComposed, Arranged by Giga\n\n▶Movie\nDirector・Storyboard・Compositor：Takashi Ohashi\nCharacter Design・Concept art：Yukie Nakauchi\n \nAnimator：Namiko Ishidate,Haruya Kageyama,Yuta Kuniyasu（CALF）,Ippei Kurahashi,Yukie Nakauchi,Shin Hashimoto（CALF）,Kei Fujishima,Maikaken,Yuribou,RiU,rhythmos\n \nProp Designer・Background Art：Hirotaka Tanaka\nGraphic Design：Syun Sasaki（AYOND）,Ryuji Okura（AYOND）\n\nAnimation Producer：Shuma Hirose（CALF）\nProduction Manager；Mai Takeshita（CALF）\n \nAnimation Production：CALF\nMV Producer：KEISUK",
+      "publishedAt": "2026-03-19T13:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "e25760a9fa1fc89926ccf7ff267f283e4cd5a0ea1cf8ebf1db168e2a33dab91e",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_5f5cb57599e6517e43c926f4bddf8c1ede8a0d5eef856509633cd060f18f1995",
+      "resourceType": "youtube-video",
+      "externalId": "iJ4lbX6zNys",
+      "resourceKey": "youtube:iJ4lbX6zNys",
+      "canonicalUrl": "https://www.youtube.com/watch?v=iJ4lbX6zNys",
+      "title": "初星学園 「ときめきエモーション」Official Music Video (HATSUBOSHI GAKUEN -  Tokimeki Emotion) #学マス #shorts",
+      "summary": "[EN Credits.]\nTokimeki Emotion\n\n▶Music\nSong by Lilja Katsuragi（VA.Kana Hanaiwa）, Sumika Shiun (VA. Miya Minato)\nLyrics written, Composed, Arranged by Yoh Kamiyama\n\nProgramming & All Instruments by Yoh Kamiyama\n\n▶Movie\nProduction: nim  \nDirection: Nate(nim), Tatsuya Suga(nim)  \nArt Direction: Kaoru Miyazaki(nim)  \nGraphic Design: Kaoru Miyazaki, Tatsuya Suga, Nate  \nMotion Design: Tatsuya Suga, Nate, sisyamo(nim)  \n3D Design: sisyamo  \nCompositing: sisyamo, Nate  \nIllustration: wata  \nIllustration Processing: Ayumu Funaki(SIKAKU Inc.)  \nSpecial Thanks: sowiti, Sam(nim)\n \nMV Producer: Keisuke Ya",
+      "publishedAt": "2026-04-04T10:01:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "96590f7c8b0492f48fc9e8e3aaa078a6cae5c9fe494da8323ecdaad29fab9b8e",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_662d86bf9827d33ff6d0064289a0699c6e2d005bb409a008ba4d97f81f92955e",
+      "resourceType": "youtube-video",
+      "externalId": "IwWo55RUPCc",
+      "resourceKey": "youtube:IwWo55RUPCc",
+      "canonicalUrl": "https://www.youtube.com/watch?v=IwWo55RUPCc",
+      "title": "初星学園 「Kira Kira」Official Music Video (HATSUBOSHI GAKUEN - Kira Kira)",
+      "summary": "[EN Credits.]\nKira Kira\n\n▶Music\nSong by Sumika Shiun（VA.Miya Minato）\nLyrics written by Chica\nComposed by Dirty Orange (Digz, Inc. Group)、MOMONADY、Chica\nArranged by Dirty Orange (Digz, Inc. Group)\n\nAll instruments & programming：Dirty Orange (Digz, Inc. Group)\nMixing Engineer：Kanako Hayashi (canalabo)\n\n▶Movie\nMovie：meri\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\nKira Kira\n\n▶Music\n歌：紫雲清夏（CV.湊 みや）\n作詞：Chica\n作曲：Dirty Orange (Digz, Inc. Group)、MOMONADY、Chica\n編曲：Dirty Orange (Digz, Inc. Group)\n\nAll instruments & programming：Dirty Orange (Digz, Inc. Group)\nMixing Engineer：林可奈子 (canalabo)\n\n▶Movie\nMovie：めり\n",
+      "publishedAt": "2026-06-23T13:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "1a71916a9fabf814867ab2288ae480039afaf1967eb11e51fbad0db4f2c44c88",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_0c305cf0af3cfa1d654efd05521eca34fc9711e245e379f2a124b396f44dbb24",
+      "resourceType": "youtube-video",
+      "externalId": "j38KXTf08Rs",
+      "resourceKey": "youtube:j38KXTf08Rs",
+      "canonicalUrl": "https://www.youtube.com/watch?v=j38KXTf08Rs",
+      "title": "初星学園 「ENDLESS DANCE」Official Music Video (HATSUBOSHI GAKUEN - ENDLESS DANCE)",
+      "summary": "[EN Credits.]\nENDLESS DANCE\n\n▶Music\nSong by Ume Hanami (VA. Ayane Matsuda), Misuzu Hataya (VA. Non Harusaki), Sena Juo (VA. Mashiro Hitaka)\nLyric written, Composed by Yoshikatsu Shuto\nArranged by Ryutaro Fujinaga (Elements Garden)\n\nGuitar, Bass, All other instruments & programming : Ryutaro Fujinaga\nMix Engineer：Fumiaki Unehara\"\n\n▶Movie\nDirector / Character Design / Chief Animation Director / Storyboard：my0nruri(hakumei-bees inc.)\nAssistant Director / Director of Photography：Joko Manato(hakumei)\nStoryboard / 3DCG Director / Motion Graphics：onmk (hakumei)\nUnit Director：funa(bees inc.)\nAnimation",
+      "publishedAt": "2026-02-27T13:00:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "abac25ca0924dec50573d0d4e36c0fa6bd003ead93e664dbee0362ebed2cabd8",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_8b4b8b99c5e96ed3b710fab566784e8bad71e99c0efd9030b4438d002dce7291",
+      "resourceType": "youtube-video",
+      "externalId": "J8fGYM03jsU",
+      "resourceKey": "youtube:J8fGYM03jsU",
+      "canonicalUrl": "https://www.youtube.com/watch?v=J8fGYM03jsU",
+      "title": "初星学園 「Top Secret」Official Music Video (HATSUBOSHI GAKUEN - Top Secret)",
+      "summary": "[EN Credits.]\nTop Secret\n\n▶Music\nSong by Mao Arimura（VA.Tsumugi Nanase）\nLyrics written, Composed, Arranged by SHOW (Digz, Inc. Group)\n\nAll instruments & programming：SHOW\nMixing Engineer：Kanako Hayashi (canalabo)\n\n▶Movie\nDirector : Yuma Saito\n\nIllustrator / Animator :Cherico\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\nTop Secret\n\n▶Music\n歌：有村麻央（CV.七瀬つむぎ）\n作詞・作曲・編曲：SHOW (Digz, Inc. Group)\n\nAll instruments & programming：SHOW\nMixing Engineer：林可奈子 (canalabo)\n\n▶Movie\nDirector : サイトウユウマ\n\nIllustrator / Animator :チェリ子\nMV Producer：矢野圭将\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Produc",
+      "publishedAt": "2026-05-22T13:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "63f9956703bff93eea4452c9f268b091418eda7da2623af60b007ab69313b8b1",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_c55a800cf82dc48663647832fd260998f17a3ee974f888187878d63f110876d3",
+      "resourceType": "youtube-video",
+      "externalId": "jqwVb5yzkyg",
+      "resourceKey": "youtube:jqwVb5yzkyg",
+      "canonicalUrl": "https://www.youtube.com/watch?v=jqwVb5yzkyg",
+      "title": "初星学園 「一体いつから」Official Music Video (HATSUBOSHI GAKUEN - Ittai itsukara)  #初星学園 #学マス  #anime",
+      "summary": "[EN Credits.]\nIttai itsukara\n▶Music\nSong by Temari Tsukimura (VA. Nao Ojika)\nLyric written, Composed by Ohashi Chippoke\nArranged by Ryuichi Iwasaki\n\nAll Instruments & Programming：Ryuichi Iwasaki\nMixed by Norikatsu Teruuchi\n\n▶Movie\nDirector/Illustration/Animation\nsyo5\n\nAnimation Assistant\nraya\nUENO Maki(WIT STUDIO)\nSAKUDA Megumi(WIT STUDIO)\nTANAKA Erina(WIT STUDIO)\n\nAnimation Support\nSHINOHARA Haruna(WIT STUDIO)\nICHIMANDA Chieko(WIT STUDIO)\n\nSpecial Thanks\nYAMANAKA Kazuki(WIT STUDIO)\n\nMV Producer：YANO Keisuke\n\n[JP Credits.]\n一体いつから\n▶Music\n歌：月村手毬 (CV. 小鹿なお)\n作詞・作曲：大橋ちっぽけ\n編曲：岩崎隆一\n\nAll Instruments &",
+      "publishedAt": "2026-01-20T09:01:14.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "6dbb89d8bb8d17ea509d08909a1fda2a40f17bf6a8dcf1f3437d4cbb237603ac",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_2b617c12cd40f7ae36cd3b5d2fcd44ddce1ff9d182e1c55cccbe1c7ec0bde68c",
+      "resourceType": "youtube-video",
+      "externalId": "Kv4VuulHKNQ",
+      "resourceKey": "youtube:Kv4VuulHKNQ",
+      "canonicalUrl": "https://www.youtube.com/watch?v=Kv4VuulHKNQ",
+      "title": "初星学園 「コンテンポラリのダンス」Official Music Video (HATSUBOSHI GAKUEN - contemporary dance) #学マス #shorts",
+      "summary": "[EN Credits.]\ncontemporary dance\n\n▶Music\nSong by Hiro Shinosawa（VA.Reina Kawamura）\nLyrics written, Composed, Arranged by mashima yuro\n\n▶Movie\nMV TOKICHIAKI\nMV asst. Mei yokoyama\n\n[JP Credits.]\nコンテンポラリのダンス\n\n▶Music\n歌：篠澤 広（CV.川村玲奈）\n作詞・作曲・編曲：真島ゆろ\n\n▶Movie\nMV トキチアキ\nMV asst. Mei yokoyama\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Producer : 矢野圭将\nLabel Director : 尾上和駿、大石和馬\nSound Producer : 佐藤貴文\nSound Director : 大澤めい\n------------------------------\n\n「学マス」で検索！\n▶学マスアプリのDLはこちら！\nhttps://app.adjust.com/19512hnz\n\nTHE IDOLM@STER™& ©Bandai Namco Entertainment Inc.\nⓅ2026 Bandai Namco Ent",
+      "publishedAt": "2026-05-31T09:00:14.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "14f45a0149b58c941f4ff1a0e2ee5c53eba00b7e693e741fe9db767f65f05f23",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_e695eb053ebe65c677eaed737ad76bf81eb15df51d50851dd4ece6d0a4682835",
+      "resourceType": "youtube-video",
+      "externalId": "l1T_2zCHTk0",
+      "resourceKey": "youtube:l1T_2zCHTk0",
+      "canonicalUrl": "https://www.youtube.com/watch?v=l1T_2zCHTk0",
+      "title": "初星学園 「Campus mode!!」Official Music Video (HATSUBOSHI GAKUEN - Campus mode!!)",
+      "summary": "[EN Credits.]\nCampus mode!!\n\n▶Music\nSong by Hatsuboshi Gakuen\nLyric written, Composed by Tomoya Tabuchi\nArranged by Shunsuke Takizawa (TRYTONELABO)\n\nPiano：Shunsuke Takizawa (TRYTONELABO)\nGuitar：yamamoto yohske.\nBass：ygarshy (from HITORIE) by the courtesy of Sony Music Labels Inc.\nDrums：Kohsuke Higuchi \nViolin：Koichiro Muroya, Eriko Ukimura, Rina Odera, Nagisa Sakaki, Momoko Takeda, Mika Naramura, Ryuto Murao, Lisa Yamamoto\nViola : Shoko Mabuchi, Tomoko Shimaoka\nCello : Masami Horisawa, Yuki Mizuno\nTrumpet : Tatsuhiko Yoshizawa\nTrombone : Yusuke Enomoto\nSax：Yuta Ishii \nRecording Engineer：Yoshik",
+      "publishedAt": "2026-05-01T13:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "3c623409dd0ad9dd109ca1a81a58d852228f589b9391e5afe2aefb34269e7451",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_fd2689e19728acddc54e3ee55f374b001b6135c89a170019b41d88805ea2a883",
+      "resourceType": "youtube-video",
+      "externalId": "L4fUKhmUXkI",
+      "resourceKey": "youtube:L4fUKhmUXkI",
+      "canonicalUrl": "https://www.youtube.com/watch?v=L4fUKhmUXkI",
+      "title": "初星学園 「ときめきのソルフェージュ」Official Music Video (HATSUBOSHI GAKUEN - Fantasy Solfege) #学マス #shorts",
+      "summary": "[EN Credits.]\nFantasy Solfege\n\n▶Music\nSong by China Kuramoto (VA. Mao Ito)\nLyric written by Cocoro. (Dream Monster)\nComposed, Arranged by Tomoari Taguma (Dream Monster)\n\nDrums&Percussion：Jyunya Yamamoto\nBass：Ryosuke Nikamoto\nGuitar：Sho Horizaki\nViolin：Takahiro Takai\nAll Other Programing：Tomoari Taguma(Dream Monster)\nRecording Engineer：Yohei Horiuchi\nMixing Engineer：Masahiko Fukui\n\n▶Movie\nIllust&Animation：Morinoji\nIllust：Shizumorokoshi\nMovie：Rinami Rai\nAnimation assistant：Nerve.\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\nときめきのソルフェージュ\n\n▶Music\n歌：倉本千奈 (CV. 伊藤舞音)\n作詞：Cocoro. (Dream Monster)\n作曲編曲：田熊知存 (",
+      "publishedAt": "2026-05-01T10:06:36.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "b699ffc03bf658c2fea6f8f41de98166f72a6a599b27ebb4d17081ae919b9d5c",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_2f80f9a70b198a2356299027e8bc02a74a62b1363fab750388470d82fe8a32a1",
+      "resourceType": "youtube-video",
+      "externalId": "LEc2DVgnUZc",
+      "resourceKey": "youtube:LEc2DVgnUZc",
+      "canonicalUrl": "https://www.youtube.com/watch?v=LEc2DVgnUZc",
+      "title": "初星学園 「赤裸々」Official Music Video (HATSUBOSHI GAKUEN - SEKIRARA) #学マス #初星学園 #shorts",
+      "summary": "[EN Credits.]\nSEKIRARA\n▶Music\nSong by Sena Juo (VA. Mashiro Hitaka)\nLyric written by Yuho Iwasato\nComposed, Arranged by Keiichi Okabe(MONACA)\n\nRecorded, Mixed & ProTools Operated by Takashi Koiwa(SIGN SOUND LLC)\n\nStrings：Koichiro Muroya Strings\n　1st Violin：Koichiro Muroya、Tomomi Tokunaga、Yuya Yanagihara、Hideki Imaoka\n　2nd Violin：Rina Odera、Eriko Ukimura、Emiko Ujikawa\n　Viola： Tomoko Shimaoka、Mayu Takashima\n　Cello： Masateru Nishikata、Yuki Mizuno\nAll Other Instruments & Programming：Keiichi Okabe(MONACA)\n\nRecording Studio：Sound City\n\nMixing Studio：Studio Earkth\n\n▶Movie\nDirector: Akira Gunji(maxill",
+      "publishedAt": "2026-02-10T09:00:30.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "ce32d83a8a2775e51be832c2fc76476b2e80ce6d23cef1ec205593365d2110d5",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_5f1cf50487d2a4542708e3f47c27b1571ca90a2773fd756748beca13432b3c07",
+      "resourceType": "youtube-video",
+      "externalId": "LNFkXBmr44g",
+      "resourceKey": "youtube:LNFkXBmr44g",
+      "canonicalUrl": "https://www.youtube.com/watch?v=LNFkXBmr44g",
+      "title": "初星学園 「Fragile Heart」Official Music Video (HATSUBOSHI GAKUEN - Fragile Heart)",
+      "summary": "[EN Credits.]\nFragile Heart\n\n▶Music\nSong by Lilja Katsuragi（VA.Kana Hanaiwa）\nLyrics written, Composed, Arranged by Ash Inoue (Dream Monster)\n\nDrums：Junya Yamamoto\nBass：Rock Sakurai\nViolin：Mamiko Amemiya\nGuitar & All Other Instruments：Ash Inoue(Dream Monster)\n\nRecording Engineer：Yohei Horiuchi(Joint 1)\nRecording Studio：HeartBeat RECORDING STUDIO\nMixing Engineer：Masahiko Fukui\n\n▶Movie\nDirector：TAMU (Bolt.inc)\nLogo Design：Takagaki\nIllustration：Hayase\nAnimation：Nemuke\nVideographer ：Hiroki Sato\n3D Design & Motion Graphics & Compositor：Kuuru\nProduction：Bolt.inc\nMV Producer：KEISUKE YANO\n\n[JP Credits.",
+      "publishedAt": "2026-06-08T13:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "257c9afc504a988ef894873407140333c2483f8feb09288b0bdb41cdfc873ad3",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_4603e12f5b9b6d2915704720d12dae56d3362eef71ec16f3a69c8f1135b19846",
+      "resourceType": "youtube-video",
+      "externalId": "LUJ7qFhcjP4",
+      "resourceKey": "youtube:LUJ7qFhcjP4",
+      "canonicalUrl": "https://www.youtube.com/watch?v=LUJ7qFhcjP4",
+      "title": "初星学園 「Choo Choo Choo」Official Music Video (HATSUBOSHI GAKUEN - Choo Choo Choo) #学マス #shorts",
+      "summary": "[EN Credits.]\nChoo Choo Choo\n\n▶Music\nSong by Sena Juo（VA.Mashiro Hitaka）\nLyrics written, Composed, Arranged by BOYHOOD (Digz, Inc. Group)\n\nAll Instruments & Programming：BOYHOOD (Digz, Inc. Group)\nMixing Engineer：Kanako Hayashi (canalabo)\n\n▶Movie\nDirector：FUKUDA.（THINGS.）\nIllust：HINATSU\nGraphic Design：Hayakawa (A.G.P), nm3(A.G.P)\nCreative Producer：Kensaku Iwashiki（THINGS.）\n\n[JP Credits.]\nChoo Choo Choo\n\n▶Music\n歌：十王星南（CV.陽高真白）\n作詞・作曲・編曲：BOYHOOD (Digz, Inc. Group)\n\nAll Instruments & Programming：BOYHOOD (Digz, Inc. Group)\nMix Engineer：林可奈子 (canalabo)\n\n▶Movie\nDirector：FUKUDA.（THINGS.）\nIllust：ひなつ\nGra",
+      "publishedAt": "2026-06-19T09:00:08.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "ebff37fdf3e30f7a973116ecf147b58cdd3708f868722678d73cb7b8568ee738",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_3d6cc6e37762decd8f9181d210991229c0de398503635243ae64ed9397cf8e35",
+      "resourceType": "youtube-video",
+      "externalId": "mSCu-N3oCMw",
+      "resourceKey": "youtube:mSCu-N3oCMw",
+      "canonicalUrl": "https://www.youtube.com/watch?v=mSCu-N3oCMw",
+      "title": "初星学園 「見て」Official Music Video (HATSUBOSHI GAKUEN - Face Me ) #初星学園  #学マス #ASOBINOTES",
+      "summary": "[EN Credits.]\nFace Me\n▶Music\nSong by Mao Arimura (VA. Tsumugi Nanase)\nLyric written, Composed, Arranged by kamome sano\n\n▶Movie\nDirection & Composite:Katsushika Shusshin\nCharactor design & Storyboard：2z2\nStoryboard Support：kamome sano\nAnimation & Paint：2z2 / Mofujiro. / moon7110 / Beicun / ENKN / Kuroirozuki / shirosan / tometoro / nekouya / Nakatsuji Sakutaro / o_mozi_R / okapaya / matsuoka toma / Yukimura Sora\nProp design：Nakatsuji Sakutaro\nCoordinator：hanaken\nMV Producer：KEISUKE YANO\n\n▶TEAM the backstage\nKatsushika Shusshin\n2z2\nkamome sano\nhanaken\nKEISUKE YANO\n＿＿＿＿＿＿＿＿＿＿＿＿＿\n[JP Credits.]\n見て\n",
+      "publishedAt": "2025-11-10T09:01:17.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "358a954e3d2448f4ac5027601c7a4ef7c47c053c9be34c0e6077ae4c08c85222",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_bd7a6d68ae19a83521d727b21db726de3d6753c25e763633852e55dbebc56cbb",
+      "resourceType": "youtube-video",
+      "externalId": "N8u2h0X6yCk",
+      "resourceKey": "youtube:N8u2h0X6yCk",
+      "canonicalUrl": "https://www.youtube.com/watch?v=N8u2h0X6yCk",
+      "title": "初星学園 「みちなるひろがる」Official Music Video (HATSUBOSHI GAKUEN - Unknown Unbound) #学マス #shorts",
+      "summary": "[EN Credits.]\nUnknown Unbound\n\nSong by China Kuramoto (VA. Mao Ito), Hiro Shinosawa (VA. Reina Kawamura)\nLyric written, Composed, Arranged, Movie created by Iyowa\n\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\nみちなるひろがる\n\n歌：倉本千奈 (CV. 伊藤舞音) 、篠澤広 (CV. 川村玲奈) \n作詞・作曲・編曲・動画：いよわ\n\nMV Producer：矢野圭将\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Producer : 矢野圭将\nLabel Director : 尾上和駿、大石和馬\nSound Producer : 佐藤貴文\nSound Director : 大澤めい\n------------------------------\n\n「学マス」で検索！\n▶学マスアプリのDLはこちら！\nhttps://app.adjust.com/19512hnz\n\nTHE IDOLM@STER™& ©Bandai Namco Entertainment Inc.\nⓅ2026 Bandai Namco En",
+      "publishedAt": "2026-01-30T09:00:29.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "e416dfd484badad633fd84fe6ac108236ef1f7484f7cf3356a3b159f23104714",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_fc11dca76a8f6f9770cb1a308457f23640e1675dc463407b427f565ef81b50a3",
+      "resourceType": "youtube-video",
+      "externalId": "n9CY5CZbsQU",
+      "resourceKey": "youtube:n9CY5CZbsQU",
+      "canonicalUrl": "https://www.youtube.com/watch?v=n9CY5CZbsQU",
+      "title": "初星学園 「歌声は君いろ」Official Music Video (HATSUBOSHI GAKUEN - The singing voice is your color) #学マス #姫崎莉波",
+      "summary": "[EN Credits.]\nThe singing voice is your color\n\n▶Music\nSong by Rinami Himesaki（VA.Yuri Usui）\nLyrics written by Kenta Kuriyama、Honoka Watanabe\nComposed, Arranged by Hinano Tanaka（IKW）\n\nAcoustic＆Electric Guitar：Mitsuhiro Ohta\nElectric Bass：Atsushi Yano\nFlute：Leo Ito\nChorus：Hinano Tanaka\nTrumpet：Tatsuhiko Yoshizawa\nDrums＆Percussion：Shun Oba\nAll Other Instruments & Programming：Hinano Tanaka（IKW）\n\nMusic Product Management：Momo Sasaki（IKW）\nRecording Engineer：Ruihei Matsumura\nMixing Engineer：Macoteau T\nRecording & Mixing Studio：Studio Recolte\n\n▶Movie\nDirector：Kakeru(Bolt.inc)\nAnimator：Dangotaso\nCompos",
+      "publishedAt": "2026-07-04T09:00:02.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "f035b16637922ce22f4069433397937fb1cb697d733417ae5e8673561213de06",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_34de755b77627828b8da10745123c89132b9807bb7b216fe2653b79616c05aa0",
+      "resourceType": "youtube-video",
+      "externalId": "nKO8cTM9jrI",
+      "resourceKey": "youtube:nKO8cTM9jrI",
+      "canonicalUrl": "https://www.youtube.com/watch?v=nKO8cTM9jrI",
+      "title": "初星学園 「見て」Official Music Video (HATSUBOSHI GAKUEN - Face Me )",
+      "summary": "[EN Credits.]\nFace Me\n▶Music\nSong by Mao Arimura (VA. Tsumugi Nanase)\nLyric written, Composed, Arranged by kamome sano\n\n▶Movie\nDirection & Composite:Katsushika Shusshin\nCharactor design & Storyboard：2z2\nStoryboard Support：kamome sano\nAnimation & Paint：2z2 / Mofujiro. / moon7110 / Beicun / ENKN / Kuroirozuki / shirosan / tometoro / nekouya / Nakatsuji Sakutaro / o_mozi_R / okapaya / matsuoka toma / Yukimura Sora\nProp design：Nakatsuji Sakutaro\nCoordinator：hanaken\nMV Producer：KEISUKE YANO\n\n▶TEAM the backstage\nKatsushika Shusshin\n2z2\nkamome sano\nhanaken\nKEISUKE YANO\n＿＿＿＿＿＿＿＿＿＿＿＿＿\n[JP Credits.]\n見て\n",
+      "publishedAt": "2025-10-31T13:00:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "d92ff66ea5bae2147c821149383d9e02b697f037b2f50679fd30ec200404d316",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_92ae0a3ba138b6341ac0e8d9e6fd6c9265bd6d5e6e8f8d32dcf4d40f5a7db8ed",
+      "resourceType": "youtube-video",
+      "externalId": "NxzKmuagLbI",
+      "resourceKey": "youtube:NxzKmuagLbI",
+      "canonicalUrl": "https://www.youtube.com/watch?v=NxzKmuagLbI",
+      "title": "初星学園 「Wildest Flower」Official Music Video (HATSUBOSHI GAKUEN -  Wildest Flower) #学マス #shorts",
+      "summary": "[EN Credits.]\nWildest Flower\n\n▶Music\nSaki Hanami（VA.Aoi Nagatsuki）\nLyrics written by HIROMI\nComposed, Arranged by Giga\n\n▶Movie\nDirector・Storyboard・Compositor：Takashi Ohashi\nCharacter Design・Concept art：Yukie Nakauchi\n \nAnimator：Namiko Ishidate,Haruya Kageyama,Yuta Kuniyasu（CALF）,Ippei Kurahashi,Yukie Nakauchi,Shin Hashimoto（CALF）,Kei Fujishima,Maikaken,Yuribou,RiU,rhythmos\n \nProp Designer・Background Art：Hirotaka Tanaka\nGraphic Design：Syun Sasaki（AYOND）,Ryuji Okura（AYOND）\n\nAnimation Producer：Shuma Hirose（CALF）\nProduction Manager；Mai Takeshita（CALF）\n \nAnimation Production：CALF\nMV Producer：KEISUK",
+      "publishedAt": "2026-03-26T10:00:26.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "1c9b740c41de9276b4a09cea7172a9356df70fdaca4c75cb938b632251fabc13",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_a5fd29ca1705eba328070a75989b410e493fb0681d76858c6a2476c83fd70e90",
+      "resourceType": "youtube-video",
+      "externalId": "O9oCfxSJXTY",
+      "resourceKey": "youtube:O9oCfxSJXTY",
+      "canonicalUrl": "https://www.youtube.com/watch?v=O9oCfxSJXTY",
+      "title": "初星学園 「ガラクタロード」Official Music Video (HATSUBOSHI GAKUEN - GARAKUTA ROAD)",
+      "summary": "[EN Credits.]\nGARAKUTA ROAD\n\n▶Music\nSong by Hatsuboshi Gakuen\nLyric written by Rou-hou\nComposed by Takafumi Sato \nArranged by Suzuki Shunsuke、Mei Osawa (Bandai Namco Studios Inc.)\n\nDrums: Yasuo Sano\nPiano: Keiji Matsumoto\nBass: Yasushi Sasamoto \nGuitar: Shunsuke Suzuki\nSax: Yoshinari Takegami\nTb: Kanade Kato\nTp: Tatsuhiko Yoshizawa\nBrass Arrangement: Yoshinari Takegami\nRecording Engineer: Ryo Wakisaka\nStudio: Sound Crew Studio, Sound City\n\nChorus：Maho Inagawa\n\n▶Movie\nDirection, Character Design, Camera, Edit : kouko\nClay Puppet Fabrication : kouko / Momo Ohmizu\nArt Production : kouko / Momo Oh",
+      "publishedAt": "2026-05-16T13:00:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "057559ae0c407eec86ad593caebf7d18bcf7bde7dd51c57722b5e9b4eab72ab8",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_9ee5dd7ac1ff0e2f6a6373a6cb26df87212deba7b7a0beb92361738e0c170b81",
+      "resourceType": "youtube-video",
+      "externalId": "OgifeukdXnU",
+      "resourceKey": "youtube:OgifeukdXnU",
+      "canonicalUrl": "https://www.youtube.com/watch?v=OgifeukdXnU",
+      "title": "初星学園 「ミラクルナナウ(ﾟ∀ﾟ)！ (佐藤貴文 Remix)」 Official Visualiser (HATSUBOSHI GAKUEN)",
+      "summary": "『Hatsuboshi Gakuen Remix Album 「ReCollection」vol.1』\n▶Streaming Now!\nhttps://nex-tone.link/c36kmBPyx\n\n[EN Credits.]\n▶Music\n【Original】\nLyrics written, Composed, Arranged by YUC'e\n\n【Remix】\nTakafumi Sato\n\n▶Movie\nDesign：punch\nAnimation：Shoo Joo Misobata\nMovie：chlumi\nDirector：Keisuke Yano , Frog96, Sasuke Haraguchi\n\n[JP Credits.]\n▶Music\n【Original】\n作詞・作曲・編曲：YUC'e\n\n【Remix】\n佐藤貴文\n\n▶Movie\nDesign：パンチ\nAnimation：驟々みそばた\nMovie：chlumi\nDirector：矢野圭将・フロクロ・原口沙輔\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Producer : 矢野圭将\nLabel Director : 尾上和駿、大石和馬\nSound Producer : 佐藤貴文\nSound Director : 大澤めい",
+      "publishedAt": "2026-05-25T14:10:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "f7dce474694a7fa4a3d2218fd33936b8ce5544b8039632f1aa8eb3bb35dd24a0",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_4651baeda46a557cf2a115342004919e94a2f4c8fefcf5d07601e1dbf9639301",
+      "resourceType": "youtube-video",
+      "externalId": "PE_iyDsY5xM",
+      "resourceKey": "youtube:PE_iyDsY5xM",
+      "canonicalUrl": "https://www.youtube.com/watch?v=PE_iyDsY5xM",
+      "title": "初星学園 「一体いつから」Official Music Video (HATSUBOSHI GAKUEN - Ittai itsukara)",
+      "summary": "[EN Credits.]\nIttai itsukara\n▶Music\nSong by Temari Tsukimura (VA. Nao Ojika)\nLyric written, Composed by Ohashi Chippoke\nArranged by Ryuichi Iwasaki\n\nAll Instruments & Programming：Ryuichi Iwasaki\nMixed by Norikatsu Teruuchi\n\n▶Movie\nDirector/Illustration/Animation\nsyo5\n\nAnimation Assistant\nraya\nUENO Maki(WIT STUDIO)\nSAKUDA Megumi(WIT STUDIO)\nTANAKA Erina(WIT STUDIO)\n\nAnimation Support\nSHINOHARA Haruna(WIT STUDIO)\nICHIMANDA Chieko(WIT STUDIO)\n\nSpecial Thanks\nYAMANAKA Kazuki(WIT STUDIO)\n\nMV Producer：YANO Keisuke\n\n[JP Credits.]\n一体いつから\n▶Music\n歌：月村手毬 (CV. 小鹿なお)\n作詞・作曲：大橋ちっぽけ\n編曲：岩崎隆一\n\nAll Instruments &",
+      "publishedAt": "2026-01-16T13:00:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "ba6c0cf7beab447e32a4dd6ac42894ac95ff9c69dafb6431f9f0a1f5cbac0197",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_9065cc7e927b841c3342d1c65fb7b0131621977cba29c47ee87747e5422574dc",
+      "resourceType": "youtube-video",
+      "externalId": "pJXjlNaRdxw",
+      "resourceKey": "youtube:pJXjlNaRdxw",
+      "canonicalUrl": "https://www.youtube.com/watch?v=pJXjlNaRdxw",
+      "title": "初星学園「金の斧、銀の斧、エメラルドの斧」Official Music Video (HATSUBOSHI GAKUEN -  Mercury and the Honest Dorothy) #学マス",
+      "summary": "[EN Credits.]\nMercury and the Honest Dorothy\n\n▶Music\nSong by Ume Hanami（VA.Ayane Matsuda）\nLyrics written, Composed, Arranged by Mei Osawa (Bandai Namco Studios Inc.)\n\nGuitar : Kenshin Sugimura\nBass : HIROTOMO(Rebrast)\nDrums : Wataru Tanaka\nBand Recording Engineer : Yuki Tomidokoro(Rebrast)\nAssistant Engineer : Haruki Natsuyama(Aobadai Studio)\nBand Recorded at Aobadai Studio\n\nBrass Band Master, Trombone : Tomohisa Ishikawa \n1st Trumpet : Akihiro Nagata\n2nd Trumpet : Yuma Takeuchi\nBrass Recording  Engineer : Masahiro Shimbo(MIXER’S LAB)\nBrass Recorded at Sekiguchidai Studio\n\nMixing Engineer : Ke",
+      "publishedAt": "2026-05-16T10:01:18.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "cba0b6cf5a135d872ce45cbb2c61383326a595cc0e0ab33ef044fb133326a48f",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_555e1c5ac21d8f9d4bb939ffb2fc5dfdf877cfcff8afd2fb87ff6287967815b7",
+      "resourceType": "youtube-video",
+      "externalId": "qjuXqI_xpFI",
+      "resourceKey": "youtube:qjuXqI_xpFI",
+      "canonicalUrl": "https://www.youtube.com/watch?v=qjuXqI_xpFI",
+      "title": "初星学園 「EGO」Official Music Video (HATSUBOSHI GAKUEN -  EGO)",
+      "summary": "[EN Credits.]\nEGO\n\n▶Music\nSaki Hanami（VA.Aoi Nagatsuki）\nLyrics written, Composed, Arranged by Kijibato (Dream Monster)\n\nAlto Sax：Masato Honma\nAll Other Instruments：Kijibato(Dream Monster)\n\nRecording Engineer：Ryuma Annaka(birdie house)\nRecording Studio：ABS RECORDING\nMixing Engineer：Masahiko Fukui\n\n▶Movie\nDirector：Kijibato(FEAT Production Team)\nCo-director：Yamakawa Yama(FEAT Production Team)\nCompositing & Graphic Design：;3ZUTAMA\nAnimation, Illustration：higoAkari.,pre_sktch,ukairo,KagenOyuhi,coyoshi yoco,Notona,Matsumoto Nokori\nBackground Design：Hiroyoshi\nLogo Design：HONOKA\nMV Production：FEAT Pro",
+      "publishedAt": "2026-04-06T10:01:29.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "fe1d91d465f982d47644aa57385d7cd40f4a3829890ea290d5ab2ec1691cef14",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_aaffbb234718595b45780ab1bfd5a81687bbe6f23965ef67f447f0ef5ee1423f",
+      "resourceType": "youtube-video",
+      "externalId": "qLE3dvslpnc",
+      "resourceKey": "youtube:qLE3dvslpnc",
+      "canonicalUrl": "https://www.youtube.com/watch?v=qLE3dvslpnc",
+      "title": "初星学園 「Kira Kira」Official Music Video (HATSUBOSHI GAKUEN - Kira Kira) #学マス #shorts",
+      "summary": "[EN Credits.]\nKira Kira\n\n▶Music\nSong by Sumika Shiun（VA.Miya Minato）\nLyrics written by Chica\nComposed by Dirty Orange (Digz, Inc. Group)、MOMONADY、Chica\nArranged by Dirty Orange (Digz, Inc. Group)\n\nAll instruments & programming：Dirty Orange (Digz, Inc. Group)\nMixing Engineer：Kanako Hayashi (canalabo)\n\n▶Movie\nMovie：meri\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\nKira Kira\n\n▶Music\n歌：紫雲清夏（CV.湊 みや）\n作詞：Chica\n作曲：Dirty Orange (Digz, Inc. Group)、MOMONADY、Chica\n編曲：Dirty Orange (Digz, Inc. Group)\n\nAll instruments & programming：Dirty Orange (Digz, Inc. Group)\nMixing Engineer：林可奈子 (canalabo)\n\n▶Movie\nMovie：めり\n",
+      "publishedAt": "2026-06-25T09:00:00.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "7bb5d76385dba5e4ae854376d5539f8d8651a6488269709254c5d81608459b89",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_e669c95869a87da22c9d1bd9679c45a2c865412e81a8d0e1b88f22aa9731c6c2",
+      "resourceType": "youtube-video",
+      "externalId": "qmTXRvV7Dk4",
+      "resourceKey": "youtube:qmTXRvV7Dk4",
+      "canonicalUrl": "https://www.youtube.com/watch?v=qmTXRvV7Dk4",
+      "title": "初星学園 「わかし・さわがし・スカパンク」Official Music Video (HATSUBOSHI GAKUEN - Wakashi,Sawagashi,SKA PUNK)",
+      "summary": "[EN Credits.]\nWakashi,Sawagashi,SKA PUNK\n\n▶Music\nSong by Ume Hanami (VA. Ayane Matsuda), Misuzu Hataya (VA. Non Harusaki), Sena Juo (VA. Mashiro Hitaka)\nLyric written by Mei Osawa (Bandai Namco Studios Inc.)\nComposed by AYATOMO (MAYSON's PARTY)、Takaaki Kimura\nArranged by Takaaki Kimura\n\nGt.AYATOMO (MAYSON's PARTY)\nGt.MIKI (MAYSON's PARTY)\nBa.TSUKASA (MAYSON's PARTY)\nDr.YANOK (MAYSON's PARTY)\nTp.SAKI (MAYSON's PARTY)\nTb.MOE (MAYSON's PARTY)\nT-sax.PON (MAYSON's PARTY)\n\nChorus: Maho Inagawa\nKeyboard & All Other Instruments: Takaaki Kimura\n \n▶Movie\nDirector：TAMU (Bolt.inc)\nIllustration：pelyopelyo\n",
+      "publishedAt": "2026-02-18T13:00:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "c87faaf25cb4d6264fdd78e5ae51769309db7349d5c1ca2504e6be4c6673af83",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_bf64f38d4946f725a5f2b68cb5480d60ea4fb1444f428625c48dec28d108a659",
+      "resourceType": "youtube-video",
+      "externalId": "QP2SyFWHOLc",
+      "resourceKey": "youtube:QP2SyFWHOLc",
+      "canonicalUrl": "https://www.youtube.com/watch?v=QP2SyFWHOLc",
+      "title": "初星学園 「Atmosphere」Official Music Video (HATSUBOSHI GAKUEN - Atmosphere)  #初星学園 #学マス #shorts",
+      "summary": "[EN Credits.]\nAtmosphere\n▶Music\nSong by Lilja Katsuragi (VA. Kana Hanaiwa)\nLyric written, Composed, Arranged by Heart's Cry\n\nBass:Yuki Endo\nDrums:yasushi(TOKYO LOGIC)\nOther Instruments & Programming:Heart's Cry\nMixing:Tomiaki Ishikawa(TOKYO LOGIC)\nSound Direction:Yusaku Murata(TOKYO LOGIC)\n\n▶Movie\nDirector / 3DCG Designer / Compositor：Toroch\nIllustrator：nekome toworu\nLogo Designer：Haduki\nSpecial Thanks：Oshima Tsukumo\nCreative Producer / Live2D Animator：Yuimi Hiroi（Hifumi,inc.）\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\nAtmosphere\n▶Music\n歌：葛城リーリヤ (CV. 花岩香奈)\n作詞・作曲・編曲：Heart's Cry\n\nBass:遠藤優樹\nDrums:ya",
+      "publishedAt": "2025-12-14T03:00:35.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "7eebaaa5731ab0f10807f144d3064611575df708f7a26a62ce8129c57653f150",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_086b9fa13250b26394e10ee012a5ae9b889d7a9d03cc60776d0f04a7170e8cff",
+      "resourceType": "youtube-video",
+      "externalId": "QulHtowM_6o",
+      "resourceKey": "youtube:QulHtowM_6o",
+      "canonicalUrl": "https://www.youtube.com/watch?v=QulHtowM_6o",
+      "title": "初星学園 「ときめきエモーション」Official Music Video (HATSUBOSHI GAKUEN -  Tokimeki Emotion)",
+      "summary": "[EN Credits.]\nTokimeki Emotion\n\n▶Music\nSong by Lilja Katsuragi（VA.Kana Hanaiwa）, Sumika Shiun (VA. Miya Minato)\nLyrics written, Composed, Arranged by Yoh Kamiyama\n\nProgramming & All Instruments by Yoh Kamiyama\n\n▶Movie\nProduction: nim  \nDirection: Nate(nim), Tatsuya Suga(nim)  \nArt Direction: Kaoru Miyazaki(nim)  \nGraphic Design: Kaoru Miyazaki, Tatsuya Suga, Nate  \nMotion Design: Tatsuya Suga, Nate, sisyamo(nim)  \n3D Design: sisyamo  \nCompositing: sisyamo, Nate  \nIllustration: wata  \nIllustration Processing: Ayumu Funaki(SIKAKU Inc.)  \nSpecial Thanks: sowiti, Sam(nim)\n \nMV Producer: Keisuke Ya",
+      "publishedAt": "2026-04-01T13:00:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "08a0070ec3bbdcec6dacbeae919ff33fcf76152aaa5e6f0c25e83857cff26542",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_ff4ec2b88dc2fdcfc34cc72b265621e29d0806368fa51ca064fae76d718f22a6",
+      "resourceType": "youtube-video",
+      "externalId": "qwfpgEhngVI",
+      "resourceKey": "youtube:qwfpgEhngVI",
+      "canonicalUrl": "https://www.youtube.com/watch?v=qwfpgEhngVI",
+      "title": "初星学園 「みちなるひろがる」Official Music Video (HATSUBOSHI GAKUEN - Unknown Unbound)",
+      "summary": "[EN Credits.]\nUnknown Unbound\n\nSong by China Kuramoto (VA. Mao Ito), Hiro Shinosawa (VA. Reina Kawamura)\nLyric written, Composed, Arranged, Movie created by Iyowa\n\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\nみちなるひろがる\n\n歌：倉本千奈 (CV. 伊藤舞音) 、篠澤広 (CV. 川村玲奈) \n作詞・作曲・編曲・動画：いよわ\n\nMV Producer：矢野圭将\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Producer : 矢野圭将\nLabel Director : 尾上和駿、大石和馬\nSound Producer : 佐藤貴文\nSound Director : 大澤めい\n------------------------------\n\n「学マス」で検索！\n▶学マスアプリのDLはこちら！\nhttps://app.adjust.com/19512hnz\n\nTHE IDOLM@STER™& ©Bandai Namco Entertainment Inc.\nⓅ2026 Bandai Namco En",
+      "publishedAt": "2026-01-27T13:00:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "9084341816c1b670a37706ddd3d613a49f8e7ed1fd7d5f71486ca69bea6c84e5",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_8cd42d8164b39ad0d7cda84d72c70c9072766905a7f5ffbaf8034350af3c128c",
+      "resourceType": "youtube-video",
+      "externalId": "QYgxhkq7Xos",
+      "resourceKey": "youtube:QYgxhkq7Xos",
+      "canonicalUrl": "https://www.youtube.com/watch?v=QYgxhkq7Xos",
+      "title": "初星学園 「Unhappy Light」Official Music Video (HATSUBOSHI GAKUEN - Unhappy Light)",
+      "summary": "[EN Credits.]\nUnhappy Light\n\n▶Music\nSong by Temari Tsukimura（VA.Nao Ojika）\nLyrics written, Composed, Arranged by Aira (Dream Monster)\n\nDrums：Junya Yamamoto\nBass：Rock Sakurai\nGuitar & All Other Instruments：Aira(Dream Monster)\n\nRecording Engineer：Yohei Horiuchi(Joint 1)\nRecording Studio：HeartBeat RECORDING STUDIO\nMixing Engineer：Yasuo Hiruma\n\n▶Movie\nDirector/Creative Produce/Storyboard：reinou\nCharacter Design/Animation Director/Key Animation：Kumaneko Yoru\n\nAnimation Assistant/BackGround(Outside)/Paint:Tsuruta\nPaint:Aoyama Wasabi,Kanda Yo\nBackGround(In-room)/Character Styling (Inner)/Color Design",
+      "publishedAt": "2026-06-03T13:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "f3096d1a9c9c6939624faed6ba57ed05c4a4a20ef2c279922d87b3af9d3bb3e9",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_09ca390891a617dcd4b68bfb093dd8295109c289e544e2bf53de1bf5d6eafa97",
+      "resourceType": "youtube-video",
+      "externalId": "R9PEnLmv6zI",
+      "resourceKey": "youtube:R9PEnLmv6zI",
+      "canonicalUrl": "https://www.youtube.com/watch?v=R9PEnLmv6zI",
+      "title": "初星学園 「Atmosphere」Official Music Video (HATSUBOSHI GAKUEN - Atmosphere)",
+      "summary": "[EN Credits.]\nAtmosphere\n▶Music\nSong by Lilja Katsuragi (VA. Kana Hanaiwa)\nLyric written, Composed, Arranged by Heart's Cry\n\nBass:Yuki Endo\nDrums:yasushi(TOKYO LOGIC)\nOther Instruments & Programming:Heart's Cry\nMixing:Tomiaki Ishikawa(TOKYO LOGIC)\nSound Direction:Yusaku Murata(TOKYO LOGIC)\n\n▶Movie\nDirector / 3DCG Designer / Compositor：Toroch\nIllustrator：nekome toworu\nLogo Designer：Haduki\nSpecial Thanks：Oshima Tsukumo\nCreative Producer / Live2D Animator：Yuimi Hiroi（Hifumi,inc.）\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\nAtmosphere\n▶Music\n歌：葛城リーリヤ (CV. 花岩香奈)\n作詞・作曲・編曲：Heart's Cry\n\nBass:遠藤優樹\nDrums:ya",
+      "publishedAt": "2025-12-08T13:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "ba7b581d0ae4b898e99910f47ed343ca1ad3f4c0e5e238ac462654b34073da2b",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_cb7ca46bd6c796ad4a32245197d33260349b801457785e6df72db4039b449520",
+      "resourceType": "youtube-video",
+      "externalId": "Ro5uggoTd5g",
+      "resourceKey": "youtube:Ro5uggoTd5g",
+      "canonicalUrl": "https://www.youtube.com/watch?v=Ro5uggoTd5g",
+      "title": "初星学園 「一体いつから」Official Music Video (HATSUBOSHI GAKUEN - Ittai itsukara)  #初星学園 #学マス  #anime",
+      "summary": "[EN Credits.]\nIttai itsukara\n▶Music\nSong by Temari Tsukimura (VA. Nao Ojika)\nLyric written, Composed by Ohashi Chippoke\nArranged by Ryuichi Iwasaki\n\nAll Instruments & Programming：Ryuichi Iwasaki\nMixed by Norikatsu Teruuchi\n\n▶Movie\nDirector/Illustration/Animation\nsyo5\n\nAnimation Assistant\nraya\nUENO Maki(WIT STUDIO)\nSAKUDA Megumi(WIT STUDIO)\nTANAKA Erina(WIT STUDIO)\n\nAnimation Support\nSHINOHARA Haruna(WIT STUDIO)\nICHIMANDA Chieko(WIT STUDIO)\n\nSpecial Thanks\nYAMANAKA Kazuki(WIT STUDIO)\n\nMV Producer：YANO Keisuke\n\n[JP Credits.]\n一体いつから\n▶Music\n歌：月村手毬 (CV. 小鹿なお)\n作詞・作曲：大橋ちっぽけ\n編曲：岩崎隆一\n\nAll Instruments &",
+      "publishedAt": "2026-01-21T09:00:46.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "513b4bfc08c4aa1eb673f5aadf5914826c9d7b7ba84a44478993b82e01dd8941",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_eab976e5633eb9e6fcffd32449c31603d2d086acb744d277efdb3837f215e684",
+      "resourceType": "youtube-video",
+      "externalId": "Sa-Bp-EzgQs",
+      "resourceKey": "youtube:Sa-Bp-EzgQs",
+      "canonicalUrl": "https://www.youtube.com/watch?v=Sa-Bp-EzgQs",
+      "title": "初星学園 「わかし・さわがし・スカパンク」Official Music Video (HATSUBOSHI GAKUEN - Wakashi,Sawagashi,SKA PUNK) #学マス",
+      "summary": "[EN Credits.]\nWakashi,Sawagashi,SKA PUNK\n\n▶Music\nSong by Ume Hanami (VA. Ayane Matsuda), Misuzu Hataya (VA. Non Harusaki), Sena Juo (VA. Mashiro Hitaka)\nLyric written by Mei Osawa (Bandai Namco Studios Inc.)\nComposed by AYATOMO (MAYSON's PARTY)、Takaaki Kimura\nArranged by Takaaki Kimura\n\nGt.AYATOMO (MAYSON's PARTY)\nGt.MIKI (MAYSON's PARTY)\nBa.TSUKASA (MAYSON's PARTY)\nDr.YANOK (MAYSON's PARTY)\nTp.SAKI (MAYSON's PARTY)\nTb.MOE (MAYSON's PARTY)\nT-sax.PON (MAYSON's PARTY)\n\nChorus: Maho Inagawa\nKeyboard & All Other Instruments: Takaaki Kimura\n \n▶Movie\nDirector：TAMU (Bolt.inc)\nIllustration：pelyopelyo\n",
+      "publishedAt": "2026-02-21T10:02:03.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "d8a509f218d12bd19edf642210a8351fb34abe4e42d9664d5d1eee6534bc77a8",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_6690a107a1de035dc37ddc49019c7962bba349a24f6f33fb7886530ada9ae058",
+      "resourceType": "youtube-video",
+      "externalId": "SG-5n_ymcOw",
+      "resourceKey": "youtube:SG-5n_ymcOw",
+      "canonicalUrl": "https://www.youtube.com/watch?v=SG-5n_ymcOw",
+      "title": "初星学園 「Campus mode!!」Official Music Video (HATSUBOSHI GAKUEN - Campus mode!!) #学マス #shorts",
+      "summary": "[EN Credits.]\nCampus mode!!\n\n▶Music\nSong by Hatsuboshi Gakuen\nLyric written, Composed by Tomoya Tabuchi\nArranged by Shunsuke Takizawa (TRYTONELABO)\n\nPiano：Shunsuke Takizawa (TRYTONELABO)\nGuitar：yamamoto yohske.\nBass：ygarshy (from HITORIE) by the courtesy of Sony Music Labels Inc.\nDrums：Kohsuke Higuchi \nViolin：Koichiro Muroya, Eriko Ukimura, Rina Odera, Nagisa Sakaki, Momoko Takeda, Mika Naramura, Ryuto Murao, Lisa Yamamoto\nViola : Shoko Mabuchi, Tomoko Shimaoka\nCello : Masami Horisawa, Yuki Mizuno\nTrumpet : Tatsuhiko Yoshizawa\nTrombone : Yusuke Enomoto\nSax：Yuta Ishii \nRecording Engineer：Yoshik",
+      "publishedAt": "2026-05-27T09:00:33.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "7ad086f24c4adbd534c2adad76f2b569119c2c2388ce64375828dd6c4c7b7592",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_1ad9c14a67a0389c6d23ca30925fc18f6d3494493b8ec0c40babb06c043e45c2",
+      "resourceType": "youtube-video",
+      "externalId": "svqDYvnUUEo",
+      "resourceKey": "youtube:svqDYvnUUEo",
+      "canonicalUrl": "https://www.youtube.com/watch?v=svqDYvnUUEo",
+      "title": "初星学園 「VEIL」Official Music Video (HATSUBOSHI GAKUEN - VEIL) #学マス #shorts",
+      "summary": "[EN Credits.]\nVEIL\n\n▶Music\nSong by Misuzu Hataya (VA. Non Harusaki)\nLyric written by GUCCHO\nComposed by GUCCHO, Dubscribe\nArranged by Dubscribe, GUCCHO\n\n▶Movie\nDirector: Kosuke Tsukagawa (SIGNIF)\nCharacter Design / Illustrator: match\nAnimator: Kana Kurimoto, Haru Yamao, Amanotou, Souupbox, Akihiko Wakahoi, Sota Fukushima, Ranka, Kyo Tanaka, bibi, tyodendo, aki\n3D Artist: Reika, Ai Ikeda, Akari Kumagai (SIGNIF), Sakura Misawa\nEffects Artist: Ryoma Sanpei (SIGNIF)\nProducer: Musashi Ito (SIGNIF)\nMV Producer:KEISUKE YANO\n\n[JP Credits.]\nVEIL\n\n▶Music\n歌：秦谷美鈴 (CV. 春咲 暖)\n作詞：GUCCHO\n作曲：GUCCHO, Dubscribe\n",
+      "publishedAt": "2026-05-12T09:01:11.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "8ad7f519d298d1bd43fd6042881785950cf96f759cc98b98224efbac8926c753",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_c9c3346a457138c19615bdd5ba754d1d5717ba0dd08f5b444ba41de209b58c59",
+      "resourceType": "youtube-video",
+      "externalId": "tNSRvjAK6Hk",
+      "resourceKey": "youtube:tNSRvjAK6Hk",
+      "canonicalUrl": "https://www.youtube.com/watch?v=tNSRvjAK6Hk",
+      "title": "初星学園 「Unhappy Light」Official Music Video (HATSUBOSHI GAKUEN - Unhappy Light)  #学マス #shorts",
+      "summary": "[EN Credits.]\nUnhappy Light\n\n▶Music\nSong by Temari Tsukimura（VA.Nao Ojika）\nLyrics written, Composed, Arranged by Aira (Dream Monster)\n\nDrums：Junya Yamamoto\nBass：Rock Sakurai\nGuitar & All Other Instruments：Aira(Dream Monster)\n\nRecording Engineer：Yohei Horiuchi(Joint 1)\nRecording Studio：HeartBeat RECORDING STUDIO\nMixing Engineer：Yasuo Hiruma\n\n▶Movie\nDirector/Creative Produce/Storyboard：reinou\nCharacter Design/Animation Director/Key Animation：Kumaneko Yoru\n\nAnimation Assistant/BackGround(Outside)/Paint:Tsuruta\nPaint:Aoyama Wasabi,Kanda Yo\nBackGround(In-room)/Character Styling (Inner)/Color Design",
+      "publishedAt": "2026-06-10T11:00:48.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "76c13dc94ec27567dc9263f2d7d7d9a3f062ae00cba25f9fa1d7f40d2ae910b3",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_5e7c4082aac44f6890cac7025a9ce6eb21e54c922bf21963f6d2ef06de4308a3",
+      "resourceType": "youtube-video",
+      "externalId": "UGFUHmpMZ7I",
+      "resourceKey": "youtube:UGFUHmpMZ7I",
+      "canonicalUrl": "https://www.youtube.com/watch?v=UGFUHmpMZ7I",
+      "title": "初星学園 「EGO (Nor Remix)」 Official Visualiser (HATSUBOSHI GAKUEN)",
+      "summary": "『Hatsuboshi Gakuen Remix Album 「ReCollection」vol.1』\n▶Streaming Now!\nhttps://nex-tone.link/c36kmBPyx\n\n[EN Credits.]\n▶Music\n【Original】\nLyrics written, Composed, Arranged by Kijibato (Dream Monster)\n\n【Remix】\nNor\n\n▶Movie\nDesign：punch\nAnimation：Shoo Joo Misobata\nMovie：chlumi\nDirector：Keisuke Yano , Frog96, Sasuke Haraguchi\n\n[JP Credits.]\n▶Music\n【Original】\n作詞・作曲・編曲：Kijibato (Dream Monster)\n\n【Remix】\nNor\n\n▶Movie\nDesign：パンチ\nAnimation：驟々みそばた\nMovie：chlumi\nDirector：矢野圭将・フロクロ・原口沙輔\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Producer : 矢野圭将\nLabel Director : 尾上和駿、大石和馬\nSound Producer :",
+      "publishedAt": "2026-05-25T13:00:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "3840fbfea4bdb63123f520264a7d357822626a70ac82e1d350c734a31171ac3e",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_3030ef808323d5d5de2272afbf99cb80ec9754bb6f5ce86cb98ed9317ec8fabc",
+      "resourceType": "youtube-video",
+      "externalId": "UU5jZ1o1U_U",
+      "resourceKey": "youtube:UU5jZ1o1U_U",
+      "canonicalUrl": "https://www.youtube.com/watch?v=UU5jZ1o1U_U",
+      "title": "初星学園 「Wildest Flower」Official Music Video (HATSUBOSHI GAKUEN -  Wildest Flower) #学マス #shorts",
+      "summary": "[EN Credits.]\nWildest Flower\n\n▶Music\nSaki Hanami（VA.Aoi Nagatsuki）\nLyrics written by HIROMI\nComposed, Arranged by Giga\n\n▶Movie\nDirector・Storyboard・Compositor：Takashi Ohashi\nCharacter Design・Concept art：Yukie Nakauchi\n \nAnimator：Namiko Ishidate,Haruya Kageyama,Yuta Kuniyasu（CALF）,Ippei Kurahashi,Yukie Nakauchi,Shin Hashimoto（CALF）,Kei Fujishima,Maikaken,Yuribou,RiU,rhythmos\n \nProp Designer・Background Art：Hirotaka Tanaka\nGraphic Design：Syun Sasaki（AYOND）,Ryuji Okura（AYOND）\n\nAnimation Producer：Shuma Hirose（CALF）\nProduction Manager；Mai Takeshita（CALF）\n \nAnimation Production：CALF\nMV Producer：KEISUK",
+      "publishedAt": "2026-03-25T10:00:47.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "bb7a4ee2919254b746b59512521ee7e68c5269e8532269e7188d9769b9a5121d",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_8ac47c2af66c06c8fb4922dc92e7ecb7b5e9eb342f1520cf26e93e52079b7028",
+      "resourceType": "youtube-video",
+      "externalId": "VdBSj902Vu4",
+      "resourceKey": "youtube:VdBSj902Vu4",
+      "canonicalUrl": "https://www.youtube.com/watch?v=VdBSj902Vu4",
+      "title": "初星学園 「Top Secret」Official Music Video (HATSUBOSHI GAKUEN - Top Secret) #学マス #shorts",
+      "summary": "[EN Credits.]\nTop Secret\n\n▶Music\nSong by Mao Arimura（VA.Tsumugi Nanase）\nLyrics written, Composed, Arranged by SHOW (Digz, Inc. Group)\n\nAll instruments & programming：SHOW\nMixing Engineer：Kanako Hayashi (canalabo)\n\n▶Movie\nDirector : Yuma Saito\n\nIllustrator / Animator :Cherico\n\n[JP Credits.]\nTop Secret\n\n▶Music\n歌：有村麻央（CV.七瀬つむぎ）\n作詞・作曲・編曲：SHOW (Digz, Inc. Group)\n\nAll instruments & programming：SHOW\nMixing Engineer：林可奈子 (canalabo)\n\n▶Movie\nDirector : サイトウユウマ\n\nIllustrator / Animator :チェリ子\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Producer : 矢野圭将\nLabel Director : 尾上和駿、大石和馬\nSound",
+      "publishedAt": "2026-05-28T09:00:05.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "4b17134528447b7484e3a820e3561902b8c4094fe6db0054330bb460d8f6ac46",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_858b241ddebf77f56a7b1138c2669dcd0799882ccaeb87c11c53b4b9dd272ee8",
+      "resourceType": "youtube-video",
+      "externalId": "VkpFO-AvAdE",
+      "resourceKey": "youtube:VkpFO-AvAdE",
+      "canonicalUrl": "https://www.youtube.com/watch?v=VkpFO-AvAdE",
+      "title": "初星学園 「真っ白いページと水彩の主人公」Official Music Video (A Blank White Page and a Watercolor Hero) #学マス #shorts",
+      "summary": "[EN Credits.]\nA Blank White Page and a Watercolor Hero\n\n▶Music\nSong by Ume Hanami（VA.Ayane Matsuda）\nLyrics written, Composed by Takafumi Sato\nArranged by Tsubasa Handa\n\nAcoustic & Electric Guitar : Yuto “Carlos” Shimizu\nElectric Bass : Ryosuke Nikamoto\nDrums : Leon Yuki\nStrings : Yu Manabe Strings\nTrumpet : Teppei Kawakami\nAlto & Tenor Sax : Ryoji Ihara\n\nMusicians Coordinator : Takahiro Ikeda (Miracle Bus)\nRecording & Mixing Engineer : Mitsunori Aizawa\nAssistant Engineer : Reina Ohki (Sound City)\nRecording Studio : Sound City / Miracle Bus Studio\nMixing Studio : 32Studio / Miracle Bus Studio\n\n",
+      "publishedAt": "2026-04-24T09:00:47.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "4d93e24cf5c8755250d457ef8069bdc58cbe744dfde6c87bcd8bb2a59553afb4",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_de866c81dabd4e59da094bc87066752c8790a45a32ac89dc750df543105cb583",
+      "resourceType": "youtube-video",
+      "externalId": "voQWJzgCzlY",
+      "resourceKey": "youtube:voQWJzgCzlY",
+      "canonicalUrl": "https://www.youtube.com/watch?v=voQWJzgCzlY",
+      "title": "初星学園 「ときめきのソルフェージュ」Official Music Video (HATSUBOSHI GAKUEN - Fantasy Solfege) #学マス #shorts",
+      "summary": "[EN Credits.]\nFantasy Solfege\n\n▶Music\nSong by China Kuramoto (VA. Mao Ito)\nLyric written by Cocoro. (Dream Monster)\nComposed, Arranged by Tomoari Taguma (Dream Monster)\n\nDrums&Percussion：Jyunya Yamamoto\nBass：Ryosuke Nikamoto\nGuitar：Sho Horizaki\nViolin：Takahiro Takai\nAll Other Programing：Tomoari Taguma(Dream Monster)\nRecording Engineer：Yohei Horiuchi\nMixing Engineer：Masahiko Fukui\n\n▶Movie\nIllust&Animation：Morinoji\nIllust：Shizumorokoshi\nMovie：Rinami Rai\nAnimation assistant：Nerve.\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\nときめきのソルフェージュ\n\n▶Music\n歌：倉本千奈 (CV. 伊藤舞音)\n作詞：Cocoro. (Dream Monster)\n作曲編曲：田熊知存 (",
+      "publishedAt": "2026-05-02T09:01:26.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "4bcaef6d785e94d4e69927a8c9cbd2e82c0af77224336ded1bb27eeffc0816eb",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_b6e4365936558ff77e4389a7b8518ac0079cbe216c71711dfc22700d4cec9813",
+      "resourceType": "youtube-video",
+      "externalId": "VRuCluZFeBU",
+      "resourceKey": "youtube:VRuCluZFeBU",
+      "canonicalUrl": "https://www.youtube.com/watch?v=VRuCluZFeBU",
+      "title": "初星学園 「Yellow Big Bang！ (cosMo＠暴走P Remix)」 Official Visualiser (HATSUBOSHI GAKUEN)",
+      "summary": "『Hatsuboshi Gakuen Remix Album 「ReCollection」vol.1』\n▶Streaming Now!\nhttps://nex-tone.link/c36kmBPyx\n\n[EN Credits.]\n▶Music\n【Original】\nLyrics written by Kana Yaginuma\nComposed, Arranged by Shotaro Seo (MONACA)\n\n【Remix】\ncosMo@Bousou-P\n\n▶Movie\nDesign：punch\nAnimation：Shoo Joo Misobata\nMovie：chlumi\nDirector：Keisuke Yano , Frog96, Sasuke Haraguchi\n\n[JP Credits.]\n▶Music\n【Original】\n作詞：やぎぬまかな\n作曲・編曲：瀬尾祥太郎 (MONACA)\n\n【Remix】\ncosMo＠暴走P\n\n▶Movie\nDesign：パンチ\nAnimation：驟々みそばた\nMovie：chlumi\nDirector：矢野圭将・フロクロ・原口沙輔\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Producer : 矢野圭将\nLabel Director : ",
+      "publishedAt": "2026-05-25T13:10:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "b9f88813a9496c3b34671a7901ed745f87f59e29ead0dfbcb4bdeb568ac5b767",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_9acf31307f097aa5899b4a3ccebdfb2cb690d85c70bf347906b6e681fe5460a2",
+      "resourceType": "youtube-video",
+      "externalId": "vYIvJ8cjwIw",
+      "resourceKey": "youtube:vYIvJ8cjwIw",
+      "canonicalUrl": "https://www.youtube.com/watch?v=vYIvJ8cjwIw",
+      "title": "初星学園「金の斧、銀の斧、エメラルドの斧」Official Music Video (HATSUBOSHI GAKUEN -  Mercury and the Honest Dorothy) #学マス",
+      "summary": "[EN Credits.]\nMercury and the Honest Dorothy\n\n▶Music\nSong by Ume Hanami（VA.Ayane Matsuda）\nLyrics written, Composed, Arranged by Mei Osawa (Bandai Namco Studios Inc.)\n\nGuitar : Kenshin Sugimura\nBass : HIROTOMO(Rebrast)\nDrums : Wataru Tanaka\nBand Recording Engineer : Yuki Tomidokoro(Rebrast)\nAssistant Engineer : Haruki Natsuyama(Aobadai Studio)\nBand Recorded at Aobadai Studio\n\nBrass Band Master, Trombone : Tomohisa Ishikawa \n1st Trumpet : Akihiro Nagata\n2nd Trumpet : Yuma Takeuchi\nBrass Recording  Engineer : Masahiro Shimbo(MIXER’S LAB)\nBrass Recorded at Sekiguchidai Studio\n\nMixing Engineer : Ke",
+      "publishedAt": "2026-05-15T10:01:31.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "8ca7ccda10d7eb834fdc2e018e35a819b11f90c4309df9ca320af44a9c467b71",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_eb977c26dfac80eadf3a3a40fdade197eb3e6c985bf36fdb5c52b56e9716b6ad",
+      "resourceType": "youtube-video",
+      "externalId": "WxFmsuy4nrM",
+      "resourceKey": "youtube:WxFmsuy4nrM",
+      "canonicalUrl": "https://www.youtube.com/watch?v=WxFmsuy4nrM",
+      "title": "初星学園 「空と約束」Official Music Video (HATSUBOSHI GAKUEN - A Tiny Brave Promise )",
+      "summary": "[EN Credits.]\nA Tiny Brave Promise\n▶Music\nSong by China Kuramoto (VA. Mao Ito)\nLyric written by Shoko Ohmori\nComposed, Arranged by Evan Call\n\n【Musicians】\nDrums : Leon Yuki\nAcoustic Guitar : Hiroaki Tsutsumi\nElectric Bass : Kazuhiro Sunaga\n\n【Production in Hungary】\nOrchestra : Budapest Scoring Orchestra\nConductor : Ábel Tompa\nSession Producer : Bálint Sapszon\nOrchestra Coordinator : Bertalan Veér\nRecording Engineer : Viktor Szabó\nStudio assistant :  Botond Buczkó / Marcell Novák\nLibrarian : Ágnes Sapszon\n\nInstrumental Recording & Mixing Engineer : Atsushi Fujita\nAssistant Engineer : Seiya Kawago",
+      "publishedAt": "2025-10-21T13:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "85390e9f91b7233dc70e1810f14852d5096db6a1e2b34c5768c4c675a19fc1cb",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_6b2f5fc07ca542cd4aab3681b41fef6593c69bae2d7a1abb09347dd7c63facd2",
+      "resourceType": "youtube-video",
+      "externalId": "X1xcOhkgc4c",
+      "resourceKey": "youtube:X1xcOhkgc4c",
+      "canonicalUrl": "https://www.youtube.com/watch?v=X1xcOhkgc4c",
+      "title": "初星学園 「ヨルニテ」Official Music Video (HATSUBOSHI GAKUEN - yorunite)",
+      "summary": "[EN Credits.]\nyorunite\n\n▶Music\nSong by Misuzu Hataya (VA. Non Harusaki)\nLyric written, Composed, Arranged by Shogo Nomura(Bandai Namco Studios Inc.)\n\nGuitar/Piano：Shogo Nomura(Bandai Namco Studios Inc.)\nMix Engineer：Shogo Nomura(Bandai Namco Studios Inc.)\n\n▶Movie\nDirector:YYG NT Lab(Fudinoyamai/Kazuma Kanai)\nIllustration & Animation:Iou,Kuroda,kate,Konro,sa(same),JunchukanBonta,shirai_momokichi,temari izon,Nishiuri tsukasa,hige,Kaito Hirose,bonsai,mikan_city,Miyamori She,rerenge\nInterlude Visuals:haruka teramoto\nVideographer:Tamaki Terashima\nLyric Design:Ayu Kimura\nLyric Motion Design:40kl\nMV ",
+      "publishedAt": "2026-04-21T13:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "f13c3d7d86d57ff034bcb17029c200e445875b2f69b86e16952f8fdbd7e556f6",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_9787a3da2d2d005c597ea8c2da45ebefe2866360854e2a77b078424f4a64a10f",
+      "resourceType": "youtube-video",
+      "externalId": "x4iF2FXdClM",
+      "resourceKey": "youtube:x4iF2FXdClM",
+      "canonicalUrl": "https://www.youtube.com/watch?v=x4iF2FXdClM",
+      "title": "初星学園 「ふわふわ」Official Music Video (HATSUBOSHI GAKUEN - Fuwafuwa) #学マス #shorts",
+      "summary": "[EN Credits.]\nFuwafuwa\n\n▶Music\nSong by Kotone Fujita (VA. Hikaru Iida)\nLyric written by Itsuki Shinagawa\nComposed by Hiroya Kato\nArranged by Yugen Sudo 、Hiroya Kato\n\nGuitar : Yugen Sudo \nOther instruments : Yugen Sudo\nRecording Engineer：Naofumi Momota (Rebrast)\nMixing Engineer：Sotaro Kitamura\n\n▶Movie\nDirector: Funya (SIGNIF)\nCharacter Design / Illustrator: mitsuki sanagi\nAnimator / Storyboard: Ranka\nAnimator: Souupbox\nPainter: Amanotou\nAssistant Designer: Mizumi\nProducer: Musashi Ito (SIGNIF)\nMV Producer:KEISUKE YANO\n\n[JP Credits.]\nふわふわ\n\n▶Music\n歌：藤田ことね(CV. 飯田ヒカル)\n作詞：品川 樹\n作曲：加藤弘也\n編曲：須藤幽玄、加藤弘也\n\n",
+      "publishedAt": "2026-05-05T09:01:27.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "4bb10ad20a72287ab60f2f1ceccbdc6e67f244648711ad78f6c81d85eb0bff0b",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_7f4490a2b94fa1b4b59dfc6fb56d0208952cb66c8ea482bf80e5c7242f9c9d84",
+      "resourceType": "youtube-video",
+      "externalId": "x4P3pfwRQzA",
+      "resourceKey": "youtube:x4P3pfwRQzA",
+      "canonicalUrl": "https://www.youtube.com/watch?v=x4P3pfwRQzA",
+      "title": "初星学園 「見て」Official Music Video (HATSUBOSHI GAKUEN - Face Me ) #初星学園 #学マス #shorts",
+      "summary": "[EN Credits.]\nFace Me\n▶Music\nSong by Mao Arimura (VA. Tsumugi Nanase)\nLyric written, Composed, Arranged by kamome sano\n\n▶Movie\nDirection & Composite:Katsushika Shusshin\nCharactor design & Storyboard：2z2\nStoryboard Support：kamome sano\nAnimation & Paint：2z2 / Mofujiro. / moon7110 / Beicun / ENKN / Kuroirozuki / shirosan / tometoro / nekouya / Nakatsuji Sakutaro / o_mozi_R / okapaya / matsuoka toma / Yukimura Sora\nProp design：Nakatsuji Sakutaro\nCoordinator：hanaken\nMV Producer：KEISUKE YANO\n\n▶TEAM the backstage\nKatsushika Shusshin\n2z2\nkamome sano\nhanaken\nKEISUKE YANO\n＿＿＿＿＿＿＿＿＿＿＿＿＿\n[JP Credits.]\n見て\n",
+      "publishedAt": "2025-11-11T09:01:26.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "fb8a5387f5ab10bed2c84992f7a3fcd5142cb3e2e939153360c346f64c9d6f9e",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_7341a005fcdc7957f54db8d6593599f8efefa65d93454d812e258bf4849de688",
+      "resourceType": "youtube-video",
+      "externalId": "XaKWyzrhte8",
+      "resourceKey": "youtube:XaKWyzrhte8",
+      "canonicalUrl": "https://www.youtube.com/watch?v=XaKWyzrhte8",
+      "title": "初星学園 「Unhappy Light」Official Music Video (HATSUBOSHI GAKUEN - Unhappy Light)  #学マス #shorts",
+      "summary": "[EN Credits.]\nUnhappy Light\n\n▶Music\nSong by Temari Tsukimura（VA.Nao Ojika）\nLyrics written, Composed, Arranged by Aira (Dream Monster)\n\nDrums：Junya Yamamoto\nBass：Rock Sakurai\nGuitar & All Other Instruments：Aira(Dream Monster)\n\nRecording Engineer：Yohei Horiuchi(Joint 1)\nRecording Studio：HeartBeat RECORDING STUDIO\nMixing Engineer：Yasuo Hiruma\n\n▶Movie\nDirector/Creative Produce/Storyboard：reinou\nCharacter Design/Animation Director/Key Animation：Kumaneko Yoru\n\nAnimation Assistant/BackGround(Outside)/Paint:Tsuruta\nPaint:Aoyama Wasabi,Kanda Yo\nBackGround(In-room)/Character Styling (Inner)/Color Design",
+      "publishedAt": "2026-06-11T09:00:37.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "99a15cbb8bbbb0ded8a4076addfe79264c76a0b92667cdaf0b0f68ef62aeea5c",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_9d693cee39aa63db9b30fcce52aea88896a51b2598bab958841ca5a603d54df3",
+      "resourceType": "youtube-video",
+      "externalId": "xOrm8rPXdOk",
+      "resourceKey": "youtube:xOrm8rPXdOk",
+      "canonicalUrl": "https://www.youtube.com/watch?v=xOrm8rPXdOk",
+      "title": "初星学園 「憧れをいっぱい (Tomggg Remix)」 Official Visualiser (HATSUBOSHI GAKUEN)",
+      "summary": "『Hatsuboshi Gakuen Remix Album 「ReCollection」vol.1』\n▶Streaming Now!\nhttps://nex-tone.link/c36kmBPyx\n\n[EN Credits.]\n▶Music\n【Original】\nLyrics written, Composed, Arranged by Ryuichi Takagi(Dream Monster)\n\n【Remix】\nTomggg\n\n▶Movie\nDesign：punch\nAnimation：Shoo Joo Misobata\nMovie：chlumi\nDirector：Keisuke Yano , Frog96, Sasuke Haraguchi\n\n[JP Credits.]\n▶Music\n【Original】\n作詞・作曲・編曲：高木龍一(Dream Monster)\n\n【Remix】\nTomggg\n\n▶Movie\nDesign：パンチ\nAnimation：驟々みそばた\nMovie：chlumi\nDirector：矢野圭将・フロクロ・原口沙輔\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Producer : 矢野圭将\nLabel Director : 尾上和駿、大石和馬\nSound Prod",
+      "publishedAt": "2026-05-25T13:25:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "c1de76ba94f3bf206cd01f523a3bff20c7234017db7ba3cb778d86ad44de4d83",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_bc0c46c2948841422ce70405f7bbc7a28505957b1432d083e0384180210b7db3",
+      "resourceType": "youtube-video",
+      "externalId": "XUGo3ifkaiU",
+      "resourceKey": "youtube:XUGo3ifkaiU",
+      "canonicalUrl": "https://www.youtube.com/watch?v=XUGo3ifkaiU",
+      "title": "初星学園 「L.U.V (石濱 翔 Remix)」 Official Visualiser (HATSUBOSHI GAKUEN)",
+      "summary": "『Hatsuboshi Gakuen Remix Album 「ReCollection」vol.1』\n▶Streaming Now!\nhttps://nex-tone.link/c36kmBPyx\n\n[EN Credits.]\n▶Music\n【Original】\nLyrics written, Composed by Yukichikasaku/men\nArranged by Tatsuya Kurauchi\n\n【Remix】\nKakeru Ishihama (MONACA)\n\n▶Movie\nDesign：punch\nAnimation：Shoo Joo Misobata\nMovie：chlumi\nDirector：Keisuke Yano , Frog96, Sasuke Haraguchi\n\n[JP Credits.]\n▶Music\n【Original】\n作詞・作曲：諭吉佳作/men\n編曲：倉内達矢\n\n【Remix】\n石濱 翔 (MONACA)\n\n▶Movie\nDesign：パンチ\nAnimation：驟々みそばた\nMovie：chlumi\nDirector：矢野圭将・フロクロ・原口沙輔\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Producer : 矢野圭将\nLabel Direc",
+      "publishedAt": "2026-05-25T13:40:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "c361af18b83d3efe964e461bb0051f971ab15a89b2958da5cee2d08330b52d12",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_708a530414eab0d6ae9dfa87a79407754d83d6949c13ed0a2b19127fbce41b1e",
+      "resourceType": "youtube-video",
+      "externalId": "XV3piOXbFPs",
+      "resourceKey": "youtube:XV3piOXbFPs",
+      "canonicalUrl": "https://www.youtube.com/watch?v=XV3piOXbFPs",
+      "title": "初星学園 「Feel Jewel Dream (James Landino Remix)」 Official Visualiser  (HATSUBOSHI GAKUEN)",
+      "summary": "『Hatsuboshi Gakuen Remix Album 「ReCollection」vol.1』\n▶Streaming Now!\nhttps://nex-tone.link/c36kmBPyx\n\n[EN Credits.]\n▶Music\n【Original】\nLyrics written, Composed, Arranged by DÉ DÉ MOUSE\n\n【Remix】\nJames Landino\n\n▶Movie\nDesign：punch\nAnimation：Shoo Joo Misobata\nMovie：Naohiro Yako\nDirector：Keisuke Yano , Frog96, Sasuke Haraguchi\n\n[JP Credits.]\n▶Music\n【Original】\n作詞・作曲・編曲：DÉ DÉ MOUSE\n\n【Remix】\nJames Landino\n\n▶Movie\nDesign：パンチ\nAnimation：驟々みそばた\nMovie：Naohiro Yako\nDirector：矢野圭将・フロクロ・原口沙輔\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Producer : 矢野圭将\nLabel Director : 尾上和駿、大石和馬\nSound Prod",
+      "publishedAt": "2026-05-25T13:15:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "792308499e24c819dc7756c2e27c2a67314eddd0dbcdf4e05d0724cafef78e94",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_c97404e9ff1ecd97ebe042b2ba46113a6322648526c0230edf52b780681f7ebe",
+      "resourceType": "youtube-video",
+      "externalId": "Y-ta-NZkbq0",
+      "resourceKey": "youtube:Y-ta-NZkbq0",
+      "canonicalUrl": "https://www.youtube.com/watch?v=Y-ta-NZkbq0",
+      "title": "初星学園 のライブ配信",
+      "summary": "",
+      "publishedAt": "2026-03-02T07:18:18.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "f599013322caa187cd83bd2af6dc78f1081b1def1a7eae385032bdf7eb9df1b8",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_4df980f399e01e4da10320acabc915e5dbf13196360324493f88d75a99d7a3b3",
+      "resourceType": "youtube-video",
+      "externalId": "Y6wgeV3NZPw",
+      "resourceKey": "youtube:Y6wgeV3NZPw",
+      "canonicalUrl": "https://www.youtube.com/watch?v=Y6wgeV3NZPw",
+      "title": "初星学園 「SUGAR FLAVOR」Official Music Video (HATSUBOSHI GAKUEN - SUGAR FLAVOR) #学マス #shorts",
+      "summary": "[EN Credits.]\nSUGAR FLAVOR\n\n▶Music\nSong by Mao Arimura (VA. Tsumugi Nanase), Rinami Himesaki (VA. Yuri Usui)\nLyrics written, Composed, Arranged by Kai Takahashi\n\n▶Movie\nDirection & Charactor design & Storyboard：2z2\nComposite direction：Yu Nakagaito(Folium)\nMotion graphics design：Hidetaka Kamada(Folium)\nLogo design：SHU.\nBackground art：Nakatsuji Sakutaro\nIllustration / Prop design：Ochiai Haruka / SHU. / Tonchi\nAnimation & Paint：2z2 / matsuoka toma / Uekibachi Kingyo / Shirosan / moon7110 / ENKN / MOFUJIRO. / numamomi / Kuroirozuki / sakume / nabe\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\nSUGAR FLAV",
+      "publishedAt": "2026-06-17T10:00:30.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "d381b07556bcff0e58741f700c432be5d794dff87f61eb937c7307eb908f16dc",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_3c61a5b02de04c9fe8decee2aefc67f3653fbb508e76aaaea6db114c5092ff08",
+      "resourceType": "youtube-video",
+      "externalId": "YbyjjPC6wUQ",
+      "resourceKey": "youtube:YbyjjPC6wUQ",
+      "canonicalUrl": "https://www.youtube.com/watch?v=YbyjjPC6wUQ",
+      "title": "初星学園 「金の斧、銀の斧、エメラルドの斧」Official Music Video (HATSUBOSHI GAKUEN -  Mercury and the Honest Dorothy)",
+      "summary": "[EN Credits.]\nMercury and the Honest Dorothy\n\n▶Music\nSong by Ume Hanami（VA.Ayane Matsuda）\nLyrics written, Composed, Arranged by Mei Osawa (Bandai Namco Studios Inc.)\n\nGuitar : Kenshin Sugimura\nBass : HIROTOMO(Rebrast)\nDrums : Wataru Tanaka\nBand Recording Engineer : Yuki Tomidokoro(Rebrast)\nAssistant Engineer : Haruki Natsuyama(Aobadai Studio)\nBand Recorded at Aobadai Studio\n\nBrass Band Master, Trombone : Tomohisa Ishikawa \n1st Trumpet : Akihiro Nagata\n2nd Trumpet : Yuma Takeuchi\nBrass Recording  Engineer : Masahiro Shimbo(MIXER’S LAB)\nBrass Recorded at Sekiguchidai Studio\n\nMixing Engineer : Ke",
+      "publishedAt": "2026-05-11T13:00:27.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "9d6bb5b57bf72cbec55c178de32fd43eb20633e06580e164cdf4f75c20886ff2",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_9eaf1b899b1d6c111dee4789221ab7b8e60d7146db508c5c67ca1a3bd594ebad",
+      "resourceType": "youtube-video",
+      "externalId": "YF0iy-NG0W8",
+      "resourceKey": "youtube:YF0iy-NG0W8",
+      "canonicalUrl": "https://www.youtube.com/watch?v=YF0iy-NG0W8",
+      "title": "初星学園 「理論武装して」Official Music Video (HATSUBOSHI GAKUEN - RIRONBUSO SITE) #初星学園 #学園アイドルマスター  #shorts",
+      "summary": "[EN Credits.]\nRIRONBUSO SITE\n\n▶Music\nSong by Tsubame Amaya (VA. Amane Yukari)\nLyric written by Kenta Matsukuma, GBB Ayaka\nComposed by Kenta Matsukuma\nArranged by SCRAMBLES\n\nTrack Design：YUNOSY\nBass：Ohara just begun\nDrum：Toshiyuki Wakayama\n\nRecording Studio：SCRAMBLE STUDIO DAIZAWA\n\nRecording Engineer：Shota Mohri\nMixing Engineer：Ohara just begun\n\n▶Movie\nDirector：kouko\nCharacter Designer：Inuha\nLead Animator：LINTALO\nAdditional Animation：Go Kawashima, Akiya Lemonsour\nPainters：aini., Kanna Shiohari, trout\nGraphic Designer：Opus\nPerformer：Hikari Ikeda\n3D Artist：ANJU KAWAMOTO (SAMPRAS DESIGN)\nCompositi",
+      "publishedAt": "2025-11-19T09:01:01.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "1210153f16f5b7a77123720cc866dbcf3aa52a7f209380403b50cbd5877f50b3",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_4dd7a657ab334a3df3f1ed2729097df202a0be39fc215ccf3d9ee65be0247e71",
+      "resourceType": "youtube-video",
+      "externalId": "yS-fsWrARw8",
+      "resourceKey": "youtube:yS-fsWrARw8",
+      "canonicalUrl": "https://www.youtube.com/watch?v=yS-fsWrARw8",
+      "title": "初星学園 「ふわふわ」Official Music Video (HATSUBOSHI GAKUEN - Fuwafuwa)",
+      "summary": "[EN Credits.]\nFuwafuwa\n\n▶Music\nSong by Kotone Fujita (VA. Hikaru Iida)\nLyric written by Itsuki Shinagawa\nComposed by Hiroya Kato\nArranged by Yugen Sudo 、Hiroya Kato\n\nGuitar : Yugen Sudo \nOther instruments : Yugen Sudo\nRecording Engineer：Naofumi Momota (Rebrast)\nMixing Engineer：Sotaro Kitamura\n\n▶Movie\nDirector: Funya (SIGNIF)\nCharacter Design / Illustrator: mitsuki sanagi\nAnimator / Storyboard: Ranka\nAnimator: Souupbox\nPainter: Amanotou\nAssistant Designer: Mizumi\nProducer: Musashi Ito (SIGNIF)\nMV Producer:KEISUKE YANO\n\n[JP Credits.]\nふわふわ\n\n▶Music\n歌：藤田ことね(CV. 飯田ヒカル)\n作詞：品川 樹\n作曲：加藤弘也\n編曲：須藤幽玄、加藤弘也\n\n",
+      "publishedAt": "2026-04-29T14:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "c19b51298417bcabb6efeade24ac5ebb7babbc10b9cf4372f717e7e9733b81e4",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_c7cb04026fbe15ad7a93a7ce3983f80622775dd9e3423897c671ed631f436ed1",
+      "resourceType": "youtube-video",
+      "externalId": "YttcQTqagTk",
+      "resourceKey": "youtube:YttcQTqagTk",
+      "canonicalUrl": "https://www.youtube.com/watch?v=YttcQTqagTk",
+      "title": "初星学園 「Top Secret」Official Music Video (HATSUBOSHI GAKUEN - Top Secret) #学マス #shorts",
+      "summary": "[EN Credits.]\nTop Secret\n\n▶Music\nSong by Mao Arimura（VA.Tsumugi Nanase）\nLyrics written, Composed, Arranged by SHOW (Digz, Inc. Group)\n\nAll instruments & programming：SHOW\nMixing Engineer：Kanako Hayashi (canalabo)\n\n▶Movie\nDirector : Yuma Saito\n\nIllustrator / Animator :Cherico\n\n[JP Credits.]\nTop Secret\n\n▶Music\n歌：有村麻央（CV.七瀬つむぎ）\n作詞・作曲・編曲：SHOW (Digz, Inc. Group)\n\nAll instruments & programming：SHOW\nMixing Engineer：林可奈子 (canalabo)\n\n▶Movie\nDirector : サイトウユウマ\n\nIllustrator / Animator :チェリ子\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Producer : 矢野圭将\nLabel Director : 尾上和駿、大石和馬\nSound",
+      "publishedAt": "2026-05-29T09:00:32.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "12b3d6d6b155a02a75f16f6672c90046c7697c5c3b2a1251b7d9be15f64ad146",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_0b9e1708cbb0a246d94c76866e9b78032e620eb20e66fc37b45b9b9bbeac746c",
+      "resourceType": "youtube-video",
+      "externalId": "yYxEvHKhQCA",
+      "resourceKey": "youtube:yYxEvHKhQCA",
+      "canonicalUrl": "https://www.youtube.com/watch?v=yYxEvHKhQCA",
+      "title": "初星学園 「ツキノカメ (Shinpei Nasuno Remix)」 Official Visualiser (HATSUBOSHI GAKUEN)",
+      "summary": "『Hatsuboshi Gakuen Remix Album 「ReCollection」vol.1』\n▶Streaming Now!\nhttps://nex-tone.link/c36kmBPyx\n\n[EN Credits.]\n▶Music\n【Original】\nLyrics written, Composed, Arranged by mifumei (Bandai Namco Studios Inc.)\n \n【Remix】\nShinpei Nasuno\n\n▶Movie\nDesign：punch\nAnimation：Shoo Joo Misobata\nMovie：chlumi\nDirector：Keisuke Yano , Frog96, Sasuke Haraguchi\n\n[JP Credits.]\n▶Music\n【Original】\n作詞・作曲・編曲：ミフメイ (Bandai Namco Studios Inc.)\n\n【Remix】\nShinpei Nasuno\n\n▶Movie\nDesign：パンチ\nAnimation：驟々みそばた\nMovie：chlumi\nDirector：矢野圭将・フロクロ・原口沙輔\n\n------------------------------\nMusic Label : ASOBINOTES\nLabel & MV Producer : 矢野圭将\nL",
+      "publishedAt": "2026-05-25T14:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "ca62cbadb54b7a28afa86e751f2f7190c3ff385efcc7410a047f8003f5e7e1bc",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_be4f00ba569605e72fdbf67c98d4f237375850310479c5b1415395f5540f5df5",
+      "resourceType": "youtube-video",
+      "externalId": "Z-LWjF5J6Mw",
+      "resourceKey": "youtube:Z-LWjF5J6Mw",
+      "canonicalUrl": "https://www.youtube.com/watch?v=Z-LWjF5J6Mw",
+      "title": "初星学園 「キミとセミブルー」Official Music Video (HATSUBOSHI GAKUEN - Kimi to Semi Blue)",
+      "summary": "[EN Credits.]\nKimi to Semi Blue\n▶Music\nSong by Mao Arimura（VA.Tsumugi Nanase）, Rinami Himesaki（VA.Yuri Usui）, Sumika Shiun（VA.Miya Minato）\nLyrics written by Oto Itsuki\nComposed, arranged by Hajime Mitsumasu（FirstCall）\n\nGuitar：Takayuki\"Kojiro\"Sasaki\nBass：Ryosuke NIkamoto\nDrums：Masayuki \"Mabo\" Nakamura\nAll Other Instruments：Hajime Mitsumasu（FirstCall）\n\nRecording Engineer：Mitsunori Aizawa（SIGN SOUND）\nMixing Engineer：Yasuomi Masuda（SIGN SOUND）\nRecording Studio：Motoazabu Studio\nMixing Studio：Studio Vibes\nProduction Coordinated by：Kazuki Morita（FirstCall）\n\nChorus：Eri Sasaki\n\n▶Movie\nStoryboard & Comp",
+      "publishedAt": "2026-03-02T13:00:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "b43816138620c5888bf21d37f01df5736984d4e3facc9b33268bf687d59b85ba",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_9436d6a7d4a07b640540a1c25d38d1ff318e5df365c5c776e8fc34a405c5b5fb",
+      "resourceType": "youtube-video",
+      "externalId": "z2WzTPOIWkE",
+      "resourceKey": "youtube:z2WzTPOIWkE",
+      "canonicalUrl": "https://www.youtube.com/watch?v=z2WzTPOIWkE",
+      "title": "初星学園 「SUGAR FLAVOR」Official Music Video (HATSUBOSHI GAKUEN - SUGAR FLAVOR)",
+      "summary": "[EN Credits.]\nSUGAR FLAVOR\n\n▶Music\nSong by Mao Arimura (VA. Tsumugi Nanase), Rinami Himesaki (VA. Yuri Usui)\nLyrics written, Composed, Arranged by Kai Takahashi\n\n▶Movie\nDirection & Charactor design & Storyboard：2z2\nComposite direction：Yu Nakagaito(Folium)\nMotion graphics design：Hidetaka Kamada(Folium)\nLogo design：SHU.\nBackground art：Nakatsuji Sakutaro\nIllustration / Prop design：Ochiai Haruka / SHU. / Tonchi\nAnimation & Paint：2z2 / matsuoka toma / Uekibachi Kingyo / Shirosan / moon7110 / ENKN / MOFUJIRO. / numamomi / Kuroirozuki / sakume / nabe\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\nSUGAR FLAV",
+      "publishedAt": "2026-06-15T13:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "dca25347f35f9af938b9c681fc0805f3bbf9e8a38cae2e743737b941087abab1",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_71e876e7e54e28b66de40b97b4dd56ab582118af290fc3d3ebdbae3d6d505ff4",
+      "resourceType": "youtube-video",
+      "externalId": "ZhIlyzx9pK8",
+      "resourceKey": "youtube:ZhIlyzx9pK8",
+      "canonicalUrl": "https://www.youtube.com/watch?v=ZhIlyzx9pK8",
+      "title": "初星学園 「Choo Choo Choo」Official Music Video (HATSUBOSHI GAKUEN - Choo Choo Choo)",
+      "summary": "[EN Credits.]\nChoo Choo Choo\n\n▶Music\nSong by Sena Juo（VA.Mashiro Hitaka）\nLyrics written, Composed, Arranged by BOYHOOD (Digz, Inc. Group)\n\nAll Instruments & Programming：BOYHOOD (Digz, Inc. Group)\nMixing Engineer：Kanako Hayashi (canalabo)\n\n▶Movie\nDirector：FUKUDA.（THINGS.）\nIllust：HINATSU\nGraphic Design：Hayakawa (A.G.P), nm3(A.G.P)\nCreative Producer：Kensaku Iwashiki（THINGS.）\nMV Producer：KEISUKE YANO\n\n[JP Credits.]\nChoo Choo Choo\n\n▶Music\n歌：十王星南（CV.陽高真白）\n作詞・作曲・編曲：BOYHOOD (Digz, Inc. Group)\n\nAll Instruments & Programming：BOYHOOD (Digz, Inc. Group)\nMix Engineer：林可奈子 (canalabo)\n\n▶Movie\nDirector：FUKUDA",
+      "publishedAt": "2026-06-18T13:00:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "41a0d83184e86db4f97ffccc94e8b823d356e6dec2f00c27eee78dbc9616f6df",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_ab615c8ebb14de89041c0aa7c6a0f6891f9d279bc210040e527b57311e51591f",
+      "resourceType": "youtube-video",
+      "externalId": "zpDB6GzOXq0",
+      "resourceKey": "youtube:zpDB6GzOXq0",
+      "canonicalUrl": "https://www.youtube.com/watch?v=zpDB6GzOXq0",
+      "title": "初星学園 「真っ白いページと水彩の主人公」Official Music Video (A Blank White Page and a Watercolor Hero)",
+      "summary": "[EN Credits.]\nA Blank White Page and a Watercolor Hero\n\n▶Music\nSong by Ume Hanami（VA.Ayane Matsuda）\nLyrics written, Composed by Takafumi Sato\nArranged by Tsubasa Handa\n\nAcoustic & Electric Guitar : Yuto “Carlos” Shimizu\nElectric Bass : Ryosuke Nikamoto\nDrums : Leon Yuki\nStrings : Yu Manabe Strings\nTrumpet : Teppei Kawakami\nAlto & Tenor Sax : Ryoji Ihara\n\nMusicians Coordinator : Takahiro Ikeda (Miracle Bus)\nRecording & Mixing Engineer : Mitsunori Aizawa\nAssistant Engineer : Reina Ohki (Sound City)\nRecording Studio : Sound City / Miracle Bus Studio\nMixing Studio : 32Studio / Miracle Bus Studio\n\n",
+      "publishedAt": "2026-04-10T13:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "f079785c1c607b4253fdd23a377b3c2da34e09fe0d9335cabc0f0de54417b5fa",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_21b4e574e57f2a82632eeddf9287d342b65829c7c0155dd7a02ee38c77a42844",
+      "resourceType": "youtube-video",
+      "externalId": "zX6q_3y-pWY",
+      "resourceKey": "youtube:zX6q_3y-pWY",
+      "canonicalUrl": "https://www.youtube.com/watch?v=zX6q_3y-pWY",
+      "title": "初星学園 「EGO」Official Music Video (HATSUBOSHI GAKUEN -  EGO) #学マス #shorts",
+      "summary": "[EN Credits.]\nEGO\n\n▶Music\nSaki Hanami（VA.Aoi Nagatsuki）\nLyrics written, Composed, Arranged by Kijibato (Dream Monster)\n\nAlto Sax：Masato Honma\nAll Other Instruments：Kijibato(Dream Monster)\n\nRecording Engineer：Ryuma Annaka(birdie house)\nRecording Studio：ABS RECORDING\nMixing Engineer：Masahiko Fukui\n\n▶Movie\nDirector：Kijibato(FEAT Production Team)\nCo-director：Yamakawa Yama(FEAT Production Team)\nCompositing & Graphic Design：;3ZUTAMA\nAnimation, Illustration：higoAkari.,pre_sktch,ukairo,KagenOyuhi,coyoshi yoco,Notona,Matsumoto Nokori\nBackground Design：Hiroyoshi\nLogo Design：HONOKA\nMV Production：FEAT Pro",
+      "publishedAt": "2026-04-05T10:01:22.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "419284f5a7646df8bb8e417556f0af8b602b2ce81c6ba6fcddba7800a0aa7044",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    }
+  ]
 }

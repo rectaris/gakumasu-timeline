@@ -37,6 +37,8 @@
 
 ページングを使う結果は`pagination`を持ちます。
 `pagesFetched`、`pageLimit`、`nextPageAvailable`により取得範囲を示し、`fetchedItemCount`と`retainedItemCount`で今回取得した候補と以前の結果から保持した候補を区別します。
+YouTubeの`collected`と`partial`では`pagination`を必須とし、`pagesFetched`は`pageLimit`を超過できません。
+`partial`では、ページ上限まで取得したことを示すため、両者が一致する必要があります。
 
 `partial`の結果は、安定した`resourceKey`を使って既存の有効なデータセットとマージします。
 今回取得しなかった既存候補を削除せず、今回取得した同一候補の内容を優先します。

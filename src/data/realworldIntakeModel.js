@@ -152,6 +152,9 @@ export function validateIntakeDataset(
   if (!registryIds.has(dataset.sourceRegistryId)) {
     errors.push("sourceRegistryId: レジストリに存在するIDが必要です。");
   }
+  const registrySource = registry.sources.find(
+    (item) => item.id === dataset.sourceRegistryId,
+  );
   requireTimestamp(errors, dataset.collectedAt, "collectedAt");
   if (!REALWORLD_INTAKE_STATUSES.includes(dataset.status)) {
     errors.push("status: collected、partial、skippedのいずれかが必要です。");
@@ -180,6 +183,15 @@ export function validateIntakeDataset(
       }
       if (!Number.isInteger(pagination.pageLimit) || pagination.pageLimit < 1) {
         errors.push("pagination.pageLimit: 1以上の整数が必要です。");
+      }
+      if (
+        Number.isInteger(pagination.pagesFetched) &&
+        Number.isInteger(pagination.pageLimit) &&
+        pagination.pagesFetched > pagination.pageLimit
+      ) {
+        errors.push(
+          "pagination.pagesFetched: pageLimit以下である必要があります。",
+        );
       }
       if (typeof pagination.nextPageAvailable !== "boolean") {
         errors.push("pagination.nextPageAvailable: 真偽値が必要です。");
@@ -215,6 +227,14 @@ export function validateIntakeDataset(
       errors.push(
         "pagination.nextPageAvailable: partialの場合はtrueが必要です。",
       );
+    } else if (
+      Number.isInteger(dataset.pagination.pagesFetched) &&
+      Number.isInteger(dataset.pagination.pageLimit) &&
+      dataset.pagination.pagesFetched !== dataset.pagination.pageLimit
+    ) {
+      errors.push(
+        "pagination.pagesFetched: partialの場合はpageLimitと一致する必要があります。",
+      );
     }
   }
   if (
@@ -228,6 +248,15 @@ export function validateIntakeDataset(
   }
   if (dataset.status === "skipped" && dataset.pagination !== undefined) {
     errors.push("pagination: skippedの場合は指定できません。");
+  }
+  if (
+    registrySource?.acquisition === "youtube-data-api" &&
+    ["collected", "partial"].includes(dataset.status) &&
+    !isRecord(dataset.pagination)
+  ) {
+    errors.push(
+      "pagination: YouTubeの取得成功データではページング情報が必須です。",
+    );
   }
   const ids = new Set();
   const externalIds = new Set();
