@@ -122,9 +122,9 @@ Canonical details and synthetic examples are linked from
 - [x] Propose the official-source hierarchy and publication lifecycle.
 - [x] Propose lanes, filters, date labels, default range, and mobile behavior.
 - [x] Propose the projection and cross-view reference boundary.
-- [ ] Receive explicit approval or requested revisions for specification 0.2.
+- [x] Receive explicit approval or requested revisions for specification 0.2.
 - [ ] Select and verify the representative factual initial data set.
-- [ ] Record approved decisions and mark the specification `Approved`.
+- [x] Record approved decisions and mark the specification `Approved`.
 
 ## Initial Validation Rules
 
