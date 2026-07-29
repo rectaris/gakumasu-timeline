@@ -36,7 +36,9 @@
       "acquisition": "x-api",
       "externalId": "gkmas_official",
       "scopeMode": "all",
-      "keywords": []
+      "keywords": [],
+      "collectionState": "paused",
+      "pauseReason": "Xからのデータ取得は保留中です。"
     },
     {
       "id": "origin_idolmaster_portal",
@@ -83,7 +85,9 @@
       "acquisition": "x-api",
       "externalId": "imas_official",
       "scopeMode": "gakumas-explicit",
-      "keywords": ["学園アイドルマスター", "学マス", "初星学園"]
+      "keywords": ["学園アイドルマスター", "学マス", "初星学園"],
+      "collectionState": "paused",
+      "pauseReason": "Xからのデータ取得は保留中です。"
     }
   ]
 }

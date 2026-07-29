@@ -20,6 +20,9 @@
 - 本番ビルドの物語イベントは`data/raw/story_events/published.json`だけを読み込み、未レビューデータを成果物へ含めない
 - 物語時系列の `storyReferences` は raw 側を正本とし、StoryBlockから参照元を引く逆引き索引を `src/data/generated/story_events/referenceIndex.js` へ生成する
 - 学マス情報史の取得元は`data/raw/realworld_events/source-registry.json`で許可し、`npm run collect:realworld`が公式サイト、YouTube Data API、X APIの応答を`intake/`の共通形式へ正規化する
+- レジストリで`paused`の発信元はアダプターを呼び出さず、現在はXの2発信元が該当する
+- ページ上限に達したYouTube結果は`partial`とし、`resourceKey`で既存候補とマージして未取得ページの候補を保持する
+- 発信元固有の通信失敗は後続処理から隔離し、失敗した発信元の最後の有効なデータセットを変更しない
 - 取得レスポンス全文は`.agent-artifacts/realworld-ingest/`へローカル保存し、本番入力またはコミット対象にしない
 - `intake/`は出典候補であり、レビュー担当者が同じ出来事の候補をまとめて`unreviewed/`のInfoEventを作成する
 - 学マス情報史の本番データは、構造レビューと事実レビューを通過した`data/raw/realworld_events/published.json`だけから生成する
@@ -36,7 +39,7 @@
 - focused validation でも、イベント ID の重複と参加者/世界線参照は全データ文脈を使って確認する
 - 検証は表示用正規化の前に、イベント ID、日付範囲、`occurrenceType`、参加者参照、世界線参照、空文字値、不確実性メタデータを確認する
 - `storyReferences`は参照IDの一意性、型、表示順、StoryBlockの参照整合性を全データ文脈で確認する
-- 公式ソース取り込みは、取得元ID、取得状態、URL、日時、プラットフォーム識別子、`resourceKey`を検証し、ソースをまたぐ同一リソース候補を報告する
+- 公式ソース取り込みは、取得元ID、取得状態、ページング完全性、取得件数、保持件数、URL、日時、プラットフォーム識別子、`resourceKey`を検証し、ソースをまたぐ同一リソース候補を報告する
 - 失敗時は元ファイル、カテゴリ、レーン、イベント ID / title、フィールド、理由を表示する
 - `npm run verify` はデータ検証、ユニットテスト、ビルド、本番成果物の公開境界検証を実行する
 

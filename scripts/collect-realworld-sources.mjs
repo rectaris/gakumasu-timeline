@@ -12,6 +12,15 @@ const DEFAULT_REGISTRY = "data/raw/realworld_events/source-registry.json";
 const DEFAULT_OUTPUT_ROOT = "data/raw/realworld_events/intake";
 const DEFAULT_ARTIFACT_ROOT = ".agent-artifacts/realworld-ingest";
 
+class CollectionRequestError extends Error {
+  constructor(message, failureKind, httpStatus = null) {
+    super(message);
+    this.name = "CollectionRequestError";
+    this.failureKind = failureKind;
+    this.httpStatus = httpStatus;
+  }
+}
+
 function sha256(value) {
   return crypto.createHash("sha256").update(value).digest("hex");
 }
@@ -105,14 +114,56 @@ async function fetchChecked(url, options = {}) {
   try {
     response = await fetch(url, options);
   } catch {
-    throw new Error(`Request failed: ${safeUrl.toString()}`);
+    throw new CollectionRequestError(
+      `Request failed: ${safeUrl.toString()}`,
+      "network-error",
+    );
   }
   if (!response.ok) {
-    throw new Error(
+    const failureKind =
+      {
+        401: "unauthorized",
+        402: "payment-required",
+        403: "forbidden",
+        429: "rate-limited",
+      }[response.status] ?? "http-error";
+    throw new CollectionRequestError(
       `${response.status} ${response.statusText}: ${safeUrl.toString()}`,
+      failureKind,
+      response.status,
     );
   }
   return response;
+}
+
+function classifyCollectionError(error) {
+  if (error instanceof CollectionRequestError) {
+    return {
+      failureKind: error.failureKind,
+      httpStatus: error.httpStatus,
+      message: error.message,
+    };
+  }
+  return {
+    failureKind:
+      error instanceof SyntaxError ? "invalid-response" : "collector-error",
+    httpStatus: null,
+    message: error instanceof Error ? error.message : String(error),
+  };
+}
+
+async function writeJsonAtomic(target, value) {
+  const temporary = path.join(
+    path.dirname(target),
+    `.${path.basename(target)}.${process.pid}.tmp`,
+  );
+  await fs.mkdir(path.dirname(target), { recursive: true });
+  try {
+    await fs.writeFile(temporary, `${JSON.stringify(value, null, 2)}\n`);
+    await fs.rename(temporary, target);
+  } finally {
+    await fs.rm(temporary, { force: true });
+  }
 }
 
 async function writeArtifact(context, filename, content) {
@@ -162,6 +213,7 @@ export async function collectWebsite(source, context) {
 async function youtubePlaylistItems(source, playlistId, context) {
   const items = [];
   let pageToken = "";
+  let pagesFetched = 0;
   for (let page = 1; page <= context.maxPages; page += 1) {
     const url = new URL("https://www.googleapis.com/youtube/v3/playlistItems");
     url.searchParams.set("part", "snippet,contentDetails,status");
@@ -175,6 +227,7 @@ async function youtubePlaylistItems(source, playlistId, context) {
       {},
       `${source.id}/playlist-items-${page}.json`,
     );
+    pagesFetched = page;
     payload.items?.forEach((item) => {
       const videoId =
         item.contentDetails?.videoId ?? item.snippet?.resourceId?.videoId;
@@ -198,7 +251,14 @@ async function youtubePlaylistItems(source, playlistId, context) {
     pageToken = payload.nextPageToken || "";
     if (!pageToken) break;
   }
-  return items;
+  return {
+    items,
+    pagination: {
+      pagesFetched,
+      pageLimit: context.maxPages,
+      nextPageAvailable: Boolean(pageToken),
+    },
+  };
 }
 
 export async function collectYouTube(source, context) {
@@ -206,9 +266,14 @@ export async function collectYouTube(source, context) {
     return { skipped: "YOUTUBE_API_KEY is not set", items: [] };
   }
   if (source.platform === "youtube-playlist") {
+    const collection = await youtubePlaylistItems(
+      source,
+      source.externalId,
+      context,
+    );
     return {
       skipped: null,
-      items: await youtubePlaylistItems(source, source.externalId, context),
+      ...collection,
     };
   }
   const url = new URL("https://www.googleapis.com/youtube/v3/channels");
@@ -226,9 +291,10 @@ export async function collectYouTube(source, context) {
   if (!playlistId) {
     throw new Error(`${source.id}: YouTube upload playlist was not found.`);
   }
+  const collection = await youtubePlaylistItems(source, playlistId, context);
   return {
     skipped: null,
-    items: await youtubePlaylistItems(source, playlistId, context),
+    ...collection,
   };
 }
 
@@ -247,6 +313,7 @@ export async function collectX(source, context) {
   if (!userId) throw new Error(`${source.id}: X user ID was not found.`);
   const items = [];
   let paginationToken = "";
+  let pagesFetched = 0;
   for (let page = 1; page <= context.maxPages; page += 1) {
     const url = new URL(`https://api.x.com/2/users/${userId}/tweets`);
     url.searchParams.set("max_results", "100");
@@ -261,6 +328,7 @@ export async function collectX(source, context) {
       { headers },
       `${source.id}/posts-${page}.json`,
     );
+    pagesFetched = page;
     payload.data?.forEach((post) => {
       const text = post.text || post.id;
       items.push(
@@ -279,12 +347,45 @@ export async function collectX(source, context) {
     paginationToken = payload.meta?.next_token || "";
     if (!paginationToken) break;
   }
-  return { skipped: null, items };
+  return {
+    skipped: null,
+    items,
+    pagination: {
+      pagesFetched,
+      pageLimit: context.maxPages,
+      nextPageAvailable: Boolean(paginationToken),
+    },
+  };
 }
 
 async function loadRegistry(registryPath) {
   const registry = JSON.parse(await fs.readFile(registryPath, "utf8"));
   return assertValidSourceRegistry(registry, registryPath);
+}
+
+async function loadExistingDataset(target, registry, sourceId) {
+  try {
+    const dataset = JSON.parse(await fs.readFile(target, "utf8"));
+    return assertValidIntakeDataset(dataset, registry, target);
+  } catch (error) {
+    if (error?.code === "ENOENT") return null;
+    throw new Error(
+      `${sourceId}: existing intake dataset cannot be preserved: ${
+        error instanceof Error ? error.message : error
+      }`,
+    );
+  }
+}
+
+function mergePartialItems(existingItems, fetchedItems) {
+  const fetchedKeys = new Set(fetchedItems.map((item) => item.resourceKey));
+  const retainedItems = existingItems.filter(
+    (item) => !fetchedKeys.has(item.resourceKey),
+  );
+  return {
+    items: [...retainedItems, ...fetchedItems],
+    retainedItemCount: retainedItems.length,
+  };
 }
 
 function parseArgs(argv) {
@@ -339,40 +440,106 @@ export async function collectSources(options, environment = process.env) {
   };
   const results = [];
   for (const source of selected) {
+    const target = path.join(options.outputRoot, `${source.id}.json`);
+    let existing;
     let collection;
-    if (source.acquisition === "website") {
-      collection = { skipped: null, items: await collectWebsite(source, context) };
-    } else if (source.acquisition === "youtube-data-api") {
-      collection = await collectYouTube(source, context);
-    } else {
-      collection = await collectX(source, context);
+    try {
+      existing = await loadExistingDataset(target, registry, source.id);
+      if (source.collectionState === "paused") {
+        collection = {
+          skipped: source.pauseReason,
+          items: [],
+        };
+      } else if (source.acquisition === "website") {
+        collection = {
+          skipped: null,
+          items: await collectWebsite(source, context),
+        };
+      } else if (source.acquisition === "youtube-data-api") {
+        collection = await collectYouTube(source, context);
+      } else {
+        collection = await collectX(source, context);
+      }
+    } catch (error) {
+      const failure = classifyCollectionError(error);
+      results.push({
+        sourceId: source.id,
+        status: "failed",
+        itemCount: existing?.items.length ?? 0,
+        eligibleCount:
+          existing?.items.filter((item) => item.match.eligible).length ?? 0,
+        preservedExisting: Boolean(existing),
+        ...failure,
+      });
+      continue;
     }
-    if (collection.skipped && options.requireAll) {
-      throw new Error(`${source.id}: ${collection.skipped}`);
+
+    try {
+      if (collection.skipped && existing?.items.length) {
+        results.push({
+          sourceId: source.id,
+          status: "skipped",
+          itemCount: existing.items.length,
+          eligibleCount: existing.items.filter((item) => item.match.eligible)
+            .length,
+          skipReason: collection.skipped,
+          preservedExisting: true,
+        });
+        continue;
+      }
+
+      const isPartial = collection.pagination?.nextPageAvailable === true;
+      const fetchedItems = collection.items;
+      const merged = isPartial
+        ? mergePartialItems(existing?.items ?? [], fetchedItems)
+        : { items: fetchedItems, retainedItemCount: 0 };
+      const dataset = {
+        schemaVersion: 1,
+        sourceRegistryId: source.id,
+        collectedAt: retrievedAt,
+        status: collection.skipped
+          ? "skipped"
+          : isPartial
+            ? "partial"
+            : "collected",
+        ...(collection.skipped ? { skipReason: collection.skipped } : {}),
+        ...(collection.pagination
+          ? {
+              pagination: {
+                ...collection.pagination,
+                fetchedItemCount: fetchedItems.length,
+                retainedItemCount: merged.retainedItemCount,
+              },
+            }
+          : {}),
+        items: merged.items.sort((a, b) =>
+          a.externalId.localeCompare(b.externalId, "en"),
+        ),
+      };
+      assertValidIntakeDataset(dataset, registry, source.id);
+      await writeJsonAtomic(target, dataset);
+      results.push({
+        sourceId: source.id,
+        status: dataset.status,
+        itemCount: dataset.items.length,
+        eligibleCount: dataset.items.filter((item) => item.match.eligible)
+          .length,
+        skipReason: collection.skipped,
+        preservedExisting: merged.retainedItemCount > 0,
+        ...(dataset.pagination ? { pagination: dataset.pagination } : {}),
+      });
+    } catch (error) {
+      const failure = classifyCollectionError(error);
+      results.push({
+        sourceId: source.id,
+        status: "failed",
+        itemCount: existing?.items.length ?? 0,
+        eligibleCount:
+          existing?.items.filter((item) => item.match.eligible).length ?? 0,
+        preservedExisting: Boolean(existing),
+        ...failure,
+      });
     }
-    const dataset = {
-      schemaVersion: 1,
-      sourceRegistryId: source.id,
-      collectedAt: retrievedAt,
-      status: collection.skipped ? "skipped" : "collected",
-      ...(collection.skipped ? { skipReason: collection.skipped } : {}),
-      items: collection.items.sort((a, b) =>
-        a.externalId.localeCompare(b.externalId, "en"),
-      ),
-    };
-    assertValidIntakeDataset(dataset, registry, source.id);
-    await fs.mkdir(options.outputRoot, { recursive: true });
-    await fs.writeFile(
-      path.join(options.outputRoot, `${source.id}.json`),
-      `${JSON.stringify(dataset, null, 2)}\n`,
-    );
-    results.push({
-      sourceId: source.id,
-      status: dataset.status,
-      itemCount: dataset.items.length,
-      eligibleCount: dataset.items.filter((item) => item.match.eligible).length,
-      skipReason: collection.skipped,
-    });
   }
   if (artifactDirectory) {
     await fs.mkdir(artifactDirectory, { recursive: true });
@@ -383,8 +550,9 @@ export async function collectSources(options, environment = process.env) {
           run_id: runId,
           created_at: retrievedAt,
           task: "real-world official source intake",
-          plans: ["docs/plan/active/075-realworld-official-source-intake.md"],
+          plans: ["docs/plan/active/076-realworld-intake-resilience.md"],
           artifacts: context.artifacts,
+          results,
           redaction_report: "redaction-report.md",
           pinned: false,
         },
@@ -412,11 +580,32 @@ async function main() {
   const options = parseArgs(process.argv.slice(2));
   const results = await collectSources(options);
   results.forEach((result) => {
-    const detail = result.skipReason
-      ? `skipped (${result.skipReason})`
-      : `${result.itemCount} item(s), ${result.eligibleCount} eligible`;
+    let detail;
+    if (result.status === "failed") {
+      detail = `failed (${result.failureKind}: ${result.message})`;
+    } else if (result.skipReason) {
+      const preserved = result.preservedExisting
+        ? `; preserved ${result.itemCount} existing item(s)`
+        : "";
+      detail = `skipped (${result.skipReason}${preserved})`;
+    } else {
+      const partial =
+        result.status === "partial"
+          ? `; partial, retained ${result.pagination.retainedItemCount}`
+          : "";
+      detail = `${result.itemCount} item(s), ${result.eligibleCount} eligible${partial}`;
+    }
     console.log(`${result.sourceId}: ${detail}`);
   });
+  if (
+    results.some(
+      (result) =>
+        result.status === "failed" ||
+        (options.requireAll && result.status === "skipped"),
+    )
+  ) {
+    process.exitCode = 1;
+  }
 }
 
 const entrypoint = process.argv[1] ? fileURLToPath(import.meta.url) : "";

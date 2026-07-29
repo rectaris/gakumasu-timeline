@@ -342,6 +342,9 @@ StoryBlockから参照元を引くための索引は、`npm run generate:data`�
 
 取得レスポンス全文は`.agent-artifacts/realworld-ingest/`へローカル保存し、リポジトリへコミットしません。
 `intake/`の項目はInfoEventではなく、レビュー後に同じ出来事を示す複数項目を1件へ統合できます。
+ページ上限までの取得は`partial`としてページング情報を持ち、既存候補とマージして候補の減少を防ぎます。
+通信失敗時は発信元ごとの既存ファイルを保持し、後続ソースの取得を続けます。
+Xの取得元はレジストリ上で`paused`とし、取得を保留しています。
 
 InfoEventは一回の公開、更新、公演、配信を表し、`info_<小文字UUID>`形式の不変IDを持ちます。
 告知日時は`announcedAt`、発生日時は`startsAt`、終了は`endsAt`へ分けます。

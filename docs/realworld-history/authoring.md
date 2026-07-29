@@ -40,13 +40,29 @@ npm run collect:realworld -- --max-pages 1
 npm run validate:data
 ```
 
-YouTube Data APIを使う取得では`YOUTUBE_API_KEY`、X APIを使う取得では`X_BEARER_TOKEN`を環境変数から読みます。
+YouTube Data APIを使う取得では`YOUTUBE_API_KEY`を環境変数から読みます。
+X APIの保留を将来解除する場合は`X_BEARER_TOKEN`を環境変数から読みます。
 値はJSON、ログ、コマンド引数へ保存しません。
-認証情報がない取得元は失敗扱いにせず、`status: "skipped"`と理由を`intake/`へ記録します。
+認証情報がない取得元は失敗扱いにせず、`skipped`として実行結果へ記録します。
+既存候補がある場合はそのファイルを保持し、空の`skipped`データで上書きしません。
 一部だけを再取得するときは`--source <sourceRegistryId>`を指定します。
 
 各取り込み項目は、取得元内の`externalId`に加え、プラットフォームをまたいだ重複確認に使う`resourceKey`を持ちます。
 アイドルマスター全体の発信元では、題名と本文に学マス判定語を含む項目だけを候補とします。
+
+YouTubeで`--max-pages`の上限に達して次ページが残る場合は、`status: "partial"`として保存します。
+部分取得は既存候補とマージされるため、少ないページ数で再実行しても以前の候補を削除しません。
+末尾まで取得した`collected`だけが既存候補全体を置き換えます。
+
+発信元ごとの通信失敗は後続ソースを止めません。
+失敗した発信元の既存ファイルを保持し、コマンドは全ソースの処理後に失敗終了します。
+`--require-all`を指定した場合は、通信失敗に加えて`skipped`がある場合も失敗終了します。
+
+## X取得の保留
+
+学園アイドルマスター公式Xとアイドルマスター公式Xは、`source-registry.json`で`collectionState: "paused"`としています。
+保留中はBearer Tokenの有無にかかわらずX APIを呼び出しません。
+ログイン済みブラウザ、oEmbed、X APIによる代替取得はこの段階では実装しません。
 
 ## 新規項目の追加
 

@@ -23,11 +23,27 @@
 - `scopeMode`：全件を候補にするか、学マス明示項目だけを候補にするかを示します。
 - `keywords`：学マス明示判定に使う語です。
 - `discoveryUrls`：Webサイトで取得対象にする任意のページ一覧です。
+- `collectionState`：任意の取得状態です。省略時は`active`とし、`paused`では取得処理を呼び出しません。
+- `pauseReason`：`paused`で必須となる保留理由です。
 
 ### IntakeRecord
 
 `intake/<sourceRegistryId>.json`は、一回の取得結果と正規化済み候補を保存します。
-データセットは`collected`または`skipped`の状態を持ち、取得できなかった理由を区別します。
+データセットは`collected`、`partial`、`skipped`の状態を持ちます。
+
+- `collected`：取得対象の末尾まで確認した結果です。
+- `partial`：ページ上限に達し、次ページが残っている結果です。
+- `skipped`：認証情報不足または発信元の保留によって取得を実行しなかった結果です。
+
+ページングを使う結果は`pagination`を持ちます。
+`pagesFetched`、`pageLimit`、`nextPageAvailable`により取得範囲を示し、`fetchedItemCount`と`retainedItemCount`で今回取得した候補と以前の結果から保持した候補を区別します。
+
+`partial`の結果は、安定した`resourceKey`を使って既存の有効なデータセットとマージします。
+今回取得しなかった既存候補を削除せず、今回取得した同一候補の内容を優先します。
+`collected`の結果だけが既存候補全体を置き換えます。
+
+発信元固有の通信失敗はデータセット状態として保存せず、実行結果とローカルの実行記録へ残します。
+この場合、最後の有効なデータセットを変更しません。
 
 各候補は次の情報を持ちます。
 
@@ -187,3 +203,4 @@ SourceOriginとIntakeRecordもアプリの本番入力へ含めません。
 - 投影項目と手動項目が重複しないこと。
 - SourceOrigin IDとIntakeRecord IDが規定形式で一意であること。
 - IntakeRecordが登録済みSourceOriginを参照し、取得状態、URL、日時、`resourceKey`を満たすこと。
+- `partial`が次ページの存在と取得件数、保持件数を明示すること。

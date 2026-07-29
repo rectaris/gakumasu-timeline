@@ -151,8 +151,9 @@ npm run collect:realworld -- --max-pages 1
 npm run validate:data
 ```
 
-YouTubeには`YOUTUBE_API_KEY`、Xには`X_BEARER_TOKEN`を環境変数で設定します。
-認証情報がない取得元は`skipped`として記録され、公開データへ自動反映されません。
+YouTubeには`YOUTUBE_API_KEY`を環境変数で設定します。
+ページ上限に達した結果は`partial`として既存候補とマージされ、公開データへ自動反映されません。
+Xの取得はレジストリ上で保留しており、`X_BEARER_TOKEN`が設定されていても通信しません。
 
 ## イベントの追加・編集
 

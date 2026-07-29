@@ -15,6 +15,22 @@ import {
 
 const originalFetch = global.fetch;
 
+function youtubeItem(videoId, title, publishedAt) {
+  return {
+    snippet: {
+      title,
+      description: `${title} description`,
+      resourceId: { videoId },
+      publishedAt,
+    },
+    contentDetails: {
+      videoId,
+      videoPublishedAt: publishedAt,
+    },
+    status: { privacyStatus: "public" },
+  };
+}
+
 afterEach(() => {
   global.fetch = originalFetch;
   vi.restoreAllMocks();
@@ -107,5 +123,201 @@ describe("real-world intake model", () => {
         artifacts: [],
       }),
     ).rejects.not.toThrow(/super-secret-key/);
+  });
+
+  it("marks capped YouTube collection partial and preserves older candidates", async () => {
+    const temporaryRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "realworld-youtube-partial-"),
+    );
+    const registryPath = path.join(temporaryRoot, "registry.json");
+    const outputRoot = path.join(temporaryRoot, "intake");
+    const playlistSource = structuredClone(
+      registry.sources.find(
+        (item) => item.id === "origin_imas_gakumas_playlist",
+      ),
+    );
+    const testRegistry = { schemaVersion: 1, sources: [playlistSource] };
+    await fs.writeFile(registryPath, JSON.stringify(testRegistry));
+
+    const newer = youtubeItem(
+      "newVideo001",
+      "新しい動画",
+      "2026-07-29T00:00:00Z",
+    );
+    const older = youtubeItem(
+      "oldVideo001",
+      "古い動画",
+      "2026-07-28T00:00:00Z",
+    );
+    global.fetch = vi
+      .fn()
+      .mockResolvedValueOnce(
+        new Response(
+          JSON.stringify({ items: [newer], nextPageToken: "next-page" }),
+          { status: 200 },
+        ),
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ items: [older] }), { status: 200 }),
+      );
+
+    const options = {
+      registry: registryPath,
+      outputRoot,
+      artifactRoot: path.join(temporaryRoot, "artifacts"),
+      sourceIds: [],
+      maxPages: 2,
+      artifacts: false,
+      requireAll: false,
+    };
+    const complete = await collectSources(options, {
+      YOUTUBE_API_KEY: "test-key",
+    });
+    expect(complete[0]).toEqual(
+      expect.objectContaining({ status: "collected", itemCount: 2 }),
+    );
+
+    global.fetch = vi.fn(async () =>
+      new Response(
+        JSON.stringify({ items: [newer], nextPageToken: "still-more" }),
+        { status: 200 },
+      ),
+    );
+    const partial = await collectSources(
+      { ...options, maxPages: 1 },
+      { YOUTUBE_API_KEY: "test-key" },
+    );
+    expect(partial[0]).toEqual(
+      expect.objectContaining({
+        status: "partial",
+        itemCount: 2,
+        preservedExisting: true,
+      }),
+    );
+    const dataset = JSON.parse(
+      await fs.readFile(
+        path.join(outputRoot, `${playlistSource.id}.json`),
+        "utf8",
+      ),
+    );
+    expect(dataset.pagination).toEqual({
+      pagesFetched: 1,
+      pageLimit: 1,
+      nextPageAvailable: true,
+      fetchedItemCount: 1,
+      retainedItemCount: 1,
+    });
+    expect(dataset.items.map((item) => item.externalId).sort()).toEqual([
+      "newVideo001",
+      "oldVideo001",
+    ]);
+    expect(validateIntakeDataset(dataset, testRegistry)).toEqual([]);
+  });
+
+  it("continues after one source fails and preserves its valid dataset", async () => {
+    const temporaryRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "realworld-source-failure-"),
+    );
+    const registryPath = path.join(temporaryRoot, "registry.json");
+    const outputRoot = path.join(temporaryRoot, "intake");
+    const first = structuredClone(registry.sources[0]);
+    Object.assign(first, {
+      id: "origin_first_site",
+      url: "https://first.example/",
+      externalId: "first.example",
+      discoveryUrls: ["https://first.example/"],
+    });
+    const second = structuredClone(registry.sources[0]);
+    Object.assign(second, {
+      id: "origin_second_site",
+      url: "https://second.example/",
+      externalId: "second.example",
+      discoveryUrls: ["https://second.example/"],
+    });
+    const testRegistry = { schemaVersion: 1, sources: [first, second] };
+    await fs.writeFile(registryPath, JSON.stringify(testRegistry));
+    global.fetch = vi.fn(async (url) =>
+      new Response(
+        `<html><title>${new URL(url).hostname}</title><body>初回</body></html>`,
+        { status: 200 },
+      ),
+    );
+    const options = {
+      registry: registryPath,
+      outputRoot,
+      artifactRoot: path.join(temporaryRoot, "artifacts"),
+      sourceIds: [],
+      maxPages: 1,
+      artifacts: false,
+      requireAll: false,
+    };
+    await collectSources(options, {});
+    const firstPath = path.join(outputRoot, `${first.id}.json`);
+    const firstBeforeFailure = await fs.readFile(firstPath, "utf8");
+
+    global.fetch = vi.fn(async (url) =>
+      String(url).includes("first.example")
+        ? new Response("failure", { status: 500 })
+        : new Response(
+            "<html><title>second updated</title><body>更新</body></html>",
+            { status: 200 },
+          ),
+    );
+    const results = await collectSources(options, {});
+    expect(results).toEqual([
+      expect.objectContaining({
+        sourceId: first.id,
+        status: "failed",
+        failureKind: "http-error",
+        preservedExisting: true,
+      }),
+      expect.objectContaining({
+        sourceId: second.id,
+        status: "collected",
+      }),
+    ]);
+    expect(await fs.readFile(firstPath, "utf8")).toBe(firstBeforeFailure);
+    const secondDataset = JSON.parse(
+      await fs.readFile(path.join(outputRoot, `${second.id}.json`), "utf8"),
+    );
+    expect(secondDataset.items[0].title).toBe("second updated");
+  });
+
+  it("skips a paused X source before making a network request", async () => {
+    const temporaryRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "realworld-paused-x-"),
+    );
+    const registryPath = path.join(temporaryRoot, "registry.json");
+    const outputRoot = path.join(temporaryRoot, "intake");
+    const xSource = structuredClone(
+      registry.sources.find((item) => item.id === "origin_gakumas_x"),
+    );
+    const testRegistry = { schemaVersion: 1, sources: [xSource] };
+    await fs.writeFile(registryPath, JSON.stringify(testRegistry));
+    global.fetch = vi.fn();
+
+    const results = await collectSources(
+      {
+        registry: registryPath,
+        outputRoot,
+        artifactRoot: path.join(temporaryRoot, "artifacts"),
+        sourceIds: [],
+        maxPages: 1,
+        artifacts: false,
+        requireAll: false,
+      },
+      { X_BEARER_TOKEN: "unused-token" },
+    );
+    expect(results[0]).toEqual(
+      expect.objectContaining({
+        status: "skipped",
+        skipReason: "Xからのデータ取得は保留中です。",
+      }),
+    );
+    expect(global.fetch).not.toHaveBeenCalled();
+    const dataset = JSON.parse(
+      await fs.readFile(path.join(outputRoot, `${xSource.id}.json`), "utf8"),
+    );
+    expect(validateIntakeDataset(dataset, testRegistry)).toEqual([]);
   });
 });

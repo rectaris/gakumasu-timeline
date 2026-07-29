@@ -15,8 +15,13 @@ export const REALWORLD_RESOURCE_TYPES = [
   "youtube-video",
   "x-post",
 ];
-export const REALWORLD_INTAKE_STATUSES = ["collected", "skipped"];
+export const REALWORLD_INTAKE_STATUSES = [
+  "collected",
+  "partial",
+  "skipped",
+];
 export const REALWORLD_OWNER_SCOPES = ["gakumas", "idolmaster"];
+export const REALWORLD_COLLECTION_STATES = ["active", "paused"];
 
 const ORIGIN_ID_PATTERN = /^origin_[a-z0-9_]+$/;
 const INTAKE_ID_PATTERN = /^intake_[0-9a-f]{64}$/;
@@ -96,6 +101,15 @@ export function validateSourceRegistry(registry, source = "source registry") {
     if (!REALWORLD_SCOPE_MODES.includes(item.scopeMode)) {
       errors.push(`${path}.scopeMode: 未対応の収録範囲です。`);
     }
+    const collectionState = item.collectionState ?? "active";
+    if (!REALWORLD_COLLECTION_STATES.includes(collectionState)) {
+      errors.push(`${path}.collectionState: activeまたはpausedが必要です。`);
+    }
+    if (collectionState === "paused") {
+      requireText(errors, item.pauseReason, `${path}.pauseReason`);
+    } else if (item.pauseReason !== undefined) {
+      errors.push(`${path}.pauseReason: pausedの場合だけ指定できます。`);
+    }
     if (
       !Array.isArray(item.keywords) ||
       item.keywords.some((keyword) => typeof keyword !== "string")
@@ -140,7 +154,7 @@ export function validateIntakeDataset(
   }
   requireTimestamp(errors, dataset.collectedAt, "collectedAt");
   if (!REALWORLD_INTAKE_STATUSES.includes(dataset.status)) {
-    errors.push("status: collectedまたはskippedが必要です。");
+    errors.push("status: collected、partial、skippedのいずれかが必要です。");
   }
   if (dataset.status === "skipped") {
     requireText(errors, dataset.skipReason, "skipReason");
@@ -152,6 +166,68 @@ export function validateIntakeDataset(
   }
   if (dataset.status === "skipped" && dataset.items.length > 0) {
     errors.push("items: skippedの場合は空配列が必要です。");
+  }
+  if (dataset.pagination !== undefined) {
+    const pagination = dataset.pagination;
+    if (!isRecord(pagination)) {
+      errors.push("pagination: オブジェクトが必要です。");
+    } else {
+      if (
+        !Number.isInteger(pagination.pagesFetched) ||
+        pagination.pagesFetched < 1
+      ) {
+        errors.push("pagination.pagesFetched: 1以上の整数が必要です。");
+      }
+      if (!Number.isInteger(pagination.pageLimit) || pagination.pageLimit < 1) {
+        errors.push("pagination.pageLimit: 1以上の整数が必要です。");
+      }
+      if (typeof pagination.nextPageAvailable !== "boolean") {
+        errors.push("pagination.nextPageAvailable: 真偽値が必要です。");
+      }
+      if (
+        !Number.isInteger(pagination.fetchedItemCount) ||
+        pagination.fetchedItemCount < 0
+      ) {
+        errors.push("pagination.fetchedItemCount: 0以上の整数が必要です。");
+      }
+      if (
+        !Number.isInteger(pagination.retainedItemCount) ||
+        pagination.retainedItemCount < 0
+      ) {
+        errors.push("pagination.retainedItemCount: 0以上の整数が必要です。");
+      }
+      if (
+        Number.isInteger(pagination.fetchedItemCount) &&
+        Number.isInteger(pagination.retainedItemCount) &&
+        pagination.fetchedItemCount + pagination.retainedItemCount !==
+          dataset.items.length
+      ) {
+        errors.push(
+          "pagination: 取得件数と保持件数の合計がitems件数と一致する必要があります。",
+        );
+      }
+    }
+  }
+  if (dataset.status === "partial") {
+    if (!isRecord(dataset.pagination)) {
+      errors.push("pagination: partialの場合は必須です。");
+    } else if (dataset.pagination.nextPageAvailable !== true) {
+      errors.push(
+        "pagination.nextPageAvailable: partialの場合はtrueが必要です。",
+      );
+    }
+  }
+  if (
+    dataset.status === "collected" &&
+    isRecord(dataset.pagination) &&
+    dataset.pagination.nextPageAvailable !== false
+  ) {
+    errors.push(
+      "pagination.nextPageAvailable: collectedの場合はfalseが必要です。",
+    );
+  }
+  if (dataset.status === "skipped" && dataset.pagination !== undefined) {
+    errors.push("pagination: skippedの場合は指定できません。");
   }
   const ids = new Set();
   const externalIds = new Set();

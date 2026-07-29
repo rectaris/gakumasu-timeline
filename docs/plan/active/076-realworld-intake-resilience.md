@@ -65,13 +65,13 @@ failures while pausing all X acquisition work.
 
 ## Tasks
 
-- [ ] Extend source and intake contracts for paused and partial states.
-- [ ] Return pagination completeness metadata from paginated adapters.
-- [ ] Add lossless partial merge and atomic per-source writes.
-- [ ] Isolate and classify source-specific failures.
-- [ ] Pause both X origins before adapter dispatch.
-- [ ] Add focused regression tests.
-- [ ] Update data-flow and authoring documentation.
+- [x] Extend source and intake contracts for paused and partial states.
+- [x] Return pagination completeness metadata from paginated adapters.
+- [x] Add lossless partial merge and atomic per-source writes.
+- [x] Isolate and classify source-specific failures.
+- [x] Pause both X origins before adapter dispatch.
+- [x] Add focused regression tests.
+- [x] Update data-flow and authoring documentation.
 - [ ] Run full validation and archive the plan.
 
 ## Boundaries
