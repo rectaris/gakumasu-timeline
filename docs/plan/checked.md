@@ -77,3 +77,4 @@ id	path
 066	docs/plan/checked/066-gakumasu-realworld-history-view.md
 075	docs/plan/checked/075-realworld-official-source-intake.md
 076	docs/plan/checked/076-realworld-intake-resilience.md
+077	docs/plan/checked/077-youtube-intake-snapshot.md

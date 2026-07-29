@@ -64,7 +64,7 @@ completeness metadata.
 - [x] Require pagination metadata on successful YouTube datasets.
 - [x] Add focused validation regression tests.
 - [x] Update the data-model validation contract.
-- [ ] Run full validation, commit the snapshots, and archive the plan.
+- [x] Run full validation, commit the snapshots, and archive the plan.
 
 ## Boundaries
 
@@ -73,3 +73,24 @@ completeness metadata.
 - Do not expand the YouTube page limit in this plan.
 - Do not promote intake candidates to InfoEvents.
 - Do not change public routes or IDs.
+
+## Validation Notes
+
+The adopted snapshot contains two unchanged official-site pages and two
+100-item YouTube candidate sets.
+Both YouTube datasets are explicitly partial after two pages, report that a
+next page remains, and contain no retained legacy items.
+
+The review found no duplicate IDs or resource keys, malformed video IDs or
+URLs, missing publication times, empty titles, private/deleted titles, duplicate
+content hashes, or secret-like values.
+
+Validation completed:
+
+- `npm test -- --run tests/realworldIntake.test.js`
+- `npm run verify`
+- `python3 scripts/security-static-check.py`
+- `python3 scripts/validate-changes.py`
+- `bash scripts/lint-plan-docs.sh`
+- `bash scripts/format-plan-docs.sh --check`
+- `git diff --check`
