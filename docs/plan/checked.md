@@ -72,3 +72,4 @@ id	path
 065	docs/plan/checked/065-story-event-graph-view.md
 072	docs/plan/checked/072-story-event-mvp-evaluation.md
 064	docs/plan/checked/064-three-view-application-shell.md
+073	docs/plan/checked/073-story-data-publication-lifecycle.md
