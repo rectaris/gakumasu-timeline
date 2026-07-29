@@ -72,7 +72,7 @@ failures while pausing all X acquisition work.
 - [x] Pause both X origins before adapter dispatch.
 - [x] Add focused regression tests.
 - [x] Update data-flow and authoring documentation.
-- [ ] Run full validation and archive the plan.
+- [x] Run full validation and archive the plan.
 
 ## Boundaries
 
@@ -81,3 +81,26 @@ failures while pausing all X acquisition work.
 - Do not modify or stage the user's current intake JSON changes.
 - Do not promote intake candidates to InfoEvents.
 - Do not change public routes or selection IDs.
+
+## Validation Notes
+
+Focused tests verify that a capped YouTube run retains candidates from the last
+valid dataset, a failed source does not stop a later source, and paused X
+origins make no network request.
+
+A credential-free smoke run used a temporary output directory.
+It collected both website origins, skipped YouTube for missing credentials, and
+skipped both X origins because their registry entries are paused.
+
+Validation completed:
+
+- `npm test -- --run tests/realworldIntake.test.js`
+- `npm run verify`
+- `python3 scripts/security-static-check.py`
+- `python3 scripts/validate-changes.py`
+- `bash scripts/lint-plan-docs.sh`
+- `bash scripts/format-plan-docs.sh --check`
+- `git diff --check`
+
+The user's three uncommitted intake datasets remain outside implementation
+commits.

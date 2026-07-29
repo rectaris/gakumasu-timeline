@@ -76,3 +76,4 @@ id	path
 074	docs/plan/checked/074-realworld-history-specification-proposal.md
 066	docs/plan/checked/066-gakumasu-realworld-history-view.md
 075	docs/plan/checked/075-realworld-official-source-intake.md
+076	docs/plan/checked/076-realworld-intake-resilience.md
