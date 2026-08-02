@@ -15,7 +15,9 @@
     "validate:data": "node scripts/generate-data.mjs --check && node scripts/validate-data.mjs && node scripts/validate-realworld-intake.mjs",
     "verify": "npm run validate:data && npm run test && npm run build && node scripts/verify-production-story-data.mjs",
     "build": "vite build",
+    "build:curiretas": "vite build --base=/gakumastool/timeline/ && node scripts/prepare-cloudflare-assets.mjs",
     "deploy": "node -e \"console.error('Deployment is handled by GitHub Actions to rectaris/rectaris.github.io under /timeline/.'); process.exit(1)\"",
+    "deploy:curiretas": "npm run build:curiretas && npx --yes wrangler@4.118.0 deploy --config wrangler.timeline.jsonc",
     "preview": "vite preview"
   },
   "dependencies": {
