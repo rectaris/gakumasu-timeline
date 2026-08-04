@@ -116,6 +116,10 @@ Pull request #5 merged as `196233a`. Cloudflare Workers Build completed
 successfully and deployed Worker version
 `4508e1e7-6a0f-4ab5-823c-affd995f5c9e`.
 
+After disabling non-production branch builds, verification commit `d0ec84b`
+produced nine successful GitHub checks and no Cloudflare Workers Builds check.
+This confirms that `dev` and pull requests remain verification-only paths.
+
 Post-deployment Chromium checks at `1440x900` returned 200 for all three views
 and the hashed JavaScript asset with no application console errors or
 same-origin request failures. The legacy production and dev URLs also returned
