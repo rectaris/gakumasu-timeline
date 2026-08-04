@@ -36,10 +36,9 @@ import ZoomControls from "../components/ZoomControls.vue";
 import SidePanel from "../components/SidePanel.vue";
 import AdSlot from "../components/AdSlot.vue";
 import IntroGuide from "../components/IntroGuide.vue";
+import ApplicationHeader from "../components/ApplicationHeader.vue";
 import TimelineScaleOverlay from "../components/TimelineScaleOverlay.vue";
 import TimelineSvg from "../components/TimelineSvg.vue";
-import TimelineModeSwitcher from "../components/TimelineModeSwitcher.vue";
-import LoginLink from "../components/LoginLink.vue";
 import { invertHexColor } from "../utils/colors";
 import {
   EVENT_AUDIT_CATEGORY_LABELS,
@@ -1247,8 +1246,11 @@ onUnmounted(() => {
   <WorldlineEditor v-if="isWorldlineEditorMode" />
 
   <template v-else>
-  <header class="app-header">
-    <div class="header-left">
+  <ApplicationHeader
+    title="物語時系列"
+    title-id="narrative-page-title"
+  >
+    <template #primary-actions>
       <button
         ref="menuButtonRef"
         class="menu-button"
@@ -1280,30 +1282,8 @@ onUnmounted(() => {
         title="設定を開く"
         @click="toggleSettingsMenu"
       >⚙</button>
-    </div>
-    <h1
-      id="narrative-page-title"
-      class="app-title"
-      data-timeline-page-heading
-      tabindex="-1"
-    >キャラクタータイムライン</h1>
-    <div class="header-right">
-      <TimelineModeSwitcher />
-      <LoginLink />
-      <a
-        class="portal-link"
-        href="https://rectaris.github.io/"
-        aria-label="rectaris.github.ioへ移動"
-        title="rectaris.github.ioへ移動"
-      >
-        <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
-          <path d="M15 3h6v6" />
-          <path d="M10 14 21 3" />
-          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-        </svg>
-      </a>
-    </div>
-  </header>
+    </template>
+  </ApplicationHeader>
 
   <ManualModal
     :open="manualOpen"

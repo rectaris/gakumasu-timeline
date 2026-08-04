@@ -49,11 +49,12 @@ function handleChange(event) {
 }
 
 .mode-switcher__select {
-  min-height: 34px;
+  height: var(--header-control-size);
+  box-sizing: border-box;
   max-width: 148px;
   padding: 0 28px 0 9px;
   border: 1px solid var(--border-strong);
-  border-radius: 7px;
+  border-radius: var(--header-control-radius);
   background: var(--button-bg);
   color: var(--button-text);
   font: inherit;
