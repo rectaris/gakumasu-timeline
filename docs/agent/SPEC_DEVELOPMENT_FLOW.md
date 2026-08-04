@@ -24,10 +24,11 @@ This workflow is generated for `gakumasu-timeline`.
 - Treat Copier-managed workflow files as shared template surface; avoid local-only edits unless the repository intentionally diverges.
 - Preserve explicit contracts for public APIs, generated artifacts, runtime data paths, and integration boundaries.
 - Keep README files human-facing; move reusable agent policy into `docs/agent/SPEC_*.md`.
-<<<<<<< before updating
 - Treat `docs/agent/SPEC_*.md` as the mandatory routing layer for agent-facing decisions.
 - Treat `agents-rules/` as detailed playbooks, invariants, and review checklists linked from the specs or `AGENTS.md`.
 - Use `agents-rules/decision-boundaries.md` before making approval-sensitive, dependency, generated-artifact, public URL, helper, or release decisions.
+- Keep `.agent-logs/` and `.agent-artifacts/` local-only. Use `docs/plan` for durable summaries and links to relevant run ids, not for raw log bodies.
+- Read normative instructions directly. Do not compress `AGENTS.md`, `docs/agent/`, validation policy, or security policy.
 
 ## Data Integrity
 
@@ -36,10 +37,6 @@ This workflow is generated for `gakumasu-timeline`.
 - Mechanical data-shape changes are allowed when scoped, validated, and behavior-preserving.
 - Preserve `canonicalId` compatibility for shared URLs. If an ID must change, document the migration or compatibility decision before implementation.
 - Represent uncertainty explicitly. Do not turn unknown single-day timing into a fake concrete date.
-=======
-- Keep `.agent-logs/` and `.agent-artifacts/` local-only. Use `docs/plan` for durable summaries and links to relevant run ids, not for raw log bodies.
-- Read normative instructions directly. Do not compress `AGENTS.md`, `docs/agent/`, validation policy, or security policy.
->>>>>>> after updating
 
 ## Review Classes
 

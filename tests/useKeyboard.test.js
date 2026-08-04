@@ -31,6 +31,21 @@ describe("useKeyboard", () => {
     expect(shouldIgnoreShortcutEvent(keyboardEvent({ ctrlKey: true }))).toBe(
       true,
     );
+    expect(
+      shouldIgnoreShortcutEvent(
+        keyboardEvent({ target: { tagName: "select" } }),
+      ),
+    ).toBe(true);
+    expect(
+      shouldIgnoreShortcutEvent(
+        keyboardEvent({ target: { tagName: "div", isContentEditable: true } }),
+      ),
+    ).toBe(true);
+    expect(shouldIgnoreShortcutEvent(keyboardEvent({ altKey: true }))).toBe(true);
+    expect(shouldIgnoreShortcutEvent(keyboardEvent({ metaKey: true }))).toBe(true);
+    expect(
+      shouldIgnoreShortcutEvent(keyboardEvent({ defaultPrevented: true })),
+    ).toBe(true);
   });
 
   it("dispatches navigation, search, return, pan, zoom, and close shortcuts", () => {

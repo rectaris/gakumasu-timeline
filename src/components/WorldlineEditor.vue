@@ -314,6 +314,9 @@ async function fetchJson(url, options = {}) {
     ...options,
     headers: {
       "content-type": "application/json",
+      ...(options.method === "POST" && state.value?.editorSessionToken
+        ? { "x-worldline-editor-token": state.value.editorSessionToken }
+        : {}),
       ...(options.headers ?? {}),
     },
   });

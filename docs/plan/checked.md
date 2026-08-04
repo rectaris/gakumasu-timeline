@@ -81,3 +81,4 @@ id	path
 078	docs/plan/checked/078-realworld-review-inventory.md
 079	docs/plan/checked/079-realworld-review-decision-ledger.md
 081	docs/plan/checked/081-login-header-link.md
+082	docs/plan/checked/082-pr-3-review-fixes.md

@@ -6,6 +6,7 @@ import {
   applyWorldlineEditorMutation,
   previewWorldlineEditorMutation,
   readWorldlineEditorState,
+  validateWorldlineEditorWriteRequest,
 } from "../scripts/worldline-editor-api.mjs";
 
 function baseEvent(id, title = id) {
@@ -48,6 +49,38 @@ function baseState() {
 }
 
 describe("worldline editor api", () => {
+  it("requires same-origin JSON writes with the current editor session token", () => {
+    const request = (headers) => ({ headers });
+    const validHeaders = {
+      host: "127.0.0.1:5173",
+      origin: "http://127.0.0.1:5173",
+      "content-type": "application/json; charset=utf-8",
+      "x-worldline-editor-token": "test-session-token",
+    };
+
+    expect(
+      validateWorldlineEditorWriteRequest(request(validHeaders), "test-session-token"),
+    ).toBeNull();
+    expect(
+      validateWorldlineEditorWriteRequest(
+        request({ ...validHeaders, origin: "https://attacker.example" }),
+        "test-session-token",
+      ),
+    ).toMatchObject({ statusCode: 403 });
+    expect(
+      validateWorldlineEditorWriteRequest(
+        request({ ...validHeaders, "x-worldline-editor-token": "wrong" }),
+        "test-session-token",
+      ),
+    ).toMatchObject({ statusCode: 403 });
+    expect(
+      validateWorldlineEditorWriteRequest(
+        request({ ...validHeaders, "content-type": "text/plain" }),
+        "test-session-token",
+      ),
+    ).toMatchObject({ statusCode: 415 });
+  });
+
   it("keeps participant options in raw idol commu file order", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "worldline-editor-"));
     const rawDirectory = path.join(root, "data/raw/worldline_commu/idol_commu");

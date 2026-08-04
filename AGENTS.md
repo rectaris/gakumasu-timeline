@@ -38,13 +38,9 @@ Maintain the Gakumasu timeline application, data, and UI interactions.
 - Use Git for every coherent work unit.
 - Preserve user changes you did not make.
 - Prefer deterministic checks over prose-only rules.
-<<<<<<< before updating
+- Use tmux for long-running, shared, or interactive commands when available; use normal command execution for short deterministic commands.
 - Ask before high-impact or ambiguous changes to timeline data structures or core interactions.
 - Use `agents-rules/decision-boundaries.md` for approval, validation, data, dependency, helper, and release decisions.
-=======
-- Use tmux for long-running, shared, or interactive commands when available; use normal command execution for short deterministic commands.
-- Ask before high-impact or ambiguous changes.
->>>>>>> after updating
 - Treat `docs/plan/checked.md` and checked archives as lookup-only history; search metadata first when possible.
 - Keep human-facing README files separate from agent-facing operational policy.
 - Keep raw agent logs and large agent artifacts local under `.agent-logs/` and `.agent-artifacts/`; do not commit them.

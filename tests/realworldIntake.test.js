@@ -94,7 +94,7 @@ describe("real-world intake model", () => {
     await fs.writeFile(registryPath, JSON.stringify(testRegistry));
     global.fetch = vi.fn(async () =>
       new Response(
-        "<html><head><title>公式情報</title></head><body>学マス更新</body></html>",
+        "<html><head><title>公式&amp;lt;情報&amp;gt;</title></head><body>学マス更新<script>alert('bad')</script >本文</body></html>",
         { status: 200 },
       ),
     );
@@ -125,9 +125,11 @@ describe("real-world intake model", () => {
       expect.objectContaining({
         resourceType: "web-page",
         resourceKey: "web:https://gakuen.idolmaster-official.jp/",
-        title: "公式情報",
+        title: "公式&lt;情報&gt;",
       }),
     );
+    expect(dataset.items[0].summary).toContain("学マス更新 本文");
+    expect(dataset.items[0].summary).not.toContain("alert");
   });
 
   it("does not expose a YouTube API key in an HTTP error", async () => {

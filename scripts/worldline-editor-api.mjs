@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 import {
@@ -12,6 +13,7 @@ import {
 import { worldlines } from "../src/data/worldlines.js";
 
 const EDITOR_API_PREFIX = "/__worldline-editor/api";
+const EDITOR_TOKEN_HEADER = "x-worldline-editor-token";
 const JSON_HEADERS = { "content-type": "application/json; charset=utf-8" };
 
 const LOCAL_ADDRESSES = new Set([
@@ -487,6 +489,43 @@ function isLocalRequest(req) {
   return !address || LOCAL_ADDRESSES.has(address);
 }
 
+function tokensMatch(actual, expected) {
+  const actualBuffer = Buffer.from(String(actual ?? ""));
+  const expectedBuffer = Buffer.from(String(expected ?? ""));
+  return (
+    actualBuffer.length === expectedBuffer.length &&
+    crypto.timingSafeEqual(actualBuffer, expectedBuffer)
+  );
+}
+
+function isSameOriginRequest(req) {
+  const origin = req.headers.origin;
+  if (!origin) return true;
+
+  try {
+    const originUrl = new URL(origin);
+    return (
+      (originUrl.protocol === "http:" || originUrl.protocol === "https:") &&
+      originUrl.host === req.headers.host
+    );
+  } catch {
+    return false;
+  }
+}
+
+export function validateWorldlineEditorWriteRequest(req, sessionToken) {
+  if (!isSameOriginRequest(req)) {
+    return { statusCode: 403, message: "Same-origin requests only." };
+  }
+  if (!tokensMatch(req.headers[EDITOR_TOKEN_HEADER], sessionToken)) {
+    return { statusCode: 403, message: "Invalid editor session token." };
+  }
+  if (req.headers["content-type"]?.split(";", 1)[0].trim() !== "application/json") {
+    return { statusCode: 415, message: "JSON requests only." };
+  }
+  return null;
+}
+
 function sendJson(res, statusCode, payload) {
   res.writeHead(statusCode, JSON_HEADERS);
   res.end(JSON.stringify(payload));
@@ -514,7 +553,10 @@ function readRequestJson(req) {
   });
 }
 
-export function worldlineEditorApiPlugin({ root = process.cwd() } = {}) {
+export function worldlineEditorApiPlugin({
+  root = process.cwd(),
+  sessionToken = crypto.randomBytes(32).toString("base64url"),
+} = {}) {
   return {
     name: "worldline-editor-api",
     configureServer(server) {
@@ -531,9 +573,20 @@ export function worldlineEditorApiPlugin({ root = process.cwd() } = {}) {
           return;
         }
 
+        if (req.method === "POST") {
+          const denial = validateWorldlineEditorWriteRequest(req, sessionToken);
+          if (denial) {
+            sendJson(res, denial.statusCode, { ok: false, message: denial.message });
+            return;
+          }
+        }
+
         try {
           if (req.method === "GET" && url.pathname === `${EDITOR_API_PREFIX}/state`) {
-            sendJson(res, 200, await readWorldlineEditorState({ root }));
+            sendJson(res, 200, {
+              ...(await readWorldlineEditorState({ root })),
+              editorSessionToken: sessionToken,
+            });
             return;
           }
 

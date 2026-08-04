@@ -37,18 +37,18 @@ function canonicalTimestamp(value) {
 
 function decodeHtml(value) {
   return value
-    .replaceAll("&amp;", "&")
     .replaceAll("&lt;", "<")
     .replaceAll("&gt;", ">")
     .replaceAll("&quot;", "\"")
-    .replaceAll("&#39;", "'");
+    .replaceAll("&#39;", "'")
+    .replaceAll("&amp;", "&");
 }
 
 function htmlText(html) {
   return decodeHtml(
     html
-      .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, " ")
-      .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, " ")
+      .replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, " ")
+      .replace(/<style\b[^>]*>[\s\S]*?<\/style\s*>/gi, " ")
       .replace(/<[^>]+>/g, " ")
       .replace(/\s+/g, " ")
       .trim(),
@@ -426,7 +426,7 @@ export async function collectSources(options, environment = process.env) {
   if (unknown.length) throw new Error(`Unknown source ID: ${unknown.join(", ")}`);
 
   const retrievedAt = new Date().toISOString();
-  const runId = retrievedAt.replace(/[-:.]/g, "").replace("Z", "Z");
+  const runId = retrievedAt.replace(/[-:.]/g, "");
   const artifactDirectory = options.artifacts
     ? path.join(options.artifactRoot, runId)
     : null;

@@ -1,6 +1,6 @@
 # Codex CI Autofix
 
-**Codex CI Autofix** は、PR の通常 CI が失敗したときに Codex GitHub Action で最小修正を試す GitHub Actions ワークフローです。
+**Codex CI Autofix** は、PR の通常 CI が失敗した後に、手動操作で Codex GitHub Action に最小修正を試行させる GitHub Actions ワークフローです。
 
 この仕組みは同一リポジトリ内の PR ブランチだけを対象にします。
 
@@ -8,13 +8,13 @@ fork PR では write token と `OPENAI_API_KEY` を使いません。
 
 ## Why This Exists
 
-`@codex fix the CI failures` は単発の Codex タスクとして動くため、CI が再実行されてまだ失敗した場合に自動で次の修正試行へ進みません。
+`@codex fix the CI failures` は単発の Codex タスクとして動きます。
 
-このリポジトリの `codex-ci-autofix.yml` は、`CI` workflow の失敗を `workflow_run` で受け取り、上限回数まで修正コミットを試します。
+このリポジトリの `codex-ci-autofix.yml` は、GitHub Actions の `Run workflow` から対象 PR と失敗 run を指定して実行します。
 
-CI が通ればループは止まります。
+特権を持つ `workflow_run` から PR コードを自動実行しないため、修正は自動開始しません。
 
-上限回数に達した場合も止まります。
+再試行が必要な場合は、更新後の PR HEAD に対応する失敗 run を指定して再実行します。
 
 ## Workflow Interaction
 
@@ -22,15 +22,19 @@ CI が通ればループは止まります。
 
 `pull_request`、`push`、`workflow_dispatch` で実行されます。
 
-`.github/workflows/codex-ci-autofix.yml` は `CI` workflow の完了を監視します。
+`.github/workflows/codex-ci-autofix.yml` は `workflow_dispatch` でのみ起動します。
 
-`CI` が PR イベントで失敗し、PR ブランチが同一リポジトリにある場合だけ Codex を起動します。
+指定された PR が同一リポジトリにあり、現在の PR HEAD に対応する `CI` が失敗している場合だけ Codex を起動します。
 
 Codex は `.github/codex/prompts/ci-autofix.md` の指示を受け取り、`gh run view "$FAILED_RUN_ID" --log-failed` で失敗ログを確認します。
 
 Codex はファイルを編集できますが、commit、push、merge はしません。
 
 workflow の後段 job が差分を patch artifact にし、既定の `direct-push` mode では `fix: codex ci autofix` として PR ブランチへ push します。
+
+生成時と適用時は失敗 run の commit SHA を checkout し、適用前にリモートブランチが同じ SHA のままであることを確認します。
+
+PR ブランチが更新されている場合は、古い失敗に対する patch を適用せず停止します。
 
 `patch-only` mode に切り替えると、workflow は patch artifact だけを残します。
 
@@ -50,9 +54,7 @@ workflow の write 権限は patch を適用して PR ブランチへ commit す
 
 無効化するには GitHub Actions の workflow 一覧で `Codex CI Autofix` を disable にするか、この YAML ファイルを削除します。
 
-一時的に自動 push を止める場合は、`workflow_dispatch` の `mode` で `patch-only` を選んで手動実行してください。
-
-自動実行も patch-only にしたい場合は、YAML 内の `mode = "direct-push"` を `mode = "patch-only"` に変更します。
+push を行わない場合は、`workflow_dispatch` の `mode` で `patch-only` を選びます。
 
 ## Fork PR Restriction
 
@@ -78,7 +80,9 @@ GitHub Actions の `Codex CI Autofix` から `Run workflow` を選びます。
 
 `pr_number` に同一リポジトリ PR の番号を指定します。
 
-`failed_run_id` を省略した場合、workflow はその PR HEAD に紐づく最新の失敗した `CI` run を探します。
+`failed_run_id` を省略した場合、workflow は現在の PR HEAD に紐づく最新の失敗した `CI` run を探します。
+
+`failed_run_id` を指定した場合も、その run が現在の PR HEAD に対する失敗した pull request `CI` でなければ停止します。
 
 `mode` に `patch-only` を指定すると、push せず artifact だけを生成します。
 
@@ -95,5 +99,3 @@ PR の Files changed と commit diff を確認してください。
 ## Revert
 
 仕組み全体を戻すには、`.github/workflows/codex-ci-autofix.yml`、`.github/codex/prompts/ci-autofix.md`、この文書、`AGENTS.md` の CI autofix section を削除します。
-
-通常 CI から `workflow_dispatch` を外したい場合は、`.github/workflows/ci.yml` の該当 trigger も戻します。

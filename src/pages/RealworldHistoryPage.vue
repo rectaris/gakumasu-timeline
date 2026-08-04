@@ -2,6 +2,7 @@
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import TimelineModeSwitcher from "../components/TimelineModeSwitcher.vue";
 import LoginLink from "../components/LoginLink.vue";
+import { shouldIgnoreShortcutEvent } from "../composables/useKeyboard";
 import { realworldHistory } from "../data/realworldHistory";
 import {
   createRealworldSelectionUrl,
@@ -17,6 +18,7 @@ import {
 } from "../utils/realworldHistory";
 
 const viewportRef = ref(null);
+const YEAR_HEADER_HEIGHT = 32;
 const query = ref("");
 const category = ref("all");
 const status = ref("all");
@@ -76,7 +78,7 @@ const hasFilters = computed(
 function itemStyle(item) {
   return {
     left: `${item.x}px`,
-    top: `${item.y}px`,
+    top: `${item.y + YEAR_HEADER_HEIGHT}px`,
     width: `${Math.max(item.width, 150)}px`,
     "--item-color": INFO_CATEGORY_META[item.event.category].color,
   };
@@ -136,10 +138,22 @@ function focusDefaultRange() {
 }
 
 function handleKeydown(event) {
-  if (event.key === "Escape" && selectedId.value) updateSelection(null);
-  if (event.key === "+" || event.key === "=") setZoom(zoom.value + 0.15);
-  if (event.key === "-") setZoom(zoom.value - 0.15);
-  if (event.key === "0") showAll();
+  const isEscape = event.key === "Escape";
+  if (shouldIgnoreShortcutEvent(event, { allowFromForm: isEscape })) return;
+
+  if (isEscape && selectedId.value) {
+    event.preventDefault();
+    updateSelection(null);
+  } else if (event.key === "+" || event.key === "=") {
+    event.preventDefault();
+    setZoom(zoom.value + 0.15);
+  } else if (event.key === "-") {
+    event.preventDefault();
+    setZoom(zoom.value - 0.15);
+  } else if (event.key === "0") {
+    event.preventDefault();
+    showAll();
+  }
 }
 
 watch(filteredEvents, () => {
@@ -228,7 +242,10 @@ onUnmounted(() => {
       <div ref="viewportRef" class="realworld-viewport" tabindex="0" aria-label="現実世界の時間軸">
         <div
           class="realworld-stage"
-          :style="{ width: `${layout.width}px`, height: `${layout.height}px` }"
+          :style="{
+            width: `${layout.width}px`,
+            height: `${layout.height + YEAR_HEADER_HEIGHT}px`,
+          }"
         >
           <div
             v-for="tick in yearTicks"
@@ -242,7 +259,7 @@ onUnmounted(() => {
             v-for="(_, index) in categories"
             :key="index"
             class="realworld-lane-line"
-            :style="{ top: `${index * 116}px` }"
+            :style="{ top: `${YEAR_HEADER_HEIGHT + index * 116}px` }"
           ></div>
           <button
             v-for="item in layout.items"
@@ -311,7 +328,7 @@ onUnmounted(() => {
 .realworld-lane-labels div { height: 116px; display: flex; align-items: center; gap: 8px; padding: 0 12px; box-sizing: border-box; border-bottom: 1px solid var(--border-soft); font-size: 12px; font-weight: 800; }
 .realworld-lane-labels span { width: 9px; height: 9px; border-radius: 99px; }
 .realworld-viewport { overflow: auto; background: var(--timeline-viewport-fill); touch-action: pan-x pan-y; }
-.realworld-stage { position: relative; min-width: 100%; padding-top: 32px; box-sizing: content-box; }
+.realworld-stage { position: relative; min-width: 100%; }
 .realworld-year { position: absolute; top: 0; bottom: 0; border-left: 1px solid var(--timeline-month-line); }
 .realworld-year span { position: absolute; top: 7px; left: 7px; color: var(--text-muted); font-size: 11px; font-weight: 800; }
 .realworld-lane-line { position: absolute; right: 0; left: 0; height: 116px; border-bottom: 1px solid var(--border-soft); }
@@ -324,7 +341,7 @@ onUnmounted(() => {
 .realworld-item strong { font-size: 13px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
 .realworld-item small { color: var(--text-muted); white-space: nowrap; }
 .realworld-empty { margin: 40px 20px; padding: 48px 24px; text-align: center; border: 1px dashed var(--border); border-radius: 14px; background: var(--surface-soft); }
-.realworld-detail { position: fixed; z-index: 1250; top: 76px; right: 16px; width: min(360px, calc(100vw - 32px)); max-height: calc(100vh - 104px); overflow: auto; box-sizing: border-box; padding: 20px; border: 1px solid var(--border); border-top: 5px solid #318878; border-radius: 14px; background: var(--surface-elevated); box-shadow: 0 18px 48px var(--shadow); }
+.realworld-detail { position: fixed; z-index: 1250; top: 136px; right: 16px; width: min(360px, calc(100vw - 32px)); max-height: calc(100vh - 164px); overflow: auto; box-sizing: border-box; padding: 20px; border: 1px solid var(--border); border-top: 5px solid #318878; border-radius: 14px; background: var(--surface-elevated); box-shadow: 0 18px 48px var(--shadow); }
 .realworld-detail > p:first-of-type { margin: 0; color: #318878; font-size: 12px; font-weight: 800; }
 .realworld-detail h2 { margin: 6px 32px 10px 0; font-size: 21px; }
 .realworld-detail h3 { font-size: 14px; }
