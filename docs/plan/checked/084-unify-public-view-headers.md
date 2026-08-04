@@ -86,7 +86,7 @@ timeline shell while keeping page-specific tools and content ownership intact.
 - [x] Consolidate header sizing, spacing, and action styling.
 - [x] Align human-facing documentation with the shared shell.
 - [x] Run automated and browser validation on desktop and mobile.
-- [ ] Commit and archive the completed plan.
+- [x] Commit and archive the completed plan.
 
 ## Validation Notes
 
