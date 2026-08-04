@@ -50,7 +50,6 @@ acceptance_focus:
   - deployment boundary
 expected_output: implementation-and-activation
 checked_summary_ja: 現行配信を維持したままmainへのpushでcuriretas.com配下のタイムラインを自動デプロイする。
-completion_deferred_reason: Cloudflare Workers Builds Git integration must be activated and verified against a main-branch commit.
 
 ## Problem
 
@@ -100,15 +99,34 @@ automatically while `dev` and pull requests remain verification-only paths.
 - [x] Commit the coherent local preparation.
 - [x] Deploy and smoke-test the production route after owner approval.
 - [x] Add repository-side configuration and documentation for Git-linked deployment.
-- [ ] Connect the existing Worker to `rectaris/gakumasu-timeline`.
-- [ ] Verify a `main` push produces a successful Workers Builds check and deployment.
+- [x] Connect the existing Worker to `rectaris/gakumasu-timeline`.
+- [x] Verify a `main` push produces a successful Workers Builds check and deployment.
 
 ## Validation Notes
 
 Local validation passed for the legacy build, the mounted Cloudflare build,
-Wrangler dry-run, 138 unit tests, data integrity, and production publication
-boundaries.
+Wrangler dry-run, 139 unit tests, data integrity, production publication
+boundaries, static security, structure, and plan checks.
 
 Local Wrangler and Chromium smoke checks returned 200 for the base timeline,
 story graph, real-world history, and a hashed asset with no failed network
 requests or browser console errors.
+
+Pull request #5 merged as `196233a`. Cloudflare Workers Build completed
+successfully and deployed Worker version
+`4508e1e7-6a0f-4ab5-823c-affd995f5c9e`.
+
+After disabling non-production branch builds, verification commit `d0ec84b`
+produced nine successful GitHub checks and no Cloudflare Workers Builds check.
+This confirms that `dev` and pull requests remain verification-only paths.
+
+Post-deployment Chromium checks at `1440x900` returned 200 for all three views
+and the hashed JavaScript asset with no application console errors or
+same-origin request failures. The legacy production and dev URLs also returned
+200.
+
+The pre-existing main-push TruffleHog check still fails before scanning because
+its explicit `base: main` resolves to the same commit as `head: HEAD`. Local
+Gitleaks and static security checks passed, and the successful pull-request
+TruffleHog checks cover this change. Fixing that workflow remains outside this
+deployment task.
