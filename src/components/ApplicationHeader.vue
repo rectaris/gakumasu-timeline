@@ -32,9 +32,9 @@ defineProps({
       <LoginLink />
       <a
         class="portal-link"
-        href="https://rectaris.github.io/"
-        aria-label="rectaris.github.ioへ移動"
-        title="rectaris.github.ioへ移動"
+        href="https://curiretas.com/gakumastool/"
+        aria-label="Curiretasの学マスツールへ移動"
+        title="Curiretasの学マスツールへ移動"
       >
         <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
           <path d="M15 3h6v6" />
