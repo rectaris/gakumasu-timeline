@@ -59,7 +59,7 @@ tools page without changing any application or deployment path.
 
 - [x] Update the shared portal link.
 - [x] Validate all three views and the production build.
-- [ ] Commit and archive the completed plan.
+- [x] Commit and archive the completed plan.
 
 ## Validation Notes
 
