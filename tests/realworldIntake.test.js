@@ -94,7 +94,7 @@ describe("real-world intake model", () => {
     await fs.writeFile(registryPath, JSON.stringify(testRegistry));
     global.fetch = vi.fn(async () =>
       new Response(
-        "<html><head><title>公式&amp;lt;情報&amp;gt;</title></head><body>学マス更新<script>alert('bad')</script >本文</body></html>",
+        "<html><head><title>公式&amp;lt;情報&amp;gt;</title></head><body>学マス更新<script>alert('bad')</script\t\n data-invalid>本文</body></html>",
         { status: 200 },
       ),
     );

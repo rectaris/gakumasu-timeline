@@ -82,3 +82,4 @@ id	path
 079	docs/plan/checked/079-realworld-review-decision-ledger.md
 081	docs/plan/checked/081-login-header-link.md
 082	docs/plan/checked/082-pr-3-review-fixes.md
+083	docs/plan/checked/083-pr-3-codeql-html-filter.md
