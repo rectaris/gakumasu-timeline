@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - dev
   workflow_dispatch:
 
 permissions:
@@ -27,7 +28,7 @@ jobs:
         if: hashFiles('package.json') != ''
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version-file: .node-version
 
       - name: Install Python dependencies
         if: hashFiles('pyproject.toml', 'requirements.txt', 'uv.lock') != ''

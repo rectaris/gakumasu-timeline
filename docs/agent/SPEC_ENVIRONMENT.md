@@ -36,7 +36,21 @@ Keep secrets out of repository files. Use environment variables or the platform 
 
 - Deployment is handled by GitHub Actions publishing `dist/` into the
   `rectaris/rectaris.github.io` repository under `timeline/` or `timeline/dev/`.
+- The `curiretas.com/gakumastool/timeline/` production Worker is deployed by
+  Cloudflare Workers Builds after its Git integration is activated.
+- Workers Builds uses `main` as the production branch, `npm run verify` as the
+  build command, and `npm run deploy:curiretas` as the deploy command.
+- Keep non-production Workers Builds disabled while `preview_urls` is false;
+  `dev` and pull requests remain verification-only paths.
+- Pin local, GitHub Actions, and Workers Builds execution to Node.js 24 through
+  `.node-version`.
+- A push or merge to `main` authorizes both the legacy GitHub Pages deployment
+  and the Curiretas Worker deployment after the Git integration is activated.
+- Keep the Cloudflare GitHub App scoped to this repository. Keep Workers Builds
+  credentials in Cloudflare instead of repository files or GitHub Secrets.
 - `npm run deploy` is a guard command and must not publish from this repository.
+- `npm run deploy:curiretas` remains available for owner-approved manual
+  recovery and initial verification.
 - Do not deploy unless the user explicitly asks for deployment or an approved repository policy says to deploy.
 - A normal implementation task may build and preview locally without publishing.
 - If deployment is requested, run the relevant validation first, confirm the published URL or asset path when practical, and report the published target or any deployment blocker.
