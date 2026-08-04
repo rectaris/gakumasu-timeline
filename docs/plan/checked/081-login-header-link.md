@@ -92,16 +92,36 @@ the legacy GitHub Pages builds or making authentication mandatory.
 
 ## Tasks
 
-- [ ] Add the shared login component with the exact destination and Japanese
+- [x] Add the shared login component with the exact destination and Japanese
       accessible copy.
-- [ ] Mount it in all three public page headers without replacing existing
+- [x] Mount it in all three public page headers without replacing existing
       controls.
-- [ ] Validate both the legacy build and the Curiretas-mounted build.
-- [ ] Browser-check all three modes at desktop and 375x812, including keyboard
+- [x] Validate both the legacy build and the Curiretas-mounted build.
+- [x] Browser-check all three modes at desktop and 375x812, including keyboard
       focus, no header overlap, and no console or network errors caused by the
       change.
-- [ ] Confirm anonymous viewing and existing interactions remain unchanged.
+- [x] Confirm anonymous viewing and existing interactions remain unchanged.
 
 ## Validation Notes
 
-Pending implementation.
+Implemented `LoginLink.vue` as the sole owner of the exact login URL, Japanese
+copy, accessible name, title, icon, focus treatment, and compact mobile style.
+All three public headers render the component while preserving the existing
+mode switcher and portal links.
+
+Validation completed:
+
+- `npm run test` passed 138 tests across 25 files.
+- `npm run build` passed for the unchanged `/timeline/` legacy base.
+- `npm run build:curiretas` passed for `/gakumastool/timeline/`.
+- `python3 scripts/validate-changes.py` passed its selected plan checks.
+- `python3 scripts/security-static-check.py` passed.
+- `git diff --check` passed.
+- Playwright checked all three modes at 1440x900 and 375x812.
+- Each browser scenario exposed one same-tab login link with the exact URL,
+  accessible name and title `ログインページへ移動`, visible keyboard focus,
+  no header overlap, and no console, page, or failed-network errors.
+- Browser smoke checks confirmed anonymous loading, narrative and story portal
+  links, mode switching through all three views, and zoom changes in each view.
+- Temporary screenshots are stored outside the repository under
+  `/tmp/gakumasu-081-login-qa/` and are not tracked artifacts.

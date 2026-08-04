@@ -9,6 +9,7 @@ import {
   watch,
 } from "vue";
 import TimelineModeSwitcher from "../components/TimelineModeSwitcher.vue";
+import LoginLink from "../components/LoginLink.vue";
 import { storyGraph } from "../data/storyGraph";
 import {
   createNarrativeEventUrl,
@@ -341,6 +342,7 @@ onUnmounted(() => {
       </div>
       <div class="story-header__actions">
         <TimelineModeSwitcher />
+        <LoginLink />
         <a
           class="story-portal-link"
           href="https://rectaris.github.io/"

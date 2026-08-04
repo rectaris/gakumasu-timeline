@@ -1,6 +1,7 @@
 <script setup>
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import TimelineModeSwitcher from "../components/TimelineModeSwitcher.vue";
+import LoginLink from "../components/LoginLink.vue";
 import { realworldHistory } from "../data/realworldHistory";
 import {
   createRealworldSelectionUrl,
@@ -174,7 +175,10 @@ onUnmounted(() => {
         <p>現実世界史</p>
         <h1 data-timeline-page-heading tabindex="-1">学マス情報史</h1>
       </div>
-      <TimelineModeSwitcher />
+      <div class="realworld-header__actions">
+        <TimelineModeSwitcher />
+        <LoginLink />
+      </div>
     </header>
 
     <section class="realworld-toolbar" aria-label="学マス情報史の検索と表示条件">
@@ -294,6 +298,7 @@ onUnmounted(() => {
 .realworld-header p, .realworld-header h1 { margin: 0; }
 .realworld-header p { color: #318878; font-size: 11px; font-weight: 800; letter-spacing: .12em; }
 .realworld-header h1 { font-size: 22px; }
+.realworld-header__actions { display: flex; align-items: center; gap: 10px; }
 .realworld-toolbar { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; padding: 14px 20px 8px; }
 .realworld-toolbar label { display: grid; gap: 4px; color: var(--text-muted); font-size: 11px; font-weight: 700; }
 .realworld-toolbar input, .realworld-toolbar select, .realworld-toolbar button, .realworld-zoom button, .realworld-empty button { min-height: 38px; box-sizing: border-box; border: 1px solid var(--border); border-radius: 8px; background: var(--button-bg); color: var(--button-text); padding: 0 11px; }
@@ -334,6 +339,7 @@ onUnmounted(() => {
 .detail-unreviewed { color: var(--text-muted); font-size: 13px; }
 @media (max-width: 720px) {
   .realworld-header { align-items: flex-start; }
+  .realworld-header__actions { gap: 6px; }
   .realworld-toolbar { padding-inline: 12px; }
   .realworld-zoom { width: 100%; margin-left: 0; overflow-x: auto; }
   .realworld-summary { padding-inline: 12px; }

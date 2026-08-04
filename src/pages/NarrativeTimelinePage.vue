@@ -39,6 +39,7 @@ import IntroGuide from "../components/IntroGuide.vue";
 import TimelineScaleOverlay from "../components/TimelineScaleOverlay.vue";
 import TimelineSvg from "../components/TimelineSvg.vue";
 import TimelineModeSwitcher from "../components/TimelineModeSwitcher.vue";
+import LoginLink from "../components/LoginLink.vue";
 import { invertHexColor } from "../utils/colors";
 import {
   EVENT_AUDIT_CATEGORY_LABELS,
@@ -1288,6 +1289,7 @@ onUnmounted(() => {
     >キャラクタータイムライン</h1>
     <div class="header-right">
       <TimelineModeSwitcher />
+      <LoginLink />
       <a
         class="portal-link"
         href="https://rectaris.github.io/"
