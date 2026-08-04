@@ -1,7 +1,6 @@
 <script setup>
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
-import TimelineModeSwitcher from "../components/TimelineModeSwitcher.vue";
-import LoginLink from "../components/LoginLink.vue";
+import ApplicationHeader from "../components/ApplicationHeader.vue";
 import { shouldIgnoreShortcutEvent } from "../composables/useKeyboard";
 import { realworldHistory } from "../data/realworldHistory";
 import {
@@ -183,17 +182,11 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <main class="realworld-page">
-    <header class="realworld-header">
-      <div>
-        <p>現実世界史</p>
-        <h1 data-timeline-page-heading tabindex="-1">学マス情報史</h1>
-      </div>
-      <div class="realworld-header__actions">
-        <TimelineModeSwitcher />
-        <LoginLink />
-      </div>
-    </header>
+  <main class="realworld-page" aria-labelledby="realworld-page-title">
+    <ApplicationHeader
+      title="学マス情報史"
+      title-id="realworld-page-title"
+    />
 
     <section class="realworld-toolbar" aria-label="学マス情報史の検索と表示条件">
       <label>
@@ -310,19 +303,14 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.realworld-page { min-height: calc(100vh - 56px); background: radial-gradient(circle at 18% 0, rgba(48, 136, 120, .14), transparent 32rem), var(--app-bg); color: var(--text-primary); }
-.realworld-header { min-height: 76px; padding: 14px 20px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--border-soft); background: var(--header-bg); }
-.realworld-header p, .realworld-header h1 { margin: 0; }
-.realworld-header p { color: #318878; font-size: 11px; font-weight: 800; letter-spacing: .12em; }
-.realworld-header h1 { font-size: 22px; }
-.realworld-header__actions { display: flex; align-items: center; gap: 10px; }
-.realworld-toolbar { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; padding: 14px 20px 8px; }
-.realworld-toolbar label { display: grid; gap: 4px; color: var(--text-muted); font-size: 11px; font-weight: 700; }
-.realworld-toolbar input, .realworld-toolbar select, .realworld-toolbar button, .realworld-zoom button, .realworld-empty button { min-height: 38px; box-sizing: border-box; border: 1px solid var(--border); border-radius: 8px; background: var(--button-bg); color: var(--button-text); padding: 0 11px; }
+.realworld-page { min-height: calc(100vh - var(--app-header-height)); background: radial-gradient(circle at 18% 0, rgba(48, 136, 120, .14), transparent 32rem), var(--app-bg); color: var(--text-primary); }
+.realworld-toolbar { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; padding: 12px 16px 8px; background: var(--surface-elevated); }
+.realworld-toolbar label { display: grid; gap: 3px; color: var(--text-muted); font-size: 10px; font-weight: 700; }
+.realworld-toolbar input, .realworld-toolbar select, .realworld-toolbar button, .realworld-zoom button, .realworld-empty button { min-height: var(--app-control-height); box-sizing: border-box; border: 1px solid var(--border-strong); border-radius: var(--app-control-radius); background: var(--button-bg); color: var(--button-text); padding: 0 10px; font: inherit; font-size: 12px; }
 .realworld-toolbar input { width: min(280px, 64vw); }
 .realworld-zoom { margin-left: auto; display: flex; align-items: center; gap: 5px; }
 .realworld-zoom output { min-width: 48px; text-align: center; color: var(--text-muted); font-size: 12px; }
-.realworld-summary { margin: 0; padding: 4px 20px 10px; color: var(--text-muted); font-size: 12px; }
+.realworld-summary { margin: 0; padding: 4px 16px 10px; border-bottom: 1px solid var(--border); background: var(--surface-elevated); color: var(--text-muted); font-size: 12px; }
 .realworld-timeline-shell { display: grid; grid-template-columns: 112px minmax(0, 1fr); margin: 0 20px 24px; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: 0 10px 34px var(--shadow); }
 .realworld-lane-labels { padding-top: 32px; background: var(--surface); border-right: 1px solid var(--border); z-index: 2; }
 .realworld-lane-labels div { height: 116px; display: flex; align-items: center; gap: 8px; padding: 0 12px; box-sizing: border-box; border-bottom: 1px solid var(--border-soft); font-size: 12px; font-weight: 800; }
@@ -355,8 +343,6 @@ onUnmounted(() => {
 .detail-close { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 99px; background: var(--button-bg); color: var(--button-text); }
 .detail-unreviewed { color: var(--text-muted); font-size: 13px; }
 @media (max-width: 720px) {
-  .realworld-header { align-items: flex-start; }
-  .realworld-header__actions { gap: 6px; }
   .realworld-toolbar { padding-inline: 12px; }
   .realworld-zoom { width: 100%; margin-left: 0; overflow-x: auto; }
   .realworld-summary { padding-inline: 12px; }

@@ -23,6 +23,12 @@
     --button-text: #17212b;
     --button-text-inverse: #ffffff;
     --header-bg: rgba(255, 255, 255, 0.94);
+    --app-header-height: 56px;
+    --app-control-height: 36px;
+    --app-control-radius: 7px;
+    --header-control-size: var(--app-control-height);
+    --header-control-radius: var(--app-control-radius);
+    --header-action-gap: 8px;
     --overlay: rgba(0, 0, 0, 0.4);
     --overlay-strong: rgba(0, 0, 0, 0.45);
     --shadow: rgba(28, 39, 50, 0.14);
@@ -178,7 +184,7 @@ select:focus-visible {
     width: 100%;
     max-width: none;
     margin: 0;
-    padding: 56px 0 0;
+    padding: var(--app-header-height) 0 0;
     min-height: 100vh;
     text-align: initial;
     box-sizing: border-box;
@@ -186,10 +192,10 @@ select:focus-visible {
 
 .side-panel {
     position: fixed;
-    top: 56px;
+    top: var(--app-header-height);
     right: 0;
     width: 320px;
-    height: calc(100vh - 56px);
+    height: calc(100vh - var(--app-header-height));
     background: var(--surface);
     color: var(--button-text);
     border-left: 1px solid var(--border);
@@ -1271,7 +1277,7 @@ select:focus-visible {
 
 .timeline-shell {
     width: 100%;
-    height: calc(100vh - 56px);
+    height: calc(100vh - var(--app-header-height));
     padding: 0;
     box-sizing: border-box;
 }
@@ -1458,9 +1464,10 @@ select:focus-visible {
     top: 0;
     left: 0;
     right: 0;
-    height: 56px;
+    height: var(--app-header-height);
+    box-sizing: border-box;
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
     justify-items: center;
     background: var(--header-bg);
@@ -1471,21 +1478,24 @@ select:focus-visible {
 }
 
 .app-title {
+    grid-column: 2;
     margin: 0;
     font-size: 18px;
     font-weight: 700;
     color: var(--text-primary);
+    white-space: nowrap;
 }
 
 .menu-button,
 .manual-button,
 .settings-button,
 .portal-link {
-    width: 36px;
-    height: 36px;
+    width: var(--header-control-size);
+    height: var(--header-control-size);
+    box-sizing: border-box;
     border: 1px solid var(--border-strong);
     background: var(--button-bg);
-    border-radius: 6px;
+    border-radius: var(--header-control-radius);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1510,19 +1520,21 @@ select:focus-visible {
 }
 
 .header-left {
+    grid-column: 1;
     justify-self: start;
     margin-left: 12px;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--header-action-gap);
 }
 
 .header-right {
+    grid-column: 3;
     justify-self: end;
     margin-right: 12px;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--header-action-gap);
 }
 
 .portal-link svg {
@@ -1635,10 +1647,10 @@ select:focus-visible {
 .side-menu,
 .settings-menu {
     position: fixed;
-    top: 56px;
+    top: var(--app-header-height);
     left: 0;
     width: 280px;
-    height: calc(100vh - 56px);
+    height: calc(100vh - var(--app-header-height));
     background: var(--surface);
     color: var(--button-text);
     box-shadow: 2px 0 12px var(--shadow);
@@ -1852,12 +1864,12 @@ select:focus-visible {
 
 @media (max-width: 720px) {
     :root {
-        --mobile-detail-panel-height: min(74vh, calc(100vh - 56px));
+        --mobile-detail-panel-height: min(74vh, calc(100vh - var(--app-header-height)));
     }
 
     @supports (height: 100dvh) {
         :root {
-            --mobile-detail-panel-height: min(74dvh, calc(100dvh - 56px));
+            --mobile-detail-panel-height: min(74dvh, calc(100dvh - var(--app-header-height)));
         }
     }
 
@@ -1877,7 +1889,15 @@ select:focus-visible {
     }
 
     .app-title {
-        display: none;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+    }
+
+    .header-right {
+        grid-column: 2;
     }
 
     .side-panel.open {

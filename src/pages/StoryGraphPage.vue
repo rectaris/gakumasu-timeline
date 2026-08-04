@@ -8,8 +8,7 @@ import {
   ref,
   watch,
 } from "vue";
-import TimelineModeSwitcher from "../components/TimelineModeSwitcher.vue";
-import LoginLink from "../components/LoginLink.vue";
+import ApplicationHeader from "../components/ApplicationHeader.vue";
 import { storyGraph } from "../data/storyGraph";
 import {
   createNarrativeEventUrl,
@@ -331,26 +330,10 @@ onUnmounted(() => {
     role="main"
     aria-labelledby="story-graph-page-title"
   >
-    <header class="story-header">
-      <div class="story-header__identity">
-        <span class="story-header__eyebrow">STORY GRAPH</span>
-        <h1
-          id="story-graph-page-title"
-          data-timeline-page-heading
-          tabindex="-1"
-        >物語イベント</h1>
-      </div>
-      <div class="story-header__actions">
-        <TimelineModeSwitcher />
-        <LoginLink />
-        <a
-          class="story-portal-link"
-          href="https://rectaris.github.io/"
-          aria-label="rectaris.github.ioへ移動"
-          title="rectaris.github.ioへ移動"
-        >↗</a>
-      </div>
-    </header>
+    <ApplicationHeader
+      title="物語イベント"
+      title-id="story-graph-page-title"
+    />
 
     <div class="story-toolbar" aria-label="物語イベントの絞り込み">
       <div class="story-toolbar__intro">
@@ -664,74 +647,14 @@ onUnmounted(() => {
 <style scoped>
 .story-page {
   display: flex;
-  min-height: calc(100vh - 56px);
-  height: calc(100vh - 56px);
+  min-height: calc(100vh - var(--app-header-height));
+  height: calc(100vh - var(--app-header-height));
   flex-direction: column;
   overflow: hidden;
   background:
     radial-gradient(circle at 14% 12%, rgba(208, 94, 111, 0.09), transparent 30rem),
     radial-gradient(circle at 84% 84%, rgba(43, 143, 138, 0.08), transparent 34rem),
     var(--app-bg);
-}
-
-.story-header {
-  position: fixed;
-  z-index: 1200;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 56px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 0 14px 0 18px;
-  border-bottom: 1px solid var(--border-soft);
-  background: var(--header-bg);
-  box-shadow: 0 4px 16px var(--shadow);
-  backdrop-filter: blur(14px);
-}
-
-.story-header__identity {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  min-width: 0;
-}
-
-.story-header__identity h1 {
-  margin: 0;
-  color: var(--text-primary);
-  font-size: 18px;
-  white-space: nowrap;
-}
-
-.story-header__eyebrow {
-  color: #aa334a;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 0.14em;
-}
-
-.story-header__actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.story-portal-link {
-  display: grid;
-  width: 34px;
-  height: 34px;
-  place-items: center;
-  border: 1px solid var(--border-strong);
-  border-radius: 7px;
-  background: var(--button-bg);
-  color: var(--button-text);
-  font-size: 17px;
-  font-weight: 800;
-  text-decoration: none;
 }
 
 .story-toolbar {
@@ -787,9 +710,9 @@ onUnmounted(() => {
 .story-filters select,
 .story-filters button {
   box-sizing: border-box;
-  min-height: 34px;
+  min-height: var(--app-control-height);
   border: 1px solid var(--border-strong);
-  border-radius: 7px;
+  border-radius: var(--app-control-radius);
   background: var(--button-bg);
   color: var(--button-text);
   font: inherit;
@@ -1242,22 +1165,8 @@ onUnmounted(() => {
 }
 
 @media (max-width: 620px) {
-  .story-header {
-    padding-right: 8px;
-    padding-left: 12px;
-  }
-
-  .story-header__eyebrow,
-  .story-portal-link {
-    display: none;
-  }
-
-  .story-header__identity h1 {
-    font-size: 16px;
-  }
-
   .story-page {
-    height: calc(100dvh - 56px);
+    height: calc(100dvh - var(--app-header-height));
   }
 
   .story-toolbar {

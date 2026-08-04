@@ -18,15 +18,15 @@
 .login-link {
   display: inline-flex;
   flex: 0 0 auto;
-  min-width: 36px;
-  height: 36px;
+  min-width: var(--header-control-size);
+  height: var(--header-control-size);
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
   gap: 6px;
   padding: 0 10px;
   border: 1px solid var(--border-strong);
-  border-radius: 7px;
+  border-radius: var(--header-control-radius);
   background: var(--button-bg);
   color: var(--button-text);
   font-size: 13px;
