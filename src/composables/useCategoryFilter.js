@@ -1,5 +1,7 @@
 import { computed, reactive, ref, watch } from "vue";
-import { backgroundFromTextColor, normalizeHexColor } from "../utils/colors";
+import { normalizeHexColor } from "../utils/colors";
+import { resolveColorDesign } from "../utils/colorTokens";
+import { summarizeEventAuditQuality } from "../utils/events";
 
 const CATEGORY_OPTIONS = [
   { id: "idol", label: "アイドルコミュ" },
@@ -49,6 +51,10 @@ function sortLanes(lanes, sortMode) {
   }
 }
 
+function optionIds(options) {
+  return new Set(options.map((option) => option.id));
+}
+
 function hasValidEventRange(event, laneId, laneLabel, category) {
   if (!event?.start?.year || !event?.start?.month) {
     console.warn("Invalid event start date", {
@@ -76,7 +82,13 @@ function normalizeLanes(category, lanes) {
   return lanes.map((lane, index) => {
     const laneId = lane.id || `${category}_${index}`;
     const laneLabel = normalizeLaneLabel(lane);
-    const laneColor = normalizeLaneColor(lane, index);
+    const fallbackColor = normalizeLaneColor(lane, index);
+    const { colorSource, colorRoles } = resolveColorDesign(lane, {
+      category,
+      fallbackColor,
+      fallbackIndex: index
+    });
+    const laneColor = colorSource.sourceColor ?? fallbackColor;
     const events = Array.isArray(lane.events)
       ? lane.events.filter((event) =>
           hasValidEventRange(event, laneId, laneLabel, category),
@@ -88,8 +100,10 @@ function normalizeLanes(category, lanes) {
       id: laneId,
       name: laneLabel,
       color: laneColor,
-      textColor: laneColor,
-      labelBgColor: backgroundFromTextColor(laneColor),
+      colorSource,
+      colorRoles,
+      textColor: colorRoles.labelText,
+      labelBgColor: colorRoles.labelBg,
       events,
     };
   });
@@ -187,6 +201,7 @@ export function useCategoryFilter({
       key: lane.id,
       label: lane.name,
       eventCount: lane.events.length,
+      qualitySummary: summarizeEventAuditQuality(lane.events),
     }));
   });
 
@@ -200,7 +215,7 @@ export function useCategoryFilter({
   const laneSortMode = computed({
     get: () => laneSortModes[selectedCategory.value],
     set: (value) => {
-      laneSortModes[selectedCategory.value] = value;
+      setLaneSortMode(selectedCategory.value, value);
     },
   });
 
@@ -230,6 +245,78 @@ export function useCategoryFilter({
 
   function isLaneSelected(category, laneKey) {
     return selectedLaneKeys[category].includes(laneKey);
+  }
+
+  function isValidCategory(category) {
+    return optionIds(CATEGORY_OPTIONS).has(category);
+  }
+
+  function isValidLaneSortMode(sortMode) {
+    return optionIds(SORT_OPTIONS).has(sortMode);
+  }
+
+  function allLaneIdsForCategory(category) {
+    return (sortedLanesByCategory.value[category] || []).map((lane) => lane.id);
+  }
+
+  function selectedLaneIdsForCategory(category) {
+    return selectedLaneKeys[category] || [];
+  }
+
+  function setLaneSortMode(category, sortMode) {
+    if (!isValidCategory(category) || !isValidLaneSortMode(sortMode)) return false;
+    laneSortModes[category] = sortMode;
+    return true;
+  }
+
+  function selectAllLanes(category) {
+    if (!isValidCategory(category)) return false;
+    selectedLaneKeys[category] = allLaneIdsForCategory(category);
+    return true;
+  }
+
+  function setLaneSelection(category, laneIds, { allowEmpty = true } = {}) {
+    if (!isValidCategory(category)) return false;
+
+    const validLaneIds = new Set(allLaneIdsForCategory(category));
+    const nextSelection = laneIds.filter((id) => validLaneIds.has(id));
+
+    if (!allowEmpty && nextSelection.length === 0) return false;
+
+    selectedLaneKeys[category] = nextSelection;
+    return true;
+  }
+
+  function applyLaneVisibilityState(category, laneSelection) {
+    if (!laneSelection) return false;
+
+    const allLaneIds = allLaneIdsForCategory(category);
+    if (!allLaneIds.length) return false;
+
+    const requestedIds = laneSelection.ids || [];
+    const validRequestedIds = requestedIds.filter((id) => allLaneIds.includes(id));
+
+    if (
+      requestedIds.length > 0 &&
+      validRequestedIds.length === 0 &&
+      !laneSelection.hasExplicitEmptyList
+    ) {
+      return false;
+    }
+
+    if (laneSelection.mode === "include") {
+      return setLaneSelection(category, validRequestedIds);
+    }
+
+    if (laneSelection.mode === "exclude") {
+      const hiddenIds = new Set(validRequestedIds);
+      return setLaneSelection(
+        category,
+        allLaneIds.filter((id) => !hiddenIds.has(id)),
+      );
+    }
+
+    return false;
   }
 
   function toggleLane(category, laneKey) {
@@ -280,6 +367,14 @@ export function useCategoryFilter({
     allSelected,
     isIndeterminate,
     isLaneSelected,
+    isValidCategory,
+    isValidLaneSortMode,
+    allLaneIdsForCategory,
+    selectedLaneIdsForCategory,
+    setLaneSortMode,
+    selectAllLanes,
+    setLaneSelection,
+    applyLaneVisibilityState,
     toggleLane,
     toggleAll,
   };

@@ -5,8 +5,19 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "test": "vitest run",
+    "measure:layout": "node scripts/measure-timeline-layout.mjs",
+    "generate:data": "node scripts/generate-data.mjs",
+    "collect:realworld": "node scripts/collect-realworld-sources.mjs",
+    "review:realworld": "node scripts/generate-realworld-review-inventory.mjs",
+    "review:realworld:decide": "node scripts/set-realworld-review-decision.mjs",
+    "story:id": "node scripts/create-story-id.mjs",
+    "validate:data": "node scripts/generate-data.mjs --check && node scripts/validate-data.mjs && node scripts/validate-realworld-intake.mjs",
+    "verify": "npm run validate:data && npm run test && npm run build && node scripts/verify-production-story-data.mjs",
     "build": "vite build",
-    "deploy": "gh-pages -d dist",
+    "build:curiretas": "vite build --base=/gakumastool/timeline/ && node scripts/prepare-cloudflare-assets.mjs",
+    "deploy": "node -e \"console.error('Deployment is handled by GitHub Actions to rectaris/rectaris.github.io under /timeline/.'); process.exit(1)\"",
+    "deploy:curiretas": "npm run build:curiretas && npx --yes wrangler@4.118.0 deploy --config wrangler.timeline.jsonc",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -15,7 +26,8 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",
-    "gh-pages": "^6.3.0",
-    "vite": "^7.2.4"
+    "playwright": "^1.59.1",
+    "vite": "^7.2.4",
+    "vitest": "^3.2.4"
   }
 }

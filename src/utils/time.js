@@ -1,5 +1,13 @@
 import { DAYS_IN_MONTH } from "./constants";
 
+export function yearOf(year) {
+  return year;
+}
+
+export function yearsAgo(n) {
+  return 1 - n;
+}
+
 export function timeValue(year, month) {
   return year * 12 + (month - 1);
 }

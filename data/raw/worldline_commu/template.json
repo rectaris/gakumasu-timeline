@@ -1,0 +1,61 @@
+{
+  "id": "replace_me_lane_id",
+  "name": "レーン名",
+  "color": "#000000",
+  "events": [
+    {
+      "id": "replace_me_event_id",
+      "start": {
+        "year": 1,
+        "month": 4,
+        "day": 1
+      },
+      "end": {
+        "year": 1,
+        "month": 4,
+        "day": 10
+      },
+      "title": "イベントタイトル",
+      "detail": "イベント詳細説明",
+      "occurrenceType": "singleWithinRange",
+      "dateConfidence": "rangeOnly",
+      "sourceBasis": "explicit",
+      "sourceStatus": "confirmed",
+      "rangeReason": "sourceRange",
+      "worldlineId": [
+        "idol_story"
+      ],
+      "participants": [
+        "saki_hanami"
+      ],
+      "source": [
+        "出典コミュ名 第1話"
+      ],
+      "sourceDetails": [
+        {
+          "id": "source_id_optional",
+          "label": "出典コミュ名 第1話",
+          "status": "confirmed",
+          "claim": "候補期間の根拠",
+          "supports": [
+            "event",
+            "date"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "summary": "出典ごとに候補時期が異なる",
+          "sources": [
+            "出典コミュ名 第1話",
+            "別出典"
+          ],
+          "resolution": "未解決"
+        }
+      ],
+      "note": [
+        "日付幅の根拠や未登録人物などの補足"
+      ]
+    }
+  ]
+}

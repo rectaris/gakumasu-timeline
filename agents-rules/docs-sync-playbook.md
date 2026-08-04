@@ -17,6 +17,17 @@ This document is agent-only workflow guidance for keeping human-facing docs alig
 - Review `docs/ui-behavior.md` when UI behavior or control behavior changed.
 - Review `docs/processing-flow.md` when implementation flow or derived data flow changed.
 - Review `docs/data-structure.md` when event fields, IDs, or data contracts changed.
+- Review `docs/deploy.md` when deployment, public path, hosted subdirectory, or public link behavior changed.
+
+## Change-To-Docs Matrix
+
+| Change type | Docs to review |
+| --- | --- |
+| UI labels, controls, panels, menus, settings, manual, or selection behavior | `docs/manual.md`, `docs/ui-behavior.md` |
+| Main user workflow or project overview | `README.md` |
+| Data fields, IDs, contracts, extraction, or normalization | `docs/data-structure.md`, `docs/processing-flow.md` |
+| Deployment, public paths, hosting, or links | `docs/deploy.md`, `README.md` when user-facing |
+| Agent workflow, validation, helper, or policy behavior | `AGENTS.md`, `docs/agent/`, `agents-rules/` |
 
 ## Update Rules
 

@@ -1,0 +1,1815 @@
+{
+  "schemaVersion": 1,
+  "sourceRegistryId": "origin_imas_gakumas_playlist",
+  "collectedAt": "2026-07-29T12:10:40.157Z",
+  "status": "partial",
+  "pagination": {
+    "pagesFetched": 2,
+    "pageLimit": 2,
+    "nextPageAvailable": true,
+    "fetchedItemCount": 100,
+    "retainedItemCount": 0
+  },
+  "items": [
+    {
+      "id": "intake_c4d20f46e8c899d574a4004b94365133ab8b12a82a640e1bddf988d3a28eb917",
+      "resourceType": "youtube-video",
+      "externalId": "_4NgVxbU1og",
+      "resourceKey": "youtube:_4NgVxbU1og",
+      "canonicalUrl": "https://www.youtube.com/watch?v=_4NgVxbU1og",
+      "title": "【学マス】姫崎 莉波「H.I.F」出場告知PV【アイドルマスター】",
+      "summary": "「H.I.F」頂上決戦、開幕！\n姫崎 莉波（ひめさき りなみ）　CV.薄井 友里\n\n#姫崎莉波\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n■視聴にあたっての注意事項\nご覧いただく映像によっては、激しく点滅する場面が含まれることがあります。\n映像内の激しい点滅により、ごくまれにけいれん発作や失神などの光感受性発作の症状を起こされる方がいらっしゃいます。\nこうした症状のある方は、必ず事前に医師へ相談してください。また、こうした症状の予防のため、画面から十分離れ、お部屋を明るくしてご鑑賞ください。\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシー",
+      "publishedAt": "2026-05-11T09:00:49.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "8f77337de17a5c0fa64a876ae277cd7c159ef848fe04f30d0d64b7e06a1cfb91",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_a7f23e6f827d3d087838937e9c468d757a7dcf738a0119d87798bafedf025d42",
+      "resourceType": "youtube-video",
+      "externalId": "_bpsZRUxxJU",
+      "resourceKey": "youtube:_bpsZRUxxJU",
+      "canonicalUrl": "https://www.youtube.com/watch?v=_bpsZRUxxJU",
+      "title": "【学マス】新プロデュース＆新シナリオ「H.I.F編」実装決定PV【アイドルマスター】",
+      "summary": "解放条件などは4月3日の生配信にて！\n\n📺4月3日(金) 19:00～（予定）\nhttps://youtube.com/live/PU6ESnZOTxA\n\n▼出演\n✧松田 彩音 (花海 佑芽役)\n✧長月 あおい (花海 咲季役)\n✧山本 亮 (学園アイドルマスタープロデューサー)\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps:/",
+      "publishedAt": "2026-04-02T09:00:46.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "57ba139d74f77edb3477b177d4f5e1212b5c2c53a5f0e570746df11b6ac99d4e",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_c59c6eeb907f0d8377ad43790c8e6cde864db1bc07eeefbdbe1473a8c53120b5",
+      "resourceType": "youtube-video",
+      "externalId": "0Goji89GFX0",
+      "resourceKey": "youtube:0Goji89GFX0",
+      "canonicalUrl": "https://www.youtube.com/watch?v=0Goji89GFX0",
+      "title": "【学マス】CM「引き放題って…好き？ ことね＆星南編」【アイドルマスター】",
+      "summary": "学園アイドルマスター 引き放題ガシャ開催中！\n終了演出が出るまでの間、\n無料で10連以上ガシャ引き放題！\n\n引き放題ガシャログインボーナス＆ミッション開催期間：2025/12/26 11:00～2026/2/1 4:59\n引き放題ガシャ開催期間：2025/12/26 11:00～2026/2/1 23:59\n\n※「TVCM放映記念引き放題ガシャ」（以下「引き放題ガシャ」）の提供内容は、プラチナガシャと同様になります\n※引き放題ガシャの期間中、ゲームへのログイン・ゲーム内ミッション達成によって挑戦権が最大５回得られます\n※引き放題ガシャでは終了演出が出るまでの間、無料でガシャを引き続けることができます\n※期間・内容は予告なく変更する場合があります\n※詳細はゲーム内をご確認ください\n\n\n\n▼学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター #学マス\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサ",
+      "publishedAt": "2025-12-26T08:00:03.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "d84c3a7f901779ae2c547cbe47674b85915460a71128f7eb46623dbb6c674b7b",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_d4cfde90669a1735c49b364e7f30146181e342879bfa237740e3a88459ea0bff",
+      "resourceType": "youtube-video",
+      "externalId": "0Q-fxRJakCY",
+      "resourceKey": "youtube:0Q-fxRJakCY",
+      "canonicalUrl": "https://www.youtube.com/watch?v=0Q-fxRJakCY",
+      "title": "【生配信】学園アイドルマスター ～初星学園HR 2周年目前SP～【アイドルマスター】",
+      "summary": "📅5/8(金) 19：00～\n「学園アイドルマスター」の最新情報をお届けする生配信『初星学園HR』を放送予定！\n\n5/16に2周年を迎える学園アイドルマスター！\n新プロデュース&シナリオ「H.I.F編」についてなど、2周年関連情報をたっぷりお届けいたします！\n \nプロデューサーの皆さん、お楽しみに！\n\n【出演者】\n長月 あおい（花海 咲季役）\n小鹿 なお（月村 手毬役）\n飯田 ヒカル（藤田 ことね役）\n七瀬 つむぎ（有村 麻央役）\n薄井 友里（姫崎 莉波役）\n春咲 暖（秦谷 美鈴役）\n「学園アイドルマスター」プロデューサー 山本 亮\n「学園アイドルマスター」プロデューサー 佐藤 大地\n\n#学園アイドルマスター #学マス #初星学園HR\n#長月あおい #花海咲季 #小鹿なお #月村手毬 #飯田ヒカル #藤田ことね\n#七瀬つむぎ #有村麻央 #薄井友里 #姫崎莉波 #春咲暖 #秦谷美鈴 \n\n【関連リンク】\n■「学園アイドルマスター」公式サイト\nhttps://gakuen.idolmaster-official.jp/\n\n■「学園アイドルマスター」公式X\nhttps://x.com/gkmas_official\n\n■「学園アイドルマスター」公式Discord\nhttps://discord.gg/sgSdejpp3Z\n\n■App Store\nhttps://apps.apple.co",
+      "publishedAt": "2026-05-08T11:50:35.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "a6260232dd7cc438a5929b752a86ef842304711162badb065f647e2db0e76c84",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_25d7a97514e52b22cd1d18ccb8851e5675031f54b9e9228fe707c2331a642162",
+      "resourceType": "youtube-video",
+      "externalId": "1wEIovHX-bo",
+      "resourceKey": "youtube:1wEIovHX-bo",
+      "canonicalUrl": "https://www.youtube.com/watch?v=1wEIovHX-bo",
+      "title": "【ゆめぱしー】「みちなるひろがる」サビダンス 教室ver.【学マス】【アイドルマスター】#shorts",
+      "summary": "#倉本千奈 と #篠澤広 のデュオユニット #ゆめぱしー で、オリジナル楽曲 #みちなるひろがる を踊ってみました♪\n\n\n「みちなるひろがる ゆめぱしーガシャ」2026年1月27日(火)～開催予定！\n※詳細は公式X・ゲーム内をご確認ください\n\n▶MUSIC\n歌：ゆめぱしー\n作詞作曲編曲：いよわ\n\n▶MOVIE\n省略キャラデザイン:和谷 興\n原画: 和谷 興\nダンスパート原画: specinef\n作画監督: U.\n動画/仕上: スタジオドット タカバヤシ\n色彩設計/色指定検査: 小松亜理沙（WITSTUDIO）\n撮影: 郡司章(maxilla), Eita(maxilla)\nアニメーションプロデューサー: 吉川貴哉（aeoniumLLC）\n\n▼#学マス DLはこちら▼\nhttps://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://twitter.com/gkmas_official \n\n#学園アイドルマスター\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお",
+      "publishedAt": "2026-01-26T09:00:04.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "e827429217cc22408a4b0b86fbcc908dff8f18b40f88b8fa543faec6f1711b63",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_21f6ebdceced7de2345ff6882b5fa3eb94ce1f0c54a71e75aa89785fa66963f6",
+      "resourceType": "youtube-video",
+      "externalId": "26dpDbWQmLY",
+      "resourceKey": "youtube:26dpDbWQmLY",
+      "canonicalUrl": "https://www.youtube.com/watch?v=26dpDbWQmLY",
+      "title": "花海咲季 生誕ミニライブ2026【#花海咲季生誕祭2026】",
+      "summary": "#花海咲季生誕祭2026\n\n【花海咲季】ソロ曲 プレイリスト\nhttps://www.youtube.com/playlist?list=PL8AmPgz38WkWG_0-nkHs8Ob3Po1T79x9u\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら】\nhttps://idolmaster-official.jp/\n【アイドルマスター関連グッズ情報はこちらから！- アソビストア】\nhttps://asobistore.jp/content/title",
+      "publishedAt": "2026-04-01T14:55:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "308edb591b2ea82c00a20dfe62c1e27d8ab66e20b871abe64e1764d8886a5b3d",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_ff81eefbc7d3a86430eafa84d54aecc42d3f06c3048cc00873f7267b796e3bdb",
+      "resourceType": "youtube-video",
+      "externalId": "2Nj9mKhi1UA",
+      "resourceKey": "youtube:2Nj9mKhi1UA",
+      "canonicalUrl": "https://www.youtube.com/watch?v=2Nj9mKhi1UA",
+      "title": "藤田ことね 生誕ミニライブ2026【#藤田ことね生誕祭2026】",
+      "summary": "#藤田ことね生誕祭2026\n\n【藤田ことね】ソロ曲 プレイリスト\nhttps://www.youtube.com/watch?v=WCDLyXJgbIo&list=PL8AmPgz38WkVqwfdjwaPsP8d6Dd1AlShU\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら】\nhttps://idolmaster-official.jp/\n【アイドルマスター関連グッズ情報はこちらから！- アソビストア】\nhttps://asobistore.jp/",
+      "publishedAt": "2026-04-28T14:55:21.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "7d1e3f83caf4baf3b2f81b2e97877236b6e1bdab8a2270cd7ed04670ad36ecf3",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_6a42e8c466e41368db865e973445c206f5deef66a32caabc0fb79d562e417b73",
+      "resourceType": "youtube-video",
+      "externalId": "3_UoePmrjFQ",
+      "resourceKey": "youtube:3_UoePmrjFQ",
+      "canonicalUrl": "https://www.youtube.com/watch?v=3_UoePmrjFQ",
+      "title": "【学マス】有村 麻央「H.I.F」出場告知PV【アイドルマスター】",
+      "summary": "「H.I.F」頂上決戦、開幕！\n有村 麻央（ありむら まお）　CV.七瀬 つむぎ\n\n#有村麻央\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n■視聴にあたっての注意事項\nご覧いただく映像によっては、激しく点滅する場面が含まれることがあります。\n映像内の激しい点滅により、ごくまれにけいれん発作や失神などの光感受性発作の症状を起こされる方がいらっしゃいます。\nこうした症状のある方は、必ず事前に医師へ相談してください。また、こうした症状の予防のため、画面から十分離れ、お部屋を明るくしてご鑑賞ください。\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーは",
+      "publishedAt": "2026-05-05T09:00:05.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "d70b10d62dfd7c69745c79ea1de0ffc7331af528518cffc6f84174b60f929ebe",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_ad25846293fd725bd6390c57cbedf4166715a0bc329aeafc41efecfbc024003b",
+      "resourceType": "youtube-video",
+      "externalId": "38V1ExbL_Ig",
+      "resourceKey": "youtube:38V1ExbL_Ig",
+      "canonicalUrl": "https://www.youtube.com/watch?v=38V1ExbL_Ig",
+      "title": "【学マス】CM「引き放題って…好き？ 咲季＆佑芽編」【アイドルマスター】",
+      "summary": "学園アイドルマスター 引き放題ガシャ開催中！\n終了演出が出るまでの間、\n無料で10連以上ガシャ引き放題！\n\n引き放題ガシャログインボーナス＆ミッション開催期間：2025/12/26 11:00～2026/2/1 4:59\n引き放題ガシャ開催期間：2025/12/26 11:00～2026/2/1 23:59\n\n※「TVCM放映記念引き放題ガシャ」（以下「引き放題ガシャ」）の提供内容は、プラチナガシャと同様になります\n※引き放題ガシャの期間中、ゲームへのログイン・ゲーム内ミッション達成によって挑戦権が最大５回得られます\n※引き放題ガシャでは終了演出が出るまでの間、無料でガシャを引き続けることができます\n※期間・内容は予告なく変更する場合があります\n※詳細はゲーム内をご確認ください\n\n\n\n▼学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター #学マス\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサ",
+      "publishedAt": "2025-12-26T03:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "f85421fdde5f8f756d604e0a446ed66fdd21c79e2d67eb76d19f8216ad2e7264",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_5852395c4550cb873543dfd20849cbdf0f74dc5cbcbb3513b5ab5b26ab4cd28c",
+      "resourceType": "youtube-video",
+      "externalId": "3It_fFq0pKY",
+      "resourceKey": "youtube:3It_fFq0pKY",
+      "canonicalUrl": "https://www.youtube.com/watch?v=3It_fFq0pKY",
+      "title": "【RippleSign】「SUGAR FLAVOR」サビダンス バックステージver.【学マス】【アイドルマスター】#shorts",
+      "summary": "#有村麻央 と #姫崎莉波 のデュオユニット #RippleSign で、オリジナル楽曲 #SUGAR_FLAVOR をライブ前のバックステージで踊ってみました♪\nユニット衣装にも注目です！\n\n\n「SUGAR FLAVOR RippleSignガシャ」2026年6月15日(月)～開催予定！\n※詳細は公式X・ゲーム内をご確認ください\n\n▼MUSIC\n歌：SUGAR FLAVOR\n作詞作曲編曲：Kai Takahashi\n\n▼MOVIE\n省略キャラデザイン: ナポりん\n原画:specinef\n作画監督: U.\n動画/仕上:REC Animation Factory\n色彩設計/色指定検査: 小松亜理沙（WITSTUDIO）\n背景:三原伸明\n撮影:REC Animation Factory\n松井 士\n硲野 継\n鈴木 優\n菅木 みなみ\n田口 雅大\n猪﨑 武尊\nアニメーションプロデューサー: 吉川貴哉（aeoniumLLC）\n\n▼#学マス DLはこちら▼\nhttps://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://twitter.com/gkmas_official \n\n#学園アイドルマスター\n\n◆アイドルマスターチャンネルとは？\n「YouTubeで",
+      "publishedAt": "2026-06-14T10:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "7609e912d67fc883846fd4bde85ba9b2b18d1f5cca234ddc1449fd573d33e265",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_b0bcf8de558556547a08bbfa2ad9fe0e882e3ff6c1b3668d07ee0217d27c1df5",
+      "resourceType": "youtube-video",
+      "externalId": "3waHX7wT9C4",
+      "resourceKey": "youtube:3waHX7wT9C4",
+      "canonicalUrl": "https://www.youtube.com/watch?v=3waHX7wT9C4",
+      "title": "【学マス】Luna say maybe／月村手毬｜The 2nd Period H.I.F選抜試験【アイドルマスター】",
+      "summary": "2026年5月16日(土)･5月17日(日) に幕張イベントホールにて開催された\n「学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション)」\nのxRライブストリーミングチケットが2026年6月22日(月)まで発売中！\n是非チェックしてください！\n\n★ご購入はこちらから！★\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【",
+      "publishedAt": "2026-06-14T11:05:32.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "146efec00957c39af25c237ccbe91590e5f35271b641094c7f7ce2392ec4a113",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_8697a18b414bdbe000df982627a43bec840f66c3edd7680801796fbd28c76744",
+      "resourceType": "youtube-video",
+      "externalId": "4gFz8YZA2H8",
+      "resourceKey": "youtube:4gFz8YZA2H8",
+      "canonicalUrl": "https://www.youtube.com/watch?v=4gFz8YZA2H8",
+      "title": "【学マス】CM「引き放題って…好き？ 手毬＆美鈴編」【アイドルマスター】",
+      "summary": "学園アイドルマスター 引き放題ガシャ開催中！\n終了演出が出るまでの間、\n無料で10連以上ガシャ引き放題！\n\n引き放題ガシャログインボーナス＆ミッション開催期間：2025/12/26 11:00～2026/2/1 4:59\n引き放題ガシャ開催期間：2025/12/26 11:00～2026/2/1 23:59\n\n※「TVCM放映記念引き放題ガシャ」（以下「引き放題ガシャ」）の提供内容は、プラチナガシャと同様になります\n※引き放題ガシャの期間中、ゲームへのログイン・ゲーム内ミッション達成によって挑戦権が最大５回得られます\n※引き放題ガシャでは終了演出が出るまでの間、無料でガシャを引き続けることができます\n※期間・内容は予告なく変更する場合があります\n※詳細はゲーム内をご確認ください\n\n\n\n▼学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター #学マス\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサ",
+      "publishedAt": "2025-12-26T08:00:08.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "2ebf5ed7221ea2a546e407b815316ceca79959f7fb931f4cfeddd914ed779563",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_426eb17458812f1b43a8192e99e1f5e86c839943ffc4794f81ad4bc1b4c7be31",
+      "resourceType": "youtube-video",
+      "externalId": "6DFbpEh9g54",
+      "resourceKey": "youtube:6DFbpEh9g54",
+      "canonicalUrl": "https://www.youtube.com/watch?v=6DFbpEh9g54",
+      "title": "【学マス】Fighting My Way／花海咲季｜The 2nd Period H.I.F選抜試験【アイドルマスター】",
+      "summary": "2026年5月16日(土)･5月17日(日) に幕張イベントホールにて開催された\n「学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション)」\nのxRライブストリーミングチケットが2026年6月22日(月)まで発売中！\n是非チェックしてください！\n\n★ご購入はこちらから！★\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【",
+      "publishedAt": "2026-06-13T11:10:11.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "d249c6862d49303a0a52d677494338d968907bed81eef7d9cb380915d33c017e",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_1ecc7df93471b79ee5f414c0835722e7f05f220d25bb01e6186ea43c690edd8a",
+      "resourceType": "youtube-video",
+      "externalId": "7lijA13emtU",
+      "resourceKey": "youtube:7lijA13emtU",
+      "canonicalUrl": "https://www.youtube.com/watch?v=7lijA13emtU",
+      "title": "【学マス】REVERSI「ときめきエモーション」 予告PV【アイドルマスター】",
+      "summary": "ときめきエモーション REVERSIガシャ開催決定！\n\nガシャ開始は4/1(水)を予定しております！\nお楽しみに！\n\n#学園アイドルマスター \n#REVERSI\n#ときめきエモーション\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://x.com/gkmas_official\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_",
+      "publishedAt": "2026-03-28T10:00:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "e5fb70c7b8172d8104ff93b54a34406825d45ab17b1ad4fe1074b08d1f12b637",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_014b6347c8102af165c53e13d3f42980f26fae558191d5effa8bb454f52ca584",
+      "resourceType": "youtube-video",
+      "externalId": "7vbGmeZBFJI",
+      "resourceKey": "youtube:7vbGmeZBFJI",
+      "canonicalUrl": "https://www.youtube.com/watch?v=7vbGmeZBFJI",
+      "title": "【学マス】紫雲 清夏「H.I.F編」シナリオ告知PV【アイドルマスター】",
+      "summary": "学園アイドルマスター2周年！\n\n新シナリオ『H.I.F編』\n頂上決戦、開幕！\n\n#紫雲清夏\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータル",
+      "publishedAt": "2026-06-04T09:35:33.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "6b27cddea874d5ea4969061bebbd122194641f3a42ae1ea573159a7446653409",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_dd32343519854aec591bf9e0a8799cc52807e9b16c87137a845ebbbbb8c5526c",
+      "resourceType": "youtube-video",
+      "externalId": "84jwPXNv3Lw",
+      "resourceKey": "youtube:84jwPXNv3Lw",
+      "canonicalUrl": "https://www.youtube.com/watch?v=84jwPXNv3Lw",
+      "title": "【学マス】紫雲 清夏「H.I.F」出場告知PV【アイドルマスター】",
+      "summary": "「H.I.F」頂上決戦、開幕！\n紫雲 清夏（しうん すみか）　CV.湊 みや\n\n#紫雲清夏\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n■視聴にあたっての注意事項\nご覧いただく映像によっては、激しく点滅する場面が含まれることがあります。\n映像内の激しい点滅により、ごくまれにけいれん発作や失神などの光感受性発作の症状を起こされる方がいらっしゃいます。\nこうした症状のある方は、必ず事前に医師へ相談してください。また、こうした症状の予防のため、画面から十分離れ、お部屋を明るくしてご鑑賞ください。\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこち",
+      "publishedAt": "2026-05-07T09:00:16.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "979d304552ce6223e7d891539114f75a5c3144e92826806e313b22393cec5644",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_783a8ee575f8c6db91f7da3c400c2970761e0479bbcef177f219bbf31465002a",
+      "resourceType": "youtube-video",
+      "externalId": "8Vvev_9bEm0",
+      "resourceKey": "youtube:8Vvev_9bEm0",
+      "canonicalUrl": "https://www.youtube.com/watch?v=8Vvev_9bEm0",
+      "title": "【学マス】雨夜 燕 紹介PV【アイドルマスター】",
+      "summary": "「学園アイドルマスター」\n雨夜 燕（あまや つばめ）　CV.天音 ゆかり　紹介PVを公開！\n \n▼雨夜 燕 紹介文\n初星学園生徒会副会長。学園No.2のアイドル。\n実力相応のプライドを持ち、尊大な態度を取る。\n自分にも他人にも厳しいが、面倒見は良い。\n幼馴染の星南をライバル視しており、いずれ星南を超えて『一番星』になると公言している。\n \n▼雨夜 燕　プロフィール詳細はこちら！▼\nhttps://gakuen.idolmaster-official.jp/idol/tsubame/\n \n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター #学マス \n#雨夜燕\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り",
+      "publishedAt": "2025-11-15T11:09:46.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "1e7984072d991cab0592c2beda43c3ad5a013a35a5a326a31cedd490d4c8fbb9",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_4ece1a97947f0fb06cf6fd9e5bfbfddab849f23ef06efb1d5d848c09d7d9bafb",
+      "resourceType": "youtube-video",
+      "externalId": "9_VOHIrxqjQ",
+      "resourceKey": "youtube:9_VOHIrxqjQ",
+      "canonicalUrl": "https://www.youtube.com/watch?v=9_VOHIrxqjQ",
+      "title": "【学マス】藤田 ことね「H.I.F」出場告知PV【アイドルマスター】",
+      "summary": "「H.I.F」頂上決戦、開幕！\n藤田 ことね（ふじた ことね）　CV.飯田 ヒカル\n\n#藤田ことね\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n■視聴にあたっての注意事項\nご覧いただく映像によっては、激しく点滅する場面が含まれることがあります。\n映像内の激しい点滅により、ごくまれにけいれん発作や失神などの光感受性発作の症状を起こされる方がいらっしゃいます。\nこうした症状のある方は、必ず事前に医師へ相談してください。また、こうした症状の予防のため、画面から十分離れ、お部屋を明るくしてご鑑賞ください。\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシ",
+      "publishedAt": "2026-05-04T09:00:10.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "a417b595bd0bb7f4710fffabf37444588f7d60548167d4aaa7c32d38b6bab040",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_30cf25cb6936b05dd8d0b0b9f35f76540fdbd9254b03aba3357999333dd502ae",
+      "resourceType": "youtube-video",
+      "externalId": "B-yBnPJ36Ss",
+      "resourceKey": "youtube:B-yBnPJ36Ss",
+      "canonicalUrl": "https://www.youtube.com/watch?v=B-yBnPJ36Ss",
+      "title": "【学マス】ライブシーン（4K対応）REVERSI「ときめきエモーション」【アイドルマスター】",
+      "summary": "REVERSI\n＜メンバー＞\n紫雲 清夏（しうん すみか）　CV.湊 みや\n葛城 リーリヤ（かつらぎ りーりや）　CV.花岩 香奈\n\n『4Kサイズ』のライブシーンを公開！大迫力の映像をお楽しみください！\n\nガシャ開始は4/1(水)を予定しております！\nお楽しみに！\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター #REVERSI #ときめきエモーション #葛城リーリヤ #紫雲清夏\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【ア",
+      "publishedAt": "2026-03-29T03:00:13.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "29ac479e767fe22847f0445eeb8e47c96306a7fc4f6a776519465e5a8cd922fb",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_05169d7ff3d3ffe4500a8d6d25236e25f870c44b2489132cb7a8a67707404819",
+      "resourceType": "youtube-video",
+      "externalId": "B0r2QtUzWWo",
+      "resourceKey": "youtube:B0r2QtUzWWo",
+      "canonicalUrl": "https://www.youtube.com/watch?v=B0r2QtUzWWo",
+      "title": "【学マス】倉本 千奈「H.I.F」出場告知PV【アイドルマスター】",
+      "summary": "「H.I.F」頂上決戦、開幕！\n倉本 千奈（くらもと ちな）　CV.伊藤 舞音\n\n#倉本千奈\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n■視聴にあたっての注意事項\nご覧いただく映像によっては、激しく点滅する場面が含まれることがあります。\n映像内の激しい点滅により、ごくまれにけいれん発作や失神などの光感受性発作の症状を起こされる方がいらっしゃいます。\nこうした症状のある方は、必ず事前に医師へ相談してください。また、こうした症状の予防のため、画面から十分離れ、お部屋を明るくしてご鑑賞ください。\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーは",
+      "publishedAt": "2026-05-09T09:00:24.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "791e4e36de8fd8f9a80452d737b8f4b84c1d2b23308a077c7c03c49dc943a9a0",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_e679130d41dfc3cab6ade2a16ea26a47e219eb3eec6cf24874623d7a730051bc",
+      "resourceType": "youtube-video",
+      "externalId": "b2vjc1ZAgFc",
+      "resourceKey": "youtube:b2vjc1ZAgFc",
+      "canonicalUrl": "https://www.youtube.com/watch?v=b2vjc1ZAgFc",
+      "title": "【生配信】学園アイドルマスター 「初星学園HR #STEP3 秦谷 美鈴」【アイドルマスター】",
+      "summary": "📅4/28(火) 19：00～\n「学園アイドルマスター」の最新情報をお届けする生配信『初星学園HR #STEP3 秦谷 美鈴』を放送予定！\n\n今回STEP3が実装されるアイドルは『秦谷 美鈴』\n秦谷 美鈴役の春咲 暖さん、月村 手毬役の小鹿 なおさんとご一緒に秦谷 美鈴のSTEP3についてご紹介します📺\n\nプロデューサーの皆さん、お楽しみに！\n\n【出演者】\n春咲 暖（秦谷 美鈴役）\n小鹿 なお（月村 手毬役）\n「学園アイドルマスター」プロデューサー 佐藤 大地\n\n#学園アイドルマスター #学マス #初星学園HR #春咲暖 #秦谷美鈴 #小鹿なお #月村手毬\n\n【関連リンク】\n■「学園アイドルマスター」公式サイト\nhttps://gakuen.idolmaster-official.jp/\n\n■「学園アイドルマスター」公式X\nhttps://x.com/gkmas_official\n\n■「学園アイドルマスター」公式Discord\nhttps://discord.gg/sgSdejpp3Z\n\n■App Store\nhttps://apps.apple.com/jp/app/id6446659989?mt=8\n\n■Google Play\nhttps://play.google.com/store/apps/details?id=com.bandainamcoent.idolmaste",
+      "publishedAt": "2026-04-28T11:20:03.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "f377cab0d7a15b8c8f9654071cbb819d299df5058d4961150be6f1b9db9c3827",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_b16b2939912ac20c0352a28af963b0141c8dbd7b2762adac817c873ea7e85a3f",
+      "resourceType": "youtube-video",
+      "externalId": "bpD4yCgtn9k",
+      "resourceKey": "youtube:bpD4yCgtn9k",
+      "canonicalUrl": "https://www.youtube.com/watch?v=bpD4yCgtn9k",
+      "title": "【学マス】秦谷 美鈴 STEP3 告知PV【アイドルマスター】",
+      "summary": "STEP3追加アイドル\n秦谷 美鈴（はたや みすず）　CV.春咲 暖\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター #STEP3 #秦谷美鈴 #VEIL\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら】",
+      "publishedAt": "2026-04-23T09:05:02.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "3c54a1ee06ed30e5d4e74f2f1676273735f18eaaeb48047eb6f53d899297a558",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_4b9c38823c8fc763d3041a196577b867c959bbbc44781f5d26a5fd31542bfba9",
+      "resourceType": "youtube-video",
+      "externalId": "CKShNavxO3U",
+      "resourceKey": "youtube:CKShNavxO3U",
+      "canonicalUrl": "https://www.youtube.com/watch?v=CKShNavxO3U",
+      "title": "【学マス】RippleSign「SUGAR FLAVOR」予告PV【アイドルマスター】",
+      "summary": "SUGAR FLAVOR RippleSignガシャ開催決定！\n\nガシャ開始は6/15(月)を予定しております！\nお楽しみに！\n\n#学園アイドルマスター \n#RippleSign　\n#SUGARFLAVOR\n\n▼#学マス好評配信中！\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター　#学マス\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【ア",
+      "publishedAt": "2026-06-13T08:00:09.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "b1c21e939cee822b8d0cae335b4295a165114ac5dcbcb64dd335453046fb7eb0",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_025e7f48be147ede7ee20a8bb60cc234e896a040e04bbd741997a852b0a3f979",
+      "resourceType": "youtube-video",
+      "externalId": "cmb_bFgzxNo",
+      "resourceKey": "youtube:cmb_bFgzxNo",
+      "canonicalUrl": "https://www.youtube.com/watch?v=cmb_bFgzxNo",
+      "title": "雨夜燕 「MY STAGE」＋生誕ミニライブ2026【#雨夜燕生誕祭2026】",
+      "summary": "『雨夜 燕 誕生日記念 Single「MY STAGE」』『雨夜 燕 誕生日記念セット』アソビストアにて受注受付中！\n\n購入ページ：https://shop.asobistore.jp/product/catalog/n/30/t/category/ca/gm_tsubame_BD_0520/s/older#a1\n\n受注期間：2026年5月20日（水）1:00～2026年5月31日（日）\n\n商品詳細：\n●雨夜 燕 誕生日記念 Single「MY STAGE」\n\n●雨夜 燕 誕生日記念セット\n・学園アイドルマスター雨夜 燕 アクリルキーホルダー\n・学園アイドルマスター雨夜 燕 缶バッジ\n・学園アイドルマスター雨夜 燕 アクリルパネル\n・学園アイドルマスター雨夜 燕 ステッカー（2種）\n\n\n▼「学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション)」特設サイトはこちら\nhttps://idolmaster-official.jp/live_event/gkmas_2ndperiod/\n\n▼配信チケットご購入はこちら！\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/information\n\n\n------------------------------\nCredits.\n▶キャラクタ",
+      "publishedAt": "2026-05-19T14:55:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "090d6399aaf68911f6106768ff477b4e733206920bd2a0be9438a4e7b089f2e2",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_dc4631a237ecfa621f112e350c939a661bfdd14f3204fea59d8cf44db313a8fb",
+      "resourceType": "youtube-video",
+      "externalId": "COaa60p1H1Y",
+      "resourceKey": "youtube:COaa60p1H1Y",
+      "canonicalUrl": "https://www.youtube.com/watch?v=COaa60p1H1Y",
+      "title": "【学マス】ミラクルナナウ(ﾟ∀ﾟ)！／初星学園｜The 2nd Period H.I.F選抜試験【アイドルマスター】",
+      "summary": "2026年5月16日(土)･5月17日(日) に幕張イベントホールにて開催された\n「学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション)」\nのxRライブストリーミングチケットが2026年6月22日(月)まで発売中！\n是非チェックしてください！\n\n★ご購入はこちらから！★\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【",
+      "publishedAt": "2026-06-12T11:05:02.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "98eb8e72ee1c6f97e50c31040d37bf5b42c699529bdf615cdd9d33d8b9b7a81a",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_1491d402e189bffa830994ed551ce561b8c0e90e5fba61e6d35f5c09c94a93db",
+      "resourceType": "youtube-video",
+      "externalId": "cvbzWUlEbIM",
+      "resourceKey": "youtube:cvbzWUlEbIM",
+      "canonicalUrl": "https://www.youtube.com/watch?v=cvbzWUlEbIM",
+      "title": "【学マス】ゆめぱしー「みちなるひろがる」 予告PV【アイドルマスター】",
+      "summary": "みちなるひろがる ゆめぱしーガシャ開催決定！\n\nガシャ開始は1/27(火)を予定しております！\nお楽しみに！\n\n#学園アイドルマスター \n#ゆめぱしー　\n#みちなるひろがる\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://x.com/gkmas_official\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_offici",
+      "publishedAt": "2026-01-24T09:00:55.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "db8bf68ac04ce92fbe46e60b770ab136fd63fffc09a275beb374b2699739905b",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_1bb6a781f511bbdd88c9791a64c624c5116a9f8c0d4387bdebef734d53257d91",
+      "resourceType": "youtube-video",
+      "externalId": "cWkXaXmHYdw",
+      "resourceKey": "youtube:cWkXaXmHYdw",
+      "canonicalUrl": "https://www.youtube.com/watch?v=cWkXaXmHYdw",
+      "title": "【#学マス】Hatsuboshi IDOL FESTIVAL 曲の繋がりにもストーリーが… #初星学園放送部 #村田綾香【アイドルマスター】",
+      "summary": "✅本編はこちらから！\nhttps://asobichannel.asobistore.jp/watch/9lzm4dozxv\n\n▼出演者▼\nMC: #村田綾香（#真城優 役）\n\nラジオ「初星学園放送部」は、毎週水曜 21 時放送中！\n最新イベントや楽曲、コラボの話題など\n学マスをより楽しむためのコンテンツをお届け中！\n\n毎週、おたより募集中！\n皆さんのプロデュース活動、教えて下さい！\n\n✉️投稿フォーム\nhttps://asobistore.jp/content/title/Idolmaster/gakuenradio/contact/\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n",
+      "publishedAt": "2026-06-12T12:00:15.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "357dbf58e628bae0907573155706227c07b3bf68361f68a31a899458ade38988",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_8c3920097a10f15f2a4d9037aa5a4fb31cc2359ceee9505c7e71f14e9c6478bd",
+      "resourceType": "youtube-video",
+      "externalId": "cxYNPLvC53U",
+      "resourceKey": "youtube:cxYNPLvC53U",
+      "canonicalUrl": "https://www.youtube.com/watch?v=cxYNPLvC53U",
+      "title": "【学マス】月村 手毬「H.I.F編」シナリオ告知PV【アイドルマスター】",
+      "summary": "学園アイドルマスター2周年！\n\n新シナリオ『H.I.F編』\n頂上決戦、開幕！\n\n#月村手毬\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータル",
+      "publishedAt": "2026-05-16T01:40:02.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "625bf44aa0301e4a38e080c9b1c5810a33b3041acc4d9ef963ac50eddca01fbe",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_070386f0c26d85a511110c6c4883a8c06c2c5526664931850c77142d4258a039",
+      "resourceType": "youtube-video",
+      "externalId": "d-lMIJW8W3I",
+      "resourceKey": "youtube:d-lMIJW8W3I",
+      "canonicalUrl": "https://www.youtube.com/watch?v=d-lMIJW8W3I",
+      "title": "【生配信】学園アイドルマスター 「初星学園HR #STEP3 十王 星南」【アイドルマスター】",
+      "summary": "📅2/6(金) 19：00～\n「学園アイドルマスター」の最新情報をお届けする生配信『初星学園HR #STEP3 十王 星南』を放送予定！\n\n今回STEP3が実装されるアイドルは『十王 星南』\n十王 星南役の陽高 真白さん、花海 佑芽役の松田 彩音さん、秦谷 美鈴役の春咲 暖さんとご一緒に十王 星南のSTEP3についてご紹介します📺\n\nプロデューサーの皆さん、お楽しみに！\n\n【出演者】\n陽高 真白（十王 星南役）\n松田 彩音（花海 佑芽役）\n春咲 暖（秦谷 美鈴役）\n「学園アイドルマスター」プロデューサー 山本 亮\n\n#学園アイドルマスター #学マス #初星学園HR #陽高真白 #十王星南 #松田彩音 #花海佑芽 #春咲暖 #秦谷美鈴\n\n【関連リンク】\n■「学園アイドルマスター」公式サイト\nhttps://gakuen.idolmaster-official.jp/\n\n■「学園アイドルマスター」公式X\nhttps://x.com/gkmas_official\n\n■「学園アイドルマスター」公式Discord\nhttps://discord.gg/sgSdejpp3Z\n\n■App Store\nhttps://apps.apple.com/jp/app/id6446659989?mt=8\n\n■Google Play\nhttps://play.google.com/store/apps/",
+      "publishedAt": "2026-02-06T11:36:44.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "b1f0b6032a33c1450d5df832fe52d8b83dfa0078de48b6dc4922cda0c646b479",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_b250aa75e2ccaacd78f0b3d381f10a023121fd84bb52edb68a896e437e9bea51",
+      "resourceType": "youtube-video",
+      "externalId": "D4Q9VpWhQmA",
+      "resourceKey": "youtube:D4Q9VpWhQmA",
+      "canonicalUrl": "https://www.youtube.com/watch?v=D4Q9VpWhQmA",
+      "title": "【学マス】雨夜 燕「H.I.F」出場告知PV【アイドルマスター】",
+      "summary": "「H.I.F」頂上決戦、開幕！\n雨夜 燕（あまや つばめ）　CV.天音 ゆかり\n\n#雨夜燕\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n■視聴にあたっての注意事項\nご覧いただく映像によっては、激しく点滅する場面が含まれることがあります。\n映像内の激しい点滅により、ごくまれにけいれん発作や失神などの光感受性発作の症状を起こされる方がいらっしゃいます。\nこうした症状のある方は、必ず事前に医師へ相談してください。また、こうした症状の予防のため、画面から十分離れ、お部屋を明るくしてご鑑賞ください。\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこ",
+      "publishedAt": "2026-05-14T09:00:14.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "440cde2c39c6cea2b46b46027bf2ed8d5beff16b5161dc05e85db0629f9777ef",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_98e668d346e3977300780431a146ab5402702f0be1c703d949144c0d6e1534a9",
+      "resourceType": "youtube-video",
+      "externalId": "D778HjuSXyw",
+      "resourceKey": "youtube:D778HjuSXyw",
+      "canonicalUrl": "https://www.youtube.com/watch?v=D778HjuSXyw",
+      "title": "【学マス】秦谷 美鈴「H.I.F」出場告知PV【アイドルマスター】",
+      "summary": "「H.I.F」頂上決戦、開幕！\n秦谷 美鈴（はたや みすず）　CV.春咲 暖\n\n#秦谷美鈴\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n■視聴にあたっての注意事項\nご覧いただく映像によっては、激しく点滅する場面が含まれることがあります。\n映像内の激しい点滅により、ごくまれにけいれん発作や失神などの光感受性発作の症状を起こされる方がいらっしゃいます。\nこうした症状のある方は、必ず事前に医師へ相談してください。また、こうした症状の予防のため、画面から十分離れ、お部屋を明るくしてご鑑賞ください。\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこ",
+      "publishedAt": "2026-05-10T09:00:13.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "0267d6134fad71dd4c5bd3fa005bc79a87831f26c97a8ac13ecd04566bedf102",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_2192961ce87015638957cfdd0959f3954070100eb0680384bfa98624d1fd1cc0",
+      "resourceType": "youtube-video",
+      "externalId": "DwTF1uJpiW8",
+      "resourceKey": "youtube:DwTF1uJpiW8",
+      "canonicalUrl": "https://www.youtube.com/watch?v=DwTF1uJpiW8",
+      "title": "【学マス】ツキノカメ／秦谷美鈴｜The 2nd Period H.I.F選抜試験【アイドルマスター】",
+      "summary": "2026年5月16日(土)･5月17日(日) に幕張イベントホールにて開催された\n「学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション)」\nのxRライブストリーミングチケットが2026年6月22日(月)まで発売中！\n是非チェックしてください！\n\n★ご購入はこちらから！★\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【",
+      "publishedAt": "2026-06-14T11:15:32.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "a11223898d9a240ae622e094384fe66a513039b80043edbb3f6300a0e9693a74",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_d48e85fc3cb78a964782c36161aff4c73e4fdc28475550b2173287c4ee158221",
+      "resourceType": "youtube-video",
+      "externalId": "Ee2-dQRi_Z8",
+      "resourceKey": "youtube:Ee2-dQRi_Z8",
+      "canonicalUrl": "https://www.youtube.com/watch?v=Ee2-dQRi_Z8",
+      "title": "【生配信】学園アイドルマスター 「初星学園HR #STEP3 葛城 リーリヤ」【アイドルマスター】",
+      "summary": "📅12/4(木) 19：00～\n「学園アイドルマスター」の最新情報をお届けする生配信『初星学園HR #STEP3 葛城 リーリヤ』を放送予定！\n\n今回STEP3が実装されるアイドルは『葛城 リーリヤ』\n葛城 リーリヤ役の花岩 香奈さん、紫雲 清夏役の湊 みやさんとご一緒に葛城 リーリヤのSTEP3についてご紹介します📺\n\nプロデューサーの皆さん、お楽しみに！\n\n【出演者】\n花岩 香奈（葛城 リーリヤ役）\n湊 みや（紫雲 清夏役）\n「学園アイドルマスター」元プロデューサー 小美野 日出文\n\n#学園アイドルマスター #学マス #初星学園HR #花岩香奈 #葛城リーリヤ #湊みや #紫雲清夏\n\n【関連リンク】\n■「学園アイドルマスター」公式サイト\nhttps://gakuen.idolmaster-official.jp/\n\n■「学園アイドルマスター」公式X\nhttps://x.com/gkmas_official\n\n■「学園アイドルマスター」公式Discord\nhttps://discord.gg/sgSdejpp3Z\n\n■App Store\nhttps://apps.apple.com/jp/app/id6446659989?mt=8\n\n■Google Play\nhttps://play.google.com/store/apps/details?id=com.bandainam",
+      "publishedAt": "2025-12-04T11:27:41.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "409ed86cd52127d27057d2c598aec6a0470544fdd0e42e069e9d59599fbbf9f9",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_d4029fad30f391aab4743a8dd1c9af066832eacdfb3e1ebd798ef791edc53dd3",
+      "resourceType": "youtube-video",
+      "externalId": "eUham8j7kos",
+      "resourceKey": "youtube:eUham8j7kos",
+      "canonicalUrl": "https://www.youtube.com/watch?v=eUham8j7kos",
+      "title": "【学マス】世界一可愛い私／藤田ことね｜The 2nd Period H.I.F選抜試験【アイドルマスター】",
+      "summary": "2026年5月16日(土)･5月17日(日) に幕張イベントホールにて開催された\n「学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション)」\nのxRライブストリーミングチケットが2026年6月22日(月)まで発売中！\n是非チェックしてください！\n\n★ご購入はこちらから！★\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【",
+      "publishedAt": "2026-06-14T11:20:37.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "dbddcca492a9092feeccafbe5903d38dc5d467e58fd50a443019cdfcc12725af",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_9d10a75d9ee63be63b4920c88998d8807138018b3384c3dbdbd91c25f28fb536",
+      "resourceType": "youtube-video",
+      "externalId": "f_4KlRwNu4A",
+      "resourceKey": "youtube:f_4KlRwNu4A",
+      "canonicalUrl": "https://www.youtube.com/watch?v=f_4KlRwNu4A",
+      "title": "【学マス】月村 手毬「H.I.F」出場告知PV【アイドルマスター】",
+      "summary": "「H.I.F」頂上決戦、開幕！\n月村 手毬（つきむら てまり）　CV.小鹿 なお\n\n#月村手毬\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n■視聴にあたっての注意事項\nご覧いただく映像によっては、激しく点滅する場面が含まれることがあります。\n映像内の激しい点滅により、ごくまれにけいれん発作や失神などの光感受性発作の症状を起こされる方がいらっしゃいます。\nこうした症状のある方は、必ず事前に医師へ相談してください。また、こうした症状の予防のため、画面から十分離れ、お部屋を明るくしてご鑑賞ください。\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーは",
+      "publishedAt": "2026-05-03T09:00:50.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "04c7a714152fc0f54bf90572467c56b4b7a28d967d55c7515889acecb26f73be",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_bcff405a7e6246eebf80178aba353061df271f48c737be14390b7560ffceecbe",
+      "resourceType": "youtube-video",
+      "externalId": "FenKZya4S7w",
+      "resourceKey": "youtube:FenKZya4S7w",
+      "canonicalUrl": "https://www.youtube.com/watch?v=FenKZya4S7w",
+      "title": "【学マス】月村 手毬 STEP3 告知PV【アイドルマスター】",
+      "summary": "STEP3追加アイドル\n月村 手毬（つきむら てまり）　CV.小鹿 なお\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター #STEP3 #月村手毬 #一体いつから\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトは",
+      "publishedAt": "2026-02-10T06:01:01.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "ccc57e182070e18d1441d4d14782b9ca0a11ef0539608f3960a607564ca92a7f",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_1e85c08f522b522d0ded367eee766bf544c6a50e7c2a188c65ce21528c1f3dc7",
+      "resourceType": "youtube-video",
+      "externalId": "g3YKstJd2v8",
+      "resourceKey": "youtube:g3YKstJd2v8",
+      "canonicalUrl": "https://www.youtube.com/watch?v=g3YKstJd2v8",
+      "title": "【学マス】Wonder Scale／倉本千奈｜The 2nd Period H.I.F選抜試験【アイドルマスター】",
+      "summary": "2026年5月16日(土)･5月17日(日) に幕張イベントホールにて開催された\n「学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション)」\nのxRライブストリーミングチケットが2026年6月22日(月)まで発売中！\n是非チェックしてください！\n\n★ご購入はこちらから！★\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【",
+      "publishedAt": "2026-06-13T11:25:20.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "28587f80111b1d39c05be44ca037020ebc50157e38a6499e9b289e384f57193e",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_0a6fd513780460107781c53f3db13c963d2c68b0290427f61d4cd1f88a21a4f2",
+      "resourceType": "youtube-video",
+      "externalId": "GJKgEWn0u04",
+      "resourceKey": "youtube:GJKgEWn0u04",
+      "canonicalUrl": "https://www.youtube.com/watch?v=GJKgEWn0u04",
+      "title": "【生配信】「学園アイドルマスター 初星音楽祭」DAY2 ライブ直前！初星学園放送部 出張生放送【アイドルマスター】",
+      "summary": "「学園アイドルマスター 初星音楽祭」DAY2開演前の16:00から\n「ライブ直前！初星学園放送部 出張生放送」を実施！\n\nDAY2開演を間近に控えた京王アリーナTOKYO現地から放送！\nYouTubeとASOBI STAGEエントランスページにて\n会場の熱気、そして開演目前に控えた現地の様子を放送部よりお届けします！\n\n■出演\n村田綾香さん（真城 優役)\n※声のみの出演となります\n\n■配信日時\n3月1日(日) 16:00~(予定)\n※無料でご視聴いただけます。\n※音声のみの出演となります。\n\n★「学園アイドルマスター 初星音楽祭」 配信チケットはこちら！\nhttps://asobistage.asobistore.jp/event/gakuen_gkmas_musicfestival/ticket\n\n★「学園アイドルマスター 初星音楽祭」公式サイト\nhttps://idolmaster-official.jp/live_event/gkmas_musicfestival/\n\n★「学園アイドルマスター 初星学園放送部」アーカイブはこちら！\nhttps://asobichannel.asobistore.jp/tag/56eawbbs5\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所",
+      "publishedAt": "2026-03-01T08:02:27.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "90360233c9b040fcffbd5d155dc59638372a5add5c3f1777777ff32ffbecf831",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_5c17cb900793a86c93f43dd8e12cd91db9908b80a73417cd9bf1fd3980c1d7cb",
+      "resourceType": "youtube-video",
+      "externalId": "gmgG6P_asPA",
+      "resourceKey": "youtube:gmgG6P_asPA",
+      "canonicalUrl": "https://www.youtube.com/watch?v=gmgG6P_asPA",
+      "title": "【学マス】十王 星南 STEP3 告知PV【アイドルマスター】",
+      "summary": "STEP3追加アイドル\n十王 星南（じゅうおう せな）　CV.陽高 真白\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター #STEP3 #十王星南 #赤裸々\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら",
+      "publishedAt": "2026-02-10T06:02:00.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "c8b77f62f947a6fe6eb2ceed53f835dc2a1fe73a62767d3055a5ced390f1f62c",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_4e335fa4615842eb9df0a59a9088d73c066e126a99a06f9aa5729dea35f3425f",
+      "resourceType": "youtube-video",
+      "externalId": "GMlwto2a5qM",
+      "resourceKey": "youtube:GMlwto2a5qM",
+      "canonicalUrl": "https://www.youtube.com/watch?v=GMlwto2a5qM",
+      "title": "【学マス】秦谷 美鈴「H.I.F編」シナリオ告知PV【アイドルマスター】",
+      "summary": "学園アイドルマスター2周年！\n\n新シナリオ『H.I.F編』\n頂上決戦、開幕！\n\n#秦谷美鈴\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータル",
+      "publishedAt": "2026-05-16T01:55:00.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "99b8ea00c47152977e8d6ce174d13ab5c34144215b220f7326281486890cbcfa",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_1ff8bfc09b0b271e3ade69961a4b8619106fe5e16e8034b581dd303e4351e827",
+      "resourceType": "youtube-video",
+      "externalId": "gOvFQN0KzC0",
+      "resourceKey": "youtube:gOvFQN0KzC0",
+      "canonicalUrl": "https://www.youtube.com/watch?v=gOvFQN0KzC0",
+      "title": "【学マス】葛城 リーリヤ「H.I.F編」シナリオ告知PV【アイドルマスター】",
+      "summary": "学園アイドルマスター2周年！\n\n新シナリオ『H.I.F編』\n頂上決戦、開幕！\n\n#葛城リーリヤ\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポー",
+      "publishedAt": "2026-06-04T09:30:05.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "c955fe17e8a02263863c63dcf7e0f80c10907fbe7aa8c3ae7d2703c586c49e1b",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_aa048fb7efa2ad53da93ced9fad84ad19736af79a03fc930b2c71f68ac0a9ad2",
+      "resourceType": "youtube-video",
+      "externalId": "heR_xVESwrc",
+      "resourceKey": "youtube:heR_xVESwrc",
+      "canonicalUrl": "https://www.youtube.com/watch?v=heR_xVESwrc",
+      "title": "【学マス】花海 佑芽 STEP3 告知PV【アイドルマスター】",
+      "summary": "STEP3追加アイドル\n花海 佑芽（はなみ うめ）　CV.松田 彩音\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター #STEP3 #花海佑芽 #真っ白いページと水彩の主人公\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポー",
+      "publishedAt": "2026-03-27T09:10:00.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "91838ef22acb698fce6ed82a8fdaa78724b891ac486462d37d6d77e3fd2d05ae",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_7dde59d58bde7f97b93f8d919d27e5f7e799381a6de70ba84acb3290d5991683",
+      "resourceType": "youtube-video",
+      "externalId": "HgQkGOX8FbA",
+      "resourceKey": "youtube:HgQkGOX8FbA",
+      "canonicalUrl": "https://www.youtube.com/watch?v=HgQkGOX8FbA",
+      "title": "【学マス】十王 星南「H.I.F」出場告知PV【アイドルマスター】",
+      "summary": "「H.I.F」頂上決戦、開幕！\n十王 星南（じゅうおう せな）　CV.陽高 真白\n\n#十王星南\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n■視聴にあたっての注意事項\nご覧いただく映像によっては、激しく点滅する場面が含まれることがあります。\n映像内の激しい点滅により、ごくまれにけいれん発作や失神などの光感受性発作の症状を起こされる方がいらっしゃいます。\nこうした症状のある方は、必ず事前に医師へ相談してください。また、こうした症状の予防のため、画面から十分離れ、お部屋を明るくしてご鑑賞ください。\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシー",
+      "publishedAt": "2026-05-15T09:00:23.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "c168dbdaf096a1d0852f1864f784c6aca45637a5117ac1ed6c86bfde3af20b5a",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_5daa9aa673eb6cb80aa296c27a4241f6d6ddd257e4aa4bfda9af5a62122cd7f5",
+      "resourceType": "youtube-video",
+      "externalId": "I_nZqeIG3iU",
+      "resourceKey": "youtube:I_nZqeIG3iU",
+      "canonicalUrl": "https://www.youtube.com/watch?v=I_nZqeIG3iU",
+      "title": "【学マス】雨夜 燕 N.I.A編実装&初星フェス開催PV【アイドルマスター】",
+      "summary": "2025年12月26日\n雨夜 燕 N.I.A編実装 & 初星フェス開催！\n\n▼学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター #学マス\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら】\nh",
+      "publishedAt": "2025-12-20T10:09:42.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "b8c0a03e0b17c5ca4e01f0618847219ae1a9233b39f7f04f5c52b31670a23ba8",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_8ef52bcb8c25c8610e5a66859827819a9fd14a6c7ae58236c499ed8185b935fc",
+      "resourceType": "youtube-video",
+      "externalId": "i7kBYR-eaiw",
+      "resourceKey": "youtube:i7kBYR-eaiw",
+      "canonicalUrl": "https://www.youtube.com/watch?v=i7kBYR-eaiw",
+      "title": "【学マス】篠澤広「H.I.F編」シナリオ告知PV【アイドルマスター】",
+      "summary": "学園アイドルマスター2周年！\n\n新シナリオ『H.I.F編』\n頂上決戦、開幕！\n\n#篠澤広\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサ",
+      "publishedAt": "2026-05-25T09:35:00.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "a825c3cd36d9c3d7795dc1935a01dca51867efd5b95fb3ddc240fc96165d57f7",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_b8e797c8ff0cc2697d85ff6130eb5ed363c8c46eb9b6d974dc52325d471c3a21",
+      "resourceType": "youtube-video",
+      "externalId": "ieC665Klfts",
+      "resourceKey": "youtube:ieC665Klfts",
+      "canonicalUrl": "https://www.youtube.com/watch?v=ieC665Klfts",
+      "title": "【学マス】ナイワ／初星学園｜The 2nd Period H.I.F選抜試験【アイドルマスター】",
+      "summary": "2026年5月16日(土)･5月17日(日) に幕張イベントホールにて開催された\n「学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション)」\nのxRライブストリーミングチケットが2026年6月22日(月)まで発売中！\n是非チェックしてください！\n\n★ご購入はこちらから！★\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【",
+      "publishedAt": "2026-06-12T11:20:19.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "d364cf4b8dc9d70297bff6e78bf13c4d207b28914cf359d05da05ad8fe1bb49c",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_d7a1a316b9bd2e97a122478ed8ab5676418491aa109415866c48790441874a4d",
+      "resourceType": "youtube-video",
+      "externalId": "iq7BCUXAaxA",
+      "resourceKey": "youtube:iq7BCUXAaxA",
+      "canonicalUrl": "https://www.youtube.com/watch?v=iq7BCUXAaxA",
+      "title": "篠澤 広 生誕ミニライブ2025【#篠澤広生誕祭2025】",
+      "summary": "#篠澤広生誕祭2025\n\n【篠澤 広】ソロ曲 プレイリスト\nhttps://www.youtube.com/watch?v=XLwmEuM0dIw&list=PL8AmPgz38WkVLERdb6sxhv9criSCq_qSg\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら】\nhttps://idolmaster-official.jp/\n【アイドルマスター関連グッズ情報はこちらから！- アソビストア】\nhttps://asobistore.jp/con",
+      "publishedAt": "2025-12-20T14:55:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "c013a311237b53a5dcd0fa6341c974e3eb2cccc45a0dcdc455df0e5641c2d454",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_05babd5749d2aa93622aee42f0a5e8c3f5c4d29abdfcd7603c8068fc9c292e9b",
+      "resourceType": "youtube-video",
+      "externalId": "JN74QXOJQaA",
+      "resourceKey": "youtube:JN74QXOJQaA",
+      "canonicalUrl": "https://www.youtube.com/watch?v=JN74QXOJQaA",
+      "title": "十王星南 生誕ミニライブ2025【#十王星南生誕祭2025】",
+      "summary": "#十王星南生誕祭2025\n\n【十王星南】ソロ曲 プレイリスト\nhttps://youtube.com/playlist?list=PL8AmPgz38WkUkBI8bW5iLW4ibSdnLEtr9&si=i5G3l0pFrEPm_nKv\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら】\nhttps://idolmaster-official.jp/\n【アイドルマスター関連グッズ情報はこちらから！- アソビストア】\nhttps://asobistore.",
+      "publishedAt": "2025-12-06T14:55:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "e1ca68ade6ab5fdf268f904f3475624ddedc257d1c357ca35c065b04fdd9870f",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_813bcaf7aa9ead88dd20668575c4650adc53a7abf5db38abe485bac940e5018c",
+      "resourceType": "youtube-video",
+      "externalId": "JneM4Ny2VtQ",
+      "resourceKey": "youtube:JneM4Ny2VtQ",
+      "canonicalUrl": "https://www.youtube.com/watch?v=JneM4Ny2VtQ",
+      "title": "葛城リーリヤ 生誕記念配信2026【#葛城リーリヤ生誕祭2026】",
+      "summary": "#葛城リーリヤ生誕祭2026\n\n【葛城リーリヤソロ曲プレイリスト】\n https://youtube.com/playlist?list=PL8AmPgz38WkUk3w_JXjAQkIvPAjQ6jEBj&si=fdBncBKbdUNKQOVw  \n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら】\nhttps://idolmaster-official.jp/\n【アイドルマスター関連グッズ情報はこちらから！- アソビストア】\nhttps://asob",
+      "publishedAt": "2026-07-23T14:58:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "7a0ecb773dc65755d26969bccee99e3df09d39d8f8e764daed668e4944b9052a",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_a68f4cf92347e08a4d06353dd5921f7a46e1bcd22496bdf8c934f31fb1077cd6",
+      "resourceType": "youtube-video",
+      "externalId": "joWXU8SJnbI",
+      "resourceKey": "youtube:joWXU8SJnbI",
+      "canonicalUrl": "https://www.youtube.com/watch?v=joWXU8SJnbI",
+      "title": "【冒頭無料配信】学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション) xRストリーミングライブ DAY2【アイドルマスター】",
+      "summary": "学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション) xRストリーミングライブの冒頭約20分を無料生配信！\n\n※本編開演約15分前より、会場内映像の生配信をこちらのページで開始いたします。\n\n冒頭無料配信終了後のライブ全編視聴は、ASOBI STAGEよりxRストリーミングチケットをお買い求めください！\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n■公演日時\n2026年5月16日（土）16:00開場／17:00開演\n2026年5月17日（日）15:00開場／16:00開演\n\n■開催場所\n幕張メッセ・イベントホール\nASOBI STAGE\n\n■出演アイドル\n＜DAY1＞\n出場生徒：有村麻央、倉本千奈、篠澤広、花海佑芽、花海咲季、姫崎莉波\n司会進行：【 初星学園生徒会執行部 】十王星南、雨夜燕、秦谷美鈴\n\n＜DAY2＞\n出場生徒：雨夜燕、葛城リーリヤ、紫雲清夏、十王星南、月村手毬、秦谷美鈴、藤田ことね\n司会進行：【 初星学園生徒会執行部 】姫崎莉波、倉本千奈、花海佑芽\n\n■xRライブストリーミングチケット販売中\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n■イベント公式サ",
+      "publishedAt": "2026-05-17T07:33:28.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "079991c87b469986461223d985d3583d0d998361d1348ad5ddc085ed40e6c3ea",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_49742cd7a3b185eea7fd14cdf1c6e8c90338c6f03f7af281ff299e4b9b749d5a",
+      "resourceType": "youtube-video",
+      "externalId": "k6baTn5mCLU",
+      "resourceKey": "youtube:k6baTn5mCLU",
+      "canonicalUrl": "https://www.youtube.com/watch?v=k6baTn5mCLU",
+      "title": "【学マス】葛城 リーリヤ STEP3 告知PV【アイドルマスター】",
+      "summary": "STEP3追加アイドル\n葛城 リーリヤ（かつらぎ りーりや）　CV.花岩 香奈\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター #STEP3 #葛城リーリヤ #Atmosphere\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリー",
+      "publishedAt": "2026-02-10T06:00:47.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "a6900c9d39b2128dbeb76be186eea367c7131ed41aa1837332c475a541e62d8d",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_8258d6df5cc29dd76b9e06a3555c310eb10d34ee66aa9f9a3ffcd5812d77f8f1",
+      "resourceType": "youtube-video",
+      "externalId": "kYJqwyrqolw",
+      "resourceKey": "youtube:kYJqwyrqolw",
+      "canonicalUrl": "https://www.youtube.com/watch?v=kYJqwyrqolw",
+      "title": "【学マス】新プロデュースモード「H.I.F編」紹介PV【アイドルマスター】",
+      "summary": "新プロデュースモード「H.I.F」編\n2026年5月16日より順次実装決定！\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター #HIF\n\n◆アイドルマスターチャンネルとは？\n\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら】\nhttps://",
+      "publishedAt": "2026-05-08T10:12:01.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "cb19346d09dde130e65f647db2a614fd15833853334625d17e3e8d48cec09690",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_de9bed2ad6ed8163672f8f54cbe49f24541a589cbdd8ced31e18dc6e5a00c5fe",
+      "resourceType": "youtube-video",
+      "externalId": "lbJDeXoo-is",
+      "resourceKey": "youtube:lbJDeXoo-is",
+      "canonicalUrl": "https://www.youtube.com/watch?v=lbJDeXoo-is",
+      "title": "【REVERSI】「ときめきエモーション」サビダンス レッスン室ver.【学マス】【アイドルマスター】#shorts",
+      "summary": "#紫雲清夏 と #葛城リーリヤ のデュオユニット #REVERSI で、オリジナル楽曲 #ときめきエモーション を踊ってみました♪\n\n\n「ときめきエモーション REVERSIガシャ」2026年4月1日(水)～開催予定！\n※詳細は公式X・ゲーム内をご確認くださ\nい\n\n▶MUSIC\n歌：ときめきエモーション\n作詞作曲編曲：神山羊\n\n▶MOVIE\n省略キャラデザイン:ナポりん\n原画: 忍田雄介\nダンスパート原画: specinef 　U.\n作画監督: U.\n動画/仕上:REC Animation Factory\n色彩設計/色指定検査: 小松亜理沙（WITSTUDIO）\n撮影:REC Animation Factory\n猪﨑 武尊\n松井 士\n佐藤 宏明\n硲野 継\n鈴木 優\n菅木 みなみ\n田口 雅大\n栗林 桃子\nアニメーションプロデューサー: 吉川貴哉（aeoniumLLC）\n\n▼#学マス DLはこちら▼\nhttps://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://twitter.com/gkmas_official \n\n#学園アイドルマスター\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイ",
+      "publishedAt": "2026-03-30T10:00:44.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "1dfec0b7c3e0fe3fa28ae7b37e57be1b3b3f80e9c550449a50a4d06385adbc82",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_7820d7cf49b67c1c2ef7954fe330af55c99057372f4b87afcb311d08a249980d",
+      "resourceType": "youtube-video",
+      "externalId": "MctkzX1A3fU",
+      "resourceKey": "youtube:MctkzX1A3fU",
+      "canonicalUrl": "https://www.youtube.com/watch?v=MctkzX1A3fU",
+      "title": "【学マス】三分半の創世／雨夜燕｜The 2nd Period H.I.F選抜試験【アイドルマスター】",
+      "summary": "2026年5月16日(土)･5月17日(日) に幕張イベントホールにて開催された\n「学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション)」\nのxRライブストリーミングチケットが2026年6月22日(月)まで発売中！\n是非チェックしてください！\n\n★ご購入はこちらから！★\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【",
+      "publishedAt": "2026-06-14T11:25:36.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "67fbb368f355dd09894a75bc2f6b57c6f0905667d68ae9f1247e16455a25b878",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_ce8025e163d21e5b4cd3af963bd424143e9070a445820e30975c227542db8b0a",
+      "resourceType": "youtube-video",
+      "externalId": "mDVjxLBxCd8",
+      "resourceKey": "youtube:mDVjxLBxCd8",
+      "canonicalUrl": "https://www.youtube.com/watch?v=mDVjxLBxCd8",
+      "title": "【学マス】花海 佑芽「H.I.F編」シナリオ告知PV【アイドルマスター】",
+      "summary": "新シナリオ『H.I.F編』\n頂上決戦、開幕！\n\n#花海佑芽\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら】\nhttps:/",
+      "publishedAt": "2026-07-21T01:55:09.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "526de2ce06e06d11ca6e6f855fa46ffe591c54dfa127cae3bd2c105932bd8195",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_24261c5d6f2589f4c85ee2bb5d765eab2f2144b0d9e2b5758614572dc50f7e22",
+      "resourceType": "youtube-video",
+      "externalId": "mlDm7xjc-VE",
+      "resourceKey": "youtube:mlDm7xjc-VE",
+      "canonicalUrl": "https://www.youtube.com/watch?v=mlDm7xjc-VE",
+      "title": "【学マス】メクルメ／篠澤広｜The 2nd Period H.I.F選抜試験【アイドルマスター】",
+      "summary": "2026年5月16日(土)･5月17日(日) に幕張イベントホールにて開催された\n「学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション)」\nのxRライブストリーミングチケットが2026年6月22日(月)まで発売中！\n是非チェックしてください！\n\n★ご購入はこちらから！★\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【",
+      "publishedAt": "2026-06-13T11:05:13.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "33c09a0cd664bd86e74e57290641750ff5e18cb9a36276a50bed798aaea8a194",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_854409eb7f30d945ab3ed26eec5fb096a43a1cce1a940e78269d55e03515ac1a",
+      "resourceType": "youtube-video",
+      "externalId": "mR0qtqvRYWM",
+      "resourceKey": "youtube:mR0qtqvRYWM",
+      "canonicalUrl": "https://www.youtube.com/watch?v=mR0qtqvRYWM",
+      "title": "【学マス】雨夜 燕 誕生日記念Single「MY STAGE」- Game Sizeリリックビデオ #CD予約受付中！【アイドルマスター】",
+      "summary": "『雨夜 燕 誕生日記念 Single「MY STAGE」』『雨夜 燕 誕生日記念セット』アソビストアにて受注受付中！\n\n購入ページ： https://shop.asobistore.jp/product/catalog/n/30/t/category/ca/gm_tsubame_BD_0520/s/older#a1\n受注期間：2026年5月20日（水）1:00～2026年5月31日（日）\n\n商品詳細：\n●雨夜 燕 誕生日記念 Single「MY STAGE」\n\n●雨夜 燕 誕生日記念セット\n・学園アイドルマスター雨夜 燕 アクリルキーホルダー\n・学園アイドルマスター雨夜 燕 缶バッジ\n・学園アイドルマスター雨夜 燕 アクリルパネル\n・学園アイドルマスター雨夜 燕 ステッカー （2種）\n\n------------------------------\nCredits.\n▶キャラクター原案\n南野あき\n\n▶Music\n歌：雨夜 燕 (CV. 天音ゆかり)\n作詞：MOMONADY\n作曲：MOMONADY、YUKI FUNAKOSHI (Digz, Inc. Group)\n編曲：YUKI FUNAKOSHI (Digz, Inc. Group)\n\nAll Instruments & Programming：YUKI FUNAKOSHI (Digz, Inc. Group)\nMixing Eng",
+      "publishedAt": "2026-05-20T01:00:37.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "186867f58d3e6fb921de7128f48aeb31f992d90798145e246c9215595476c1ba",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_1f46f48963e2b557f7cc349501b4106670ff9793c81473f35e60749d9e48e7f8",
+      "resourceType": "youtube-video",
+      "externalId": "N3Mgroyx50k",
+      "resourceKey": "youtube:N3Mgroyx50k",
+      "canonicalUrl": "https://www.youtube.com/watch?v=N3Mgroyx50k",
+      "title": "【学マス】みてぬい第1弾登場！【アイドルマスター】",
+      "summary": "6月6日より学園アイドルマスター初の公式ぬいぐるみ「みてぬい」が登場！\n\n▼「みてぬい」公式サイトはこちら💻\nhttps://mitenui.idolmaster-official.jp/\n\n▼アソビストアはこちら🛒\nhttps://shop.asobistore.jp/product/catalog/n/30/t/category/ca/gkms_fy26_mite_nui/s/older#a1\n受注期間：2026年6月6日(土)～7月20日(月)\n※その他ECサイトでも順次取り扱い予定\n\n▼みてぬいとは\n「プロデューサー！みてみて！」\nアイドルがプロデューサーに見てほしいものを教えてくれる新しいぬいぐるみシリーズが登場！\n現場や日常、もちろんプロデュース活動中にも♪『一緒に「見て」楽しむ』新アイテムブランドです♪みてぬいと一緒にたくさんおでかけしてくださいね♪\n\n------------------------------\n▶Music\n「Campus mode!! [みてぬい ver.]」」\n編曲：小林伸嘉 (Bandai Namco Studios Inc.)\n\n「Campus mode!!」\n作詞作曲：田淵智也\n編曲：滝澤俊輔（TRYTONELABO）\n\n------------------------------ \nMusic Label : ASOBINOTES\n",
+      "publishedAt": "2026-06-06T11:00:23.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "16e38475889d9f795adb83d8e09c2a91c337bb91f74f65a82e6ecb9cc248f31f",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_b341d36076a26e0773e407c89410c3ccb1d3386b9cecfa1c1c33916298ebd8d9",
+      "resourceType": "youtube-video",
+      "externalId": "O78kUGPM0K8",
+      "resourceKey": "youtube:O78kUGPM0K8",
+      "canonicalUrl": "https://www.youtube.com/watch?v=O78kUGPM0K8",
+      "title": "【学マス】「雨夜 燕」2025年11月16日（日）プロデュース開始決定！【アイドルマスター】",
+      "summary": "「雨夜 燕」2025年11月16日（日）プロデュース開始決定！\n\n初星学園No.2\nプライドをかけて、今\n頂への下剋上――\n\n詳細は11月15日(土)20:00～配信予定の\nプロデュース直前生配信で発表！\n▼初星学園HR～祝1.5thアニバーサリー！！！雨夜 燕プロデュース開始直前SP～▼\nhttps://www.youtube.com/live/YIPNkojvFVs\n\n▼【学マス1.5周年】ガクマスタイムズ特設サイト｜雨夜 燕 特集▼\nhttps://gkmas-halfanniv2025.idolmaster-official.jp\n\n※日時・内容は予告なく変更になる場合がございます\n\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター #学マス \n#雨夜燕 #実装決定 #ENDLESS_DANCE\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツを",
+      "publishedAt": "2025-11-07T09:00:12.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "5b3708f383af14bce24d15b0bac6f9b9b8470e6bb29e86a475d52d52ae7fb897",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_7a24b19975183a9d10e1009336e972f20de0059e4d96489213c848acb2267917",
+      "resourceType": "youtube-video",
+      "externalId": "P5Fe4nhePa0",
+      "resourceKey": "youtube:P5Fe4nhePa0",
+      "canonicalUrl": "https://www.youtube.com/watch?v=P5Fe4nhePa0",
+      "title": "【生配信】学園アイドルマスター 「初星学園HR #STEP3 月村 手毬」【アイドルマスター】",
+      "summary": "📅1/14(水) 19：00～\n「学園アイドルマスター」の最新情報をお届けする生配信『初星学園HR #STEP3 月村 手毬』を放送予定！\n\n今回STEP3が実装されるアイドルは『月村 手毬』\n月村 手毬役の小鹿 なおさん、倉本 千奈役の伊藤 舞音さん、篠澤 広役の川村 玲奈さんとご一緒に月村 手毬のSTEP3についてご紹介します📺\n\nプロデューサーの皆さん、お楽しみに！\n\n【出演者】\n小鹿 なお（月村 手毬役）\n伊藤 舞音（倉本 千奈役）\n川村 玲奈（篠澤 広役）\n「学園アイドルマスター」プロデューサー 佐藤 大地\n\n#学園アイドルマスター #学マス #初星学園HR #小鹿なお #月村手毬 #伊藤舞音 #倉本千奈 #川村玲奈 #篠澤広\n\n【関連リンク】\n■「学園アイドルマスター」公式サイト\nhttps://gakuen.idolmaster-official.jp/\n\n■「学園アイドルマスター」公式X\nhttps://x.com/gkmas_official\n\n■「学園アイドルマスター」公式Discord\nhttps://discord.gg/sgSdejpp3Z\n\n■App Store\nhttps://apps.apple.com/jp/app/id6446659989?mt=8\n\n■Google Play\nhttps://play.google.com/store/app",
+      "publishedAt": "2026-01-14T11:33:24.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "e5d1ca2e50e33713d80bb07736907f786d6b0f90a4f617093905656f5b59d92c",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_a37533be4702636a33928a1700c331fc58febdcfaf9ed73973e861c64f92f7b3",
+      "resourceType": "youtube-video",
+      "externalId": "PgLGQ4VQkjc",
+      "resourceKey": "youtube:PgLGQ4VQkjc",
+      "canonicalUrl": "https://www.youtube.com/watch?v=PgLGQ4VQkjc",
+      "title": "【学マス】倉本千奈「H.I.F編」シナリオ告知PV【アイドルマスター】",
+      "summary": "学園アイドルマスター2周年！\n\n新シナリオ『H.I.F編』\n頂上決戦、開幕！\n\n#倉本千奈\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータル",
+      "publishedAt": "2026-05-25T09:30:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "6ac474f8be85ae5f1abd03eb45e0afc4f15ba4d344da6757aa3f04873983a5e8",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_7fb0f00f9f25083417d5c9fa7c5bf4ff4d0423b23b0be3daf1463c59cb9bb589",
+      "resourceType": "youtube-video",
+      "externalId": "pKKtsU8NmG4",
+      "resourceKey": "youtube:pKKtsU8NmG4",
+      "canonicalUrl": "https://www.youtube.com/watch?v=pKKtsU8NmG4",
+      "title": "【生配信】学園アイドルマスター 「初星学園HR #STEP3 雨夜 燕」【アイドルマスター】",
+      "summary": "📅7/20(月・祝) 19：00～\n「学園アイドルマスター」の最新情報をお届けする生配信『初星学園HR #STEP3 雨夜 燕』を放送予定！\n\n今回STEP3が実装されるアイドルは『雨夜 燕』\n雨夜 燕役の天音 ゆかりさん、花海 咲季役の長月 あおいさんとご一緒に雨夜 燕のSTEP3についてご紹介します📺\n\n番組後半では今後のガシャ情報もお知らせ予定！\nプロデューサーの皆さん、お楽しみに！\n\n【出演者】\n天音 ゆかり（雨夜 燕役）\n長月 あおい（花海 咲季役）\n「学園アイドルマスター」プロデューサー 山本 亮\n\n#学園アイドルマスター #学マス #初星学園HR #天音ゆかり #雨夜燕 #長月あおい #花海咲季\n\n【関連リンク】\n■「学園アイドルマスター」公式サイト\nhttps://gakuen.idolmaster-official.jp/\n\n■「学園アイドルマスター」公式X\nhttps://x.com/gkmas_official\n\n■「学園アイドルマスター」公式Discord\nhttps://discord.gg/sgSdejpp3Z\n\n■App Store\nhttps://apps.apple.com/jp/app/id6446659989?mt=8\n\n■Google Play\nhttps://play.google.com/store/apps/details?id=c",
+      "publishedAt": "2026-07-20T11:36:16.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "71c0f6d08a577c7b5fa3078ce621b915216ebf35b5951844fa6047f7e01048d7",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_fd967424b9e7dd91996db620a06fe4bc805158ccdac832a36d9dc400c1b10571",
+      "resourceType": "youtube-video",
+      "externalId": "pqE67YrJ6gI",
+      "resourceKey": "youtube:pqE67YrJ6gI",
+      "canonicalUrl": "https://www.youtube.com/watch?v=pqE67YrJ6gI",
+      "title": "【学マス】篠澤 広「H.I.F」出場告知PV【アイドルマスター】",
+      "summary": "「H.I.F」頂上決戦、開幕！\n篠澤 広（しのさわ ひろ）　CV.川村 玲奈\n\n#篠澤広\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n■視聴にあたっての注意事項\nご覧いただく映像によっては、激しく点滅する場面が含まれることがあります。\n映像内の激しい点滅により、ごくまれにけいれん発作や失神などの光感受性発作の症状を起こされる方がいらっしゃいます。\nこうした症状のある方は、必ず事前に医師へ相談してください。また、こうした症状の予防のため、画面から十分離れ、お部屋を明るくしてご鑑賞ください。\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこち",
+      "publishedAt": "2026-05-13T09:01:09.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "c10277af7b7c988bb36958eba4234412e8dc8ff50241336359cf743fd4fba0b9",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_33547b8ccb3e3c27aac7dc1cd2d3e9c14247c22594ea5f383c782e338dd0c70b",
+      "resourceType": "youtube-video",
+      "externalId": "PU6ESnZOTxA",
+      "resourceKey": "youtube:PU6ESnZOTxA",
+      "canonicalUrl": "https://www.youtube.com/watch?v=PU6ESnZOTxA",
+      "title": "【生配信】学園アイドルマスター 「初星学園HR #STEP3 花海 佑芽」【アイドルマスター】",
+      "summary": "📅4/3(金) 19：00～\n「学園アイドルマスター」の最新情報をお届けする生配信『初星学園HR #STEP3 花海 佑芽』を放送予定！\n\n今回STEP3が実装されるアイドルは『花海 佑芽』\n花海 佑芽役の松田 彩音さん、花海 咲季役の長月 あおいさんとご一緒に花海 佑芽のSTEP3についてご紹介します📺\n\nプロデューサーの皆さん、お楽しみに！\n\n【出演者】\n松田 彩音（花海 佑芽役）\n長月 あおい（花海 咲季役）\n「学園アイドルマスター」プロデューサー 山本 亮\n\n#学園アイドルマスター #学マス #初星学園HR #松田彩音 #花海佑芽 #長月あおい #花海咲季\n\n【関連リンク】\n■「学園アイドルマスター」公式サイト\nhttps://gakuen.idolmaster-official.jp/\n\n■「学園アイドルマスター」公式X\nhttps://x.com/gkmas_official\n\n■「学園アイドルマスター」公式Discord\nhttps://discord.gg/sgSdejpp3Z\n\n■App Store\nhttps://apps.apple.com/jp/app/id6446659989?mt=8\n\n■Google Play\nhttps://play.google.com/store/apps/details?id=com.bandainamcoent.idolm",
+      "publishedAt": "2026-04-03T11:11:56.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "61f56f7f46bfd5a7d2a85b8bc08b98b7f4afee899df19a900b1825e6d9135152",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_9a74453be65876a5acc0369b0c24167ec7c065cb32a7a51db878382b65e1b67b",
+      "resourceType": "youtube-video",
+      "externalId": "Q7CMpevcOzM",
+      "resourceKey": "youtube:Q7CMpevcOzM",
+      "canonicalUrl": "https://www.youtube.com/watch?v=Q7CMpevcOzM",
+      "title": "【学マス】花海 佑芽「H.I.F」出場告知PV【アイドルマスター】",
+      "summary": "「H.I.F」頂上決戦、開幕！\n花海 佑芽（はなみ うめ）　CV.松田 彩音\n\n#花海佑芽\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n■視聴にあたっての注意事項\nご覧いただく映像によっては、激しく点滅する場面が含まれることがあります。\n映像内の激しい点滅により、ごくまれにけいれん発作や失神などの光感受性発作の症状を起こされる方がいらっしゃいます。\nこうした症状のある方は、必ず事前に医師へ相談してください。また、こうした症状の予防のため、画面から十分離れ、お部屋を明るくしてご鑑賞ください。\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこ",
+      "publishedAt": "2026-05-12T09:00:29.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "cc88aa1117c4c2ff26e53d10a35dc78cf3161baf3f5b6ad92d4cfff9aa36a6e4",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_d66bfa3849e8366552fd09408ccf279ff888bec483f6e1cad9235a15b8d5a519",
+      "resourceType": "youtube-video",
+      "externalId": "QCsb89zRVVE",
+      "resourceKey": "youtube:QCsb89zRVVE",
+      "canonicalUrl": "https://www.youtube.com/watch?v=QCsb89zRVVE",
+      "title": "【学マス】『H.I.F編』ゲーム内OPアニメーション【アイドルマスター】",
+      "summary": "新プロデュースモード＆新シナリオ『H.I.F編』\nゲーム内OPアニメーションを先行公開！\n\n『H.I.F編』は2026年5月より順次実装予定！\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター #HIF #ガラクタロード\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com",
+      "publishedAt": "2026-05-08T03:05:00.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "73f34f0c68c8e93a3402be5560984a1daf58fd3fd484403ae88e3ff8ca039e62",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_25f1451b9a17fad21c28d3cc2eb2264d60dcb052aed17451166a61b234286f0d",
+      "resourceType": "youtube-video",
+      "externalId": "QJ9Qkypdbqs",
+      "resourceKey": "youtube:QJ9Qkypdbqs",
+      "canonicalUrl": "https://www.youtube.com/watch?v=QJ9Qkypdbqs",
+      "title": "月村手毬 生誕記念配信2026【#月村手毬生誕祭2026】",
+      "summary": "#月村手毬生誕祭2026\n\n【月村手毬ソロ曲プレイリスト】\n  https://www.youtube.com/playlist?list=PL8AmPgz38WkW7RkoS2_Dk19cpQJbGnOGO\n\n▼誕生日記念グッズはこちら！\nhttps://shop.asobistore.jp/products/detail/241196-00-00-00\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら】\nhttps://idolmaster-offi",
+      "publishedAt": "2026-06-02T14:58:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "875a6d568f92664553495a95535de4dc862040cae17e436c20e799130e54ec9f",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_bc9028bb1c7f2d188708f929822c1bf52c82c35c7014fd6d70e8c9c19ef2297b",
+      "resourceType": "youtube-video",
+      "externalId": "R_T8kAUTeZc",
+      "resourceKey": "youtube:R_T8kAUTeZc",
+      "canonicalUrl": "https://www.youtube.com/watch?v=R_T8kAUTeZc",
+      "title": "紫雲清夏 生誕ミニライブ2025【#紫雲清夏生誕祭2025】",
+      "summary": "#紫雲清夏生誕祭2025\n\n【紫雲清夏】ソロ曲 プレイリスト\nhttps://youtube.com/playlist?list=PL8AmPgz38WkWq4EkQO8W2Aj1NA3XSQZgI&si=fAjk6PqAGfJARaMg\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら】\nhttps://idolmaster-official.jp/\n【アイドルマスター関連グッズ情報はこちらから！- アソビストア】\nhttps://asobistore.",
+      "publishedAt": "2025-11-10T14:55:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "4194939855da805e11d9866787a940b08476aae1c3f7709ec4f5e21564fa3af2",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_dd9198f961cb2e2acf5f7bf593da1ee82439316574262290cab71c9a3904a654",
+      "resourceType": "youtube-video",
+      "externalId": "r4wylrjOuq8",
+      "resourceKey": "youtube:r4wylrjOuq8",
+      "canonicalUrl": "https://www.youtube.com/watch?v=r4wylrjOuq8",
+      "title": "花海佑芽 生誕ミニライブ2026【#花海佑芽生誕祭2026】",
+      "summary": "#花海佑芽生誕祭2026\n\n【花海佑芽】ソロ曲 プレイリスト\nhttps://www.youtube.com/playlist?list=PL8AmPgz38WkUdMQrX0hWyXRFJBpWzbcZJ\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら】\nhttps://idolmaster-official.jp/\n【アイドルマスター関連グッズ情報はこちらから！- アソビストア】\nhttps://asobistore.jp/content/title",
+      "publishedAt": "2026-03-31T14:55:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "a1290f2f536ba9cd3435706c8fb1bf36d50b4561aa022acc783394da41cd6ab7",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_df34c8c0bee1e88ad5949b348206d86f7f84d68e65c89f79fdff46df8d1af30e",
+      "resourceType": "youtube-video",
+      "externalId": "rRm5QktaeaY",
+      "resourceKey": "youtube:rRm5QktaeaY",
+      "canonicalUrl": "https://www.youtube.com/watch?v=rRm5QktaeaY",
+      "title": "【学マス】花海 咲季「H.I.F編」シナリオ告知PV【アイドルマスター】",
+      "summary": "新シナリオ『H.I.F編』\n頂上決戦、開幕！\n\n#花海咲季\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら】\nhttps:/",
+      "publishedAt": "2026-07-21T01:50:25.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "d501f8348957ef3dba4c855a35768bc61d224823c018efc4c018b2a86c831e23",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_dbe35600354950307ab3191af44741e473bbaed6a179248ea8535ccae605cac3",
+      "resourceType": "youtube-video",
+      "externalId": "rTOxDXUI2F8",
+      "resourceKey": "youtube:rTOxDXUI2F8",
+      "canonicalUrl": "https://www.youtube.com/watch?v=rTOxDXUI2F8",
+      "title": "【学マス】姫崎 莉波「H.I.F編」シナリオ告知PV【アイドルマスター】",
+      "summary": "学園アイドルマスター2周年！\n\n新シナリオ『H.I.F編』\n頂上決戦、開幕！\n\n#姫崎莉波\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータル",
+      "publishedAt": "2026-05-16T01:50:03.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "fbc1146d148574bf92ec6339371aade30c7f695537c5617eebf529c54059ad66",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_847e9e7a2ea879b96365d70e1580edf8932f32f8c1ce2e9135fa42a0d0d4288b",
+      "resourceType": "youtube-video",
+      "externalId": "s_hHaE7W0JU",
+      "resourceKey": "youtube:s_hHaE7W0JU",
+      "canonicalUrl": "https://www.youtube.com/watch?v=s_hHaE7W0JU",
+      "title": "【学マス】L.U.V／姫崎莉波｜The 2nd Period H.I.F選抜試験【アイドルマスター】",
+      "summary": "2026年5月16日(土)･5月17日(日) に幕張イベントホールにて開催された\n「学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション)」\nのxRライブストリーミングチケットが2026年6月22日(月)まで発売中！\n是非チェックしてください！\n\n★ご購入はこちらから！★\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【",
+      "publishedAt": "2026-06-13T11:15:36.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "239330fb3d543ef50a445369198eb8f6fff4d656ce48d14430ecc1c62addd489",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_1a2ecd9e84e4204ad820582af36f5b843270f6b51a1eed050817e7a4e84440a6",
+      "resourceType": "youtube-video",
+      "externalId": "s5EPcAdtdMo",
+      "resourceKey": "youtube:s5EPcAdtdMo",
+      "canonicalUrl": "https://www.youtube.com/watch?v=s5EPcAdtdMo",
+      "title": "【学マス】有村 麻央 STEP3 告知PV【アイドルマスター】",
+      "summary": "STEP3追加アイドル\n有村 麻央（ありむら まお）　CV.七瀬 つむぎ\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター #STEP3 #有村麻央\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら】\nhtt",
+      "publishedAt": "2025-10-29T02:07:55.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "bb5cdf8121f8da8013a518a648ced94e515d3d4691911126e56a0843b93f8fde",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_f6bc08ea04bdfa3aeb51f732b850fef90f5d43c655d3f24129892c93be86c02a",
+      "resourceType": "youtube-video",
+      "externalId": "SsRGBnDZlA0",
+      "resourceKey": "youtube:SsRGBnDZlA0",
+      "canonicalUrl": "https://www.youtube.com/watch?v=SsRGBnDZlA0",
+      "title": "【生配信】学園アイドルマスター 「初星学園HR #STEP3 有村 麻央」【アイドルマスター】",
+      "summary": "📅10/30(木) 19：00～\n「学園アイドルマスター」の最新情報をお届けする生配信『初星学園HR #STEP3 有村 麻央』を放送予定！\n \n今回STEP3が実装されるアイドルは『有村 麻央』\n有村 麻央役の七瀬 つむぎさんとご一緒に、有村 麻央のSTEP3についてご紹介します📺\n \nプロデューサーの皆さん、お楽しみに！\n \n【出演者】\n七瀬 つむぎ（有村 麻央役）\n「学園アイドルマスター」元プロデューサー 小美野 日出文\n \n#学園アイドルマスター #学マス #初星学園HR #七瀬つむぎ #有村麻央\n\n【関連リンク】\n■「学園アイドルマスター」公式サイト\nhttps://gakuen.idolmaster-official.jp/\n\n■「学園アイドルマスター」公式X\nhttps://x.com/gkmas_official\n\n■「学園アイドルマスター」公式Discord\nhttps://discord.gg/sgSdejpp3Z\n\n■App Store\nhttps://apps.apple.com/jp/app/id6446659989?mt=8\n\n■Google Play\nhttps://play.google.com/store/apps/details?id=com.bandainamcoent.idolmaster_gakuen\n\n■DMM GAMES\nhttps",
+      "publishedAt": "2025-10-30T11:13:23.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "c6520c92a02266a47c8a7d30439153bf817ba9f7ea2665038649f5764c8e28b3",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_9c406e1ec6cda22f63a6e97c6cd829240cc7423af530149a8bae0a54095abd50",
+      "resourceType": "youtube-video",
+      "externalId": "T3V7_Dsq0r0",
+      "resourceKey": "youtube:T3V7_Dsq0r0",
+      "canonicalUrl": "https://www.youtube.com/watch?v=T3V7_Dsq0r0",
+      "title": "【学マス】雨夜 燕 STEP3 告知PV【アイドルマスター】",
+      "summary": "STEP3追加アイドル\n雨夜 燕（あまや つばめ）　\nCV.天音 ゆかり\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター #STEP3 #雨夜燕 #クライアイ\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこち",
+      "publishedAt": "2026-07-17T03:00:29.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "b70186883dad5a91b1588da4023269e64965a741703050cf9f8bf1b4c7b88a32",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_c523638602457a24aeec6c77bc5a04a706ff3aa5077d14cd71e44e22473e84d6",
+      "resourceType": "youtube-video",
+      "externalId": "TnUcZRX3zYE",
+      "resourceKey": "youtube:TnUcZRX3zYE",
+      "canonicalUrl": "https://www.youtube.com/watch?v=TnUcZRX3zYE",
+      "title": "【生配信】学園アイドルマスター 「初星学園HR #STEP3 花海 咲季」【アイドルマスター】",
+      "summary": "📅3/18(水) 19：00～\n「学園アイドルマスター」の最新情報をお届けする生配信『初星学園HR #STEP3 花海 咲季』を放送予定！\n\n今回STEP3が実装されるアイドルは『花海 咲季』\n花海 咲季役の長月 あおいさん、葛城 リーリヤ役の花岩 香奈さん、紫雲 清夏役の湊 みやさんとご一緒に花海 咲季のSTEP3についてご紹介します📺\n\nプロデューサーの皆さん、お楽しみに！\n\n【出演者】\n長月 あおい（花海 咲季役）\n花岩 香奈（葛城 リーリヤ役）\n湊 みや（紫雲 清夏役）\n「学園アイドルマスター」プロデューサー 山本 亮\n\n#学園アイドルマスター #学マス #初星学園HR #長月あおい #花海咲季 #花岩香奈 #葛城リーリヤ #湊みや #紫雲清夏\n\n【関連リンク】\n■「学園アイドルマスター」公式サイト\nhttps://gakuen.idolmaster-official.jp/\n\n■「学園アイドルマスター」公式X\nhttps://x.com/gkmas_official\n\n■「学園アイドルマスター」公式Discord\nhttps://discord.gg/sgSdejpp3Z\n\n■App Store\nhttps://apps.apple.com/jp/app/id6446659989?mt=8\n\n■Google Play\nhttps://play.google.com/s",
+      "publishedAt": "2026-03-18T11:20:07.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "ccde598ba47ab4e642c4ad3de255d573058e596462ac97380df0a0c1c298e633",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_c119dcbd93d3acab021b0116349954b90c26027fa2514cc1865b3bf2be4a528c",
+      "resourceType": "youtube-video",
+      "externalId": "TVhk7qP9ZoQ",
+      "resourceKey": "youtube:TVhk7qP9ZoQ",
+      "canonicalUrl": "https://www.youtube.com/watch?v=TVhk7qP9ZoQ",
+      "title": "【学マス】仮装狂騒曲／初星学園｜The 2nd Period H.I.F選抜試験【アイドルマスター】",
+      "summary": "2026年5月16日(土)･5月17日(日) に幕張イベントホールにて開催された\n「学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション)」\nのxRライブストリーミングチケットが2026年6月22日(月)まで発売中！\n是非チェックしてください！\n\n★ご購入はこちらから！★\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【",
+      "publishedAt": "2026-06-12T11:15:21.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "ddd9bf71d34a9dbf984f30389e6ffddf6867616aea08f0e445ac3e092d1d2be9",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_8bfb6e0f160907bfc85df32743a46572614823f4ebf82e1e04948d8b2de555ec",
+      "resourceType": "youtube-video",
+      "externalId": "TznCYrHsW7E",
+      "resourceKey": "youtube:TznCYrHsW7E",
+      "canonicalUrl": "https://www.youtube.com/watch?v=TznCYrHsW7E",
+      "title": "【学マス】リアル脱出ゲームに挑戦！ #学マス脱出 体験動画【アイドルマスター】",
+      "summary": "リアル脱出ゲーム×学園アイドルマスター『人狼潜む文化祭からの脱出』\n好評開催中！\n\n詳細はこちら！\nhttps://realdgame.jp/s/gkmas/\n\n#学園アイドルマスター\n#学マス脱出\n#リアル脱出ゲーム\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SN",
+      "publishedAt": "2026-04-21T03:00:25.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "3b0cb539d119ef140991aad5b6aaad01bede688b8860b2f4860ba96df9b71ecb",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_b3299e3d797a73ae6fe1d966f1af0f38edca251d365e74614f6e3088788f4761",
+      "resourceType": "youtube-video",
+      "externalId": "u4y6kdlqJ-Y",
+      "resourceKey": "youtube:u4y6kdlqJ-Y",
+      "canonicalUrl": "https://www.youtube.com/watch?v=u4y6kdlqJ-Y",
+      "title": "【学マス】Our Chant／十王星南｜The 2nd Period H.I.F選抜試験【アイドルマスター】",
+      "summary": "2026年5月16日(土)･5月17日(日) に幕張イベントホールにて開催された\n「学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション)」\nのxRライブストリーミングチケットが2026年6月22日(月)まで発売中！\n是非チェックしてください！\n\n★ご購入はこちらから！★\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【",
+      "publishedAt": "2026-06-14T11:00:37.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "a0f8f194e2263de88674960b625fb9eab91ef8c891f7960ae264e41625706b8d",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_5bebbbcd5c9ec70687e46155ca3314e5b633f93afc509799e70ee7015f41c7c8",
+      "resourceType": "youtube-video",
+      "externalId": "Ugw5WGYW_MI",
+      "resourceKey": "youtube:Ugw5WGYW_MI",
+      "canonicalUrl": "https://www.youtube.com/watch?v=Ugw5WGYW_MI",
+      "title": "【学マス】The Rolling Riceball／花海佑芽｜The 2nd Period H.I.F選抜試験【アイドルマスター】",
+      "summary": "2026年5月16日(土)･5月17日(日) に幕張イベントホールにて開催された\n「学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション)」\nのxRライブストリーミングチケットが2026年6月22日(月)まで発売中！\n是非チェックしてください！\n\n★ご購入はこちらから！★\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【",
+      "publishedAt": "2026-06-13T11:00:21.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "7f5a72b40b85e135de3aaa3d64b18dd5600e2e970a6549c626c090c2703fb786",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_86f7674d21a26fa70e2f8b79223265b1cbf85780240731ea546119fb1ac449d0",
+      "resourceType": "youtube-video",
+      "externalId": "uXaWfs608p8",
+      "resourceKey": "youtube:uXaWfs608p8",
+      "canonicalUrl": "https://www.youtube.com/watch?v=uXaWfs608p8",
+      "title": "秦谷美鈴 生誕ミニライブ2026【#秦谷美鈴生誕祭2026】",
+      "summary": "#秦谷美鈴生誕祭2026\n\n【秦谷美鈴】ソロ曲 プレイリスト\nhttps://youtube.com/playlist?list=PL8AmPgz38WkWQ962RwTeF93MDOnI79L61&si=fwJLrn4TP5iOVSgA\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら】\nhttps://idolmaster-official.jp/\n【アイドルマスター関連グッズ情報はこちらから！- アソビストア】\nhttps://asobistore.",
+      "publishedAt": "2026-02-05T14:55:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "e2fa9b4c6ea752e81ca910d729da2f05bafde33f7a3f20f1a27f9b8143969af3",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_0241fc7121ff24e51566d80e1fd7ec578f62baff53f7bb647e7b4fed6a865a61",
+      "resourceType": "youtube-video",
+      "externalId": "vB45_YgFs6I",
+      "resourceKey": "youtube:vB45_YgFs6I",
+      "canonicalUrl": "https://www.youtube.com/watch?v=vB45_YgFs6I",
+      "title": "【学マス】あさり先生のリアル脱出ゲームゼミ【アイドルマスター】",
+      "summary": "リアル脱出ゲーム×学園アイドルマスター『人狼潜む文化祭からの脱出』\nチケット大好評発売中！\n\n▼イベント特設サイト\nhttps://realdgame.jp/s/gkmas/\n\n■ストーリー\n「お願いプロデューサー！ あなたの力を貸して！」\nここは国内最大のアイドル養成学校として知られる「初星学園」。\nその学園に通うプロデューサーのあなたは、自身の担当アイドルをトップアイドルにするべく日々活動を行なっていた。\n今日は学園の一大イベント、文化祭当日。\n観客が人狼を探し出す体験型のステージイベントに、あなたの担当アイドルは出演することになった。\n「自分の成長を観に来て欲しい」\nそう誘われたあなたは観客として参加するが、裏ではとんでもない事件が起こっていて…？\n人狼を浄化する儀式(ライブ)が始まるまであとわずか。\n人狼を見つけ出し、舞台裏の事件を解決し、最高のステージを用意することはできるのか!?\n君が選んだアイドルとともに、キセキを起こしステージを成功に導け！\n\n■プレイ形式\n所要時間：約110分\n参加人数：1名～\n屋内：ホールサイズ\n必要なもの：スマートフォン、イヤホン\n※本イベントはインターネットに接続されたスマートフォンが必要です。\n※フィーチャーフォン(ガラケー)、タブレットには対応しておりませんのでご注意ください。\n※端末のOSおよびお使いのブラウザは事前に最新版へアップデー",
+      "publishedAt": "2026-02-04T05:01:04.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "9e9545aa15d73795a63aebf9ce2cd5c6331f49c5d7399bb99a16e5efb8930915",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_ac85abdc7c5a9041721311da89438a1e115bba7d8c96de650ef9dc67e5c52e14",
+      "resourceType": "youtube-video",
+      "externalId": "WjcQZ4c0rrQ",
+      "resourceKey": "youtube:WjcQZ4c0rrQ",
+      "canonicalUrl": "https://www.youtube.com/watch?v=WjcQZ4c0rrQ",
+      "title": "【学マス】ときめきエモーション／REVERSI(葛城リーリヤ, 紫雲清夏)｜The 2nd Period H.I.F選抜試験【アイドルマスター】",
+      "summary": "2026年5月16日(土)･5月17日(日) に幕張イベントホールにて開催された\n「学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション)」\nのxRライブストリーミングチケットが2026年6月22日(月)まで発売中！\n是非チェックしてください！\n\n★ご購入はこちらから！★\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【",
+      "publishedAt": "2026-06-14T11:10:16.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "bda1d2093dcee4af55e71ccd249a64cea5ef90779079be02c5c2e89004a7106c",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_5374ca13b58eea69485cbfe2b82b3836698503cd50e97152cbfce66011c536c7",
+      "resourceType": "youtube-video",
+      "externalId": "WYOyZYAGVpM",
+      "resourceKey": "youtube:WYOyZYAGVpM",
+      "canonicalUrl": "https://www.youtube.com/watch?v=WYOyZYAGVpM",
+      "title": "有村麻央 生誕ミニライブ2026【#有村麻央生誕祭2026】",
+      "summary": "#有村麻央生誕祭2026\n\n【有村麻央】ソロ曲 プレイリスト\nhttps://www.youtube.com/playlist?list=PL8AmPgz38WkU3ayVUhUkFEbzZxx5RtPfc\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら】\nhttps://idolmaster-official.jp/\n【アイドルマスター関連グッズ情報はこちらから！- アソビストア】\nhttps://asobistore.jp/content/title",
+      "publishedAt": "2026-01-17T14:55:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "866289331226a2e78d335f8033121745aee8da65815cfa9dbde88eeab22f3ea0",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_75d522fafef97fef1dba54f6113cbef29b6a8d77923c404256cf609d97490199",
+      "resourceType": "youtube-video",
+      "externalId": "x0DyVAipJdQ",
+      "resourceKey": "youtube:x0DyVAipJdQ",
+      "canonicalUrl": "https://www.youtube.com/watch?v=x0DyVAipJdQ",
+      "title": "【学マス】雨夜 燕 3D View【アイドルマスター】",
+      "summary": "「学園アイドルマスター」\n雨夜 燕（あまや つばめ）　CV.天音 ゆかり　3D Viewを公開！\n\n▼雨夜 燕 紹介文\n初星学園生徒会副会長。学園No.2のアイドル。\n実力相応のプライドを持ち、尊大な態度を取る。\n自分にも他人にも厳しいが、面倒見は良い。\n幼馴染の星南をライバル視しており、いずれ星南を超えて『一番星』になると公言している。\n \n▼雨夜 燕　プロフィール詳細はこちら！▼\nhttps://gakuen.idolmaster-official.jp/idol/tsubame/\n\n\n▼#学マス ダウンロードはこちらから！▼\n・App Store\nhttps://apps.apple.com/jp/app/id6446659989?mt=8\n・Google Play\nhttps://play.google.com/store/apps/details?id=com.bandainamcoent.idolmaster_gakuen\n・DMM GAMES\nhttps://dmg-gakuen.idolmaster-official.jp/\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://twitter.com/gkmas_official\n\n#学園アイドルマスター ",
+      "publishedAt": "2025-11-17T01:01:22.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "ff656a138265049d8fce7197aa9351cd7d49b0123b839aa9068889134ccd590c",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_254f5a13c6f7181e1ae3522ab7eedc43c30bbeb641e80978530fc5dcc7808855",
+      "resourceType": "youtube-video",
+      "externalId": "x92_IX5pOko",
+      "resourceKey": "youtube:x92_IX5pOko",
+      "canonicalUrl": "https://www.youtube.com/watch?v=x92_IX5pOko",
+      "title": "【学マス】２周年記念PV 【アイドルマスター】",
+      "summary": "「学園アイドルマスター」のリリース２周年を記念した特別PV。\n\n▼2nd Anniversary 特設サイト▼\nhttps://gkmas-2ndanniv.idolmaster-official.jp/\n\n#学園アイドルマスター \n#学マス\n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas",
+      "publishedAt": "2026-05-15T15:00:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "36083a9e27f588f18be79975d611139ae1daf8b4185b65beac038f1a88671569",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_f21876adb37a72d843ab1f423e50e4fca9408caeca4f40e5141d2de04d960231",
+      "resourceType": "youtube-video",
+      "externalId": "xMLSLuWYcec",
+      "resourceKey": "youtube:xMLSLuWYcec",
+      "canonicalUrl": "https://www.youtube.com/watch?v=xMLSLuWYcec",
+      "title": "【学マス】古今東西ちょちょいのちょい／初星学園｜The 2nd Period H.I.F選抜試験【アイドルマスター】",
+      "summary": "2026年5月16日(土)･5月17日(日) に幕張イベントホールにて開催された\n「学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション)」\nのxRライブストリーミングチケットが2026年6月22日(月)まで発売中！\n是非チェックしてください！\n\n★ご購入はこちらから！★\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【",
+      "publishedAt": "2026-06-12T11:10:02.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "73b817a0b63d4624a571aafa3f0430af1df06d076aaf8a5a18eeeb5d22f2801c",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_54c9ec3c39a1f49f8777a06f8e4fff2209af79d4444bd9677aea6b5f35a3f8e7",
+      "resourceType": "youtube-video",
+      "externalId": "xqQTbgWdTJU",
+      "resourceKey": "youtube:xqQTbgWdTJU",
+      "canonicalUrl": "https://www.youtube.com/watch?v=xqQTbgWdTJU",
+      "title": "【REVERSI】「ときめきエモーション」サビダンス バックステージver.【学マス】【アイドルマスター】#shorts",
+      "summary": "#紫雲清夏 と #葛城リーリヤ のデュオユニット #REVERSI で、オリジナル楽曲 #ときめきエモーション をライブ前のバックステージで踊ってみました♪\nユニット衣装にも注目です！\n\n\n「ときめきエモーション REVERSIガシャ」2026年4月1日(水)～開催予定！\n※詳細は公式X・ゲーム内をご確認ください\n\n▼MUSIC\n歌：ときめきエモーション\n作詞作曲編曲：神山羊\n\n▼MOVIE\n省略キャラデザイン: ナポりん\n原画: 増田まりこ　高橋健人\n作画監督: U.\n動画/仕上:REC Animation Factory \n色彩設計/色指定検査: 小松亜理沙（WITSTUDIO）\n撮影:REC Animation Factory \n猪﨑 武尊\n松井 士\n佐藤 宏明\n硲野 継\n鈴木 優\n菅木 みなみ\n田口 雅大\n栗林 桃子\nアニメーションプロデューサー: 吉川貴哉（aeoniumLLC）\n\n▼#学マス DLはこちら▼\nhttps://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://twitter.com/gkmas_official \n\n#学園アイドルマスター\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽し",
+      "publishedAt": "2026-03-31T10:01:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "2894332a4dd5f54badb4f03e205263f567f41b9d2e0cc8be70e41d39198f0edf",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_951b1a930b20947ff22167600bc29996333222bfec17a58859df339bc44e6fb8",
+      "resourceType": "youtube-video",
+      "externalId": "XriqzuPDZ44",
+      "resourceKey": "youtube:XriqzuPDZ44",
+      "canonicalUrl": "https://www.youtube.com/watch?v=XriqzuPDZ44",
+      "title": "【RippleSign】「SUGAR FLAVOR」サビダンス 教室ver.【学マス】【アイドルマスター】#shorts",
+      "summary": "#有村麻央 と #姫崎莉波 のデュオユニット #RippleSign で、オリジナル楽曲 #SUGAR_FLAVOR を踊ってみました♪\n\n\n「SUGAR FLAVOR RippleSignガシャ」2026年6月15日(月)～開催予定！\n※詳細は公式X・ゲーム内をご確認ください\n\n▶MUSIC\n歌：SUGAR FLAVOR\n作詞作曲編曲：Kai Takahashi\n\n▶MOVIE\n省略キャラデザイン:ナポりん\n原画:高橋健人　増田まりこ　\n動画/仕上:REC Animation Factory\n色彩設計/色指定検査: 小松亜理沙（WITSTUDIO）\n背景:三原伸明\n撮影:REC Animation Factory\n松井 士\n硲野 継\n鈴木 優\n菅木 みなみ\n田口 雅大\n猪﨑 武尊\nアニメーションプロデューサー:吉川貴哉（aeoniumLLC）\n\n▼#学マス DLはこちら▼\nhttps://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://twitter.com/gkmas_official \n\n#学園アイドルマスター\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデュ",
+      "publishedAt": "2026-06-14T00:00:23.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "662a4ba0eb4b7a5b9dec4ca6c3f35c8b9330fd9ca3008aaa7add387893435f5c",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_149c8508ddd1a342203bddc8a55a0a449f6d088a8c9c5cc9db1655ef782e4815",
+      "resourceType": "youtube-video",
+      "externalId": "XSulmRvI5RU",
+      "resourceKey": "youtube:XSulmRvI5RU",
+      "canonicalUrl": "https://www.youtube.com/watch?v=XSulmRvI5RU",
+      "title": "【学マス】花海 咲季「H.I.F」出場告知PV【アイドルマスター】",
+      "summary": "「H.I.F」頂上決戦、開幕！\n花海 咲季（はなみ さき） CV.長月 あおい\n\n#花海咲季\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n■視聴にあたっての注意事項\nご覧いただく映像によっては、激しく点滅する場面が含まれることがあります。\n映像内の激しい点滅により、ごくまれにけいれん発作や失神などの光感受性発作の症状を起こされる方がいらっしゃいます。\nこうした症状のある方は、必ず事前に医師へ相談してください。また、こうした症状の予防のため、画面から十分離れ、お部屋を明るくしてご鑑賞ください。\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーは",
+      "publishedAt": "2026-05-02T09:00:49.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "36f484b4166d2deee5e2ce0d05bd72076076ac6db6e34fe566187be6e73983f6",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_99c192548c3bbb818d6f17c2f326379575220ff3486835b08795590239e78485",
+      "resourceType": "youtube-video",
+      "externalId": "XtnMACyjj8g",
+      "resourceKey": "youtube:XtnMACyjj8g",
+      "canonicalUrl": "https://www.youtube.com/watch?v=XtnMACyjj8g",
+      "title": "初星学園 Remix Album「ReCollection」vol.1CROSSFADE MOVIE 【アイドルマスター】",
+      "summary": "【商品概要】\n初星学園 Remix Album「ReCollection」vol.1\n・発売日：2026年2月28日(土)\n・価格：3,500円（税込）\n\n※2026年2月28日は初星音楽祭での先行販売開始日です。\n※一般販売は2026年5月頃を予定しております。\n\n【Track List】\n01 EGO (Nor Remix)  0:03\n02 Luna say maybe (gaburyu Remix) 1:05\n03 Yellow Big Bang！ (cosMo＠暴走P Remix) 1:51\n04 Feel Jewel Dream (James Landino Remix) 2:33\n05 白線 (やしきん Remix) 3:25\n06 憧れをいっぱい (Tomggg Remix) 4:20\n07 Kira Kira (r-906 Remix) 5:14\n08 メクルメ (PAS TASTA Remix) 5:59\n09 L.U.V (石濱 翔 Remix) 6:43\n10 The Rolling Riceball (LindaAI-CUE Remix) 7:38\n11 Cosmetic (REDALiCE Remix) 8:28\n12 ツキノカメ (Shinpei Nasuno Remix) 9:18\n13 仮装狂騒曲 (原口沙輔 Remix) 9:58\n14  ミラク",
+      "publishedAt": "2026-02-26T10:00:52.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "13c5c5d9b0955976972e0c334a6a5cf4a7827555dd0f5ac7ca13acdefe22de0c",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_1bbaa87e224250d4eae5b14bc4db7858c391578ef65484dc65aefa767ee8d3c6",
+      "resourceType": "youtube-video",
+      "externalId": "XZQgoUjzGSA",
+      "resourceKey": "youtube:XZQgoUjzGSA",
+      "canonicalUrl": "https://www.youtube.com/watch?v=XZQgoUjzGSA",
+      "title": "【学マス】Fluorite／有村麻央｜The 2nd Period H.I.F選抜試験【アイドルマスター】",
+      "summary": "2026年5月16日(土)･5月17日(日) に幕張イベントホールにて開催された\n「学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション)」\nのxRライブストリーミングチケットが2026年6月22日(月)まで発売中！\n是非チェックしてください！\n\n★ご購入はこちらから！★\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【",
+      "publishedAt": "2026-06-13T11:20:12.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "7362f146cfebb625a217864d259dce70759d0d381ebd1fa39e5528324832e0e0",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_60de47f3cbc779277d9c88a9a4983df04106b9d244738eb50aae49a3ab88eeca",
+      "resourceType": "youtube-video",
+      "externalId": "y0JMWOAk5Us",
+      "resourceKey": "youtube:y0JMWOAk5Us",
+      "canonicalUrl": "https://www.youtube.com/watch?v=y0JMWOAk5Us",
+      "title": "【ゆめぱしー】「みちなるひろがる」サビダンス バックステージver.【学マス】【アイドルマスター】#shorts",
+      "summary": "#倉本千奈 と #篠澤広 のデュオユニット #ゆめぱしー で、オリジナル楽曲 #みちなるひろがる をライブ前のバックステージで踊ってみました♪\nユニット衣装にも注目です！\n\n\n「みちなるひろがる ゆめぱしーガシャ」2026年1月27日(火)～開催中！\n※詳細は公式X・ゲーム内をご確認ください\n\n▼MUSIC\n歌：ゆめぱしー\n作詞作曲編曲：いよわ\n\n▼MOVIE\n省略キャラデザイン: ナポりん\n原画: 高橋健人, ナポりん\n第二原画: Romulo, ロウィー・ヴェラ\n動画/仕上: スタジオドット\n色彩設計/色指定検査: 小松亜理沙（WITSTUDIO）\n撮影: 郡司章(maxilla), Eita(maxilla)\nアニメーションプロデューサー: 吉川貴哉（aeoniumLLC）\n\n▼#学マス DLはこちら▼\nhttps://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://twitter.com/gkmas_official \n\n#学園アイドルマスター\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロ",
+      "publishedAt": "2026-01-27T09:01:32.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "db8d85e6d12fc2f62cb196bde030f8dff6239779fd32f756d4ae68753126f4a4",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_50e40d7147829eaa4bf782d634ca4d2d581d66dfd70354b346cfcf6b83d4b437",
+      "resourceType": "youtube-video",
+      "externalId": "Y93oDFAww0Y",
+      "resourceKey": "youtube:Y93oDFAww0Y",
+      "canonicalUrl": "https://www.youtube.com/watch?v=Y93oDFAww0Y",
+      "title": "【学マス】ライブシーン（4K対応）ゆめぱしー「みちなるひろがる」【アイドルマスター】",
+      "summary": "ゆめぱしー\n＜メンバー＞\n倉本 千奈（くらもと ちな）　CV.伊藤 舞音\n篠澤 広（しのさわ ひろ）　CV.川村 玲奈　\n\n『4Kサイズ』のライブシーンを公開！大迫力の映像をお楽しみください！\n\nガシャ開始は1/27(火)を予定しております！\nお楽しみに！\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター \n#ゆめぱしー　#みちなるひろがる\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nht",
+      "publishedAt": "2026-01-26T03:00:40.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "1722a97ed6a41d4192d15330fe58551458ceae26ff6057d6550574edb49def8f",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_799b2f2f5a3d46a98848d13d30d7d164084d1bc7d6ed7bdf990f6af7c2d6a1ce",
+      "resourceType": "youtube-video",
+      "externalId": "yfCkWobnh6k",
+      "resourceKey": "youtube:yfCkWobnh6k",
+      "canonicalUrl": "https://www.youtube.com/watch?v=yfCkWobnh6k",
+      "title": "【学マス】ガラクタロード／初星学園｜The 2nd Period H.I.F選抜試験【アイドルマスター】",
+      "summary": "2026年5月16日(土)･5月17日(日) に幕張イベントホールにて開催された\n「学園アイドルマスター The 2nd Period H.I.F選抜試験(セレクション)」\nのxRライブストリーミングチケットが2026年6月22日(月)まで発売中！\n是非チェックしてください！\n\n★ご購入はこちらから！★\nhttps://asobistage.asobistore.jp/event/gakuen_2nd_selection/ticket\n\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【",
+      "publishedAt": "2026-06-12T11:00:32.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "f755361e6db22ec7e799537689f83effd9395be31959868bdcd005e0df8bc077",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_4e9cb7202bf3bf969da03b24e04a81b881476c67730b7074da2c16f1cb88d498",
+      "resourceType": "youtube-video",
+      "externalId": "YIPNkojvFVs",
+      "resourceKey": "youtube:YIPNkojvFVs",
+      "canonicalUrl": "https://www.youtube.com/watch?v=YIPNkojvFVs",
+      "title": "【生配信】学園アイドルマスター「初星学園HR～祝1.5thアニバーサリー！！！雨夜 燕プロデュース開始直前SP～」【アイドルマスター】",
+      "summary": "📅11/15(土) 20：00～\n \n「学園アイドルマスター」の最新情報をお届けする生配信『初星学園HR』を放送予定！\n学マス1.5周年アニバーサリーを記念して、「雨夜 燕プロデュース開始直前SP」の特別バージョンでお届けいたします！\n \nプロデューサーの皆さん、お楽しみに！\n \n【出演者】\n天音 ゆかり（雨夜 燕役）\n松田 彩音（花海 佑芽役）\n陽高 真白（十王 星南役）\n「学園アイドルマスター」プロデューサー 山本 亮\n \n#学園アイドルマスター #学マス #初星学園HR #雨夜燕 #天音ゆかり #花海佑芽 #松田彩音 #十王星南 #陽高真白\n\n【関連リンク】\n■「学園アイドルマスター」公式サイト\nhttps://gakuen.idolmaster-official.jp/\n\n■「学園アイドルマスター」公式X\nhttps://x.com/gkmas_official\n\n■「学園アイドルマスター」公式Discord\nhttps://discord.gg/sgSdejpp3Z\n\n■App Store\nhttps://apps.apple.com/jp/app/id6446659989?mt=8\n\n■Google Play\nhttps://play.google.com/store/apps/details?id=com.bandainamcoent.idolmaster_gaku",
+      "publishedAt": "2025-11-15T12:48:15.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "44b44aed056216e31969bab08722cb40a0b80021b5223c0cdaa719cde2dd5cb9",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_13ced7e954d09671107a18cafd5a29c829d546316281439fe3cdc202b9b80fdc",
+      "resourceType": "youtube-video",
+      "externalId": "yxL7dK1pr7g",
+      "resourceKey": "youtube:yxL7dK1pr7g",
+      "canonicalUrl": "https://www.youtube.com/watch?v=yxL7dK1pr7g",
+      "title": "姫崎莉波 生誕ミニライブ2026【#姫崎莉波生誕祭2026】",
+      "summary": "#姫崎莉波生誕祭2026\n\n【姫崎莉波】ソロ曲 プレイリスト\nhttps://youtube.com/playlist?list=PL8AmPgz38WkUU3DqCJLHMkq69mRMZm1PK&si=SIpDNtUyoHWGBk3u\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら】\nhttps://idolmaster-official.jp/\n【アイドルマスター関連グッズ情報はこちらから！- アソビストア】\nhttps://asobistore.",
+      "publishedAt": "2026-03-04T14:55:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "fb0734a76bfd1314414138ca1123fd51e4a6bb41adf44eaf524c54790824d160",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_bf15c60dd3e54d72728b85cdb77656ac81664ba50df01b32966a12c53aba24d7",
+      "resourceType": "youtube-video",
+      "externalId": "ZL_vO8Uwlkc",
+      "resourceKey": "youtube:ZL_vO8Uwlkc",
+      "canonicalUrl": "https://www.youtube.com/watch?v=ZL_vO8Uwlkc",
+      "title": "【学マス】有村 麻央「H.I.F編」シナリオ告知PV【アイドルマスター】",
+      "summary": "学園アイドルマスター2周年！\n\n新シナリオ『H.I.F編』\n頂上決戦、開幕！\n\n#有村麻央\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータル",
+      "publishedAt": "2026-05-16T01:45:06.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "58c0064c758f63710f15981236a96e0d4fe9f5c7a34cac7764775b2edb97ad44",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_0f2160d012139272e4730e1ee6ac777d8459af6cdda504630e73ff1f27adbd84",
+      "resourceType": "youtube-video",
+      "externalId": "ZNG5j7Oz7X0",
+      "resourceKey": "youtube:ZNG5j7Oz7X0",
+      "canonicalUrl": "https://www.youtube.com/watch?v=ZNG5j7Oz7X0",
+      "title": "【学マス】花海 咲季 STEP3 初報PV【アイドルマスター】",
+      "summary": "STEP3追加アイドル\n花海 咲季（はなみ さき）　CV.長月 あおい\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X\nhttps://x.com/gkmas_official\n\n#学園アイドルマスター #STEP3 #花海咲季\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツポリシーはこちら\nhttps://idolmaster-official.jp/lp/imasch_policy\n\n= = = = = = = = = = =\n【アイドルマスターチャンネル公式SNS】\nhttps://twitter.com/imas_ch\n【アイドルマスター公式SNS】\nhttps://twitter.com/imas_official\n【シリーズポータルサイトはこちら】\nhttp",
+      "publishedAt": "2026-03-01T11:30:24.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "14de60afe16e7591bca83496c712d621ead3d743c56fde2d0346c6cae1044eb5",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    },
+    {
+      "id": "intake_834947f892c434dcb98fe22db06537fbf7cf0e3b79e056879a86df3a0014becc",
+      "resourceType": "youtube-video",
+      "externalId": "zqhGpRJQ2tY",
+      "resourceKey": "youtube:zqhGpRJQ2tY",
+      "canonicalUrl": "https://www.youtube.com/watch?v=zqhGpRJQ2tY",
+      "title": "【学マス】葛城 リーリヤ「H.I.F」出場告知PV【アイドルマスター】",
+      "summary": "「H.I.F」頂上決戦、開幕！\n葛城 リーリヤ（かつらぎ りーりや）　CV.花岩 香奈\n\n#葛城リーリヤ\n#学園アイドルマスター \n#HIF\n\n▼#学マス 好評配信中！▼\nhttp://app.adjust.com/1ai6ouao\n\n▼学マス関連リンク▼\n・公式サイト\nhttps://gakuen.idolmaster-official.jp/\n・公式X（旧:Twitter）\nhttps://x.com/gkmas_official\n\n■視聴にあたっての注意事項\nご覧いただく映像によっては、激しく点滅する場面が含まれることがあります。\n映像内の激しい点滅により、ごくまれにけいれん発作や失神などの光感受性発作の症状を起こされる方がいらっしゃいます。\nこうした症状のある方は、必ず事前に医師へ相談してください。また、こうした症状の予防のため、画面から十分離れ、お部屋を明るくしてご鑑賞ください。\n\n◆アイドルマスターチャンネルとは？\n「YouTubeでプロデュースがもっと楽しくなる！\nすべての「アイドルマスター」プロデューサーさんたちの集う場所。」を掲げ、\nプロデューサーさんたちのプロデュース活動を推進できるようなコンテンツをお届けしていきます！\n\nⓅメンバーシップ登録はこちら\nhttps://www.youtube.com/@imas-official/join\n\n✂切り抜きコンテンツ",
+      "publishedAt": "2026-05-06T09:01:31.000Z",
+      "retrievedAt": "2026-07-29T12:10:40.157Z",
+      "contentHash": "b67155de6802f6ae36138c8f67af4363b9e20883e3a15fef73e735d036b932db",
+      "match": {
+        "eligible": true,
+        "reasons": [
+          "allowlisted-source"
+        ]
+      }
+    }
+  ]
+}

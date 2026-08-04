@@ -1,9 +1,65 @@
 <script setup>
+import { nextTick, ref, watch } from "vue";
+import {
+  SOURCE_CLAIM_TARGET_LABELS,
+  SOURCE_STATUS_LABELS,
+  eventUncertaintySummary,
+  sourceKeyForSourceDetail,
+  sourceKeyForSourceLabel,
+} from "../utils/events.js";
+
 const props = defineProps({
   selectedEvent: { type: Object, default: null },
+  detailContext: { type: Object, default: () => ({}) },
+  selectedEventHidden: { type: Boolean, default: false },
   yearLabel: { type: Function, required: true },
-  closePanel: { type: Function, required: true }
+  closePanel: { type: Function, required: true },
+  focusEventLane: { type: Function, required: true },
+  compareEventLane: { type: Function, required: true },
+  selectSourceFilter: { type: Function, required: true },
+  selectRelatedEvent: { type: Function, required: true }
 });
+
+const shareStatus = ref("");
+const showShareFallback = ref(false);
+const showAllSourceDetails = ref(false);
+const panelBodyRef = ref(null);
+const SOURCE_DETAIL_PREVIEW_LIMIT = 3;
+const DETAIL_HELP = {
+  lane: "このイベントが属するコミュまたは共通イベントの表示レーンです。",
+  period: "イベントが起きた時期です。期間内の1日は、候補範囲内のどこか1日を示します。",
+  occurrenceType: "継続期間か、候補範囲内の単日イベントかを示します。",
+  dateConfidence: "日付が確定か推定か、または範囲だけ特定されているかを示します。",
+  sourceBasis: "時期や内容の判断根拠が、明示情報・推論・混在のどれかを示します。",
+  sourceStatus: "出典の確認状態、推定根拠、矛盾、未確認、出典なしなどを示します。",
+  rangeReason: "候補範囲になっている理由です。月のみ確定、出典上の範囲、章順、前後関係などがあります。",
+  worldline: "イベントに紐づく世界線です。未設定の場合は明確な世界線分類がありません。",
+  participants: "イベントに関係する登場人物です。関連検索や絞り込みにも使われます。",
+  source: "簡易出典です。クリックすると同じ出典のイベントで絞り込めます。",
+  sourceDetails: "構造化された出典情報です。ID、確認状態、支える対象、主張を確認できます。",
+  storyReferences: "この出来事が参照する物語イベントのコミュです。",
+  conflicts: "複数の出典や解釈が食い違う場合の矛盾内容です。",
+  detail: "イベント本文です。タイムライン上の短いタイトルより詳しい説明を表示します。",
+  notes: "日付幅の根拠、推測理由、未登録人物、補足事項などの注記です。",
+  related: "同時期、同じレーン、同じ出典、同じ参加者など、参照しやすい関連イベントです。因果関係を示すものではありません。",
+};
+const STORY_REFERENCE_TYPE_LABELS = {
+  evidence: "根拠",
+  source: "出典",
+  subject: "主題",
+  related: "関連",
+};
+
+function helpAttrs(key) {
+  const text = DETAIL_HELP[key];
+  return text
+    ? {
+        class: "detail-help-label",
+        "data-tooltip": text,
+        tabindex: "0",
+      }
+    : {};
+}
 
 function hasExplicitDay(date) {
   return Number.isInteger(date?.day);
@@ -57,23 +113,427 @@ function formatEventOccurrence(event) {
     ? formatSingleWithinRange(event)
     : formatContinuousRange(event);
 }
+
+function formatOccurrenceType(event) {
+  return event?.occurrenceType === "singleWithinRange"
+    ? "期間内の1日"
+    : "継続期間";
+}
+
+function panelAccentStyle(event) {
+  const accent = event?.colorRoles?.panelAccent;
+  return accent ? { "--panel-accent": accent } : {};
+}
+
+function hasListItems(items) {
+  return Array.isArray(items) && items.length > 0;
+}
+
+function sourceDetailMeta(sourceDetail) {
+  const statusLabel = SOURCE_STATUS_LABELS[sourceDetail.status] ?? "";
+  const supports = Array.isArray(sourceDetail.supports)
+    ? sourceDetail.supports
+        .map((target) => SOURCE_CLAIM_TARGET_LABELS[target] ?? target)
+        .filter(Boolean)
+        .join(" / ")
+    : "";
+
+  return [
+    sourceDetail.id ? `ID: ${sourceDetail.id}` : "",
+    statusLabel,
+    supports ? `対象: ${supports}` : "",
+    sourceDetail.claim,
+  ]
+    .map((value) => String(value ?? "").trim())
+    .filter(Boolean)
+    .join(" / ");
+}
+
+function conflictMeta(conflict) {
+  return [
+    hasListItems(conflict.sources) ? `出典: ${conflict.sources.join(" / ")}` : "",
+    conflict.resolution ? `扱い: ${conflict.resolution}` : "",
+  ]
+    .filter(Boolean)
+    .join(" / ");
+}
+
+function visibleSourceDetails(sourceDetails) {
+  if (showAllSourceDetails.value) {
+    return Array.isArray(sourceDetails) ? sourceDetails : [];
+  }
+
+  return Array.isArray(sourceDetails)
+    ? sourceDetails.slice(0, SOURCE_DETAIL_PREVIEW_LIMIT)
+    : [];
+}
+
+function sourceDetailsOverflowCount(sourceDetails) {
+  return Array.isArray(sourceDetails)
+    ? Math.max(0, sourceDetails.length - SOURCE_DETAIL_PREVIEW_LIMIT)
+    : 0;
+}
+
+function relatedMeta(event) {
+  const uncertainty = eventUncertaintySummary(event);
+  const uncertaintyLabel = uncertainty.isUncertain ? uncertainty.stateLabel : "";
+
+  return [event.character, formatEventOccurrence(event), uncertaintyLabel]
+    .map((value) => String(value ?? "").trim())
+    .filter(Boolean)
+    .join(" / ");
+}
+
+function selectSourceLabel(source) {
+  const key = sourceKeyForSourceLabel(source);
+  if (key) props.selectSourceFilter(key);
+}
+
+function selectSourceDetail(sourceDetail) {
+  const key = sourceKeyForSourceDetail(sourceDetail);
+  if (key) props.selectSourceFilter(key);
+}
+
+async function copyShareUrl() {
+  const url = props.detailContext.shareUrl;
+  if (!url) return;
+
+  try {
+    if (!globalThis.navigator?.clipboard?.writeText) {
+      throw new Error("Clipboard API is unavailable.");
+    }
+    await globalThis.navigator.clipboard.writeText(url);
+    shareStatus.value = "コピーしました";
+    showShareFallback.value = false;
+  } catch {
+    shareStatus.value = "コピーできませんでした。URLを選択して共有してください。";
+    showShareFallback.value = true;
+  }
+}
+
+function selectFallbackUrl(event) {
+  event.target?.select?.();
+}
+
+watch(
+  () => props.selectedEvent?.canonicalId ?? props.selectedEvent?.id,
+  () => {
+    shareStatus.value = "";
+    showShareFallback.value = false;
+    showAllSourceDetails.value = false;
+    nextTick(() => {
+      if (panelBodyRef.value) {
+        panelBodyRef.value.scrollTop = 0;
+      }
+    });
+  },
+);
 </script>
 
 <template>
-  <aside class="side-panel" :class="{ open: selectedEvent }">
-    <div v-if="selectedEvent" class="panel-content">
-      <button class="close-btn" @click="closePanel">×</button>
+  <aside
+    class="side-panel"
+    :class="{ open: selectedEvent }"
+    role="dialog"
+    aria-modal="false"
+    :aria-label="selectedEvent ? 'イベント詳細' : 'イベント詳細パネル'"
+    :aria-labelledby="selectedEvent ? 'side-panel-title' : undefined"
+    :aria-describedby="selectedEvent ? 'side-panel-meta side-panel-detail' : undefined"
+  >
+    <div
+      v-if="selectedEvent"
+      class="panel-content"
+      :style="panelAccentStyle(selectedEvent)"
+    >
+      <div class="panel-header">
+        <button
+          class="close-btn"
+          type="button"
+          aria-label="詳細パネルを閉じる"
+          @click="closePanel"
+        >×</button>
 
-      <h2>{{ selectedEvent.title }}</h2>
+        <h2 id="side-panel-title">{{ selectedEvent.title }}</h2>
 
-      <p class="meta">
-        {{ selectedEvent.character }}<br />
-        {{ formatEventOccurrence(selectedEvent) }}
+        <div class="panel-actions" aria-label="選択中イベントの操作">
+          <button
+            class="panel-action"
+            type="button"
+            @click.stop="focusEventLane(selectedEvent)"
+          >
+            このレーンに集中
+          </button>
+          <button
+            class="panel-action"
+            type="button"
+            @click.stop="compareEventLane(selectedEvent)"
+          >
+            比較に追加
+          </button>
+          <button
+            class="panel-action"
+            type="button"
+            :disabled="!detailContext.shareUrl"
+            @click.stop="copyShareUrl"
+          >
+            URLをコピー
+          </button>
+        </div>
+
+        <p v-if="shareStatus" class="share-status">
+          {{ shareStatus }}
+        </p>
+
+        <input
+          v-if="showShareFallback"
+          class="share-url-fallback"
+          type="text"
+          readonly
+          :value="detailContext.shareUrl"
+          aria-label="共有URL"
+          @focus="selectFallbackUrl"
+        />
+      </div>
+
+      <div ref="panelBodyRef" class="panel-body">
+        <dl id="side-panel-meta" class="detail-fields">
+        <div class="detail-field">
+          <dt v-bind="helpAttrs('lane')">レーン</dt>
+          <dd>
+            <span class="event-accent" aria-hidden="true"></span>
+            {{ selectedEvent.character }}
+          </dd>
+        </div>
+        <div class="detail-field">
+          <dt v-bind="helpAttrs('period')">期間</dt>
+          <dd>{{ formatEventOccurrence(selectedEvent) }}</dd>
+        </div>
+        <div class="detail-field">
+          <dt v-bind="helpAttrs('occurrenceType')">発生形式</dt>
+          <dd>{{ formatOccurrenceType(selectedEvent) }}</dd>
+        </div>
+        <div class="detail-field">
+          <dt v-bind="helpAttrs('dateConfidence')">日付確度</dt>
+          <dd>
+            <span
+              class="detail-chip"
+              :class="{ 'detail-chip--warning': detailContext.uncertainty?.isUncertain }"
+            >{{ detailContext.uncertainty?.stateLabel }}</span>
+          </dd>
+        </div>
+        <div class="detail-field">
+          <dt v-bind="helpAttrs('sourceBasis')">根拠</dt>
+          <dd>
+            <span class="detail-chip">
+              {{ detailContext.uncertainty?.sourceBasisLabel }}
+            </span>
+          </dd>
+        </div>
+        <div class="detail-field">
+          <dt v-bind="helpAttrs('sourceStatus')">出典状態</dt>
+          <dd>
+            <span
+              class="detail-chip"
+              :class="{ 'detail-chip--warning': detailContext.uncertainty?.sourceStatus === 'conflicting' }"
+            >{{ detailContext.uncertainty?.sourceStatusLabel }}</span>
+          </dd>
+        </div>
+        <div
+          v-if="detailContext.uncertainty?.rangeReasonLabel"
+          class="detail-field"
+        >
+          <dt v-bind="helpAttrs('rangeReason')">範囲理由</dt>
+          <dd>
+            <span class="detail-chip">
+              {{ detailContext.uncertainty.rangeReasonLabel }}
+            </span>
+          </dd>
+        </div>
+        <div class="detail-field">
+          <dt v-bind="helpAttrs('worldline')">世界線</dt>
+          <dd>
+            <template v-if="hasListItems(detailContext.worldlineLabels)">
+              <span
+                v-for="worldline in detailContext.worldlineLabels"
+                :key="worldline"
+                class="detail-chip"
+              >{{ worldline }}</span>
+            </template>
+            <span v-else class="detail-empty">未設定</span>
+          </dd>
+        </div>
+        <div
+          v-if="hasListItems(detailContext.participantLabels)"
+          class="detail-field"
+        >
+          <dt v-bind="helpAttrs('participants')">参加者</dt>
+          <dd>
+            <span
+              v-for="participant in detailContext.participantLabels"
+              :key="participant"
+              class="detail-chip"
+            >{{ participant }}</span>
+          </dd>
+        </div>
+        <div class="detail-field">
+          <dt v-bind="helpAttrs('source')">出典</dt>
+          <dd>
+            <template v-if="hasListItems(detailContext.sources)">
+              <button
+                v-for="source in detailContext.sources"
+                :key="source"
+                class="detail-chip detail-chip--source detail-chip--button"
+                type="button"
+                :aria-label="`${source} と同じ出典で絞り込む`"
+                @click.stop="selectSourceLabel(source)"
+              >{{ source }}</button>
+            </template>
+            <span v-else class="detail-empty">未設定</span>
+          </dd>
+        </div>
+        </dl>
+
+      <section
+        v-if="hasListItems(detailContext.storyReferences)"
+        class="detail-section"
+        aria-labelledby="side-panel-story-references-title"
+      >
+        <h3
+          id="side-panel-story-references-title"
+          v-bind="helpAttrs('storyReferences')"
+        >物語イベント</h3>
+        <ul class="detail-list">
+          <li
+            v-for="reference in detailContext.storyReferences"
+            :key="reference.id"
+          >
+            <a class="detail-story-link" :href="reference.url">
+              {{ reference.label || "該当するコミュを開く" }}
+            </a>
+            <span class="detail-list__meta">
+              {{ STORY_REFERENCE_TYPE_LABELS[reference.type] || reference.type }}
+              <template v-if="reference.note"> / {{ reference.note }}</template>
+            </span>
+          </li>
+        </ul>
+      </section>
+
+      <section
+        v-if="hasListItems(detailContext.sourceDetails)"
+        class="detail-section"
+        aria-labelledby="side-panel-source-details-title"
+      >
+        <h3 id="side-panel-source-details-title" v-bind="helpAttrs('sourceDetails')">出典詳細</h3>
+        <ul class="detail-list">
+          <li
+            v-for="sourceDetail in visibleSourceDetails(detailContext.sourceDetails)"
+            :key="sourceDetail.id ?? sourceDetail.label"
+          >
+            <button
+              class="detail-source-action"
+              type="button"
+              :aria-label="`${sourceDetail.label} と同じ出典で絞り込む`"
+              @click.stop="selectSourceDetail(sourceDetail)"
+            >{{ sourceDetail.label }}</button>
+            <span
+              v-if="sourceDetailMeta(sourceDetail)"
+              class="detail-list__meta"
+            >{{ sourceDetailMeta(sourceDetail) }}</span>
+          </li>
+          <li
+            v-if="sourceDetailsOverflowCount(detailContext.sourceDetails)"
+            class="related-overflow"
+          >
+            <button
+              class="detail-source-action"
+              type="button"
+              @click="showAllSourceDetails = !showAllSourceDetails"
+            >
+              {{ showAllSourceDetails ? "先頭のみ表示" : `ほか ${sourceDetailsOverflowCount(detailContext.sourceDetails)} 件を表示` }}
+            </button>
+          </li>
+        </ul>
+      </section>
+
+      <section
+        v-if="hasListItems(detailContext.conflicts)"
+        class="detail-section detail-section--warning"
+        aria-labelledby="side-panel-conflicts-title"
+      >
+        <h3 id="side-panel-conflicts-title" v-bind="helpAttrs('conflicts')">出典矛盾</h3>
+        <ul class="detail-list">
+          <li
+            v-for="conflict in detailContext.conflicts"
+            :key="conflict.summary"
+          >
+            <span>{{ conflict.summary }}</span>
+            <span
+              v-if="conflictMeta(conflict)"
+              class="detail-list__meta"
+            >{{ conflictMeta(conflict) }}</span>
+          </li>
+        </ul>
+      </section>
+
+      <p v-if="selectedEventHidden" class="panel-status">
+        現在の表示条件では非表示です。
       </p>
 
-      <p class="detail">
-        {{ selectedEvent.detail }}
-      </p>
+      <section
+        class="detail-section detail-section--body"
+        aria-labelledby="side-panel-detail-title"
+      >
+        <h3 id="side-panel-detail-title" v-bind="helpAttrs('detail')">詳細</h3>
+        <p id="side-panel-detail" class="detail">
+          {{ selectedEvent.detail }}
+        </p>
+      </section>
+
+      <section
+        v-if="hasListItems(detailContext.notes)"
+        class="detail-section"
+        aria-labelledby="side-panel-notes-title"
+      >
+        <h3 id="side-panel-notes-title" v-bind="helpAttrs('notes')">注記</h3>
+        <ul class="detail-list">
+          <li v-for="note in detailContext.notes" :key="note">{{ note }}</li>
+        </ul>
+      </section>
+
+      <section
+        v-if="hasListItems(detailContext.relatedSections)"
+        class="detail-section"
+        aria-labelledby="side-panel-related-title"
+      >
+        <h3 id="side-panel-related-title" v-bind="helpAttrs('related')">関連コンテキスト</h3>
+        <div
+          v-for="section in detailContext.relatedSections"
+          :key="section.id"
+          class="related-section"
+        >
+          <h4>{{ section.title }}</h4>
+          <p>{{ section.description }}</p>
+          <ul class="related-list">
+            <li
+              v-for="event in section.items"
+              :key="event.instanceId ?? event.id"
+            >
+              <button
+                class="related-event"
+                type="button"
+                @click.stop="selectRelatedEvent(event)"
+              >
+                <span class="related-event__title">{{ event.title }}</span>
+                <span class="related-event__meta">{{ relatedMeta(event) }}</span>
+              </button>
+            </li>
+          </ul>
+          <p v-if="section.overflowCount" class="related-overflow">
+            ほか {{ section.overflowCount }} 件
+          </p>
+        </div>
+      </section>
+      </div>
     </div>
 
     <div v-else class="panel-placeholder">

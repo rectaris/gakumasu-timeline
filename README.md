@@ -1,14 +1,50 @@
 # gakumasu-timeline
 
-キャラクターやストーリーごとの出来事（期間）を、横軸＝時間・縦軸＝レーンで可視化するタイムライン表示アプリです。
+学園アイドルマスターの出来事を、独立した複数の見方でたどるアプリです。
+
+現在は、キャラクターやストーリーごとの出来事をレーンで示す「物語時系列」、ゲーム内の各コミュを1ノードとして関係を示す「物語イベント」、現実世界の日付で公式展開をたどる「学マス情報史」を表示できます。
 
 ## 公開サイト（GitHub Pages）
 
 このプロジェクトは GitHub Pages 上で動作することを前提としています。
 
-- URL: `https://rectaris.github.io/gakumasu-timeline/`
+- URL: `https://rectaris.github.io/timeline/`
+- 物語イベントMVP: `https://rectaris.github.io/timeline/?mode=story-graph`
+- 学マス情報史MVP: `https://rectaris.github.io/timeline/?mode=realworld`
 
 ## 使い方（サイト操作）
+
+### ビューの切り替え
+
+- ヘッダーの「表示」から「物語時系列」「物語イベント」「学マス情報史」を選択できます。
+- 「物語時系列」は従来のレーン型タイムラインです。
+- 「物語イベント」は、1つのコミュを1ノードとして前後関係と意味的関係を表示します。
+- 「学マス情報史」は、グレゴリオ暦上の公式情報をカテゴリレーンで表示します。
+
+### 学マス情報史MVP
+
+- 検索、カテゴリ、状態で表示を絞り込めます。
+- 月、日、分の日時精度を区別し、不明な日や時刻を補いません。
+- 予定、開催中、完了、延期、中止をラベルと線種で区別します。
+- `−`、`＋`、`現在へ`、`全期間`で表示範囲を操作できます。
+- 項目を選ぶと日時、精度、概要、公式出典を確認できます。
+- `?mode=realworld&item=<InfoEvent ID>`で選択を復元できます。
+- 本番には公式出典をレビューした項目だけを収録します。
+- ローカル開発では、精度や状態の表示確認用の合成データも表示します。
+
+### 物語イベントMVP
+
+- ノードを選ぶと、カテゴリ、シリーズ階層、人物タグ、物語上の位置を確認できます。
+- 実線は物語上の前後関係、破線は配置順を変えない意味的関係です。
+- ノード間距離と線の長さは、経過時間を表しません。
+- 前後関係が未確定の話は、孤立ノードとして別領域に表示します。
+- 検索、カテゴリ、人物で表示を絞り込めます。
+- ドラッグで移動し、ホイールまたは画面左下の操作で拡大縮小できます。
+- ノードへフォーカスした状態では、上下キーで前後関係、左右キーで表示中の隣接ノードへ移動できます。
+- `?mode=story-graph&node=<StoryBlock ID>`または`edge=<StoryEdge ID>`で選択を復元できます。
+- 公開サイトには、出典レビューと公開判断を完了したデータだけを収録します。
+- 未レビューパイロットはローカル開発とテストで使用し、本番成果物には含めません。
+- 意味的関係の表示機能はテスト専用データで検証し、表示目的だけの関係を公開データへ混ぜません。
 
 ### 画面の見方
 
@@ -32,28 +68,35 @@
 - キーボードの `Escape` を押す
 - ヘッダー、メニュー、設定、マニュアル、詳細パネル以外をクリック / タップする
 - タイムライン上では、イベント以外の領域をクリック / タップする
+- ズーム操作エリアは詳細パネルを開いたまま使えます
 
 ### 表示範囲（移動 / 拡大縮小）
 
 - 水平方向は連続 viewport で表示します
-- `H` の `- / + / 全体` で水平ズームアウト・ズームイン・全体表示ができます
-- タイムライン上でホイールするとカーソル位置基準の水平拡大縮小ができます
-- `Ctrl` を押しながらホイールすると、縦方向のレーン密度を調整できます
+- 画面下部の**表示期間（横軸）ボタン**で、水平ズームアウト・ズームイン・全体表示ができます
+- 詳細パネルを開いたままでも、画面下部の**表示期間（横軸） / レーン密度（縦軸）ボタン**でズーム操作を続けられます
+- タイムライン上でホイールするとカーソル位置基準で**表示期間（横軸）**を拡大縮小できます
+- `Ctrl` を押しながらホイールすると、**レーン密度（縦軸）**を調整できます
 - 横方向ホイールでは水平方向に移動します
 - マウスドラッグでタイムライン領域を上下左右に移動できます
 - タッチ操作では、1本指ドラッグでタイムライン領域を上下左右に移動できます
-- タッチ操作では、2本指ピンチで横方向と縦方向を同時に拡大縮小できます
+- タッチ操作では、2本指ピンチで表示期間とレーン密度を同時に調整できます
 - 横方向はピンチアウトで拡大、ピンチインで縮小します
 - 縦方向はピンチインでレーン密度が上がり、ピンチアウトで下がります
-- 左右キーで表示範囲を横移動し、`+` / `-` キーで水平ズームできます
-- `V` の `- / + / 100%` で縦方向のレーン密度を調整できます
+- 左右キーで表示範囲を横移動し、`+` / `-` キーで**表示期間**を調整できます
+- 画面下部の**レーン密度（縦軸）ボタン**で、縦方向のレーン密度を調整できます
+- レーン密度を変えても、イベント本体と重なりイベント同士の縦間隔は固定です
 - イベント選択時、現在の表示範囲に収まらない場合は、そのイベントが入る幅まで自動で調整されます
 - 月ラベルと日ラベルは上部に表示されます
-- 日付は実カレンダーではなく「各月31日換算の抽象時系列」です
+- 日付ラベルは実際の月日ではなく、前後関係を見やすくするために各月を31日換算で並べた抽象時系列です
 
 ### ヘッダーとレーン選択
 
 - 画面上部に固定ヘッダーが表示されます
+- 初回表示では、最初に触る操作を示す案内カードが左上に表示されます
+- 案内カードの **表示レーンを見る** から、カテゴリとレーン選択へすぐ進めます
+- 案内カードでは、画面下部の **表示期間（横軸） / レーン密度（縦軸）** 操作から範囲調整できることも案内されます
+- 案内カードの **操作マニュアルを見る** から、マニュアルをすぐ開けます
 - 左上のメニューからカテゴリ（アイドル/初星/イベント/サポート）を選択できます
 - ヘッダーの設定ボタンから、配色モードと表示オプションを変更できます
 - カテゴリごとのレーンをチェックで表示/非表示にできます（初期は全選択）
@@ -78,7 +121,8 @@
 
 ## 既知の制約（現状）
 
-- 日付は実カレンダーではなく、各月31日換算の抽象時系列です
+- 日付ラベルは実際の月日ではなく、前後関係を見やすくするために各月を31日換算で並べた抽象時系列です
+- 正確な月日や日数差を再現するものではありません
 - `singleWithinRange` は「期間内のどこか1日」を表しますが、具体的な発生日は未確定です
 - 共通イベントは表示上はレーンごとに複製されますが、URL 共有には共通の canonical ID を使います
 
@@ -86,14 +130,78 @@
 
 - Vue 3（SFC / `<script setup>`）
 - Vite
-- デプロイ: GitHub Pages（`gh-pages`）
+- デプロイ: GitHub Actions から `rectaris.github.io/timeline/` へ publish
 
 ## データの置き場所
 
-- キャラ/イベントデータ: [src/data/worldline_commu/](src/data/worldline_commu/)
+- 編集元データ: [data/raw/worldline_commu/](data/raw/worldline_commu/)
+- 生成済みデータ: [src/data/generated/worldline_commu/](src/data/generated/worldline_commu/)
+- 物語イベントの編集元パイロットデータ: [data/raw/story_events/](data/raw/story_events/)
+- 物語イベントの生成済みデータ: [src/data/generated/story_events/](src/data/generated/story_events/)
+- 学マス情報史の編集元データ: [data/raw/realworld_events/](data/raw/realworld_events/)
+- 学マス情報史の生成済みデータ: [src/data/generated/realworld_events/](src/data/generated/realworld_events/)
 - データ集約: [src/data/index.js](src/data/index.js)（`idolCommu` / `hatsuboshiCommus` / `eventCommus` / `supportCardCommus`）
 - 世界線一覧: [src/data/worldlines.js](src/data/worldlines.js)
 - キャラクター一覧: [src/data/characterCatalog.js](src/data/characterCatalog.js)
+
+学マス情報史の公式ソース候補は次のコマンドで取得します。
+
+```sh
+npm run collect:realworld -- --max-pages 1
+npm run validate:data
+npm run review:realworld
+```
+
+YouTubeには`YOUTUBE_API_KEY`を環境変数で設定します。
+ページ上限に達した結果は`partial`として既存候補とマージされ、公開データへ自動反映されません。
+Xの取得はレジストリ上で保留しており、`X_BEARER_TOKEN`が設定されていても通信しません。
+`review:realworld`は候補を変更せず、確認用のJSONとMarkdownを`.agent-artifacts/realworld-review/`へ生成します。
+生成した確認資料はローカル専用であり、同一タイトルやURLの一致を公開判断として扱いません。
+
+候補ごとの判断は、取得データと分離した発信元別のレビュー台帳へ記録します。
+最初に`--dry-run`を指定し、入力と既存参照を検証してください。
+
+```sh
+npm run review:realworld:decide -- \
+  --source SOURCE_REGISTRY_ID \
+  --intake INTAKE_ID \
+  --decision defer \
+  --reason needs_source_review \
+  --reviewed-by PUBLIC_REVIEWER_ID \
+  --dry-run
+```
+
+`--dry-run`を外した場合だけ`data/raw/realworld_events/reviews/`を更新します。
+このコマンドはInfoEventを作成または公開しません。
+
+## イベントの追加・編集
+
+イベントの追加と編集には、ローカル開発サーバー専用の worldline データ編集画面を使えます。
+公開サイトは閲覧用で、データの保存機能はありません。
+
+```sh
+npm run dev
+```
+
+起動後、[ローカル編集画面](http://localhost:5173/timeline/?editor=worldline)を開きます。
+Vite が別のポートで起動した場合は、表示されたローカル URL の `/timeline/` に `?editor=worldline` を付けて開きます。
+
+編集画面では、左側で「コミュ種別」と「ファイル」を選びます。
+既存イベントを直す場合は、左側のイベント一覧から対象イベントを選びます。
+新しいイベントを追加する場合は、「新規イベント」を押して保存先、ID、タイトル、時期、分類、出典を入力します。
+
+右側の「保存前レビュー」では、保存先レーンに入れた場合の見え方を確認できます。
+レーンプレビューはドラッグで上下左右に移動でき、ホイールで拡大縮小できます。
+「差分確認」で保存前の検証と変更内容を確認し、「保存」で `data/raw/worldline_commu/` と `src/data/generated/worldline_commu/` を更新します。
+
+保存後は、必要に応じて次の検証を実行します。
+
+```sh
+npm run validate:data
+npm run build
+```
+
+直接 JSON を編集する場合の項目説明とチェックリストは、[docs/data-structure.md](docs/data-structure.md) を参照してください。
 
 ## 詳細ドキュメント
 
@@ -104,3 +212,44 @@
 - [docs/ui-behavior.md](docs/ui-behavior.md)
 - [docs/deploy.md](docs/deploy.md)
 - [docs/development.md](docs/development.md)
+
+## エージェントワークフロー
+
+このリポジトリは `project-agent-workflow` から初期化されています。
+
+- 最初に `AGENTS.md` を確認します。
+- タスクごとの参照先は `docs/agent/spec-index.yaml` で選びます。
+- 重要な作業は `docs/plan/plan.md` または `docs/plan/active/` で追跡します。
+- プロジェクト固有のルールは `AGENTS.md`、`agents-rules/`、`docs/agent/SPEC_*.md` に置きます。
+
+## セキュリティ検証
+
+このテンプレートには軽量な静的セキュリティ検査が含まれます。AI agent skill を追加または更新するリポジトリでは、任意で NVIDIA SkillSpector による追加スキャンも使えます。
+
+- 現在の SkillSpector 有効化状態は `docs/agent/SPEC_VALIDATION.md` を確認してください。
+- CLI を導入済みの場合は `scripts/skillspector-scan.sh <skill-path>` で静的スキャンを実行できます。
+- LLM 解析を使う場合だけ、`SKILLSPECTOR_USE_LLM=1` とプロバイダ認証情報を環境変数で設定します。
+
+## 外部サービス連携
+
+MCP、Linear、graph memory は任意機能です。現在の有効化状態と設定手順は `docs/agent/SPEC_EXTERNAL_SERVICES.md` を確認してください。
+
+- 連携しない場合も、ローカルの plan、validation、Git workflow はそのまま使えます。
+- 認証情報はリポジトリに置かず、環境変数または secret store で管理します。
+- 外部への書き込みは、明示された lifecycle command またはユーザー指示がある場合だけ実行します。
+
+## テンプレート更新
+
+`.copier-answers.yml` をコミットしているため、テンプレート更新を取り込むには次を実行します。
+
+```sh
+copier update
+```
+
+特定のタグへ更新する場合:
+
+```sh
+copier update --vcs-ref vX.Y.Z
+```
+
+`*.rej` ファイルが生成された場合は、コミット前に手動で確認してください。

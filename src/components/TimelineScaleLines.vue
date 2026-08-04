@@ -14,22 +14,22 @@ defineProps({
   <g>
     <g v-for="y in years" :key="y.year">
       <line
+        class="timeline-grid-line timeline-grid-line--year"
         :x1="xPos(y.time)"
         :y1="timelineViewport.y"
         :x2="xPos(y.time)"
         :y2="timelineViewport.y + timelineViewport.height"
-        stroke="var(--timeline-year-line, var(--border-soft))"
       />
     </g>
 
     <g v-if="showMonthScale">
       <g v-for="tick in monthTicks" :key="`month-${tick.time}`">
         <line
+          class="timeline-grid-line timeline-grid-line--month"
           :x1="xPos(tick.time)"
           :y1="timelineViewport.y"
           :x2="xPos(tick.time)"
           :y2="timelineViewport.y + timelineViewport.height"
-          stroke="var(--timeline-month-line, var(--border))"
         />
       </g>
     </g>
@@ -37,11 +37,11 @@ defineProps({
     <g v-if="showDayScale">
       <g v-for="tick in dayTicks" :key="`day-${tick.time}`">
         <line
+          class="timeline-grid-line timeline-grid-line--day"
           :x1="xPos(tick.time)"
           :y1="timelineViewport.y"
           :x2="xPos(tick.time)"
           :y2="timelineViewport.y + timelineViewport.height"
-          stroke="var(--timeline-day-line, var(--surface-soft))"
         />
       </g>
     </g>

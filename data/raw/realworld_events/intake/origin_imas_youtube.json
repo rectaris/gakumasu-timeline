@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "sourceRegistryId": "origin_imas_youtube",
+  "collectedAt": "2026-07-29T08:46:17.281Z",
+  "status": "skipped",
+  "skipReason": "YOUTUBE_API_KEY is not set",
+  "items": []
+}

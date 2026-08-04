@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "dataset": {
+    "id": "story-graph-published",
+    "label": "物語イベント 公開データ",
+    "status": "published",
+    "description": "出典レビューと公開判断を完了した物語イベントだけを収録します。"
+  },
+  "series": [],
+  "blocks": [],
+  "edges": []
+}

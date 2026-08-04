@@ -1,6 +1,6 @@
 import { onMounted, ref, watch } from "vue";
 
-export function useSelection(allEvents) {
+export function useSelection(allEvents, options = {}) {
   const selectedEvent = ref(null);
   const pendingCanonicalId = ref(null);
 
@@ -60,6 +60,10 @@ export function useSelection(allEvents) {
         );
 
         if (!stillVisible) {
+          if (options.shouldPreserveMissingSelection?.(selectedEvent.value)) {
+            return;
+          }
+
           closePanel();
           return;
         }

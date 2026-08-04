@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "sourceRegistryId": "origin_imas_x",
+  "collectedAt": "2026-07-29T08:46:17.281Z",
+  "status": "skipped",
+  "skipReason": "X_BEARER_TOKEN is not set",
+  "items": []
+}

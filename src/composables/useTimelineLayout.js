@@ -1,77 +1,143 @@
 import { computed } from "vue";
-import { filterVisibleEvents } from "./useTimelineData";
 import {
   EVENT_BAR_HEIGHT,
-  EVENT_ROW_GAP,
+  EVENT_SUB_LANE_SPACING,
   LANE_PADDING,
+  LOW_DENSITY_SUMMARY_SCALE,
+  MAX_DENSE_SUMMARY_SUB_LANE_CAPACITY,
+  MAX_FULL_HD_SINGLE_LANE_HEIGHT,
+  MAX_VERTICAL_SCALE,
+  MIN_DENSE_SUMMARY_EVENT_COUNT,
   MIN_LANE_HEIGHT,
+  MIN_VERTICAL_SCALE,
+  STANDARD_DENSE_SUMMARY_SUB_LANE_CAPACITY,
   TOP_OFFSET,
 } from "../utils/constants";
+import { clamp } from "../utils/clamp";
+import {
+  buildLaneLayout,
+  buildTimelineRenderMetrics,
+  groupEventsByLane,
+  summarizeDenseEventsForLane,
+  visibleEventLayouts,
+} from "../utils/timelineLayout.js";
+
+export {
+  buildLaneLayout,
+  buildTimelineRenderMetrics,
+  groupEventsByLane,
+  summarizeDenseEventsForLane,
+  visibleEventLayouts,
+};
+
+export function denseSummaryCapacityForScale(scale) {
+  if (scale <= LOW_DENSITY_SUMMARY_SCALE) {
+    return 1;
+  }
+
+  if (scale < 1) {
+    return 2;
+  }
+
+  const expandedProgress = clamp(
+    (scale - 1) / (MAX_VERTICAL_SCALE - 1),
+    0,
+    1,
+  );
+
+  return Math.floor(
+    STANDARD_DENSE_SUMMARY_SUB_LANE_CAPACITY +
+      (MAX_DENSE_SUMMARY_SUB_LANE_CAPACITY -
+        STANDARD_DENSE_SUMMARY_SUB_LANE_CAPACITY) *
+        expandedProgress,
+  );
+}
+
+export function denseSummaryOptionsForScale(scale) {
+  const visibleSubLaneCapacity = denseSummaryCapacityForScale(scale);
+
+  return {
+    crowdedSubLaneCount: visibleSubLaneCapacity + 1,
+    minEvents: Math.max(
+      MIN_DENSE_SUMMARY_EVENT_COUNT,
+      visibleSubLaneCapacity + 1,
+    ),
+  };
+}
 
 export function useTimelineLayout({
   characters,
   allEvents,
   viewRange,
   verticalScale,
+  selectedEvent = null,
   width,
   leftLabelWidth,
   rightPadding,
 }) {
   const layoutMetrics = computed(() => {
     const scale = verticalScale.value;
-    const eventBarHeight = Math.max(8, EVENT_BAR_HEIGHT * scale);
-    const rowGap = Math.max(4, EVENT_ROW_GAP * scale);
-    const rowHeight = eventBarHeight + rowGap;
-    const lanePadding = Math.max(6, LANE_PADDING * scale);
-    const minLaneHeight = Math.max(40, MIN_LANE_HEIGHT * scale);
+    const eventBarHeight = EVENT_BAR_HEIGHT;
+    const rowHeight = EVENT_SUB_LANE_SPACING;
+    const lanePadding = LANE_PADDING;
+    const compactDensityProgress = Math.min(
+      1,
+      Math.max(0, (scale - MIN_VERTICAL_SCALE) / (1 - MIN_VERTICAL_SCALE)),
+    );
+    const expandedDensityProgress = Math.min(
+      1,
+      Math.max(0, (scale - 1) / (MAX_VERTICAL_SCALE - 1)),
+    );
 
     return {
       eventBarHeight,
       rowHeight,
       lanePadding,
-      minLaneHeight,
+      compactDensityProgress,
+      expandedDensityProgress,
+      maxLaneHeight: MAX_FULL_HD_SINGLE_LANE_HEIGHT,
     };
   });
 
-  function buildLaneLayout(events) {
-    const subLaneEndTimes = [];
-    const eventsWithLane = events
-      .slice()
-      .sort((a, b) => a.displayStartDay - b.displayStartDay)
-      .map((event) => {
-        let subLaneIndex = subLaneEndTimes.findIndex(
-          (laneEndTime) => laneEndTime < event.displayStartDay,
-        );
-
-        if (subLaneIndex === -1) {
-          subLaneIndex = subLaneEndTimes.length;
-          subLaneEndTimes.push(event.displayEndDay);
-        } else {
-          subLaneEndTimes[subLaneIndex] = event.displayEndDay;
-        }
-
-        return { ...event, subLaneIndex };
-      });
-
-    return {
-      events: eventsWithLane,
-      subLaneCount: Math.max(1, subLaneEndTimes.length),
-    };
-  }
+  const eventsByLane = computed(() =>
+    groupEventsByLane(allEvents.value, characters.value.length),
+  );
 
   const laneEventLayouts = computed(() =>
-    characters.value.map((char, laneIndex) => {
-      const laneEvents = allEvents.value.filter(
-        (event) => event.laneIndex === laneIndex,
-      );
+    characters.value.map((char, laneIndex) => ({
+      laneIndex,
+      characterId: char.id,
+      ...buildLaneLayout(eventsByLane.value[laneIndex] ?? []),
+    })),
+  );
 
-      return {
-        laneIndex,
-        characterId: char.id,
-        ...buildLaneLayout(laneEvents),
-      };
+  const viewportWidth = computed(() => width - leftLabelWidth - rightPadding);
+
+  const visibleEvents = computed(() =>
+    visibleEventLayouts(laneEventLayouts.value, viewRange.value, {
+      enabled: true,
+      viewportWidth: viewportWidth.value,
+      selectedEvent: selectedEvent?.value ?? null,
+      ...denseSummaryOptionsForScale(verticalScale.value),
     }),
   );
+
+  const renderedSubLaneCounts = computed(() => {
+    const counts = Array.from({ length: characters.value.length }, () => 1);
+
+    visibleEvents.value.forEach((event) => {
+      const laneIndex = event.laneIndex;
+      if (!Number.isInteger(laneIndex)) return;
+      if (laneIndex < 0 || laneIndex >= counts.length) return;
+
+      counts[laneIndex] = Math.max(
+        counts[laneIndex],
+        (event.subLaneIndex ?? 0) + 1,
+      );
+    });
+
+    return counts;
+  });
 
   const laneLayouts = computed(() => {
     let currentTop = TOP_OFFSET;
@@ -79,11 +145,21 @@ export function useTimelineLayout({
     return characters.value.map((char, laneIndex) => {
       const laneData = laneEventLayouts.value[laneIndex];
       const subLaneCount = laneData?.subLaneCount ?? 1;
-      const laneHeight = Math.max(
-        layoutMetrics.value.minLaneHeight,
-        subLaneCount * layoutMetrics.value.rowHeight +
-          layoutMetrics.value.lanePadding * 2,
-      );
+      const renderedSubLaneCount = renderedSubLaneCounts.value[laneIndex] ?? 1;
+      const contentHeight =
+        layoutMetrics.value.eventBarHeight +
+        Math.max(0, renderedSubLaneCount - 1) *
+          layoutMetrics.value.rowHeight +
+        layoutMetrics.value.lanePadding * 2;
+      const standardHeight = Math.max(MIN_LANE_HEIGHT, contentHeight);
+      const compactHeight =
+        contentHeight +
+        (standardHeight - contentHeight) *
+          layoutMetrics.value.compactDensityProgress;
+      const laneHeight =
+        compactHeight +
+        Math.max(0, layoutMetrics.value.maxLaneHeight - standardHeight) *
+          layoutMetrics.value.expandedDensityProgress;
       const laneTop = currentTop;
       const centerY = laneTop + laneHeight / 2;
 
@@ -95,6 +171,7 @@ export function useTimelineLayout({
         laneHeight,
         centerY,
         subLaneCount,
+        renderedSubLaneCount,
       };
     });
   });
@@ -138,19 +215,6 @@ export function useTimelineLayout({
       layoutMetrics.value.eventBarHeight / 2
     );
   }
-
-  const visibleEvents = computed(() =>
-    filterVisibleEvents({
-      events: laneEventLayouts.value.flatMap((lane) => lane.events),
-      viewRange,
-      eventDisplayStart: (event) => event.displayStartDay,
-      eventDisplayEnd: (event) => event.displayEndDay,
-    }).map((event) => ({
-      ...event,
-      renderStartDay: Math.max(event.displayStartDay, viewRange.value.min),
-      renderEndDay: Math.min(event.displayEndDay, viewRange.value.max),
-    })),
-  );
 
   function xPos(time) {
     const { min, max } = viewRange.value;

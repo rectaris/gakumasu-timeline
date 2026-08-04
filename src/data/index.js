@@ -1,57 +1,59 @@
 // 共通イベント
-import commonTimeline from "./worldline_commu/common_timeline";
+import commonTimeline from "./generated/worldline_commu/common_timeline";
+
+function sortedDefaultExports(modules) {
+  return Object.entries(modules)
+    .sort(([pathA], [pathB]) => pathA.localeCompare(pathB, "en"))
+    .map(([, moduleDefault]) => moduleDefault);
+}
 
 // アイドルコミュ
-// src/data/worldline_commu/idol_commu/
-import hanamiSaki from "./worldline_commu/idol_commu/001hanamiSaki";
-import tsukimuraTemari from "./worldline_commu/idol_commu/002tsukimuraTemari";
-import fujitaKotone from "./worldline_commu/idol_commu/003fujitaKotone";
-import arimuraMao from "./worldline_commu/idol_commu/004arimuraMao";
-import katsuragiLilja from "./worldline_commu/idol_commu/005katsuragiLilja";
-import kuramotoChina from "./worldline_commu/idol_commu/006kuramotoChina";
-import shiunSumika from "./worldline_commu/idol_commu/007shiunSumika";
-import shinosawaHiro from "./worldline_commu/idol_commu/008shinosawaHiro";
-import himesakiRinami from "./worldline_commu/idol_commu/009himesakiRinami";
-import hanamiUme from "./worldline_commu/idol_commu/010hanamiUme";
-import juoSena from "./worldline_commu/idol_commu/011juoSena";
-import hatayaMisuzu from "./worldline_commu/idol_commu/012hatayaMisuzu";
-import amayaTsubame from "./worldline_commu/idol_commu/013amayaTsubame";
+// src/data/generated/worldline_commu/idol_commu/
+const idolCommuModules = import.meta.glob(
+  "./generated/worldline_commu/idol_commu/*.js",
+  {
+    eager: true,
+    import: "default",
+  },
+);
 
-export const idolCommu = [
-  hanamiSaki,
-  tsukimuraTemari,
-  fujitaKotone,
-  arimuraMao,
-  katsuragiLilja,
-  kuramotoChina,
-  shiunSumika,
-  shinosawaHiro,
-  himesakiRinami,
-  hanamiUme,
-  juoSena,
-  hatayaMisuzu,
-  amayaTsubame,
-];
+export const idolCommu = sortedDefaultExports(idolCommuModules);
 
 // 初星コミュ
-// src/data/worldline_commu/hatsuboshi_commu/
-import storyOfReiris from "./worldline_commu/hatsuboshi_commu/001storyOfReiris";
+// src/data/generated/worldline_commu/hatsuboshi_commu/
+const hatsuboshiCommuModules = import.meta.glob(
+  "./generated/worldline_commu/hatsuboshi_commu/*.js",
+  {
+    eager: true,
+    import: "default",
+  },
+);
 
-export const hatsuboshiCommus = [storyOfReiris];
+export const hatsuboshiCommus = sortedDefaultExports(hatsuboshiCommuModules);
 
 // イベントコミュ
-// src/data/worldline_commu/event_commu/
+// src/data/generated/worldline_commu/event_commu/
+const eventCommuModules = import.meta.glob(
+  "./generated/worldline_commu/event_commu/*.js",
+  {
+    eager: true,
+    import: "default",
+  },
+);
 
-export const eventCommus = [
-  // 今後追加予定
-];
+export const eventCommus = sortedDefaultExports(eventCommuModules);
 
 // サポートカードコミュ
-// src/data/worldline_commu/support_story/
+// src/data/generated/worldline_commu/support_story/
+const supportCardCommuModules = import.meta.glob(
+  "./generated/worldline_commu/support_story/*.js",
+  {
+    eager: true,
+    import: "default",
+  },
+);
 
-export const supportCardCommus = [
-  // 今後追加予定
-];
+export const supportCardCommus = sortedDefaultExports(supportCardCommuModules);
 
 // 共通イベント（全レーンで表示）
 export { commonTimeline };

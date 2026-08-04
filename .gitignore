@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+.cloudflare-assets
 *.local
 
 .vscode/*
@@ -22,4 +23,26 @@ dist-ssr
 *.sln
 *.sw?
 
+# .company hybrid management
+.company/**/_archive/
+.company/**/debug-log/
+.company/**/inbox/
+.company/research/topics/
+.company/marketing/campaigns/
+
 .github/**.md
+
+# project-agent-workflow local caches
+*.pyc
+__pycache__/
+.pytest_cache/
+.venv/
+.venv-*/
+.uv-cache/
+.uv-home/
+.uv-tools/
+coverage/
+tmp/
+.agent-logs/
+.agent-artifacts/
+.wrangler/

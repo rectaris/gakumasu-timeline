@@ -1,0 +1,68 @@
+{
+  "dataset": {
+    "id": "realworld-history-unreviewed-examples",
+    "label": "学マス情報史 表示検証データ",
+    "status": "unreviewed",
+    "version": 1,
+    "timezone": "Asia/Tokyo"
+  },
+  "events": [
+    {
+      "id": "info_22222222-2222-4222-8222-222222222221",
+      "category": "story",
+      "title": "検証用ストーリー公開",
+      "summary": "日付精度とストーリーレーンを確認する合成データ。",
+      "startsAt": { "value": "2024-07-20", "precision": "date", "timezone": "Asia/Tokyo" },
+      "status": "completed",
+      "publicationStatus": "unreviewed",
+      "sources": [],
+      "revisions": [],
+      "storyReferences": [],
+      "characterIds": [],
+      "tags": ["検証用"]
+    },
+    {
+      "id": "info_22222222-2222-4222-8222-222222222222",
+      "category": "music",
+      "title": "検証用楽曲公開",
+      "summary": "月精度の表示を確認する合成データ。",
+      "startsAt": { "value": "2024-09", "precision": "month", "timezone": "Asia/Tokyo" },
+      "status": "completed",
+      "publicationStatus": "unreviewed",
+      "sources": [],
+      "revisions": [],
+      "storyReferences": [],
+      "characterIds": [],
+      "tags": ["検証用"]
+    },
+    {
+      "id": "info_22222222-2222-4222-8222-222222222223",
+      "category": "live",
+      "title": "検証用ライブ",
+      "summary": "期間と延期状態を確認する合成データ。",
+      "startsAt": { "value": "2025-03-08T17:00", "precision": "minute", "timezone": "Asia/Tokyo" },
+      "endsAt": { "value": "2025-03-08T20:00", "precision": "minute", "timezone": "Asia/Tokyo" },
+      "status": "postponed",
+      "publicationStatus": "unreviewed",
+      "sources": [],
+      "revisions": [],
+      "storyReferences": [],
+      "characterIds": [],
+      "tags": ["検証用"]
+    },
+    {
+      "id": "info_22222222-2222-4222-8222-222222222224",
+      "category": "stream",
+      "title": "検証用公式配信",
+      "summary": "将来予定の表示を確認する合成データ。",
+      "startsAt": { "value": "2026-08-15T20:00", "precision": "minute", "timezone": "Asia/Tokyo" },
+      "status": "scheduled",
+      "publicationStatus": "unreviewed",
+      "sources": [],
+      "revisions": [],
+      "storyReferences": [],
+      "characterIds": [],
+      "tags": ["検証用"]
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+# External Services
+
+This policy is optional. Generated settings:
+
+- MCP policy: `true`
+- Linear sync policy: `true`
+- Graph memory policy: `true`
+
+## Baseline
+
+- External reads and writes are not required for normal repository work.
+- External writes require explicit user intent or a documented opt-in lifecycle command.
+- Keep credentials in environment variables or platform secret stores, never in repository files.
+- Dry-run or local payload validation must not perform external writes.
+- Local repository files, tests, validation output, and Git history remain the source of truth unless a project-specific spec says otherwise.
+- If an external service is unavailable, continue with the local workflow and record the fallback only when it changes scope, confidence, or validation.
+
+## Integration Checklist
+
+When enabling an external-service option in this repository:
+
+1. Confirm the matching Copier answer is `true` in `.copier-answers.yml`.
+2. Add project-local connection details to `docs/agent/SPEC_EXTERNAL_SERVICES.md` or a linked project spec.
+3. Store credentials only in environment variables, local secret managers, or platform secret stores.
+4. Define which commands are dry-run, read-capable, and write-capable before using them.
+5. Add deterministic validation for generated payloads, local manifests, or sync metadata before any write-capable flow.
+6. Keep local-only commands useful when the external service is offline or intentionally disabled.
+
+## MCP Policy
+
+- Before using an MCP server, read the local MCP policy or skill if the repository provides one.
+- Separate read-only operations from write-capable operations.
+- Record fallback only when MCP unavailability changes scope, confidence, or validation.
+- Do not send secrets, private config, or unrelated local context to external tools.
+
+### MCP Setup
+
+- Document available MCP servers in the project-local agent docs or the user's agent runtime config, not in generated secrets.
+- For each server, record:
+  - purpose and owner
+  - allowed read operations
+  - allowed write operations, if any
+  - required credentials or secret names
+  - fallback when the server is unavailable
+- Prefer read-only MCP calls for orientation, issue lookup, documentation lookup, and memory retrieval.
+- Use write-capable MCP calls only after the task or lifecycle command clearly authorizes that side effect.
+
+### MCP Operation Pattern
+
+1. Read local specs and repo files first.
+2. Use MCP only for context that is external, current, or not stored in the repository.
+3. Summarize external findings before applying them to code or plan files.
+4. Do not let MCP output override failing local tests, validation, or source files.
+
+## Linear Sync Policy
+
+- Treat Linear as a human-facing planning surface, not the source of truth for code.
+- Local plan files remain the repository fallback.
+- Classify commands as dry-run, read-capable, or write-capable before execution.
+- Write-capable issue creation, description updates, status updates, comments, labels, and assignees require explicit user intent or documented lifecycle opt-in.
+- Managed issue regions must preserve human-authored text outside generated markers.
+- Duplicate prevention should use deterministic source markers and fail closed on ambiguity.
+
+### Linear Setup
+
+- Store credentials in `LINEAR_ACCESS_TOKEN` or `LINEAR_API_KEY`; never commit tokens or exported `.env` files.
+- Record the target Linear workspace, team, default labels, and status names in a project-local spec before enabling write-capable sync.
+- Keep `docs/plan/active/*.md`, `docs/plan/backlog/*.md`, and `docs/plan/checked/*.md` as the local execution records.
+- Use a local manifest field such as `linear_issue_key` only as linkage metadata.
+- Use a local exemption field such as `linear_sync_exempt_reason` for offline, recovery, or explicitly local-only planning.
+
+### Linear Workflow Shape
+
+- Dry-run: render the issue title, body, labels, and planned status without reading or writing Linear.
+- Read-capable preview: read an existing linked issue and show the intended diff without writing.
+- Write-capable create/link: create or link an issue from a reviewed local plan and record the issue key locally.
+- Write-capable update: update only deterministic managed regions or lifecycle status transitions.
+- Completion sync: update external status only after local validation passes and the checked archive is created.
+
+### Linear Guardrails
+
+- Do not create, update, comment on, assign, label, or close issues unless the current task, user instruction, or lifecycle command authorizes that exact side effect.
+- Generated descriptions should use a managed region so human-authored text outside that region is preserved.
+- If multiple existing issues could match a local plan, fail without linking.
+- If Linear credentials are unavailable, keep local planning active and record whether completion or sync is deferred.
+
+## Graph Memory Policy
+
+- Graph memory is auxiliary to repository files, tests, validation output, and Git history.
+- Default to read-only graph queries when they can affect the task.
+- Do not write graph memory unless the user explicitly requests a graph-memory write.
+- Do not store secrets, credentials, private configuration, raw personal data, generated dependency artifacts, build artifacts, or temporary task logs in graph memory.
+- Keep canonical graph fields stable and reviewable.
+
+### Graph Memory Setup
+
+- Define a stable project identifier before reading or writing project memory.
+- Document allowed node labels, relationship types, required fields, and review rules in a project-local graph-memory spec.
+- Keep graph credentials in the agent runtime, MCP config, or secret store, not in repository files.
+- Prefer read-only queries for prior decisions, known constraints, and cross-session context.
+
+### Graph Memory Write Pattern
+
+1. Propose candidate memories from reviewed local artifacts.
+2. Exclude secrets, temporary logs, raw personal data, generated artifacts, and speculative conclusions.
+3. Review the candidate shape against the project-local graph-memory policy.
+4. Write only when the user explicitly asks for a graph-memory write or an approved project workflow authorizes it.
+5. Record important implementation decisions in repository files even when graph memory is also updated.

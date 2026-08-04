@@ -1,40 +1,31 @@
 <script setup>
+import { estimateTextWidth } from "../utils/labels";
+
 const props = defineProps({
   characters: { type: Array, required: true },
   laneCenterY: { type: Function, required: true },
   leftLabelWidth: { type: Number, required: true },
   invertHexColor: { type: Function, required: true }
 });
+const emit = defineEmits(["focus-lane"]);
 
-const FONT_SIZE = 17;
+const FONT_SIZE = 14;
 const FONT_WEIGHT = 700;
-const H_PADDING = 8;
+const H_PADDING = 12;
 const GAP_TO_TIMELINE = 8;
 const MIN_X = 6;
-
-function estimateTextWidth(text) {
-  if (!text) return 0;
-  const asciiWidth = FONT_SIZE * 0.58;
-  const spaceWidth = FONT_SIZE * 0.28;
-  const halfKanaWidth = FONT_SIZE * 0.72;
-  const wideWidth = FONT_SIZE * 0.98;
-  return Array.from(text).reduce((total, char) => {
-    if (char === " ") return total + spaceWidth;
-    if (/^[\uFF61-\uFF9F]$/.test(char)) return total + halfKanaWidth;
-    if (/^[\u3040-\u30FF\u3400-\u9FFF\uF900-\uFAFF]$/.test(char)) {
-      return total + wideWidth;
-    }
-    if (char.charCodeAt(0) <= 0x007f) return total + asciiWidth;
-    return total + wideWidth;
-  }, 0);
-}
+const ACCENT_WIDTH = 4;
+const LABEL_HEIGHT = 28;
 
 function rectRight() {
   return props.leftLabelWidth - GAP_TO_TIMELINE;
 }
 
 function rectWidth(text) {
-  return estimateTextWidth(text) + H_PADDING * 2;
+  return Math.min(
+    rectRight() - MIN_X,
+    Math.max(72, props.leftLabelWidth - GAP_TO_TIMELINE - MIN_X),
+  );
 }
 
 function rectX(text) {
@@ -43,24 +34,78 @@ function rectX(text) {
 }
 
 function rectHeight() {
-  return FONT_SIZE + 8;
+  return LABEL_HEIGHT;
 }
 
 function textX(text) {
-  return rectX(text) + rectWidth(text) / 2;
+  return rectX(text) + ACCENT_WIDTH + H_PADDING;
+}
+
+function maxTextWidth(text) {
+  return rectWidth(text) - ACCENT_WIDTH - H_PADDING * 2;
+}
+
+function displayName(text) {
+  if (estimateTextWidth(text, { fontSize: FONT_SIZE }) <= maxTextWidth(text)) {
+    return text;
+  }
+
+  const ellipsis = "…";
+  let result = "";
+  for (const char of Array.from(text)) {
+    const candidate = `${result}${char}`;
+    if (
+      estimateTextWidth(`${candidate}${ellipsis}`, { fontSize: FONT_SIZE }) >
+      maxTextWidth(text)
+    ) {
+      return `${result}${ellipsis}`;
+    }
+    result = candidate;
+  }
+
+  return text;
+}
+
+function focusLane(event, char) {
+  event.stopPropagation();
+  emit("focus-lane", char.id);
+}
+
+function handleKeydown(event, char) {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  event.preventDefault();
+  focusLane(event, char);
 }
 
 </script>
 
 <template>
-  <g v-for="(char, index) in characters" :key="char.id">
+  <g
+    v-for="(char, index) in characters"
+    :key="char.id"
+    class="lane-label"
+    tabindex="0"
+    role="button"
+    :aria-label="`${char.name}に集中表示`"
+    @click="focusLane($event, char)"
+    @keydown="handleKeydown($event, char)"
+  >
     <rect
+      class="lane-label__surface"
       :x="rectX(char.name)"
       :y="laneCenterY(index) - rectHeight() / 2"
       :width="rectWidth(char.name)"
       :height="rectHeight()"
-      :fill="char.labelBgColor ?? char.color"
-      rx="6"
+      rx="4"
+    />
+    <rect
+      class="lane-label__accent"
+      :x="rectX(char.name)"
+      :y="laneCenterY(index) - rectHeight() / 2 + 4"
+      :width="ACCENT_WIDTH"
+      :height="rectHeight() - 8"
+      :fill="char.colorRoles?.accentStrong ?? char.colorRoles?.accent ?? char.color"
+      rx="2"
     />
     <text
       :x="textX(char.name)"
@@ -68,10 +113,10 @@ function textX(text) {
       :font-size="FONT_SIZE"
       :font-weight="FONT_WEIGHT"
       dominant-baseline="middle"
-      text-anchor="middle"
-      :fill="char.textColor ?? invertHexColor(char.color)"
+      text-anchor="start"
+      fill="var(--timeline-lane-label-text, var(--text-primary))"
     >
-      {{ char.name }}
+      {{ displayName(char.name) }}
     </text>
   </g>
 </template>
