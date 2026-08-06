@@ -1,5 +1,5 @@
 <script setup>
-import LoginLink from "./LoginLink.vue";
+import AccountControl from "./AccountControl.vue";
 import TimelineModeSwitcher from "./TimelineModeSwitcher.vue";
 
 defineProps({
@@ -29,7 +29,7 @@ defineProps({
 
     <div class="header-right">
       <TimelineModeSwitcher />
-      <LoginLink />
+      <AccountControl />
       <a
         class="portal-link"
         href="https://curiretas.com/gakumastool/"

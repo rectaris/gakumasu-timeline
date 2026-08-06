@@ -43,7 +43,6 @@ acceptance_focus:
   - canonical and legacy build behavior
 expected_output: full-implementation
 checked_summary_ja: タイムライン各画面のヘッダーをログイン状態に応じて切り替え、アカウントページと三アプリ共通ログアウトへの操作を追加する。
-completion_deferred_reason: This request creates the active implementation plan only; runtime implementation remains pending under this plan.
 
 ## Problem
 
@@ -131,10 +130,28 @@ builds unchanged.
 
 ## Tasks
 
-- [ ] Add and unit-test the tool-session boundary.
-- [ ] Replace the fixed login component with the shared authenticated account control.
-- [ ] Document the anonymous and authenticated header behavior.
-- [ ] Validate both legacy and Curiretas builds and all three timeline modes.
-- [ ] Browser-check desktop and mobile session, disclosure, logout, and error states.
+- [x] Add and unit-test the tool-session boundary.
+- [x] Replace the fixed login component with the shared authenticated account control.
+- [x] Document the anonymous and authenticated header behavior.
+- [x] Validate both legacy and Curiretas builds and all three timeline modes.
+- [x] Browser-check desktop and mobile session, disclosure, logout, and error states.
 
 ## Validation Notes
+
+- `npm run test` passed 144 tests across 26 files.
+- `npm run build` passed for the legacy `/timeline/` build.
+- `npm run build:curiretas` passed for the canonical
+  `/gakumastool/timeline/` build.
+- `python3 scripts/validate-changes.py`, the static security check, and
+  `git diff --check` passed.
+- Headless Chromium checked all three views at `1440x900` and `375x812` using
+  the built application under the canonical origin boundary.
+- Browser checks covered authenticated disclosure rendering, exact account and
+  login links, outside activation, Escape, focus restoration, logout progress,
+  failed logout retry, successful logout, visibility refresh, anonymous and
+  unavailable fallbacks, horizontal overflow, and unexpected console or
+  network failures.
+- A virtual legacy GitHub Pages origin made no session request and retained the
+  exact canonical Curiretas login link.
+- Temporary visual evidence is stored outside the repository under
+  `/tmp/gakumasu-086-account-qa/` and is not tracked.
