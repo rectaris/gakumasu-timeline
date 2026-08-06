@@ -86,3 +86,4 @@ id	path
 084	docs/plan/checked/084-unify-public-view-headers.md
 085	docs/plan/checked/085-update-portal-header-destination.md
 080	docs/plan/checked/080-curiretas-subpath-deployment.md
+086	docs/plan/checked/086-authenticated-account-menu.md
