@@ -43,7 +43,7 @@ checked_summary_ja: アカウントメニューの「三アプリからログア
 - [x] Update the account-menu logout label.
 - [x] Synchronize the UI behavior documentation.
 - [x] Build and browser-check the authenticated menu.
-- [ ] Commit, push `dev`, and open a draft PR to `main`.
+- [x] Commit, push `dev`, and open a draft PR to `main`.
 
 ## Validation Notes
 
@@ -52,3 +52,4 @@ checked_summary_ja: アカウントメニューの「三アプリからログア
 - Headless Chromium verified the authenticated account menu at `1440x900` and `375x812`.
 - Browser checks confirmed the exact `ログアウト` label, no old-label rendering, no horizontal overflow, Escape closure, focus restoration, and no unexpected console or network errors.
 - `git diff --check`, plan lint, plan format, change-aware validation, and the static security check passed.
+- Commit `6e2c527` was pushed to `dev`, and draft PR #8 was opened from `dev` to `main`.

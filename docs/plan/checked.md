@@ -88,3 +88,4 @@ id	path
 080	docs/plan/checked/080-curiretas-subpath-deployment.md
 086	docs/plan/checked/086-authenticated-account-menu.md
 087	docs/plan/checked/087-account-linked-timeline-data.md
+088	docs/plan/checked/088-shorten-account-logout-label.md
