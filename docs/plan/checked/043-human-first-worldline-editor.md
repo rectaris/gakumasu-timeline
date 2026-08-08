@@ -1,6 +1,6 @@
 # Human-First Worldline Data Editor
 
-status: active
+status: checked
 task_type: product_logic
 review_class: C
 human_design_required: yes

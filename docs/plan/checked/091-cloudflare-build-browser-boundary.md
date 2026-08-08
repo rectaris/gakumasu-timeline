@@ -1,6 +1,6 @@
 # Keep browser verification outside Cloudflare Workers Builds.
 
-status: active
+status: checked
 task_type: environment_data_flow
 review_class: B
 human_design_required: no

@@ -1,6 +1,6 @@
 # Unify the three public view headers around the narrative timeline shell.
 
-status: active
+status: checked
 task_type: ui_layout
 review_class: C
 human_design_required: yes

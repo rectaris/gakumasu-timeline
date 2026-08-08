@@ -1,6 +1,6 @@
 # Agent standards decision rules
 
-status: active
+status: checked
 task_type: orchestration_meta
 review_class: B
 human_design_required: no

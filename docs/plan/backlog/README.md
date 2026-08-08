@@ -6,7 +6,7 @@
 
 - 現在進行中の作業は `docs/plan/active/` に置きます。
 - backlog は、開始条件、対象ファイル、検証方法、完了条件が見える形で保存します。
-- 着手するときは `scripts/promote-plan.sh` で active に移します。
+- 着手するときは `.project-agent-workflow/scripts/promote-plan.sh` で active に移します。
 - 番号は active、backlog、checked で共通の連番として扱います。
 
 ## 現在の backlog
@@ -21,4 +21,4 @@ MVPを完了した[065 Story Event Graph View](../checked/065-story-event-graph-
 
 ## AI エージェント向け情報
 
-詳しい運用ルールは `docs/agent/SPEC_PLAN_WORKFLOW.md` を参照してください。
+詳しい運用ルールは `.project-agent-workflow/docs/agent/SPEC_PLAN_WORKFLOW.md` を参照してください。

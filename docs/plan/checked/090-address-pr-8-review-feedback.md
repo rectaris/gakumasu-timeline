@@ -1,6 +1,6 @@
 # Address actionable Codex review feedback on pull request 8.
 
-status: active
+status: checked
 task_type: ui_layout
 review_class: B
 human_design_required: no

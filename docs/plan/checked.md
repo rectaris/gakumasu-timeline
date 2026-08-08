@@ -93,3 +93,5 @@ id	path
 090	docs/plan/checked/090-address-pr-8-review-feedback.md
 091	docs/plan/checked/091-cloudflare-build-browser-boundary.md
 092	docs/plan/checked/092-remove-stale-account-logout-note.md
+093	docs/plan/checked/2026/08/01-15/093-copier-v1-update.md
+094	docs/plan/checked/2026/08/01-15/094-address-pr-11-review-feedback.md

@@ -1,6 +1,6 @@
 # Close the residual PR #3 CodeQL HTML-filter alert.
 
-status: complete
+status: checked
 task_type: environment_data_flow
 review_class: B
 human_design_required: no

@@ -1,6 +1,6 @@
 # Raw Data Format After Migration
 
-status: active
+status: checked
 task_type: environment_data_flow
 review_class: C
 human_design_required: yes

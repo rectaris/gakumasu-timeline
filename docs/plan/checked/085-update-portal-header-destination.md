@@ -1,6 +1,6 @@
 # Update the shared header portal destination.
 
-status: active
+status: checked
 task_type: ui_layout
 review_class: C
 human_design_required: no

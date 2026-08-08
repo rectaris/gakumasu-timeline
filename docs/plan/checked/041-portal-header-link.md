@@ -1,6 +1,6 @@
 # Add portal header link
 
-status: active
+status: checked
 task_type: ui_layout
 review_class: A
 human_design_required: no

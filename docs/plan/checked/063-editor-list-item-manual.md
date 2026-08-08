@@ -1,7 +1,7 @@
 # Editor List Item Manual
 
-status: active
-task_type: docs
+status: checked
+task_type: japanese_prose
 review_class: C
 human_design_required: no
 human_approval_status: approved

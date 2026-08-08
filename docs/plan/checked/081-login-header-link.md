@@ -1,6 +1,6 @@
 # Add a consistent authentication entry link to every public timeline header.
 
-status: active
+status: checked
 task_type: ui_layout
 review_class: B
 human_design_required: no

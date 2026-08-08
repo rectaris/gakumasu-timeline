@@ -1,6 +1,6 @@
 # Shorten the authenticated account menu logout label.
 
-status: active
+status: checked
 task_type: ui_layout
 review_class: B
 human_design_required: no

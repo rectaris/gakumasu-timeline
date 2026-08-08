@@ -1,21 +1,13 @@
 # Changes here will be overwritten by Copier.
-_commit: v0.4.1
+_commit: v1.0.0
 _src_path: https://github.com/rectaris/temp_project.git
-max_agent_threads: 4
-planning_style: active_backlog_checked
+ci_autofix_mode: disabled
+codex_hooks_mode: install_templates
+graph_memory_mode: document_optional
+linear_sync_mode: document_optional
+mcp_policy_mode: document_optional
 primary_language: mixed
 project_name: gakumasu-timeline
 project_purpose: Maintain the Gakumasu timeline application, data, and UI interactions.
 project_slug: gakumasu-timeline
-use_change_validation: true
-use_codex_agents: true
-use_graph_memory: true
-use_hooks: true
-use_linear_sync: true
-use_mcp_policy: true
-use_plan_lifecycle: true
-use_security_static: true
-use_skillspector: true
-use_structure_scanner: true
-
-
+skillspector_mode: document_optional

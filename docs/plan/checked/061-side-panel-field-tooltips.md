@@ -1,7 +1,7 @@
 # Side Panel Field Tooltips
 
-status: active
-task_type: ui
+status: checked
+task_type: ui_layout
 review_class: B
 human_design_required: no
 human_approval_status: not_required

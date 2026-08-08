@@ -1,6 +1,6 @@
 # Address PR #3 security and review findings.
 
-status: complete
+status: checked
 task_type: environment_data_flow
 review_class: B
 human_design_required: no
