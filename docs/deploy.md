@@ -145,11 +145,13 @@ Cloudflare Workers and Pages GitHub AppのRepository accessは、このリポジ
 
 Workers Buildsの認証情報はCloudflare側で管理し、`CLOUDFLARE_API_TOKEN` や `CLOUDFLARE_ACCOUNT_ID` をGitHub Secretsへ追加しません。
 
+Workers Buildsは実行時に`WORKERS_CI=1`を設定します。`npm run verify`はこの値を検出すると、NodeとWorkerのテスト、ビルド、本番成果物の公開境界検証を実行し、Playwright UI検証だけを実行しません。Chromiumを使うUI検証は、事前にブラウザをインストールするGitHub Actionsで維持します。
+
 有効化後の運用は次のとおりです。
 
 1. `dev` へのpushとPull RequestでGitHub Actionsの検証を通します。
 2. Pull Requestを `main` へマージします。
-3. Workers Buildsが `npm run verify` を実行します。
+3. Workers Buildsが `npm run verify` を実行し、ブラウザを必要としない検証を完了します。
 4. 検証が成功した場合だけ、Workers Buildsが `npm run deploy:curiretas` で本番Workerを更新します。
 5. Cloudflareのbuild logとGitHubのcheck runで対象commitを確認します。
 6. 新URLの3画面、直接の静的asset、ブラウザconsole、network errorを確認します。

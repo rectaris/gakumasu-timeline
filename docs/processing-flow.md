@@ -53,7 +53,8 @@
 - レビュー在庫の生成前にも取得元、取り込みデータ、参照対象InfoEventを既存のデータ契約で検証する
 - レビュー台帳は候補ID、判断、理由、担当者、判断日時、確認ハッシュ、InfoEvent参照を検証し、内容変更と孤立判断を報告する
 - 失敗時は元ファイル、カテゴリ、レーン、イベント ID / title、フィールド、理由を表示する
-- `npm run verify` はデータ検証、ユニットテスト、ビルド、本番成果物の公開境界検証を実行する
+- 通常の`npm run verify`はデータ検証、Node・Worker・Playwright UIテスト、ビルド、本番成果物の公開境界検証を実行する
+- Cloudflare Workers Buildsでは`WORKERS_CI=1`を検出し、Playwright UIテストだけを除外する。ブラウザ検証はGitHub Actionsで維持する
 
 ## カテゴリ/レーンの選択
 
