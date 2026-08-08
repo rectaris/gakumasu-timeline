@@ -14,7 +14,7 @@ This document is agent-only workflow guidance for visible UI or interaction chan
 
 1. Read the canonical routing rules before editing.
    - Use `AGENTS.md` for repository priority and timeline rule entry points.
-   - Use `docs/agent/SPEC_UI_DESIGN.md` for UI quality, accessibility, viewport, and browser verification policy.
+   - Use `.project-agent-workflow/docs/agent/SPEC_UI_DESIGN.md` for UI quality, accessibility, viewport, and browser verification policy.
    - Use `agents-rules/invariants.md` for timeline invariants and ID/display-time ownership.
    - Use `agents-rules/docs-sync-playbook.md` for documentation review scope.
    - Use `agents-rules/timeline-regression-checklist.md` for behavior-sensitive regression checks.
@@ -36,5 +36,5 @@ This document is agent-only workflow guidance for visible UI or interaction chan
 
 ## Verification Reference
 
-- Follow `docs/agent/SPEC_UI_DESIGN.md` for required browser and viewport verification.
+- Follow `.project-agent-workflow/docs/agent/SPEC_UI_DESIGN.md` for required browser and viewport verification.
 - If the UI change alters timeline behavior, execute the relevant interaction checks from `agents-rules/timeline-regression-checklist.md`.
