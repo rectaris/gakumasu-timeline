@@ -1,6 +1,6 @@
 # Real-World History Specification Proposal
 
-status: active
+status: checked
 task_type: planning_docs
 review_class: C
 human_design_required: yes

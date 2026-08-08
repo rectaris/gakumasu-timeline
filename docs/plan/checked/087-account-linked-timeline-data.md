@@ -1,7 +1,7 @@
 # Add account-linked timeline roles and change requests with an application-owned D1 database.
 
-status: active
-task_type: tooling
+status: checked
+task_type: environment_data_flow
 review_class: C
 human_design_required: yes
 human_approval_status: approved

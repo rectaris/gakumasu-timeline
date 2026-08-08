@@ -1,6 +1,6 @@
 # Install the Playwright Chromium runtime before CI tests.
 
-status: active
+status: checked
 task_type: environment_data_flow
 review_class: B
 human_design_required: no

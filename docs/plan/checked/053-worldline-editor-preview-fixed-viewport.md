@@ -1,7 +1,7 @@
 # Worldline Editor Preview Fixed Viewport
 
-status: active
-task_type: ui_interaction
+status: checked
+task_type: ui_layout
 review_class: B
 human_design_required: no
 human_approval_status: not_required

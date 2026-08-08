@@ -1,6 +1,6 @@
 # Three-View Application Shell
 
-status: active
+status: checked
 task_type: ui_layout
 review_class: C
 human_design_required: yes

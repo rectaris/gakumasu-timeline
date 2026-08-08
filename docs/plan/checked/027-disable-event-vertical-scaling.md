@@ -1,6 +1,6 @@
 # Disable event vertical scaling during timeline density changes
 
-status: active
+status: checked
 task_type: ui_layout
 review_class: B
 human_design_required: no

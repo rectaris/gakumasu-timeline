@@ -1,6 +1,6 @@
 # Make every timeline header reflect the shared tool session and expose account and logout actions.
 
-status: active
+status: checked
 task_type: ui_layout
 review_class: B
 human_design_required: no
