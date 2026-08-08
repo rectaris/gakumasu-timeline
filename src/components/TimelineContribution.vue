@@ -285,7 +285,7 @@ onMounted(loadRequests);
 .authoring-history { display: grid; gap: 6px; }
 .authoring-history article { display: flex; justify-content: space-between; gap: 12px; padding: 9px; border: 1px solid var(--border-soft); border-radius: 7px; font-size: 13px; }
 @media (max-width: 600px) {
-  .authoring-launcher { right: 10px; bottom: 10px; }
+  .authoring-launcher { top: calc(var(--app-header-height) + 10px); right: 10px; bottom: auto; }
   .authoring-panel { inset: var(--app-header-height) 0 0; width: 100vw; border-radius: 0; border-width: 1px 0 0; }
   .authoring-form { grid-template-columns: 1fr; }
   .authoring-form__wide { grid-column: auto; }

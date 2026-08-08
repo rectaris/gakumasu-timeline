@@ -21,6 +21,15 @@ const requestItem = {
   review: null,
 };
 
+function boxesOverlap(first, second) {
+  return (
+    first.x < second.x + second.width &&
+    first.x + first.width > second.x &&
+    first.y < second.y + second.height &&
+    first.y + first.height > second.y
+  );
+}
+
 async function newPage(browser, baseUrl, roles, options = {}) {
   const context = await browser.newContext({ viewport: options.viewport });
   const page = await context.newPage();
@@ -32,18 +41,35 @@ async function newPage(browser, baseUrl, roles, options = {}) {
   page.on("console", (entry) => {
     const expectedAuthoringStatus =
       options.meStatus && entry.location().url.endsWith("/api/authoring/me");
-    if (entry.type() === "error" && !expectedAuthoringStatus) {
+    const expectedLogoutStatus =
+      options.logoutStatus && entry.location().url.endsWith("/auth/logout");
+    if (
+      entry.type() === "error" &&
+      !expectedAuthoringStatus &&
+      !expectedLogoutStatus
+    ) {
       runtimeErrors.push(`console: ${entry.text()}`);
     }
   });
   let submitted = false;
+  let sessionAuthenticated =
+    options.sessionAuthenticated ?? (roles.length > 0);
   await page.route("**/auth/session", (route) =>
     route.fulfill({
       status: 200,
       contentType: "application/json",
-      body: JSON.stringify({ authenticated: false }),
+      body: JSON.stringify({ authenticated: sessionAuthenticated }),
     }),
   );
+  await page.route("**/auth/logout", (route) => {
+    const status = options.logoutStatus ?? 200;
+    if (status < 400) sessionAuthenticated = false;
+    return route.fulfill({
+      status,
+      contentType: "application/json",
+      body: JSON.stringify({ loggedOut: status < 400 }),
+    });
+  });
   await page.route("**/api/authoring/**", async (route) => {
     const request = route.request();
     const url = new URL(request.url());
@@ -158,6 +184,35 @@ try {
   }
 
   {
+    const { context, page, assertClean } = await newPage(browser, baseUrl, ["contributor"], {
+      logoutStatus: 500,
+    });
+    await page.getByRole("button", { name: "ログイン済み。アカウントメニューを開く" }).click();
+    await page.getByRole("button", { name: "ログアウト", exact: true }).click();
+    await page.locator(".account-control__error").getByText(
+      "ログアウトできませんでした。もう一度お試しください。",
+      { exact: true },
+    ).waitFor();
+    assert.equal(await page.locator("[data-authoring-control]").count(), 1);
+    assertClean();
+    await context.close();
+  }
+
+  {
+    const { context, page, assertClean } = await newPage(browser, baseUrl, ["admin"]);
+    await page.getByRole("button", { name: "イベントを投稿" }).click();
+    await page.getByRole("dialog", { name: "タイムラインへ投稿" }).waitFor();
+    await page.keyboard.press("Escape");
+    await page.getByRole("button", { name: "ログイン済み。アカウントメニューを開く" }).click();
+    await page.getByRole("button", { name: "ログアウト", exact: true }).click();
+    await page.getByRole("link", { name: "ログインページへ移動" }).waitFor();
+    assert.equal(await page.locator("[data-authoring-control]").count(), 0);
+    assert.equal(await page.getByRole("dialog", { name: "タイムラインへ投稿" }).count(), 0);
+    assertClean();
+    await context.close();
+  }
+
+  {
     const { context, page, assertClean } = await newPage(browser, baseUrl, [], { meStatus: 503 });
     await page.locator('[data-authoring-state="unavailable"]').waitFor();
     assert.equal(await page.locator("[data-authoring-control]").count(), 0);
@@ -166,10 +221,37 @@ try {
   }
 
   {
-    const { context, page, assertClean } = await newPage(browser, baseUrl, ["contributor"], {
+    const { context, page, assertClean } = await newPage(browser, baseUrl, ["admin"], {
       viewport: { width: 375, height: 812 },
     });
-    await page.getByRole("button", { name: "イベントを投稿" }).click();
+    const contributionLauncher = page.getByRole("button", { name: "イベントを投稿" });
+    const reviewLauncher = page.getByRole("button", { name: "審査", exact: true });
+    const zoomPanel = page.getByRole("region", { name: "ズーム操作エリア" });
+    await Promise.all([
+      contributionLauncher.waitFor(),
+      reviewLauncher.waitFor(),
+      zoomPanel.waitFor(),
+    ]);
+    const contributionBox = await contributionLauncher.boundingBox();
+    const reviewBox = await reviewLauncher.boundingBox();
+    const zoomBox = await zoomPanel.boundingBox();
+    assert.ok(contributionBox && reviewBox && zoomBox);
+    assert.equal(
+      boxesOverlap(contributionBox, reviewBox),
+      false,
+      `authoring launchers overlap: ${JSON.stringify({ contributionBox, reviewBox })}`,
+    );
+    assert.equal(
+      boxesOverlap(contributionBox, zoomBox),
+      false,
+      `contribution launcher overlaps zoom: ${JSON.stringify({ contributionBox, zoomBox })}`,
+    );
+    assert.equal(
+      boxesOverlap(reviewBox, zoomBox),
+      false,
+      `review launcher overlaps zoom: ${JSON.stringify({ reviewBox, zoomBox })}`,
+    );
+    await contributionLauncher.click();
     const box = await page.getByRole("dialog", { name: "タイムラインへ投稿" }).boundingBox();
     assert.ok(box && box.x === 0 && box.width <= 375 && box.height <= 756);
     if (process.env.TIMELINE_AUTHORING_SCREENSHOT) {
@@ -187,7 +269,7 @@ try {
     await context.close();
   }
 
-  console.log("Timeline authoring UI verification passed for anonymous, contributor, reviewer, failure, and 375x812 states.");
+  console.log("Timeline authoring UI verification passed for anonymous, contributor, reviewer, logout, failure, and 375x812 states.");
 } finally {
   await browser?.close();
   await server.close();

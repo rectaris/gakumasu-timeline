@@ -152,7 +152,7 @@ async function decide(item, decision) {
 .review-actions button { min-height: 36px; padding: 0 14px; border: 1px solid var(--border-strong); border-radius: 7px; background: var(--button-bg); color: var(--button-text); font: inherit; cursor: pointer; }
 .review-actions .review-approve { border-color: transparent; background: var(--accent-color, #2563eb); color: #fff; }
 @media (max-width: 600px) {
-  .review-launcher { right: 150px; bottom: 10px; }
+  .review-launcher { top: calc(var(--app-header-height) + 10px); right: 166px; bottom: auto; }
   .review-panel { inset: var(--app-header-height) 0 0; width: 100vw; border-radius: 0; border-width: 1px 0 0; }
 }
 </style>

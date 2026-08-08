@@ -21,6 +21,7 @@ import {
   isTimelineAuthoringOrigin,
   requestTimelineAuthoringRoles,
 } from "./auth/timelineAuthoring";
+import { TOOL_SESSION_CONTEXT } from "./auth/toolSession";
 import {
   commonTimeline,
   eventCommus,
@@ -99,11 +100,19 @@ async function checkTimelineAuthoring() {
   authoringRoles.value = result.roles;
 }
 
+function handleToolLogoutSucceeded() {
+  authoringState.value = "anonymous";
+  authoringRoles.value = [];
+}
+
 provide(TIMELINE_MODE_CONTEXT, {
   mode,
   navigateToMode,
 });
 provide(APPLICATION_APPEARANCE_CONTEXT, appearance);
+provide(TOOL_SESSION_CONTEXT, {
+  logoutSucceeded: handleToolLogoutSucceeded,
+});
 
 onMounted(() => {
   window.addEventListener("popstate", syncLocation);
