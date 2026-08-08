@@ -64,6 +64,8 @@ Confirm that the remote v1.0.0 tag matches `../temp_project`, preview the exact 
 - Use the exact requested v1.0.0 command after a `--pretend` preview.
 - Treat conflict markers, rejection files, loss of project policy, or validation failures as blockers.
 - Keep generated workflow implementation in `.project-agent-workflow/` and project-specific rules under root extension points.
+- Keep the template-managed CI autofix mode disabled and preserve the existing manual-only workflow under a project-owned filename.
+- Resolve the known hardening-hook merge by adopting the v1 compatibility bridge after confirming the managed hook retains the security rules.
 
 ## Tasks
 

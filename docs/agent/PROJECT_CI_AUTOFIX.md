@@ -22,7 +22,7 @@ fork PR では write token と `OPENAI_API_KEY` を使いません。
 
 `pull_request`、`push`、`workflow_dispatch` で実行されます。
 
-`.github/workflows/codex-ci-autofix.yml` は `workflow_dispatch` でのみ起動します。
+`.github/workflows/codex-ci-autofix-manual.yml` は `workflow_dispatch` でのみ起動します。
 
 指定された PR が同一リポジトリにあり、現在の PR HEAD に対応する `CI` が失敗している場合だけ Codex を起動します。
 
@@ -50,7 +50,7 @@ workflow の write 権限は patch を適用して PR ブランチへ commit す
 
 ## Enable Or Disable
 
-有効化するには `.github/workflows/codex-ci-autofix.yml` を repository の default branch に置きます。
+有効化するには `.github/workflows/codex-ci-autofix-manual.yml` を repository の default branch に置きます。
 
 無効化するには GitHub Actions の workflow 一覧で `Codex CI Autofix` を disable にするか、この YAML ファイルを削除します。
 
@@ -98,4 +98,4 @@ PR の Files changed と commit diff を確認してください。
 
 ## Revert
 
-仕組み全体を戻すには、`.github/workflows/codex-ci-autofix.yml`、`.github/codex/prompts/ci-autofix.md`、この文書、`AGENTS.md` の CI autofix section を削除します。
+仕組み全体を戻すには、`.github/workflows/codex-ci-autofix-manual.yml`、`.github/codex/prompts/ci-autofix.md`、この文書を削除します。
