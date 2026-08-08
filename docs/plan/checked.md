@@ -92,3 +92,4 @@ id	path
 089	docs/plan/checked/089-install-playwright-chromium-in-ci.md
 090	docs/plan/checked/090-address-pr-8-review-feedback.md
 091	docs/plan/checked/091-cloudflare-build-browser-boundary.md
+092	docs/plan/checked/092-remove-stale-account-logout-note.md
