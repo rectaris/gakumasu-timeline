@@ -34,17 +34,32 @@ async function newPage(browser, baseUrl, roles, options = {}) {
   const context = await browser.newContext({ viewport: options.viewport });
   const page = await context.newPage();
   const runtimeErrors = [];
+  const applicationOrigin = new URL(baseUrl).origin;
+  const isApplicationUrl = (value) => {
+    if (!value) return true;
+    try {
+      return new URL(value).origin === applicationOrigin;
+    } catch {
+      return false;
+    }
+  };
   page.on("pageerror", (error) => runtimeErrors.push(`page: ${error.message}`));
-  page.on("requestfailed", (request) =>
-    runtimeErrors.push(`request: ${request.url()} ${request.failure()?.errorText ?? "failed"}`),
-  );
+  page.on("requestfailed", (request) => {
+    if (isApplicationUrl(request.url())) {
+      runtimeErrors.push(
+        `request: ${request.url()} ${request.failure()?.errorText ?? "failed"}`,
+      );
+    }
+  });
   page.on("console", (entry) => {
+    const entryUrl = entry.location().url;
     const expectedAuthoringStatus =
-      options.meStatus && entry.location().url.endsWith("/api/authoring/me");
+      options.meStatus && entryUrl.endsWith("/api/authoring/me");
     const expectedLogoutStatus =
-      options.logoutStatus && entry.location().url.endsWith("/auth/logout");
+      options.logoutStatus && entryUrl.endsWith("/auth/logout");
     if (
       entry.type() === "error" &&
+      isApplicationUrl(entryUrl) &&
       !expectedAuthoringStatus &&
       !expectedLogoutStatus
     ) {

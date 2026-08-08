@@ -70,3 +70,5 @@ checked_summary_ja: PRレビューに基づき、ログアウト後の投稿権�
 - `npm run build` and `npm run build:curiretas` passed.
 - The mobile browser assertions confirmed that contributor and reviewer launchers do not overlap each other or the zoom panel.
 - Plan lint, plan format, `git diff --check`, and the static security check passed before commit.
+- PR-side CI passed for commit `13599c9`, while the simultaneous push-side run failed only because two third-party Google Ads ping requests were aborted.
+- Browser diagnostics now retain application-origin request and console failures while excluding nondeterministic third-party advertising failures.
