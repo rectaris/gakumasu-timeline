@@ -1,0 +1,194 @@
+import assert from "node:assert/strict";
+import { chromium } from "playwright";
+import { createServer } from "vite";
+
+const requestItem = {
+  id: "request-1",
+  targetLaneId: "saki_hanami",
+  event: {
+    id: "submitted_event",
+    start: { year: 1, month: 4, day: 1 },
+    end: { year: 1, month: 4, day: 1 },
+    title: "審査対象イベント",
+    detail: "審査対象の詳細",
+    occurrenceType: "singleWithinRange",
+    participants: ["saki_hanami"],
+  },
+  status: "submitted",
+  version: 1,
+  submittedAt: Date.now(),
+  updatedAt: Date.now(),
+  review: null,
+};
+
+async function newPage(browser, baseUrl, roles, options = {}) {
+  const context = await browser.newContext({ viewport: options.viewport });
+  const page = await context.newPage();
+  const runtimeErrors = [];
+  page.on("pageerror", (error) => runtimeErrors.push(`page: ${error.message}`));
+  page.on("requestfailed", (request) =>
+    runtimeErrors.push(`request: ${request.url()} ${request.failure()?.errorText ?? "failed"}`),
+  );
+  page.on("console", (entry) => {
+    const expectedAuthoringStatus =
+      options.meStatus && entry.location().url.endsWith("/api/authoring/me");
+    if (entry.type() === "error" && !expectedAuthoringStatus) {
+      runtimeErrors.push(`console: ${entry.text()}`);
+    }
+  });
+  let submitted = false;
+  await page.route("**/auth/session", (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({ authenticated: false }),
+    }),
+  );
+  await page.route("**/api/authoring/**", async (route) => {
+    const request = route.request();
+    const url = new URL(request.url());
+    if (url.pathname.endsWith("/me")) {
+      const status = options.meStatus ?? 200;
+      await route.fulfill({
+        status,
+        contentType: "application/json",
+        body: JSON.stringify(
+          status === 200
+            ? { authenticated: true, roles }
+            : {
+                error: {
+                  code: status === 401 ? "authentication_required" : "authoring_unavailable",
+                  message: "Unavailable",
+                },
+              },
+        ),
+      });
+      return;
+    }
+    if (url.searchParams.get("scope") === "mine") {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ requests: submitted ? [requestItem] : [] }),
+      });
+      return;
+    }
+    if (url.searchParams.get("scope") === "review") {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ requests: [requestItem] }),
+      });
+      return;
+    }
+    if (request.method() === "POST" && url.pathname.endsWith("/requests")) {
+      submitted = true;
+      await route.fulfill({
+        status: 201,
+        contentType: "application/json",
+        body: JSON.stringify({ request: { id: requestItem.id, status: "submitted" } }),
+      });
+      return;
+    }
+    if (request.method() === "POST" && url.pathname.endsWith("/decision")) {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ request: { id: requestItem.id, status: "approved", version: 2 } }),
+      });
+      return;
+    }
+    await route.fulfill({ status: 404, body: "{}" });
+  });
+  await page.goto(baseUrl, { waitUntil: "domcontentloaded" });
+  return {
+    context,
+    page,
+    assertClean: () => assert.deepEqual(runtimeErrors, []),
+  };
+}
+
+const server = await createServer({
+  logLevel: "error",
+  server: { host: "127.0.0.1", port: 0 },
+});
+
+let browser;
+try {
+  await server.listen();
+  const baseUrl = server.resolvedUrls?.local[0];
+  if (!baseUrl) throw new Error("Vite did not expose a local verification URL.");
+  browser = await chromium.launch({ headless: true });
+
+  {
+    const { context, page, assertClean } = await newPage(browser, baseUrl, [], { meStatus: 401 });
+    await page.waitForTimeout(100);
+    assert.equal(await page.locator("[data-authoring-control]").count(), 0);
+    assertClean();
+    await context.close();
+  }
+
+  {
+    const { context, page, assertClean } = await newPage(browser, baseUrl, ["contributor"]);
+    const launcher = page.getByRole("button", { name: "イベントを投稿" });
+    await launcher.waitFor();
+    await launcher.click();
+    await page.getByLabel("イベントID").fill("ui_test_event");
+    await page.getByLabel("タイトル").fill("UI投稿テスト");
+    await page.getByRole("textbox", { name: "詳細", exact: true }).fill("投稿済み状態の確認");
+    await page.getByRole("button", { name: "審査へ送る" }).click();
+    await page.getByText("投稿を受け付けました。公開には審査とGitへの反映が必要です。").waitFor();
+    assert.equal(
+      await page.locator('[data-request-status="submitted"]').count(),
+      1,
+    );
+    assertClean();
+    await context.close();
+  }
+
+  {
+    const { context, page, assertClean } = await newPage(browser, baseUrl, ["reviewer"]);
+    await page.getByRole("button", { name: "審査", exact: true }).click();
+    await page.getByRole("heading", { name: "審査対象イベント", exact: true }).waitFor();
+    await page.getByRole("button", { name: "承認", exact: true }).click();
+    await page.getByText("承認済み").waitFor();
+    await page.getByText("承認しました。Gitへの反映後に公開されます。").waitFor();
+    assertClean();
+    await context.close();
+  }
+
+  {
+    const { context, page, assertClean } = await newPage(browser, baseUrl, [], { meStatus: 503 });
+    await page.locator('[data-authoring-state="unavailable"]').waitFor();
+    assert.equal(await page.locator("[data-authoring-control]").count(), 0);
+    assertClean();
+    await context.close();
+  }
+
+  {
+    const { context, page, assertClean } = await newPage(browser, baseUrl, ["contributor"], {
+      viewport: { width: 375, height: 812 },
+    });
+    await page.getByRole("button", { name: "イベントを投稿" }).click();
+    const box = await page.getByRole("dialog", { name: "タイムラインへ投稿" }).boundingBox();
+    assert.ok(box && box.x === 0 && box.width <= 375 && box.height <= 756);
+    if (process.env.TIMELINE_AUTHORING_SCREENSHOT) {
+      await page.screenshot({
+        path: process.env.TIMELINE_AUTHORING_SCREENSHOT,
+        fullPage: true,
+      });
+    }
+    await page.keyboard.press("Escape");
+    assert.equal(
+      await page.getByRole("dialog", { name: "タイムラインへ投稿" }).count(),
+      0,
+    );
+    assertClean();
+    await context.close();
+  }
+
+  console.log("Timeline authoring UI verification passed for anonymous, contributor, reviewer, failure, and 375x812 states.");
+} finally {
+  await browser?.close();
+  await server.close();
+}

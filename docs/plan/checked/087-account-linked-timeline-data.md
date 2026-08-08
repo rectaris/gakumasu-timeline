@@ -160,11 +160,38 @@ data as the only publication path.
 
 ## Tasks
 
-- [ ] Provision and bind the timeline-owned D1 database.
-- [ ] Add migrations, the runtime Worker, and account-session validation.
-- [ ] Implement and test roles, change requests, reviews, and audit records.
-- [ ] Add accessible contributor and reviewer surfaces.
-- [ ] Preserve and document the reviewed Git publication boundary.
-- [ ] Apply remote migrations, deploy in dependency order, and record validation.
+- [x] Provision and bind the timeline-owned D1 database.
+- [x] Add migrations, the runtime Worker, and account-session validation.
+- [x] Implement and test roles, change requests, reviews, and audit records.
+- [x] Add accessible contributor and reviewer surfaces.
+- [x] Preserve and document the reviewed Git publication boundary.
+- [x] Apply remote migrations, deploy in dependency order, and record validation.
 
 ## Validation Notes
+
+- Created `gakumasu-timeline-prod` as D1 database
+  `ab1ff388-0a9b-44ce-86d8-c885d425c635` with the `apac` location hint.
+  `wrangler d1 info` reported `running_in_region: APAC`; remote primary
+  verification reported `served_by_colo: SIN`. Neither result is documented as
+  a Japan storage guarantee.
+- Applied `0001_timeline_authoring.sql` locally and remotely. Remote inspection
+  confirmed `role_grants`, `change_requests`, `review_decisions`, and
+  `d1_migrations`. No administrator identity was seeded because the required
+  human-selected stable account id was not provided; the explicit bootstrap
+  procedure is documented in `docs/deploy.md`.
+- Reused the compatible existing `curiretas-account` `GET /auth/session`
+  contract. No account Worker change or redeployment was required.
+- Deployed `gakumasu-timeline-curiretas` version
+  `253297cb-e29c-451b-b7be-be40ffa5893b` after the Service Binding target was
+  confirmed. Production checks returned `200` for the static timeline and a
+  no-store JSON `401` for the anonymous authoring API.
+- Passed `git diff --check`, `npm run validate:data`, `npm run test` (144 Node
+  tests, 7 Worker tests, and Playwright coverage for anonymous, contributor,
+  reviewer, unavailable, and 375x812 states), `npm run check:worker`,
+  `npm run build`, `npm run build:curiretas`, `npm audit --audit-level=high`,
+  `python3 scripts/security-static-check.py`, and
+  `python3 scripts/validate-changes.py`.
+- Worker dry-run resolved `TIMELINE_DB`, `ACCOUNT_SERVICE`, and `ASSETS`.
+  Local startup profiling measured a 46.80 KiB bundle, 10.42 KiB gzip, and
+  1.1 ms active startup time. The browser screenshot was temporary validation
+  evidence and was not committed.
