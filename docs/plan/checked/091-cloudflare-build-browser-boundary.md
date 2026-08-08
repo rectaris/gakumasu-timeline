@@ -51,7 +51,7 @@ checked_summary_ja: Cloudflare Workers Buildsではブラウザ不要の検証�
 - [x] Split the reusable Node and Worker test chain from the full test command.
 - [x] Select the browserless chain only in Cloudflare Workers Builds.
 - [x] Document the CI responsibility boundary.
-- [ ] Validate both verification paths, commit, push `dev`, and open a PR to `main`.
+- [x] Validate both verification paths, commit, push `dev`, and open a PR to `main`.
 
 ## Validation Notes
 
@@ -59,3 +59,4 @@ checked_summary_ja: Cloudflare Workers Buildsではブラウザ不要の検証�
 - `WORKERS_CI=1 PLAYWRIGHT_BROWSERS_PATH=/definitely-missing npm run verify` passed without launching Playwright, while retaining 144 Node tests, 7 Worker tests, the Vite build, and the production publication boundary check.
 - `npm run build:curiretas` prepared the canonical `/gakumastool/timeline/` Worker assets successfully.
 - Plan lint, plan format, `git diff --check`, change-aware validation, the static security check, and the structure map check passed.
+- Commit `c6d35fd` was pushed to `dev`, and draft PR #9 was opened from `dev` to `main`.
