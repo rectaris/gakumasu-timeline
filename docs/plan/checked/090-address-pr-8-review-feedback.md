@@ -58,7 +58,7 @@ checked_summary_ja: PRレビューに基づき、ログアウト後の投稿権�
 - [x] Reposition mobile authoring launchers away from zoom controls.
 - [x] Add browser regression coverage for logout and control overlap.
 - [x] Synchronize UI behavior documentation.
-- [ ] Validate, commit, push `dev`, and confirm PR #8 checks.
+- [x] Validate, commit, push `dev`, and confirm PR #8 checks.
 
 ## Validation Notes
 
@@ -72,3 +72,5 @@ checked_summary_ja: PRレビューに基づき、ログアウト後の投稿権�
 - Plan lint, plan format, `git diff --check`, and the static security check passed before commit.
 - PR-side CI passed for commit `13599c9`, while the simultaneous push-side run failed only because two third-party Google Ads ping requests were aborted.
 - Browser diagnostics now retain application-origin request and console failures while excluding nondeterministic third-party advertising failures.
+- Commits `13599c9` and `6481ef7` were pushed to `dev` and added to PR #8.
+- Final GitHub checks passed: push and pull-request CI, all CodeQL analyses, both secret scans, and the dev Pages deployment.
