@@ -89,3 +89,4 @@ id	path
 086	docs/plan/checked/086-authenticated-account-menu.md
 087	docs/plan/checked/087-account-linked-timeline-data.md
 088	docs/plan/checked/088-shorten-account-logout-label.md
+089	docs/plan/checked/089-install-playwright-chromium-in-ci.md

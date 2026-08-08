@@ -42,8 +42,8 @@ checked_summary_ja: CIでPlaywrightのChromiumをインストールし、UIテ�
 
 - [x] Add the Chromium installation step after `npm ci`.
 - [x] Validate the Playwright command, full test suite, and workflow security checks.
-- [ ] Commit and push the fix to PR #8.
-- [ ] Confirm the replacement GitHub Actions CI run passes.
+- [x] Commit and push the fix to PR #8.
+- [x] Confirm the replacement GitHub Actions CI run passes.
 
 ## Validation Notes
 
@@ -53,3 +53,5 @@ checked_summary_ja: CIでPlaywrightのChromiumをインストールし、UIテ�
 - `npm run test` passed 144 Node tests, 7 Worker tests, and the Playwright UI verification.
 - Plan lint, plan format, `git diff --check`, change-aware validation, and `python3 scripts/security-static-check.py` passed.
 - `actionlint` is not installed locally; GitHub Actions will provide the authoritative workflow execution check.
+- Commit `9cfa3d6` was pushed to `dev` and added to draft PR #8.
+- The replacement GitHub Actions checks passed: both CI validate runs, all CodeQL analyses, both secret scans, and the dev Pages deployment reported success.
