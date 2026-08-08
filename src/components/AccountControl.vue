@@ -202,7 +202,7 @@ onUnmounted(() => {
           {{
             sessionState.status === "logging-out"
               ? "ログアウト中…"
-              : "三アプリからログアウト"
+              : "ログアウト"
           }}
         </button>
         <p class="account-control__note">
