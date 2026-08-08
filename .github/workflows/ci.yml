@@ -57,6 +57,10 @@ jobs:
             yarn install --frozen-lockfile
           fi
 
+      - name: Install Playwright Chromium
+        if: hashFiles('package.json') != ''
+        run: npx playwright install --with-deps chromium
+
       - name: Run Python lint
         if: hashFiles('ruff.toml', '.ruff.toml', 'pyproject.toml') != ''
         run: |

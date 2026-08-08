@@ -87,3 +87,7 @@ id	path
 085	docs/plan/checked/085-update-portal-header-destination.md
 080	docs/plan/checked/080-curiretas-subpath-deployment.md
 086	docs/plan/checked/086-authenticated-account-menu.md
+087	docs/plan/checked/087-account-linked-timeline-data.md
+088	docs/plan/checked/088-shorten-account-logout-label.md
+089	docs/plan/checked/089-install-playwright-chromium-in-ci.md
+090	docs/plan/checked/090-address-pr-8-review-feedback.md

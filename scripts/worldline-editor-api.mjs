@@ -6,10 +6,7 @@ import {
   generatedPathForRaw,
   getGeneratedDataFiles,
 } from "./generate-data.mjs";
-import {
-  formatTimelineDataIntegrityErrors,
-  validateTimelineData,
-} from "../src/data/integrity.js";
+import { validateWorldlineEditorState } from "./worldline-editor-validation.mjs";
 import { worldlines } from "../src/data/worldlines.js";
 
 const EDITOR_API_PREFIX = "/__worldline-editor/api";
@@ -357,37 +354,6 @@ export function applyWorldlineEditorMutation(state, request) {
   };
 }
 
-function validationEntriesForState(state) {
-  return state.lanes.map((entry) => ({
-    category: entry.category,
-    sourceFile: entry.sourceFile,
-    lane: entry.lane,
-  }));
-}
-
-function validateEditorState(state, focusSourceFiles = []) {
-  const characterIds = new Set(
-    state.lanes
-      .filter((entry) => entry.category === "idolCommu")
-      .map((entry) => entry.lane.id),
-  );
-  const worldlineIds = new Set(worldlines.map((worldline) => worldline.id));
-  const focusSourceFileSet = focusSourceFiles.length
-    ? new Set(focusSourceFiles)
-    : null;
-  const errors = validateTimelineData(validationEntriesForState(state), {
-    characterIds,
-    worldlineIds,
-    focusSourceFiles: focusSourceFileSet,
-  });
-
-  return {
-    ok: errors.length === 0,
-    errors,
-    message: formatTimelineDataIntegrityErrors(errors),
-  };
-}
-
 function rawLaneText(entry) {
   return `${JSON.stringify(entry.lane, null, 2)}\n`;
 }
@@ -432,7 +398,10 @@ function formatPatchText(previousState, nextState, changedSourceFiles) {
 export async function previewWorldlineEditorMutation(request, options = {}) {
   const state = options.state ?? await readWorldlineEditorState(options);
   const result = applyWorldlineEditorMutation(state, request);
-  const validation = validateEditorState(result.state, result.changedSourceFiles);
+  const validation = validateWorldlineEditorState(
+    result.state,
+    result.changedSourceFiles,
+  );
 
   return {
     ok: validation.ok,
@@ -460,7 +429,10 @@ export async function saveWorldlineEditorMutation(request, options = {}) {
   const root = options.root ?? process.cwd();
   const state = options.state ?? await readWorldlineEditorState({ ...options, root });
   const result = applyWorldlineEditorMutation(state, request);
-  const validation = validateEditorState(result.state, result.changedSourceFiles);
+  const validation = validateWorldlineEditorState(
+    result.state,
+    result.changedSourceFiles,
+  );
 
   if (!validation.ok) {
     return {

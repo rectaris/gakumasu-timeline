@@ -10,6 +10,12 @@
 
 Worldline Data Editor は dev server 専用 API を使います。本番ビルドでは通常タイムライン画面を使います。
 
+公開画面の「イベントを投稿」はD1へ追加申請を保存する別機能です。
+
+公開画面で申請が承認されても、この開発用エディターやraw JSONへ自動反映されません。
+
+承認済み申請をレビュー済みのGit変更へ変換する場合は、申請内容を確認してから本エディターまたは手動編集でraw JSONへ反映します。
+
 ## 編集対象
 
 永続的な source of truth は `data/raw/worldline_commu/` 配下の raw JSON です。

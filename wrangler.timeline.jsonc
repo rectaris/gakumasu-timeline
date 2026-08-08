@@ -1,7 +1,8 @@
 {
-  "$schema": "https://json.schemastore.org/wrangler.json",
+  "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "gakumasu-timeline-curiretas",
-  "compatibility_date": "2026-08-02",
+  "main": "workers/index.ts",
+  "compatibility_date": "2026-08-08",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": false,
   "preview_urls": false,
@@ -13,9 +14,28 @@
   ],
   "assets": {
     "directory": "./.cloudflare-assets",
+    "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "none"
+    "not_found_handling": "none",
+    "run_worker_first": [
+      "/api/authoring/*",
+      "/gakumastool/timeline/api/authoring/*"
+    ]
   },
+  "d1_databases": [
+    {
+      "binding": "TIMELINE_DB",
+      "database_name": "gakumasu-timeline-prod",
+      "database_id": "ab1ff388-0a9b-44ce-86d8-c885d425c635",
+      "migrations_dir": "./workers/migrations"
+    }
+  ],
+  "services": [
+    {
+      "binding": "ACCOUNT_SERVICE",
+      "service": "curiretas-account"
+    }
+  ],
   "observability": {
     "enabled": true,
     "head_sampling_rate": 1,

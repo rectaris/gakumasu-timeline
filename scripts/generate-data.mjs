@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { assertValidStoryGraphData } from "../src/data/storyGraphModel.js";
 import { assertValidRealworldHistoryData } from "../src/data/realworldHistoryModel.js";
 import { buildStoryReferenceIndex } from "../src/data/storyReferences.js";
+import { worldlines } from "../src/data/worldlines.js";
 
 const GENERATED_DATA_ROOT = "src/data/generated";
 const RAW_DATA_ROOT = "data/raw";
@@ -31,6 +32,11 @@ const STATIC_GENERATED_DATA_FILES = [
     category: "storyReferenceIndex",
     raw: "data/raw/worldline_commu",
     generated: "src/data/generated/story_events/referenceIndex.js",
+  },
+  {
+    category: "timelineValidationCatalog",
+    raw: "data/raw/worldline_commu",
+    generated: "workers/generated/timeline-validation-catalog.js",
   },
   {
     category: "realworldHistoryPublished",
@@ -316,7 +322,7 @@ async function renderStoryReferenceIndex() {
   const timelineFiles = getGeneratedDataFiles().filter(
     (file) =>
       !file.dataType &&
-      file.category !== "storyReferenceIndex",
+      !["storyReferenceIndex", "timelineValidationCatalog"].includes(file.category),
   );
   const entries = await Promise.all(
     timelineFiles.map(async (file) => ({
@@ -329,9 +335,37 @@ async function renderStoryReferenceIndex() {
   return `${HEADER}const data = ${renderValue(index, 0)};\n\nexport default data;\n`;
 }
 
+async function renderTimelineValidationCatalog() {
+  const timelineFiles = getGeneratedDataFiles().filter(
+    (file) =>
+      !file.dataType &&
+      !["storyReferenceIndex", "timelineValidationCatalog"].includes(file.category),
+  );
+  const lanes = await Promise.all(
+    timelineFiles.map(async (file) => {
+      const lane = await loadRawLane(file.raw);
+      return {
+        category: file.category,
+        sourceFile: file.raw,
+        id: lane.id,
+        name: lane.name,
+        eventIds: lane.events.map((event) => event.id),
+      };
+    }),
+  );
+  const catalog = {
+    lanes,
+    worldlineIds: worldlines.map((worldline) => worldline.id),
+  };
+  return `${HEADER}const catalog = ${renderValue(catalog, 0)};\n\nexport default catalog;\n`;
+}
+
 export async function renderGeneratedFile(file) {
   if (file.category === "storyReferenceIndex") {
     return renderStoryReferenceIndex();
+  }
+  if (file.category === "timelineValidationCatalog") {
+    return renderTimelineValidationCatalog();
   }
 
   let data;

@@ -1,7 +1,8 @@
 <script setup>
-import { nextTick, onMounted, onUnmounted, reactive, ref } from "vue";
+import { inject, nextTick, onMounted, onUnmounted, reactive, ref } from "vue";
 import {
   ACCOUNT_PAGE_URL,
+  TOOL_SESSION_CONTEXT,
   TOOL_LOGIN_URL,
   createToolSessionState,
   isToolSessionOrigin,
@@ -10,6 +11,7 @@ import {
   transitionToolSessionState,
 } from "../auth/toolSession";
 
+const toolSessionContext = inject(TOOL_SESSION_CONTEXT, null);
 const accountControlRef = ref(null);
 const accountTriggerRef = ref(null);
 const loginLinkRef = ref(null);
@@ -105,6 +107,7 @@ async function handleLogout() {
   try {
     await requestToolLogout();
     applySessionState({ type: "logout-succeeded" });
+    toolSessionContext?.logoutSucceeded();
     disclosureOpen.value = false;
     await nextTick();
     loginLinkRef.value?.focus();
@@ -202,7 +205,7 @@ onUnmounted(() => {
           {{
             sessionState.status === "logging-out"
               ? "ログアウト中…"
-              : "三アプリからログアウト"
+              : "ログアウト"
           }}
         </button>
         <p class="account-control__note">

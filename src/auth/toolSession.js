@@ -3,6 +3,7 @@ export const TOOL_LOGIN_URL =
 export const ACCOUNT_PAGE_URL = "https://accounts.curiretas.com/";
 export const LOGOUT_FAILURE_MESSAGE =
   "ログアウトできませんでした。もう一度お試しください。";
+export const TOOL_SESSION_CONTEXT = Symbol("tool-session-context");
 
 const INVALID_SESSION_RESPONSE_MESSAGE =
   "セッション応答の形式が正しくありません。";
