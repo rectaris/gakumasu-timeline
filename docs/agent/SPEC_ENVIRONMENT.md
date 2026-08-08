@@ -40,6 +40,10 @@ Keep secrets out of repository files. Use environment variables or the platform 
   Cloudflare Workers Builds after its Git integration is activated.
 - Workers Builds uses `main` as the production branch, `npm run verify` as the
   build command, and `npm run deploy:curiretas` as the deploy command.
+- Workers Builds provides `WORKERS_CI=1`; under that environment, `npm run
+  verify` runs Node and Worker tests without Playwright. GitHub Actions remains
+  the required Playwright UI verification gate and installs Chromium before
+  running the full verification path.
 - Keep non-production Workers Builds disabled while `preview_urls` is false;
   `dev` and pull requests remain verification-only paths.
 - Pin local, GitHub Actions, and Workers Builds execution to Node.js 24 through
