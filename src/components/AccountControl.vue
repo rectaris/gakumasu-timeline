@@ -208,9 +208,6 @@ onUnmounted(() => {
               : "ログアウト"
           }}
         </button>
-        <p class="account-control__note">
-          この操作後も、アカウントページはログインしたままです。
-        </p>
         <p
           v-if="sessionState.logoutError"
           class="account-control__error"
@@ -342,15 +339,10 @@ onUnmounted(() => {
   width: 100%;
 }
 
-.account-control__note,
 .account-control__error {
   margin: 0;
   font-size: 12px;
   line-height: 1.55;
-}
-
-.account-control__note {
-  color: var(--text-muted);
 }
 
 .account-control__error {
