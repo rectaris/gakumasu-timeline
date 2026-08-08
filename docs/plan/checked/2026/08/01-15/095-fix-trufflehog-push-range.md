@@ -1,6 +1,6 @@
 # Fix TruffleHog push scan range
 
-status: in_progress
+status: checked
 task_types:
   - environment_data_flow
   - security
@@ -72,8 +72,8 @@ Validate the workflow with repository static security and change-aware checks.
 
 - [x] Remove the conflicting TruffleHog range inputs.
 - [x] Run workflow-focused and change-aware validation.
-- [ ] Verify that the TruffleHog push job succeeds on `dev`.
-- [ ] Record the remote validation evidence and prepare the plan for archival.
+- [x] Verify that the TruffleHog push job succeeds on `dev`.
+- [x] Record the remote validation evidence and prepare the plan for archival.
 
 ## Validation Notes
 
@@ -81,4 +81,4 @@ Validate the workflow with repository static security and change-aware checks.
 - The upstream TruffleHog Action definition confirms that empty range inputs use `github.event.before` and `github.event.after` for push events, and pull-request base and head SHAs for pull requests.
 - YAML parsing and focused assertions passed: the range inputs are absent and `--results=verified` remains configured.
 - `python3 .project-agent-workflow/scripts/validate-changes.py --all` passed, including plan lint, plan formatting, and static security checks.
-- Remote `dev` push validation is pending.
+- GitHub Actions run `31263650286` succeeded on `dev`; the action selected `e811ec4` as `BASE` and `c9e49e0` as `HEAD`, scanned four chunks, and reported zero verified or unverified secrets.
