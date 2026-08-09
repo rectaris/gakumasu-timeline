@@ -26,12 +26,9 @@ MAX_ITEMS = 100
 MAX_TEXT = 10_000
 MAX_JSON_BYTES = 1_048_576
 MAX_SOURCE_BYTES = 10_485_760
-SECRET_PATTERNS = (
-    (security_rules.PRIVATE_KEY_MATERIAL, "private key material"),
-    (re.compile(r"\bgh[pousr]_[A-Za-z0-9]{20,}\b"), "GitHub token-like material"),
-    (re.compile(r"\bAKIA[0-9A-Z]{16}\b"), "AWS access-key-like material"),
-    (re.compile(r"\bsk-[A-Za-z0-9_-]{20,}\b"), "API-key-like material"),
-)
+GITHUB_TOKEN_MATERIAL = re.compile(r"\bgh[pousr]_[A-Za-z0-9]{20,}\b")
+AWS_ACCESS_KEY_MATERIAL = re.compile(r"\bAKIA[0-9A-Z]{16}\b")
+API_KEY_MATERIAL = re.compile(r"\bsk-[A-Za-z0-9_-]{20,}\b")
 
 
 class ReportError(ValueError):
@@ -254,6 +251,19 @@ def source_records(report: dict[str, Any], root: Path) -> list[dict[str, str]]:
     return records
 
 
+def secret_findings(serialized: str) -> list[str]:
+    findings: list[str] = []
+    if security_rules.PRIVATE_KEY_MATERIAL.search(serialized):
+        findings.append("private key material was detected")
+    if GITHUB_TOKEN_MATERIAL.search(serialized):
+        findings.append("GitHub token-like material was detected")
+    if AWS_ACCESS_KEY_MATERIAL.search(serialized):
+        findings.append("AWS access-key-like material was detected")
+    if API_KEY_MATERIAL.search(serialized):
+        findings.append("API-key-like material was detected")
+    return findings
+
+
 def assess(report: dict[str, Any], mode: str) -> dict[str, Any]:
     max_options = max((len(item["options"]) for item in report["decisions"]), default=0)
     status_items = len(report["facts"]) + len(report["next_actions"])
@@ -273,9 +283,7 @@ def assess(report: dict[str, Any], mode: str) -> dict[str, Any]:
     if safety["contains_unredacted_sensitive_data"]:
         blocking.append("unredacted sensitive data is present")
     serialized = json.dumps(report, ensure_ascii=False, sort_keys=True)
-    for pattern, description in SECRET_PATTERNS:
-        if pattern.search(serialized):
-            blocking.append(f"{description} was detected")
+    blocking.extend(secret_findings(serialized))
     if mode == "disabled":
         return {
             "version": 1,
