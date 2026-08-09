@@ -10,6 +10,7 @@ Maintain the Gakumasu timeline application, data, and UI interactions.
 
 - Project name: `gakumasu-timeline`
 - Primary language: `mixed`
+- Human report mode: `agent_select_local`
 - Planning style: `active_backlog_checked`
 - Local workflow modules: installed by default and activated by task routing
 - Codex helper agents: installed by default
@@ -28,7 +29,7 @@ Maintain the Gakumasu timeline application, data, and UI interactions.
 
 ## Priority
 
-1. Follow this file first for repository-local behavior.
+1. Follow project-specific instructions in the root `AGENTS.md` before this generic managed file.
 2. Use parent workspace rules only for cross-repository coordination, security, or Git policy.
 3. Open `.project-agent-workflow/docs/agent/spec-index.yaml`.
 4. Union the `required` docs from every matching route.
@@ -40,6 +41,7 @@ Maintain the Gakumasu timeline application, data, and UI interactions.
 - Track non-trivial implementation work in `docs/plan/plan.md`.
 - Keep Copier-managed workflow files updateable; put domain-specific details in separate specs.
 - For mature repositories, follow `.project-agent-workflow/docs/agent/SPEC_COPIER_ADOPTION.md` before copying or updating template-managed files.
+- Treat a Copier update as incomplete until project-owned product code, policy, configuration, plan history, and repository-specific validation remain intact and unresolved conflicts, rejection files, and unclassified tracked-file deletion are absent.
 - Use Git for every coherent work unit.
 - Preserve user changes you did not make.
 - Prefer deterministic checks over prose-only rules.

@@ -11,11 +11,6 @@ copier_managed:
   - .agents/skills/plan-archive/SKILL.md
   - .agents/skills/sequential-plan-orchestrator/SKILL.md
   - .agents/skills/write-for-reader/SKILL.md
-  - .codex/agents/change_reviewer.toml
-  - .codex/agents/docs_researcher.toml
-  - .codex/agents/repo_explorer.toml
-  - .codex/agents/scoped_worker.toml
-  - .codex/agents/sequential_plan_worker.toml
   - .codex/hooks/agent_log_event.py
   - .codex/hooks/pre_tool_hardening_gate.py
   - .codex/hooks/semantic_guard_advisory.py
@@ -30,8 +25,16 @@ seeded_project_owned:
   - .gitignore
   - .codex/config.toml
   - .codex/hooks.json
+  - .codex/agents/*.toml
   - docs/agent/**
   - docs/plan/**
+
+field_overrides:
+  - path: .codex/agents/*.toml
+    template_fixed:
+      - model
+      - model_reasoning_effort
+    project_owned_remainder: true
 
 metadata:
   - .copier-answers.yml

@@ -47,14 +47,18 @@ Before final report:
 ## Plan Validation Commands
 
 - Use `python3 .project-agent-workflow/scripts/plan_validation_commands.py check-plan <plan>` to validate a plan manifest's `validation:` command list.
-- Use `python3 .project-agent-workflow/scripts/plan_validation_commands.py run-plan <plan>` only when the active plan's validation list is trusted and ready to execute.
+- Use `python3 .project-agent-workflow/scripts/plan_validation_commands.py run-plan <plan>` only for a trusted numbered plan directly under `docs/plan/active/` whose validation list is ready to execute.
 - Validation commands are parsed without a shell. Shell metacharacters, environment assignments, absolute paths, parent-directory traversal, and unsupported quoting are rejected.
 - The built-in argv allowlist covers the declared validation script families, including `npm run typecheck` and `python3 -m pytest`.
+- Full plan lint does not reinterpret checked archive commands under the current allowlist; they remain non-executable historical records.
+- A pre-v1 open plan may use an old generic root CLI spelling only when the adoption manifest records the v0 source and the root file exactly matches the executable compatibility bridge to the managed helper.
 - Add project-specific commands by editing `.project-agent-workflow/scripts/plan_validation_commands.py` in the generated project and documenting the rule here.
 
 ## Optional Checks
 
-- Static security: `python3 .project-agent-workflow/scripts/security-static-check.py`
+- Static security for changed files: `python3 .project-agent-workflow/scripts/security-static-check.py --changed`
+- Static security for Copier-managed workflow files: `python3 .project-agent-workflow/scripts/security-static-check.py --managed`
+- Repository-wide static security, when compatible with project-owned fixtures: `python3 .project-agent-workflow/scripts/security-static-check.py`
 - Codex TOML parse check: `python3 .project-agent-workflow/scripts/check-codex-toml.py`
 - SkillSpector agent-skill scan: `.project-agent-workflow/scripts/skillspector-scan.sh <skill-path>`
 - Structure scanner: `python3 .project-agent-workflow/scripts/structure-map.py --check`
