@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier.
-_commit: v1.0.0
+_commit: v1.1.2
 _src_path: https://github.com/rectaris/temp_project.git
 ci_autofix_mode: disabled
 codex_hooks_mode: install_templates

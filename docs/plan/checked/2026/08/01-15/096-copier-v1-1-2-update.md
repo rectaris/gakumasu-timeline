@@ -1,6 +1,6 @@
 # Update managed workflow to Copier v1.1.2
 
-status: in_progress
+status: checked
 task_types:
   - copier_adoption
   - planning_docs
@@ -38,8 +38,10 @@ validation:
   - git diff --check
   - python3 .project-agent-workflow/scripts/lint-plan-docs.py
   - python3 .project-agent-workflow/scripts/structure-map.py --check
-  - python3 .project-agent-workflow/scripts/security-static-check.py
+  - python3 .project-agent-workflow/scripts/security-static-check.py --managed
   - python3 .project-agent-workflow/scripts/validate-changes.py --all
+  - npm run test
+  - npm run build
 acceptance:
   - Copier records v1.1.2 and leaves no rejection files or conflict markers.
   - Existing project-owned files and product runtime behavior remain unchanged.
@@ -66,12 +68,24 @@ Record the clean baseline, preview the requested update, and inspect the generat
 - Treat the user's requested v1.1.2 tag and command as the approved update target.
 - Keep product runtime, public paths, links, and project-owned policy out of the template update.
 - Stop before commit if Copier emits unresolved conflicts or if validation shows a managed-workflow regression.
+- Accept deletion of the four template-originated plan-directory `.gitkeep` placeholders; every directory contains durable project-owned files, and v1.1.2 intentionally stops rendering placeholders so Copier cannot recreate a project-deleted placeholder on later updates.
 
 ## Tasks
 
-- [ ] Preview v1.1.2 and inspect the affected ownership surfaces.
-- [ ] Execute the requested Copier update when the preview is safe.
-- [ ] Review the resulting diff for conflicts, ownership violations, and workflow regressions.
-- [ ] Validate, archive the plan, and commit the scoped update.
+- [x] Preview v1.1.2 and inspect the affected ownership surfaces.
+- [x] Execute the requested Copier update when the preview is safe.
+- [x] Review the resulting diff for conflicts, ownership violations, and workflow regressions.
+- [x] Validate, archive the plan, and commit the scoped update.
 
 ## Validation Notes
+
+- The local `temp_project` tag and the remote `refs/tags/v1.1.2` resolve to annotated tag object `f08b8b8cae359436fdcdbbaac8eaa0bbc58e9cad`.
+- `uv run copier update --trust --defaults --vcs-ref v1.1.2 --pretend` completed with the expected Hook-wiring migration and did not modify the clean worktree.
+- `uv run copier update --trust --defaults --vcs-ref v1.1.2` completed and updated `.copier-answers.yml` from v1.0.0 to v1.1.2.
+- No unmerged paths, rejection files, backup files, inline conflict markers, or unexpected project-owned file changes remain. Root policy, project policy, helper-agent definitions, product runtime, public paths, and links have no diff.
+- The only `docs/plan` deletions are four blank template-originated `.gitkeep` placeholders intentionally removed by v1.1.2; active, backlog, checked, and handoff content remains present.
+- `python3 .project-agent-workflow/scripts/validate-changes.py --all` passed, including Python compilation, Codex TOML, plan lint and format, and changed-file static security checks.
+- `python3 .project-agent-workflow/scripts/structure-map.py --check`, `python3 .project-agent-workflow/scripts/security-static-check.py --managed`, and `sh .project-agent-workflow/scripts/check-agent-completion.sh --plans-only` passed.
+- The compatibility Stop Hook returned `{}` for the current valid plan lifecycle state.
+- `npm run test` passed 26 core files with 144 tests, one Worker file with seven tests, and the timeline authoring UI verification.
+- `npm run build` passed with Vite 7.3.6.
