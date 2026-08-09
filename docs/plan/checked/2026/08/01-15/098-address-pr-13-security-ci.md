@@ -1,6 +1,6 @@
 # Address PR 13 security review and CodeQL failure
 
-status: in_progress
+status: checked
 task_types:
   - security
   - planning_docs
@@ -71,7 +71,7 @@ Refactor only the secret-pattern declaration and assessment loop in `human-repor
 - [x] Decouple secret detectors from output labels without weakening detection.
 - [x] Validate normal, blocked, and refused-render behavior plus repository checks.
 - [x] Restore and validate the non-blocking legacy Stop bridge.
-- [ ] Archive the plan, commit, push, and verify PR #13 checks and thread state.
+- [x] Archive the plan, commit, push, and verify PR #13 checks and thread state.
 
 ## Validation Notes
 
@@ -83,3 +83,4 @@ Refactor only the secret-pattern declaration and assessment loop in `human-repor
 - After commit `e797e56`, all three CodeQL analysis jobs and the aggregate CodeQL check passed. Advanced Security marked alerts 8 and 9 fixed and automatically resolved both review threads.
 - A later automated review identified the legacy Stop bridge's forwarding behavior as inconsistent with `SPEC_ORCHESTRATION.md`. The bridge now consumes stdin and returns `{}` without importing or invoking the canonical managed gate, and the Copier adoption description states the same single-invocation contract.
 - The non-blocking bridge smoke check returned `{}` and contained no managed-gate import or target path. The complete active-plan validation passed again after the bridge correction.
+- After commit `5eaf249`, the three language analysis jobs and aggregate CodeQL check passed again. The Stop-bridge review thread is outdated on the new diff; it remains manually unresolved because this task did not authorize resolving review conversations.

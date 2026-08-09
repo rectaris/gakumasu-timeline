@@ -98,3 +98,4 @@ id	path
 095	docs/plan/checked/2026/08/01-15/095-fix-trufflehog-push-range.md
 096	docs/plan/checked/2026/08/01-15/096-copier-v1-1-2-update.md
 097	docs/plan/checked/2026/08/01-15/097-copier-v1-2-1-update.md
+098	docs/plan/checked/2026/08/01-15/098-address-pr-13-security-ci.md
