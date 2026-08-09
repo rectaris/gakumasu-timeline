@@ -1,6 +1,6 @@
 # Update managed workflow to Copier v1.2.1
 
-status: in_progress
+status: checked
 task_types:
   - copier_adoption
   - planning_docs
@@ -90,3 +90,4 @@ Confirm the local and remote v1.2.1 tag identity, preview the Copier update from
 - `python3 .project-agent-workflow/scripts/human-report.py example` produced a valid example, and assessment of the safe minimal example returned `decision: skip` with the expected below-threshold reason.
 - `npm run test` passed 26 core files with 144 tests, one Worker file with seven tests, and the timeline authoring UI verification.
 - `npm run build` passed with Vite 7.3.6.
+- A second `uv run copier update --trust --defaults --vcs-ref v1.2.1` reported `Keeping template version 1.2.1` and left the worktree unchanged.
