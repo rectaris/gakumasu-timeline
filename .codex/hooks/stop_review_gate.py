@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Compatibility bridge to the Copier-managed Stop-hook implementation."""
+"""No-op bridge for user-level configurations that still probe the legacy path."""
 
-from pathlib import Path
-import runpy
+import sys
 
 
-TARGET = Path(__file__).resolve().parents[2] / ".project-agent-workflow/hooks/stop_review_gate.py"
-runpy.run_path(str(TARGET), run_name="__main__")
+sys.stdin.read()
+print("{}")

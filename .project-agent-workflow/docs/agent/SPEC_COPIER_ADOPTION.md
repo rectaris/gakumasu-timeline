@@ -43,7 +43,7 @@ A bridge file is a small host-discovered file that points to the managed core wi
 - Root `AGENTS.md` routes agents to `.project-agent-workflow/AGENTS.md` and project-owned policy.
 - `.agents/skills/*/SKILL.md` routes Codex skill discovery to the corresponding managed skill.
 - `.codex/hooks.json` routes enabled project hooks to `.project-agent-workflow/hooks/`.
-- `.codex/hooks/*.py` preserves legacy path compatibility; the legacy Stop bridge forwards to the managed lifecycle gate.
+- `.codex/hooks/*.py` preserves legacy path compatibility; the legacy Stop bridge remains non-blocking so the managed lifecycle gate runs only once.
 - The dedicated GitHub workflows are host integrations that remain Copier-managed.
 
 Keep bridge content stable.
