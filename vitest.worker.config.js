@@ -17,6 +17,8 @@ export default defineConfig({
         compatibilityFlags: ["nodejs_compat"],
         d1Databases: ["TIMELINE_DB"],
         bindings: {
+          DISCORD_CONTRIBUTOR_ROLE_IDS: "111111111111111111",
+          DISCORD_REVIEWER_ROLE_IDS: "222222222222222222",
           TEST_MIGRATIONS: await readD1Migrations(
             path.join(root, "workers/migrations"),
           ),
@@ -49,7 +51,22 @@ export default defineConfig({
               user: { id: token, displayName: "Test User" },
             });
           },
+          DISCORD_MEMBERSHIP_SERVICE: {
+            name: "discord-membership-test-service",
+            entrypoint: "DiscordGuildMembershipService",
+          },
         },
+        workers: [
+          {
+            name: "discord-membership-test-service",
+            modules: true,
+            scriptPath: path.join(
+              root,
+              "tests/worker/discord-membership-service.mjs",
+            ),
+            compatibilityDate: "2026-08-08",
+          },
+        ],
       },
     })),
   ],

@@ -1,6 +1,10 @@
 import { env } from "cloudflare:workers";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import worker from "../../workers";
+import {
+  getDiscordRoleMappings,
+  getDiscordTimelineRoles,
+} from "../../workers/auth/discordGuildRoles";
 
 const ORIGIN = "https://curiretas.com";
 const API = `${ORIGIN}/gakumastool/timeline/api/authoring`;
@@ -80,6 +84,150 @@ describe("timeline authoring Worker", () => {
     expect(malformed.status).toBe(503);
     expect(upstream.status).toBe(503);
     expect(JSON.stringify(await malformed.json())).not.toContain("malformed");
+  });
+
+  it("maps current Discord guild roles to contributor and reviewer authority", async () => {
+    const contributorMe = await dispatch("/me", "discord-contributor");
+    const reviewerMe = await dispatch("/me", "discord-reviewer");
+    const contributorRequest = await dispatch(
+      "/requests",
+      "discord-contributor",
+      jsonMutation(validContribution()),
+    );
+    const reviewQueue = await dispatch(
+      "/requests?scope=review",
+      "discord-reviewer",
+    );
+
+    expect(await contributorMe.json()).toEqual({
+      authenticated: true,
+      roles: ["contributor"],
+    });
+    expect(await reviewerMe.json()).toEqual({
+      authenticated: true,
+      roles: ["reviewer"],
+    });
+    expect(contributorRequest.status).toBe(201);
+    expect(reviewQueue.status).toBe(200);
+  });
+
+  it("unions Discord roles with active D1 grants without deriving admin", async () => {
+    await seedRole("discord-contributor", "reviewer");
+    await seedRole("discord-both", "admin");
+
+    const composed = await dispatch("/me", "discord-contributor");
+    const localAdmin = await dispatch("/me", "discord-both");
+    const unmapped = await dispatch("/me", "discord-unmapped");
+
+    expect(await composed.json()).toEqual({
+      authenticated: true,
+      roles: ["reviewer", "contributor"],
+    });
+    expect(await localAdmin.json()).toEqual({
+      authenticated: true,
+      roles: ["admin", "contributor", "reviewer"],
+    });
+    expect(await unmapped.json()).toEqual({ authenticated: true, roles: [] });
+  });
+
+  it.each([
+    "discord-not-linked",
+    "discord-not-member",
+    "discord-unavailable",
+  ])("grants no Discord role for the negative outcome %s", async (accountId) => {
+    const response = await dispatch("/me", accountId);
+    expect(await response.json()).toEqual({ authenticated: true, roles: [] });
+  });
+
+  it.each([
+    "discord-mismatch",
+    "discord-malformed",
+    "discord-invalid-role",
+    "discord-too-many-roles",
+    "discord-invalid-session",
+  ])("fails closed for the invalid Discord RPC result %s", async (accountId) => {
+    await seedRole(accountId, "reviewer");
+    const log = vi.spyOn(console, "error").mockImplementation(() => undefined);
+    try {
+      const response = await dispatch("/me", accountId);
+      expect(await response.json()).toEqual({
+        authenticated: true,
+        roles: ["reviewer"],
+      });
+      expect(JSON.stringify(log.mock.calls)).not.toContain(accountId);
+    } finally {
+      log.mockRestore();
+    }
+  });
+
+  it("validates bounded comma-separated Discord role mappings", () => {
+    const mappings = getDiscordRoleMappings(
+      "111111111111111111, 333333333333333333",
+      "222222222222222222",
+    );
+    expect([...mappings.contributor]).toEqual([
+      "111111111111111111",
+      "333333333333333333",
+    ]);
+    expect([...mappings.reviewer]).toEqual(["222222222222222222"]);
+    expect(() =>
+      getDiscordRoleMappings("111111111111111111,111111111111111111", ""),
+    ).toThrow("Discord role mapping is invalid.");
+    expect(() =>
+      getDiscordRoleMappings(
+        Array.from(
+          { length: 33 },
+          (_, index) => (400_000_000_000_000_000n + BigInt(index)).toString(),
+        ).join(","),
+        "",
+      ),
+    ).toThrow("Discord role mapping exceeds the configured limit.");
+  });
+
+  it("grants no Discord role when the named RPC rejects", async () => {
+    const log = vi.spyOn(console, "error").mockImplementation(() => undefined);
+    try {
+      await expect(
+        getDiscordTimelineRoles(
+          {
+            resolveDiscordGuildMembership: () =>
+              Promise.reject(new Error("test RPC failure")),
+          },
+          {
+            name: "__Host-curiretas_gakumastool_session",
+            value: "must-not-be-logged",
+          },
+          "rpc-failure-account",
+          "111111111111111111",
+          "222222222222222222",
+        ),
+      ).resolves.toEqual([]);
+      expect(JSON.stringify(log.mock.calls)).not.toContain("must-not-be-logged");
+      expect(JSON.stringify(log.mock.calls)).not.toContain("rpc-failure-account");
+    } finally {
+      log.mockRestore();
+    }
+  });
+
+  it("skips the membership RPC when both mappings are empty", async () => {
+    let called = false;
+    const roles = await getDiscordTimelineRoles(
+      {
+        resolveDiscordGuildMembership: () => {
+          called = true;
+          return Promise.reject(new Error("must not be called"));
+        },
+      },
+      {
+        name: "__Host-curiretas_gakumastool_session",
+        value: "test-credential",
+      },
+      "test-account",
+      "",
+      "",
+    );
+    expect(roles).toEqual([]);
+    expect(called).toBe(false);
   });
 
   it("enforces roles, exact origins, and payload limits", async () => {

@@ -30,10 +30,19 @@
       "migrations_dir": "./workers/migrations"
     }
   ],
+  "vars": {
+    "DISCORD_CONTRIBUTOR_ROLE_IDS": "1536729023382683728",
+    "DISCORD_REVIEWER_ROLE_IDS": "1536729104764895333"
+  },
   "services": [
     {
       "binding": "ACCOUNT_SERVICE",
       "service": "curiretas-account"
+    },
+    {
+      "binding": "DISCORD_MEMBERSHIP_SERVICE",
+      "service": "curiretas-account",
+      "entrypoint": "DiscordGuildMembershipService"
     }
   ],
   "observability": {
