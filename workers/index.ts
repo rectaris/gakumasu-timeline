@@ -1,4 +1,5 @@
 import { authenticateAccount } from "./auth/accountSession";
+import { getDiscordTimelineRoles } from "./auth/discordGuildRoles";
 import {
   handleGetChangeRequest,
   handleListChangeRequests,
@@ -11,6 +12,7 @@ import {
   handleGrantRole,
   handleListRoleGrants,
   handleRevokeRole,
+  mergeTimelineRoles,
 } from "./api/timelineRoles";
 import {
   errorResponse,
@@ -37,7 +39,15 @@ const routeAuthoringRequest = async (
   }
 
   const actor = auth.actor;
-  const roles = await getActiveRoles(env.TIMELINE_DB, actor.accountId);
+  const activeRoles = await getActiveRoles(env.TIMELINE_DB, actor.accountId);
+  const discordRoles = await getDiscordTimelineRoles(
+    env.DISCORD_MEMBERSHIP_SERVICE,
+    auth.credential,
+    actor.accountId,
+    env.DISCORD_CONTRIBUTOR_ROLE_IDS,
+    env.DISCORD_REVIEWER_ROLE_IDS,
+  );
+  const roles = mergeTimelineRoles(activeRoles, discordRoles);
   const relativePath = url.pathname.slice(API_PREFIX.length);
   const segments = relativePath.split("/").filter(Boolean);
   const now = Date.now();

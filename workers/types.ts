@@ -6,8 +6,17 @@ export type AccountActor = {
   accountId: string;
 };
 
+export type ToolSessionCookie = Readonly<{
+  name: string;
+  value: string;
+}>;
+
 export type AuthResult =
-  | { status: "authenticated"; actor: AccountActor }
+  | {
+      status: "authenticated";
+      actor: AccountActor;
+      credential: ToolSessionCookie;
+    }
   | { status: "anonymous" }
   | { status: "unavailable" };
 

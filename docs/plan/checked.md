@@ -99,3 +99,4 @@ id	path
 096	docs/plan/checked/2026/08/01-15/096-copier-v1-1-2-update.md
 097	docs/plan/checked/2026/08/01-15/097-copier-v1-2-1-update.md
 098	docs/plan/checked/2026/08/01-15/098-address-pr-13-security-ci.md
+099	docs/plan/checked/2026/08/01-15/099-discord-role-authorization.md

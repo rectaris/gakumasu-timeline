@@ -1,5 +1,5 @@
 import { readLimitedText } from "../responses";
-import type { AuthResult } from "../types";
+import type { AuthResult, ToolSessionCookie } from "../types";
 
 const SESSION_COOKIE_NAMES = [
   "__Host-curiretas_gakumastool_session",
@@ -8,7 +8,9 @@ const SESSION_COOKIE_NAMES = [
 const ACCOUNT_ID_PATTERN = /^[A-Za-z0-9_-]{1,128}$/u;
 const MAXIMUM_SESSION_RESPONSE_BYTES = 4096;
 
-export const selectToolSessionCookie = (request: Request): string | null => {
+export const selectToolSessionCookie = (
+  request: Request,
+): ToolSessionCookie | null => {
   const cookieHeader = request.headers.get("Cookie");
   if (!cookieHeader) return null;
   const cookies = new Map<string, string>();
@@ -22,10 +24,13 @@ export const selectToolSessionCookie = (request: Request): string | null => {
   }
   for (const name of SESSION_COOKIE_NAMES) {
     const value = cookies.get(name);
-    if (value) return `${name}=${value}`;
+    if (value) return { name, value };
   }
   return null;
 };
+
+const serializeToolSessionCookie = (cookie: ToolSessionCookie): string =>
+  `${cookie.name}=${cookie.value}`;
 
 const parseAuthenticatedAccountId = (value: unknown): string | null => {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
@@ -51,7 +56,10 @@ export const authenticateAccount = async (
     const response = await accountService.fetch(
       new Request("https://curiretas.com/auth/session", {
         method: "GET",
-        headers: { Accept: "application/json", Cookie: cookie },
+        headers: {
+          Accept: "application/json",
+          Cookie: serializeToolSessionCookie(cookie),
+        },
       }),
     );
     const contentLength = response.headers.get("Content-Length");
@@ -69,7 +77,7 @@ export const authenticateAccount = async (
     const accountId = parseAuthenticatedAccountId(JSON.parse(text));
     if (accountId === "") return { status: "anonymous" };
     return accountId
-      ? { status: "authenticated", actor: { accountId } }
+      ? { status: "authenticated", actor: { accountId }, credential: cookie }
       : { status: "unavailable" };
   } catch {
     return { status: "unavailable" };

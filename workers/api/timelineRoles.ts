@@ -32,6 +32,11 @@ export const getActiveRoles = async (
   return result.results.map((row) => row.role);
 };
 
+export const mergeTimelineRoles = (
+  activeRoles: readonly TimelineRole[],
+  additionalRoles: readonly TimelineRole[],
+): TimelineRole[] => Array.from(new Set([...activeRoles, ...additionalRoles]));
+
 export const hasRole = (
   roles: readonly TimelineRole[],
   required: TimelineRole,

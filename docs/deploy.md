@@ -38,8 +38,12 @@ subpath配信でqueryなしAPIも確実にWorkerへ渡すため、`run_worker_fi
 | D1データベース | `gakumasu-timeline-prod` |
 | D1 Binding | `TIMELINE_DB` |
 | D1 database id | `ab1ff388-0a9b-44ce-86d8-c885d425c635` |
-| Service Binding | `ACCOUNT_SERVICE` |
+| セッション検証用Service Binding | `ACCOUNT_SERVICE` |
+| Discord所属確認用Service Binding | `DISCORD_MEMBERSHIP_SERVICE` |
 | Service Bindingの接続先 | `curiretas-account` |
+| Discord所属確認用entrypoint | `DiscordGuildMembershipService` |
+| 投稿者へ対応付けるDiscord role ID | `DISCORD_CONTRIBUTOR_ROLE_IDS` |
+| 審査者へ対応付けるDiscord role ID | `DISCORD_REVIEWER_ROLE_IDS` |
 
 D1は2026年8月8日に `apac` を配置ヒントとして作成され、作成後の `wrangler d1 info` は `running_in_region: APAC` を返しました。
 
@@ -78,13 +82,51 @@ npx wrangler d1 execute gakumasu-timeline-prod --remote --config wrangler.timeli
 
 以後の付与と失効は管理APIを使い、`role_grants` の監査履歴を残します。
 
+### Discordロールとの連携
+
+タイムラインWorkerは、`ACCOUNT_SERVICE` でセッションを検証した後、同じCookieの名前と値だけを `DISCORD_MEMBERSHIP_SERVICE` へ渡します。
+
+Discord所属確認用entrypointは、Cookieからアカウントを再特定し、そのアカウントに連携されたDiscord IDについて現在のサーバー所属とrole IDを確認します。
+
+タイムラインWorkerは、返されたアカウントIDがセッション検証結果と一致し、所属結果とrole ID一覧が契約どおりの場合だけ、Discordのrole IDを投稿者または審査者へ対応付けます。
+
+`DISCORD_CONTRIBUTOR_ROLE_IDS` と `DISCORD_REVIEWER_ROLE_IDS` には、重複のないDiscord role IDをカンマ区切りで最大32件ずつ指定します。
+
+空文字列は、その権限への対応付けを無効にします。
+
+現在の設定は両方とも空文字列なので、Discord由来の権限は有効になっていません。
+
+有効な権限は、タイムラインD1にある失効していない付与と、現在のDiscord所属から得た `contributor` または `reviewer` の和集合です。
+
+`admin` はDiscord role IDへ対応付けず、タイムラインD1の明示的な付与だけで有効になります。
+
+Discord未連携、サーバー未所属、設定不備、RPC例外、Discord障害、アカウント不一致、不正な応答では、Discord由来の権限を付与しません。
+
+この場合も、独立して有効なタイムラインD1の付与は利用できます。
+
+本番で有効にする前に、次の作業を順に行います。
+
+1. Discord Botを対象サーバーへ追加し、メンバー情報を取得できる権限を確認します。
+2. `curiretas-account` で `DISCORD_GUILD_ID` と `DISCORD_GUILD_BOT_TOKEN` を設定し、`DISCORD_GUILD_MEMBERSHIP_ENABLED=true` へ変更します。
+3. アカウントWorkerを先に検証してデプロイし、名前付きentrypointが利用できる状態にします。
+4. 所有者が選択したDiscord role IDを、このリポジトリの2つのmapping変数へ設定します。
+5. タイムラインWorkerを検証してデプロイし、Discord連携済みのテスト用アカウントで `/gakumastool/timeline/api/authoring/me` と投稿・審査権限を確認します。
+
+Bot tokenはCloudflare secretへ保存し、リポジトリ、コマンド履歴、ログへ値を残しません。
+
+ロール連携だけを停止する場合は、このリポジトリの2つのmapping変数を空文字列へ戻してタイムラインWorkerを再デプロイします。
+
+Discord所属確認全体を停止する場合は、先にタイムライン側のmappingを空にしてから、アカウントWorkerの `DISCORD_GUILD_MEMBERSHIP_ENABLED=false` をデプロイします。
+
+所属情報をD1へ保存しないため、停止時のデータ削除はありません。
+
 ### デプロイ順序
 
-`ACCOUNT_SERVICE` の接続先である `curiretas-account` Workerが先に存在している必要があります。
+2つのService Bindingの接続先である `curiretas-account` Workerが先に存在している必要があります。
 
-今回利用する `GET /auth/session` の契約が変わっていない場合、アカウントWorkerの再デプロイは不要です。
+`DISCORD_MEMBERSHIP_SERVICE` を使用するデプロイでは、`DiscordGuildMembershipService` をexportするアカウントWorkerを先にデプロイします。
 
-契約を互換拡張した場合だけアカウントWorkerを先にデプロイし、その後に次のコマンドでタイムラインWorkerをデプロイします。
+その後に次のコマンドでタイムラインWorkerをデプロイします。
 
 ```sh
 npm run validate:data
